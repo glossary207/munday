@@ -1,0 +1,24 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - lib/custom_code/**
+    - lib/flutter_flow/**
+    - lib/backend/schema/**
+    - lib/index.dart
+    - lib/main.dart
+    - '**/*.g.dart'
+  
+  errors:
+    unused_import: warning
+    dead_code: warning
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    avoid_print: false # Common in FlutterFlow
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_final_fields: true
+    use_key_in_widget_constructors: false
+    library_private_types_in_public_api: false

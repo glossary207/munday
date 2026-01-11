@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>21798173906-b066ol52p1dqq1dambojeqldqd6bmhhj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.21798173906-b066ol52p1dqq1dambojeqldqd6bmhhj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>21798173906-0iigj7261l16pvqos4tk84ngl6r2kg3b.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBgCB10Yjv-CbJHKnQoP3DIXZ5IDj15IRg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>21798173906</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.mundayone</string>
+	<key>PROJECT_ID</key>
+	<string>chatblack-6g2orl</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chatblack-6g2orl.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:21798173906:ios:b07b58129a0439d9a3410b</string>
+	<key>DATABASE_URL</key>
+	<string>https://chatblack-6g2orl-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

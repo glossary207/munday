@@ -1,0 +1,34 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "room",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "usersend",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "userrecive",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timeupdate",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "fcm_tokens",
+      "fieldPath": "fcm_token",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    }
+  ]
+}

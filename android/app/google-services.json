@@ -1,0 +1,285 @@
+{
+  "project_info": {
+    "project_number": "21798173906",
+    "firebase_url": "https://chatblack-6g2orl-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chatblack-6g2orl",
+    "storage_bucket": "chatblack-6g2orl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:5eb1acab460548d5a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.chatblack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-p6ms66o7965i8sm1adgf19a4of934g0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.chatblack",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:346aecb8a40c4ef4a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.mudaymanager2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-7h5j5f6htaa5guis7gkrgfk3ra2b0v2l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mudaymanager2",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:b698f3f9f66f61f3a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.munday"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:6b4a38311dca7d41a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.mundaymanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:7348c27789369fa5a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.mundayone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-3mdmi2nmtg9dk2vt51fqd8t0jtma01th.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mundayone",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "21798173906-t1ng2pekqg8hdnkeshs3ooghgpnlr0dd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mundayone",
+            "certificate_hash": "10f6fc486fea226d0ff1326c2d1853200c3e2cfa"
+          }
+        },
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21798173906:android:46d529fd978a20c6a3410b",
+        "android_client_info": {
+          "package_name": "com.mycompany.truchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21798173906-0iigj7261l16pvqos4tk84ngl6r2kg3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.truchat",
+            "certificate_hash": "feb0bc4234bf31a0affcbc44f95cb7100a982904"
+          }
+        },
+        {
+          "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgK1JtcfsgLr_U4-3prlx_i7iknWV-Ww"
+        },
+        {
+          "current_key": "AIzaSyAKM_G4Y5CD6er4FaaWmtCOZST1CfctwBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21798173906-g3g20402gug9a3retgrt8dcg3qsu7dtc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21798173906-4nlo0fmfkfihqu0ndb7ih7kjptkos4q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.munday"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
