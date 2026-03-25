@@ -280,7 +280,7 @@ class DataEventsStruct extends FFSupabaseStruct {
           data['doc_ref'],
           ParamType.SupabaseDocRef,
           false,
-          collectionNamePath: ['EVENTS'],
+          collectionNamePath: ['events'],
         ),
         position: deserializeParam(
           data['position'],

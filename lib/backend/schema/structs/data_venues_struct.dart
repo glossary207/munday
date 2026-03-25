@@ -350,7 +350,7 @@ class DataVenuesStruct extends FFSupabaseStruct {
           data['EventID'],
           ParamType.SupabaseDocRef,
           true,
-          collectionNamePath: ['EVENTS'],
+          collectionNamePath: ['events'],
         ),
         rating: deserializeParam(
           data['rating'],

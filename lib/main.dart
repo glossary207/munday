@@ -2,10 +2,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth/supabase_auth/supabase_user_provider.dart';
 import 'auth/supabase_auth/auth_util.dart';
 
@@ -17,10 +16,12 @@ import 'flutter_flow/internationalization.dart';
 
 import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
     as f_f_story_view_live_zhm3f3_app_state;
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
@@ -95,6 +96,16 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _appStateNotifier = AppStateNotifier.instance;
+
+    // Initialize AppStateNotifier immediately with the persisted Supabase session
+    // so that route guards see loggedIn = true before the stream emits.
+    // Without this, navigating to requireAuth routes right after startup
+    // sees user == null and redirects to phone-login (race condition).
+    final persistedUser = Supabase.instance.client.auth.currentUser;
+    if (persistedUser != null) {
+      _appStateNotifier.update(MundaySupabaseUser(persistedUser));
+    }
+
     _router = createRouter(_appStateNotifier);
     userStream = mundaySupabaseUserStream()
       ..listen((user) {

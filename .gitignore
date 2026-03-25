@@ -63,3 +63,11 @@ local.properties
 .env
 .env.*
 !.env.example
+
+# Builder / local dev artifacts
+.munday_builder/
+.venv/
+.migration_env/
+
+# iOS Pods (generated, not committed)
+ios/Pods/

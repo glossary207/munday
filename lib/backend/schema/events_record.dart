@@ -98,7 +98,7 @@ class EventsRecord extends SupabaseRecord {
   }
 
   static SupabaseCollectionRef get collection =>
-      SupabaseFirestore.instance.collection('EVENTS');
+      SupabaseFirestore.instance.collection('events');
 
   static Stream<EventsRecord> getDocument(SupabaseDocRef ref) =>
       ref.snapshots().map((s) => EventsRecord.fromSnapshot(s));

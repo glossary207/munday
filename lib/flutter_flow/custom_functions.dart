@@ -653,6 +653,11 @@ List<dynamic>? dataEvent(
     return null;
   }
 
+  // ถ้า location เป็น (0,0) แสดงว่าไม่ได้รับ permission หรือยังไม่ได้ตำแหน่ง
+  // ให้ข้าม distance filter แสดงข้อมูลทั้งหมด
+  final bool hasValidLocation =
+      !(userLocation.latitude == 0.0 && userLocation.longitude == 0.0);
+
   // ฟังก์ชันคำนวณระยะทางระหว่างจุดสองจุด (โดยประมาน)
   double calculateDistance(LatLng start, LatLng end) {
     const double degreeToKm = 111.32; // 1 องศาละติจูด ~ 111.32 กม.
@@ -697,7 +702,10 @@ List<dynamic>? dataEvent(
       }
 
       // ส่งคืนเฉพาะอีเวนต์ที่เข้าเงื่อนไข
-      return distance <= maxDistance &&
+      // ถ้าไม่มี location ที่ถูกต้อง ข้าม distance filter
+      final bool withinDistance =
+          !hasValidLocation || distance <= maxDistance;
+      return withinDistance &&
           matchesMusicStyle &&
           matchesStyleVenues &&
           matchesDate;
@@ -834,6 +842,11 @@ List<dynamic>? dataVenuse(
     return null;
   }
 
+  // ถ้า location เป็น (0,0) แสดงว่าไม่ได้รับ permission หรือยังไม่ได้ตำแหน่ง
+  // ให้ข้าม distance filter แสดงข้อมูลทั้งหมด
+  final bool hasValidLocation =
+      !(userLocation.latitude == 0.0 && userLocation.longitude == 0.0);
+
   // ฟังก์ชันคำนวณระยะทางแบบคร่าว ๆ ระหว่าง 2 พิกัด (Euclidean + ปรับตามละติจูด)
   double calculateDistance(LatLng start, LatLng end) {
     const double degreeToKm = 111.32; // 1 องศาของ latitude ~ 111.32 กม.
@@ -869,9 +882,11 @@ List<dynamic>? dataVenuse(
         styleVenusefilter
             .any((style) => venue.styleVenuse?.contains(style) ?? false);
 
+    // ถ้าไม่มี location ที่ถูกต้อง ข้าม distance filter
+    final bool withinDistance = !hasValidLocation || distance <= maxDistance;
+
     // เงื่อนไขหลักคือ ระยะทางไม่เกิน maxDistance และต้องตรงกับ style ที่กำหนด (Music หรือ Venuse)
-    return (distance <= maxDistance) &&
-        (matchesMusicStyle || matchesVenueStyle);
+    return withinDistance && (matchesMusicStyle || matchesVenueStyle);
   }).map((venue) {
     // แปลงเป็น Map เพื่อสะดวกในการส่งออก
     final venueLocation =

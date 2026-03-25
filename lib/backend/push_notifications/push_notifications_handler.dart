@@ -3,10 +3,9 @@ import 'dart:async';
 import 'serialization_util.dart';
 import '/backend/backend.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
 
 final _handledMessageIds = <String?>{};
 
@@ -29,23 +28,19 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
       return;
     }
 
-    final notification = await FirebaseMessaging.instance.getInitialMessage();
-    if (notification != null) {
-      await _handlePushNotification(notification);
-    }
-    FirebaseMessaging.onMessageOpenedApp.listen(_handlePushNotification);
+    // Firebase Messaging logic removed since migrating to Supabase
+    // To support push notifications with Supabase, you must implement Supabase push handling.
   }
 
-  Future _handlePushNotification(RemoteMessage message) async {
-    if (_handledMessageIds.contains(message.messageId)) {
-      return;
-    }
-    _handledMessageIds.add(message.messageId);
+  Future _handlePushNotification(dynamic message) async {
+    // Stubbed out
+    if (message == null) return;
 
     safeSetState(() => _loading = true);
     try {
-      final initialPageName = message.data['initialPageName'] as String;
-      final initialParameterData = getInitialParameterData(message.data);
+      final initialPageName = message['initialPageName'] as String?;
+      if (initialPageName == null) return;
+      final initialParameterData = getInitialParameterData(message);
       final parametersBuilder = parametersBuilderMap[initialPageName];
       if (parametersBuilder != null) {
         final parameterData = await parametersBuilder(initialParameterData);

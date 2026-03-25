@@ -96,6 +96,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
     refreshListenable: appStateNotifier,
     navigatorKey: appNavigatorKey,
     errorBuilder: (context, state) => MainWidget(),
+    redirect: (context, state) {
+      if (appStateNotifier.loading) return null;
+
+      final loggedIn = appStateNotifier.loggedIn;
+      final uri = state.uri.toString();
+      final isAuthPage =
+          uri == '/phone-login' || uri.startsWith('/otp-verify');
+
+      if (!loggedIn && !isAuthPage) {
+        return '/phone-login';
+      }
+      return null;
+    },
     routes: [
       FFRoute(
         name: '_initialize',
@@ -149,13 +162,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             ),
           ),
           FFRoute(
-            name: AuthenticationWidget.routeName,
-            path: AuthenticationWidget.routePath,
-            builder: (context, params) => AuthenticationWidget(
-              namestore: params.getParam(
-                'namestore',
-                ParamType.String,
-              ),
+            name: PhoneLoginWidget.routeName,
+            path: PhoneLoginWidget.routePath,
+            builder: (context, params) => const PhoneLoginWidget(),
+          ),
+          FFRoute(
+            name: OtpVerifyWidget.routeName,
+            path: OtpVerifyWidget.routePath,
+            builder: (context, params) => OtpVerifyWidget(
+              phone: params.getParam('phone', ParamType.String) ?? '',
+              loginType:
+                  params.getParam('loginType', ParamType.String) ?? 'user',
+              isTestPhone:
+                  params.getParam('isTestPhone', ParamType.bool) ?? false,
             ),
           ),
           FFRoute(
@@ -182,28 +201,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: true,
             builder: (context, params) => SupportWidget(),
           ),
-          FFRoute(
-            name: ForgetpasswordWidget.routeName,
-            path: ForgetpasswordWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => ForgetpasswordWidget(),
-          ),
-          FFRoute(
-            name: SuccessWidget.routeName,
-            path: SuccessWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => SuccessWidget(),
-          ),
+
+
           FFRoute(
             name: BlocklistWidget.routeName,
             path: BlocklistWidget.routePath,
             requireAuth: true,
             builder: (context, params) => BlocklistWidget(),
-          ),
-          FFRoute(
-            name: AutWidget.routeName,
-            path: AutWidget.routePath,
-            builder: (context, params) => AutWidget(),
           ),
           FFRoute(
             name: MainWidget.routeName,
@@ -223,12 +227,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: false,
             builder: (context, params) => VenuesWidget(),
           ),
-          FFRoute(
-            name: HomeMainWidget.routeName,
-            path: HomeMainWidget.routePath,
-            requireAuth: false,
-            builder: (context, params) => HomeMainWidget(),
-          ),
+
           FFRoute(
             name: PromotionWidget.routeName,
             path: PromotionWidget.routePath,
@@ -266,12 +265,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: true,
             builder: (context, params) => VeerWidget(),
           ),
-          FFRoute(
-            name: BookngWidget.routeName,
-            path: BookngWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => BookngWidget(),
-          ),
+
           FFRoute(
             name: TicketWidget.routeName,
             path: TicketWidget.routePath,
@@ -307,18 +301,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-          FFRoute(
-            name: MapdumWidget.routeName,
-            path: MapdumWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => MapdumWidget(),
-          ),
-          FFRoute(
-            name: MapExWidget.routeName,
-            path: MapExWidget.routePath,
-            requireAuth: false,
-            builder: (context, params) => MapExWidget(),
-          ),
+
+
           FFRoute(
             name: ShowallphotoWidget.routeName,
             path: ShowallphotoWidget.routePath,
@@ -331,12 +315,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-          FFRoute(
-            name: Booking2cWidget.routeName,
-            path: Booking2cWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => Booking2cWidget(),
-          ),
+
           FFRoute(
             name: SharepageWidget.routeName,
             path: SharepageWidget.routePath,
@@ -362,73 +341,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-          FFRoute(
-            name: TestWidget.routeName,
-            path: TestWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => TestWidget(),
-          ),
-          FFRoute(
-            name: Booking2Widget.routeName,
-            path: Booking2Widget.routePath,
-            requireAuth: true,
-            builder: (context, params) => Booking2Widget(),
-          ),
-          FFRoute(
-            name: HomeCopy2Widget.routeName,
-            path: HomeCopy2Widget.routePath,
-            requireAuth: true,
-            builder: (context, params) => HomeCopy2Widget(),
-          ),
-          FFRoute(
-            name: TestuiWidget.routeName,
-            path: TestuiWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => TestuiWidget(),
-          ),
+
           FFRoute(
             name: PayreservenormdayWidget.routeName,
             path: PayreservenormdayWidget.routePath,
             requireAuth: true,
             builder: (context, params) => PayreservenormdayWidget(),
           ),
-          FFRoute(
-            name: HomeCopy2CopyWidget.routeName,
-            path: HomeCopy2CopyWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => HomeCopy2CopyWidget(),
-          ),
-          FFRoute(
-            name: TicketCopyWidget.routeName,
-            path: TicketCopyWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => TicketCopyWidget(),
-          ),
-          FFRoute(
-            name: InVenuseCopyWidget.routeName,
-            path: InVenuseCopyWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => InVenuseCopyWidget(
-              idVenues: params.getParam(
-                'idVenues',
-                ParamType.SupabaseDocRef,
-                isList: false,
-                collectionNamePath: ['Venues'],
-              ),
-              distance: params.getParam(
-                'distance',
-                ParamType.String,
-              ),
-              dateclick: params.getParam(
-                'dateclick',
-                ParamType.DateTime,
-              ),
-              index: params.getParam(
-                'index',
-                ParamType.int,
-              ),
-            ),
-          ),
+
           FFRoute(
             name: $lock_orientation_library_opafp4.HomePageWidget.routeName,
             path: $lock_orientation_library_opafp4.HomePageWidget.routePath,
@@ -625,7 +545,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/aut';
+            return '/phone-login';
           }
           return null;
         },
