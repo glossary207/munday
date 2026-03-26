@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/widget_previews.dart';
 import '/backend/supabase/supabase_config.dart';
 import '/app_state.dart' as app_state;
 import 'booking_model.dart';
