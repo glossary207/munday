@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth/supabase_auth/supabase_user_provider.dart';
 import 'auth/supabase_auth/auth_util.dart';
 
+import 'backend/backend.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/supabase/supabase_config.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
@@ -104,6 +105,9 @@ class _MyAppState extends State<MyApp> {
     final persistedUser = Supabase.instance.client.auth.currentUser;
     if (persistedUser != null) {
       _appStateNotifier.update(MundaySupabaseUser(persistedUser));
+      // Ensure UsersRecord exists so currentUserDocument is always non-null
+      // for returning users who didn't go through OTP flow this session.
+      maybeCreateUser(persistedUser).catchError((_) {});
     }
 
     _router = createRouter(_appStateNotifier);

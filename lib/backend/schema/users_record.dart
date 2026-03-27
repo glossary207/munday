@@ -315,7 +315,7 @@ class UsersRecord extends SupabaseRecord {
 
   static UsersRecord fromSnapshot(SupabaseDocSnapshot snapshot) => UsersRecord._(
         snapshot.reference,
-        mapFromSupabase(snapshot.data() as Map<String, dynamic>),
+        mapFromSupabase((snapshot.data() as Map<String, dynamic>?) ?? {}),
       );
 
   static UsersRecord getDocumentFromData(

@@ -59,9 +59,17 @@ final authenticatedUserStream = Supabase.instance.client.auth.onAuthStateChange
           : UsersRecord.getDocument(UsersRecord.collection.doc(uid))
               .handleError((_) {}),
     )
-    .map((user) {
-  currentUserDocument = user;
-
+    .asyncMap((user) async {
+  // If the stream emits a UsersRecord with no uid, the row doesn't exist yet.
+  // Ensure the row is created/loaded so currentUserDocument is always valid.
+  if (user != null && (user.uid == null || user.uid!.isEmpty)) {
+    final supabaseUser = Supabase.instance.client.auth.currentUser;
+    if (supabaseUser != null) {
+      await maybeCreateUser(supabaseUser);
+    }
+  } else {
+    currentUserDocument = user;
+  }
   return currentUserDocument;
 }).asBroadcastStream();
 
