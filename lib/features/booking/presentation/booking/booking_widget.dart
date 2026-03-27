@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '/backend/supabase/supabase_config.dart';
-import '/app_state.dart' as app_state;
 import 'booking_model.dart';
 export 'booking_model.dart';
 
@@ -6475,47 +6473,4 @@ class _BookingWidgetState extends State<BookingWidget> {
       },
     );
   }
-}
-
-// ======================= VS CODE PREVIEW =======================
-@Preview()
-Widget previewBookingWidget() {
-  return FutureBuilder(
-    // 1. Force the database and global variable connections inside the Preview Context
-    future: Future(() async {
-      try { await SupabaseConfig.initialize(); } catch (_) {}
-      final myAppState = app_state.FFAppState();
-      await myAppState.initializePersistedState();
-      
-      final storyAppState = f_f_story_view_live_zhm3f3_app_state.FFAppState();
-      await storyAppState.initializePersistedState();
-      
-      return {'myApp': myAppState, 'storyApp': storyAppState};
-    }),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-      
-      final myAppState = snapshot.data!['myApp'] as app_state.FFAppState;
-      final storyAppState = snapshot.data!['storyApp'] as f_f_story_view_live_zhm3f3_app_state.FFAppState;
-
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: myAppState),
-          ChangeNotifierProvider.value(value: storyAppState),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(brightness: Brightness.dark, useMaterial3: false),
-          home: BookingWidget(
-             // 2. Inject Mock Database Targets natively
-            id: SupabaseDocRef('Venues', '12345678-1234-1234-1234-123456789012'), // Mock UUID
-            location: LatLng(13.7563, 100.5018), 
-            date: DateTime.now(),
-            currentuid: 'mock_uid_123',
-            floorId: 'F1',
-          ),
-        ),
-      );
-    }
-  );
 }
