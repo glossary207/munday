@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
+  static SharedPreferences? _prefs;
 
   factory FFAppState() {
     return _instance;
@@ -16,11 +18,27 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    _safeInit(() {
+      _profileInstagramHandle =
+          _prefs?.getString('ff_profileInstagramHandle') ?? '';
+    });
+    _safeInit(() {
+      _profileFacebookHandle =
+          _prefs?.getString('ff_profileFacebookHandle') ?? '';
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
+  }
+
+  void _safeInit(Function() initializeField) {
+    try {
+      initializeField();
+    } catch (_) {}
   }
 
   bool _searchuser = false;
@@ -33,6 +51,28 @@ class FFAppState extends ChangeNotifier {
   String get userselectUID => _userselectUID;
   set userselectUID(String value) {
     _userselectUID = value;
+  }
+
+  String _profileInstagramHandle = '';
+  String get profileInstagramHandle => _profileInstagramHandle;
+  set profileInstagramHandle(String value) {
+    _profileInstagramHandle = value;
+    if (value.isEmpty) {
+      _prefs?.remove('ff_profileInstagramHandle');
+    } else {
+      _prefs?.setString('ff_profileInstagramHandle', value);
+    }
+  }
+
+  String _profileFacebookHandle = '';
+  String get profileFacebookHandle => _profileFacebookHandle;
+  set profileFacebookHandle(String value) {
+    _profileFacebookHandle = value;
+    if (value.isEmpty) {
+      _prefs?.remove('ff_profileFacebookHandle');
+    } else {
+      _prefs?.setString('ff_profileFacebookHandle', value);
+    }
   }
 
   bool _ActiveProfileUserPopup = false;
@@ -415,7 +455,7 @@ class FFAppState extends ChangeNotifier {
     _VenuseSelection = value;
   }
 
-  double _Filterdistance = 10.0;
+  double _Filterdistance = 50.0;
   double get Filterdistance => _Filterdistance;
   set Filterdistance(double value) {
     _Filterdistance = value;

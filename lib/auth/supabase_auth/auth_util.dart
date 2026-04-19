@@ -36,6 +36,16 @@ String get currentPhoneNumber =>
 
 String get currentJwtToken => _currentJwtToken ?? '';
 
+bool get currentUserNeedsOnboarding {
+  final authEmail = currentUser?.email?.trim() ?? '';
+  if (!authEmail.endsWith('@phone.munday.app')) {
+    return false;
+  }
+
+  final displayName = currentUserDocument?.displayName.trim() ?? '';
+  return displayName.isEmpty || displayName.endsWith('@phone.munday.app');
+}
+
 bool get currentUserEmailVerified =>
     currentUser?.identities?.isNotEmpty ?? false; // Approximation
 
@@ -60,9 +70,9 @@ final authenticatedUserStream = Supabase.instance.client.auth.onAuthStateChange
               .handleError((_) {}),
     )
     .asyncMap((user) async {
-  // If the stream emits a UsersRecord with no uid, the row doesn't exist yet.
+  // If the stream emits a sparse UsersRecord with no timestamps, bootstrap it.
   // Ensure the row is created/loaded so currentUserDocument is always valid.
-  if (user != null && (user.uid == null || user.uid!.isEmpty)) {
+  if (user != null && !user.hasCreatedTime()) {
     final supabaseUser = Supabase.instance.client.auth.currentUser;
     if (supabaseUser != null) {
       await maybeCreateUser(supabaseUser);

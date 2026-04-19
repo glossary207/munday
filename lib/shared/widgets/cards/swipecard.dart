@@ -224,7 +224,7 @@ class _SwipecardState extends State<Swipecard> {
 
                     // ในที่นี้ userRecord คือข้อมูล users ที่โหลดมาแล้ว (ไม่ต้อง stream)
                     final imageUrl = userRecord.photoUrl ??
-                        'https://via.placeholder.com/300?text=No+Photo';
+                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
 
                     return Container(
                       decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 {
-  "dart.flutterWidgetPreview": "startLazily",
-  "dart.previewFlutterUi": true
+  "dart.flutterSdkPath": "/Users/bewsunattha/Downloads/flutter",
+  "dart.flutterWidgetPreview": "disabled",
+  "dart.previewFlutterUiGuides": false
 }

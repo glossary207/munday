@@ -3,6 +3,7 @@
 import '/backend/supabase/supabase_shim.dart';
 
 import '/backend/schema/util/supabase_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -74,8 +75,10 @@ class ContactStruct extends FFSupabaseStruct {
         name: data['Name'] as String?,
       );
 
-  static ContactStruct? maybeFromMap(dynamic data) =>
-      data is Map ? ContactStruct.fromMap(data.cast<String, dynamic>()) : null;
+  static ContactStruct? maybeFromMap(dynamic data) {
+    final dataMap = getDataMap(data);
+    return dataMap != null ? ContactStruct.fromMap(dataMap) : null;
+  }
 
   Map<String, dynamic> toMap() => {
         'phone': _phone,
@@ -228,8 +231,7 @@ void addContactStructData(
   final nestedData = contactData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = contact.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getContactFirestoreData(

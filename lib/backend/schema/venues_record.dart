@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -121,40 +120,68 @@ class VenuesRecord extends SupabaseRecord {
   SupabaseDocRef? get idLiveChat => _idLiveChat;
   bool hasIdLiveChat() => _idLiveChat != null;
 
+  static LatLng? _parseLatLng(dynamic value) {
+    if (value == null) return null;
+    if (value is LatLng) return value;
+    if (value is Map) {
+      final lat = (value['latitude'] ?? value['lat']) as num?;
+      final lng = (value['longitude'] ?? value['lng']) as num?;
+      if (lat != null && lng != null)
+        return LatLng(lat.toDouble(), lng.toDouble());
+    }
+    return null;
+  }
+
   void _initializeFields() {
-    _nameVenuse = snapshotData['Name_Venuse'] as String?;
-    _bg = snapshotData['BG'] as String?;
+    _nameVenuse =
+        (snapshotData['venue_name'] ?? snapshotData['Name_Venuse']) as String?;
+    _bg = (snapshotData['bg'] ?? snapshotData['BG']) as String?;
     _capacity = castToType<int>(snapshotData['capacity']);
     _maxCapacity = castToType<int>(snapshotData['max_capacity']);
-    _position = snapshotData['Position'] as LatLng?;
-    _openCloseTime = snapshotData['Open_Close_time'] as String?;
-    _styleVenuse = getDataList(snapshotData['styleVenuse']);
-    _styleMusic = getDataList(snapshotData['StyleMusic']);
-    _logo = snapshotData['Logo'] as String?;
-    _events = getDataList(snapshotData['Events']);
-    _dateEvents = getDataList(snapshotData['DateEvents']);
+    _position =
+        _parseLatLng(snapshotData['position'] ?? snapshotData['Position']);
+    _openCloseTime = (snapshotData['open_close_time'] ??
+        snapshotData['Open_Close_time']) as String?;
+    _styleVenuse =
+        getDataList(snapshotData['stylevenuse'] ?? snapshotData['styleVenuse']);
+    _styleMusic =
+        getDataList(snapshotData['stylemusic'] ?? snapshotData['StyleMusic']);
+    _logo = (snapshotData['logo'] ?? snapshotData['Logo']) as String?;
+    _events = getSupabaseDocRefList(
+      snapshotData['events'] ?? snapshotData['Events'],
+      'events',
+    );
+    _dateEvents =
+        getDataList(snapshotData['dateevents'] ?? snapshotData['DateEvents']);
     _promotion = getDataList(snapshotData['promotion']);
     _photos = getDataList(snapshotData['photos']);
-    _linkContact = snapshotData['LinkContact'] is ContactStruct
-        ? snapshotData['LinkContact']
-        : ContactStruct.maybeFromMap(snapshotData['LinkContact']);
+    _linkContact = snapshotData['linkcontact'] is ContactStruct
+        ? snapshotData['linkcontact']
+        : ContactStruct.maybeFromMap(
+            snapshotData['linkcontact'] ?? snapshotData['LinkContact']);
     _userReview = getStructList(
       snapshotData['user_review'],
       ReviewStruct.fromMap,
     );
     _rating = castToType<double>(snapshotData['rating']);
-    _refUserInVenues = snapshotData['RefUserInVenues'] as SupabaseDocRef?;
-    _video = getDataList(snapshotData['Video']);
+    _refUserInVenues = getSupabaseDocRef(
+      snapshotData['RefUserInVenues'],
+      'user_in_venues',
+    );
+    _video = getDataList(snapshotData['video'] ?? snapshotData['Video']);
     _listpromotion = getStructList(
       snapshotData['listpromotion'],
       PromotionDataSubStruct.fromMap,
     );
     _tableId = getDataList(snapshotData['table_id']);
-    _idLiveChat = snapshotData['id_liveChat'] as SupabaseDocRef?;
+    _idLiveChat = getSupabaseDocRef(
+      snapshotData['id_liveChat'],
+      'room_venues_live_chat',
+    );
   }
 
   static SupabaseCollectionRef get collection =>
-      SupabaseFirestore.instance.collection('Venues');
+      SupabaseFirestore.instance.collection('venues');
 
   static Stream<VenuesRecord> getDocument(SupabaseDocRef ref) =>
       ref.snapshots().map((s) => VenuesRecord.fromSnapshot(s));
@@ -162,9 +189,10 @@ class VenuesRecord extends SupabaseRecord {
   static Future<VenuesRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => VenuesRecord.fromSnapshot(s));
 
-  static VenuesRecord fromSnapshot(SupabaseDocSnapshot snapshot) => VenuesRecord._(
+  static VenuesRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>
+      VenuesRecord._(
         snapshot.reference,
-        mapFromSupabase(snapshot.data() as Map<String, dynamic>),
+        mapFromSupabase(getDataMap(snapshot.data()) ?? <String, dynamic>{}),
       );
 
   static VenuesRecord getDocumentFromData(

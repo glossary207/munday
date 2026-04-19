@@ -73,6 +73,20 @@ class _EditImageModalWidgetState extends State<EditImageModalWidget> {
               currentUserUid,
             );
             await actions.clearCroppImageShareCache();
+            if (!mounted) {
+              return;
+            }
+            if (!(_model.croppedImageUrl?.isNotEmpty ?? false)) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'อัปโหลดรูปไม่สำเร็จ กรุณาตรวจสอบสิทธิ์ Storage แล้วลองใหม่',
+                  ),
+                ),
+              );
+              Navigator.pop(context);
+              return;
+            }
             Navigator.pop(context, _model.croppedImageUrl);
 
             safeSetState(() {});

@@ -31,6 +31,36 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  String _currentInstagramHandle() {
+    final remoteHandle = valueOrDefault(currentUserDocument?.idig, '');
+    if (remoteHandle.isNotEmpty) {
+      return remoteHandle;
+    }
+    return FFAppState().profileInstagramHandle;
+  }
+
+  String _currentFacebookHandle() {
+    final remoteHandle = valueOrDefault(currentUserDocument?.iDFacebook, '');
+    if (remoteHandle.isNotEmpty) {
+      return remoteHandle;
+    }
+    return FFAppState().profileFacebookHandle;
+  }
+
+  void _storeInstagramHandle(String value) {
+    final trimmedValue = value.trim();
+    FFAppState().update(() {
+      FFAppState().profileInstagramHandle = trimmedValue;
+    });
+  }
+
+  void _storeFacebookHandle(String value) {
+    final trimmedValue = value.trim();
+    FFAppState().update(() {
+      FFAppState().profileFacebookHandle = trimmedValue;
+    });
+  }
+
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
@@ -64,24 +94,26 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
         _model.datachange = true;
       },
     );
-    _model.textController3 ??= TextEditingController(
-        text: valueOrDefault(currentUserDocument?.idig, ''));
+    _model.textController3 ??=
+        TextEditingController(text: _currentInstagramHandle());
     _model.textFieldFocusNode3 ??= FocusNode();
     _model.textFieldFocusNode3!.addListener(
       () async {
-        await currentUserReference!.update(createUsersRecordData(
-          idig: _model.textController3.text,
-        ));
+        if (_model.textFieldFocusNode3?.hasFocus ?? false) {
+          return;
+        }
+        _storeInstagramHandle(_model.textController3.text);
       },
     );
-    _model.textController4 ??= TextEditingController(
-        text: valueOrDefault(currentUserDocument?.iDFacebook, ''));
+    _model.textController4 ??=
+        TextEditingController(text: _currentFacebookHandle());
     _model.textFieldFocusNode4 ??= FocusNode();
     _model.textFieldFocusNode4!.addListener(
       () async {
-        await currentUserReference!.update(createUsersRecordData(
-          iDFacebook: _model.textController4.text,
-        ));
+        if (_model.textFieldFocusNode4?.hasFocus ?? false) {
+          return;
+        }
+        _storeFacebookHandle(_model.textController4.text);
       },
     );
     animationsMap.addAll({
@@ -172,12 +204,6 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                       height: 115.0,
                       decoration: BoxDecoration(
                         color: Color(0xFF131313),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: Image.network(
-                            '',
-                          ).image,
-                        ),
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(0.0),
                           bottomRight: Radius.circular(0.0),
@@ -314,10 +340,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                         }
 
                                                         if ((_model
-                                                                    .uploadedLocalFile_uploadDataMainEdit
-                                                                    .bytes
-                                                                    ?.isNotEmpty ??
-                                                                false)) {
+                                                                .uploadedLocalFile_uploadDataMainEdit
+                                                                .bytes
+                                                                ?.isNotEmpty ??
+                                                            false)) {
                                                           await showModalBottomSheet(
                                                             isScrollControlled:
                                                                 true,
@@ -966,10 +992,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData1
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData1
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -1251,10 +1277,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData2
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData2
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -1536,10 +1562,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData3
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData3
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -1825,10 +1851,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData4
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData4
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -2110,10 +2136,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData5
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData5
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -2395,10 +2421,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                   }
 
                                                   if ((_model
-                                                              .uploadedLocalFile_uploadData6
-                                                              .bytes
-                                                              ?.isNotEmpty ??
-                                                          false)) {
+                                                          .uploadedLocalFile_uploadData6
+                                                          .bytes
+                                                          ?.isNotEmpty ??
+                                                      false)) {
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
                                                       backgroundColor:
@@ -2706,16 +2732,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              await currentUserReference!.update({
-                                ...mapToSupabase(
-                                  {
-                                    'IDIG': FieldValue.delete(),
-                                  },
-                                ),
-                              });
                               safeSetState(() {
                                 _model.textController3?.clear();
                               });
+                              _storeInstagramHandle('');
                             },
                             child: Icon(
                               Icons.close,
@@ -2885,13 +2905,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              await currentUserReference!
-                                  .update(createUsersRecordData(
-                                iDFacebook: '',
-                              ));
                               safeSetState(() {
                                 _model.textController4?.clear();
                               });
+                              _storeFacebookHandle('');
                             },
                             child: Icon(
                               Icons.close,

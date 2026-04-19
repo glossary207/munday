@@ -104,7 +104,7 @@ class DatapromotionStruct extends FFSupabaseStruct {
           data['IDvenuse'],
           ParamType.SupabaseDocRef,
           false,
-          collectionNamePath: ['Venues'],
+          collectionNamePath: ['venues'],
         ),
         logo: deserializeParam(
           data['logo'],
@@ -189,8 +189,7 @@ void addDatapromotionStructData(
       datapromotionData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = datapromotion.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getDatapromotionFirestoreData(

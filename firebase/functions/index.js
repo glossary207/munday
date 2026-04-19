@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const axios = require("axios").default;
 admin.initializeApp();
 
 const kFcmTokensCollection = "fcm_tokens";
@@ -10,6 +11,11 @@ const firestore = admin.firestore();
 const kPushNotificationRuntimeOpts = {
   timeoutSeconds: 540,
   memory: "2GB",
+};
+
+const kInstagramFetchRuntimeOpts = {
+  timeoutSeconds: 60,
+  memory: "256MB",
 };
 
 exports.addFcmToken = functions
@@ -240,3 +246,109 @@ exports.onUserDeleted = functions
     let firestore = admin.firestore();
     let userRef = firestore.doc("users/" + user.uid);
   });
+
+exports.getInstagramProfileInfo = functions
+  .region("asia-southeast1")
+  .runWith(kInstagramFetchRuntimeOpts)
+  .https.onRequest(async (req, res) => {
+    setCorsHeaders(res);
+
+    if (req.method === "OPTIONS") {
+      return res.status(204).send("");
+    }
+
+    const rawUsername =
+      req.method === "POST" ? req.body?.username : req.query.username;
+    const username = normalizeInstagramUsername(rawUsername);
+    if (!username) {
+      return res.status(400).json({
+        error: "invalid_username",
+        message: "Instagram username is missing or invalid.",
+      });
+    }
+
+    try {
+      const response = await axios.get(
+        "https://www.instagram.com/api/v1/users/web_profile_info/",
+        {
+          params: { username },
+          headers: {
+            "x-ig-app-id": "936619743392459",
+            "User-Agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": `https://www.instagram.com/${username}/`,
+          },
+          timeout: 15000,
+        },
+      );
+
+      const user = response.data?.data?.user;
+      if (!user) {
+        return res.status(404).json({
+          error: "not_found",
+          message: "Instagram profile was not found.",
+        });
+      }
+
+      return res.status(200).json({
+        username: user.username || username,
+        full_name: user.full_name || "",
+        biography: user.biography || "",
+        profile_pic_url: user.profile_pic_url_hd || user.profile_pic_url || "",
+        followers_count: toNullableInt(user.edge_followed_by?.count),
+        following_count: toNullableInt(user.edge_follow?.count),
+      });
+    } catch (error) {
+      const upstreamStatus = error.response?.status || null;
+      const message =
+        error.response?.data?.message || error.message || "Unknown error";
+
+      return res.status(upstreamStatus || 502).json({
+        error: "instagram_fetch_failed",
+        message,
+        upstream_status: upstreamStatus,
+      });
+    }
+  });
+
+function setCorsHeaders(res) {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+}
+
+function normalizeInstagramUsername(input) {
+  if (typeof input !== "string") {
+    return "";
+  }
+
+  let value = input.trim();
+  if (!value) {
+    return "";
+  }
+
+  value = value.replace(/^@+/, "");
+
+  try {
+    if (value.includes("instagram.com")) {
+      const parsedUrl = new URL(
+        value.startsWith("http") ? value : `https://${value}`,
+      );
+      value = parsedUrl.pathname.split("/").filter(Boolean)[0] || "";
+    }
+  } catch (_) {}
+
+  value = value.replace(/^@+/, "").split(/[/?#]/)[0].trim();
+
+  if (!/^[A-Za-z0-9._]{1,30}$/.test(value)) {
+    return "";
+  }
+
+  return value;
+}
+
+function toNullableInt(value) {
+  return Number.isFinite(value) ? Math.trunc(value) : null;
+}

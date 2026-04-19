@@ -71,10 +71,6 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
   // Model for Card33UserGrid component.
   late Card33UserGridModel card33UserGridModel;
 
@@ -93,9 +89,6 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
 
     textFieldFocusNode3?.dispose();
     textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
 
     card33UserGridModel.dispose();
   }

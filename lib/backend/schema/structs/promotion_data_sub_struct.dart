@@ -131,9 +131,10 @@ class PromotionDataSubStruct extends FFSupabaseStruct {
         sun: data['Sun'] as bool?,
       );
 
-  static PromotionDataSubStruct? maybeFromMap(dynamic data) => data is Map
-      ? PromotionDataSubStruct.fromMap(data.cast<String, dynamic>())
-      : null;
+  static PromotionDataSubStruct? maybeFromMap(dynamic data) {
+    final dataMap = getDataMap(data);
+    return dataMap != null ? PromotionDataSubStruct.fromMap(dataMap) : null;
+  }
 
   Map<String, dynamic> toMap() => {
         'photo': _photo,
@@ -354,8 +355,7 @@ void addPromotionDataSubStructData(
       promotionDataSubData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = promotionDataSub.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getPromotionDataSubFirestoreData(

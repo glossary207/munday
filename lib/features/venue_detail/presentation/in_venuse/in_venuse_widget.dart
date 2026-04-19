@@ -65,10 +65,80 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  Widget _buildVenueLoadError(
+    BuildContext context, {
+    String title = 'โหลดหน้าร้านไม่สำเร็จ',
+    String message = 'ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง',
+    IconData icon = Icons.wifi_off_rounded,
+  }) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 36.0,
+                ),
+                SizedBox(height: 12.0),
+                Text(
+                  title,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        font: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w600,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w600,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  message,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        font: GoogleFonts.openSans(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                        color: Color(0xFFB3B3B3),
+                        fontSize: 14.0,
+                        letterSpacing: 0.0,
+                        fontWeight:
+                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => InVenuseModel());
+    FFAppState().dateclick ??= widget.dateclick ??
+        functions.boxstarttime(getCurrentTimestamp) ??
+        getCurrentTimestamp;
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -84,7 +154,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
 
       safeSetState(() {
         _model.tabBarController!.animateTo(
-          widget.index!,
+          widget.index ?? 0,
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
         );
@@ -200,10 +270,29 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
     context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    final selectedDate = FFAppState().dateclick ??
+        widget.dateclick ??
+        functions.boxstarttime(getCurrentTimestamp) ??
+        getCurrentTimestamp;
+
+    if (widget.idVenues == null) {
+      return _buildVenueLoadError(
+        context,
+        title: 'ไม่พบข้อมูลร้าน',
+        message: 'ลิงก์ร้านไม่ถูกต้องหรือข้อมูลร้านถูกลบไปแล้ว',
+        icon: Icons.storefront_outlined,
+      );
+    }
 
     return StreamBuilder<VenuesRecord>(
       stream: VenuesRecord.getDocument(widget.idVenues!),
       builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return _buildVenueLoadError(
+            context,
+          );
+        }
+
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
@@ -214,7 +303,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                 height: 50.0,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.transparent,
+                    Colors.white,
                   ),
                 ),
               ),
@@ -249,12 +338,13 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                 width: MediaQuery.sizeOf(context).width * 1.0,
                                 height: 339.0,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: Image.network(
-                                      inVenuseVenuesRecord.bg,
-                                    ).image,
-                                  ),
+                                  image: inVenuseVenuesRecord.bg.isNotEmpty
+                                      ? DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              inVenuseVenuesRecord.bg),
+                                        )
+                                      : null,
                                 ),
                               ),
                               Align(
@@ -282,9 +372,10 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 0.0, 0.0),
                                   child: Container(
+                                    width: double.infinity,
                                     decoration: BoxDecoration(),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Row(
@@ -353,15 +444,17 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                         height: 100.0,
                                                         decoration:
                                                             BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image:
-                                                                Image.network(
-                                                              inVenuseVenuesRecord
-                                                                  .logo,
-                                                            ).image,
-                                                          ),
+                                                          image: inVenuseVenuesRecord
+                                                                  .logo
+                                                                  .isNotEmpty
+                                                              ? DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  image: NetworkImage(
+                                                                      inVenuseVenuesRecord
+                                                                          .logo),
+                                                                )
+                                                              : null,
                                                           shape:
                                                               BoxShape.circle,
                                                         ),
@@ -1295,6 +1388,11 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
+                                                                if (inVenuseVenuesRecord
+                                                                        .position ==
+                                                                    null) {
+                                                                  return;
+                                                                }
                                                                 await showModalBottomSheet(
                                                                   isScrollControlled:
                                                                       true,
@@ -1326,7 +1424,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                           location:
                                                                               inVenuseVenuesRecord.position!,
                                                                           distance:
-                                                                              widget.distance!,
+                                                                              widget.distance ?? '-',
                                                                           logo:
                                                                               inVenuseVenuesRecord.logo,
                                                                           name:
@@ -2274,7 +2372,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 10.0),
                           child: Container(
-                            height: 320.0,
+                            height: 334.0,
                             decoration: BoxDecoration(),
                             child: Column(
                               children: [
@@ -2627,7 +2725,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                                 child: Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 5.0),
                                                                                   child: Text(
-                                                                                    containerEventsRecord.nameArtise.firstOrNull!,
+                                                                                    containerEventsRecord.nameArtise.firstOrNull ?? 'ไม่ระบุ',
                                                                                     maxLines: 18,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           font: GoogleFonts.openSans(
@@ -3067,23 +3165,39 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                               BorderRadius
                                                                   .circular(
                                                                       0.0),
-                                                          child: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .photos
-                                                                .elementAtOrNull(
-                                                                    0)!,
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.33,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height *
-                                                                1.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                          child: inVenuseVenuesRecord
+                                                                  .photos
+                                                                  .isNotEmpty
+                                                          ? Image.network(
+                                                              inVenuseVenuesRecord
+                                                                  .photos[0],
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              height: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .height *
+                                                                  1.0,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Container(
+                                                                      color: const Color(
+                                                                          0xFF1A1A1A)),
+                                                            )
+                                                          : Container(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              color: const Color(
+                                                                  0xFF1A1A1A),
+                                                            ),
                                                         ),
                                                       ),
                                                       InkWell(
@@ -3138,23 +3252,40 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                               BorderRadius
                                                                   .circular(
                                                                       0.0),
-                                                          child: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .photos
-                                                                .elementAtOrNull(
-                                                                    1)!,
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.33,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height *
-                                                                1.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                          child: inVenuseVenuesRecord
+                                                                  .photos
+                                                                  .length >
+                                                              1
+                                                          ? Image.network(
+                                                              inVenuseVenuesRecord
+                                                                  .photos[1],
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              height: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .height *
+                                                                  1.0,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Container(
+                                                                      color: const Color(
+                                                                          0xFF1A1A1A)),
+                                                            )
+                                                          : Container(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              color: const Color(
+                                                                  0xFF1A1A1A),
+                                                            ),
                                                         ),
                                                       ),
                                                       InkWell(
@@ -3209,23 +3340,40 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                               BorderRadius
                                                                   .circular(
                                                                       0.0),
-                                                          child: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .photos
-                                                                .elementAtOrNull(
-                                                                    2)!,
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.33,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height *
-                                                                1.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                          child: inVenuseVenuesRecord
+                                                                  .photos
+                                                                  .length >
+                                                              2
+                                                          ? Image.network(
+                                                              inVenuseVenuesRecord
+                                                                  .photos[2],
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              height: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .height *
+                                                                  1.0,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Container(
+                                                                      color: const Color(
+                                                                          0xFF1A1A1A)),
+                                                            )
+                                                          : Container(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.33,
+                                                              color: const Color(
+                                                                  0xFF1A1A1A),
+                                                            ),
                                                         ),
                                                       ),
                                                     ],
@@ -3298,24 +3446,42 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                 BorderRadius
                                                                     .circular(
                                                                         0.0),
-                                                            child:
-                                                                Image.network(
-                                                              inVenuseVenuesRecord
-                                                                  .photos
-                                                                  .elementAtOrNull(
-                                                                      3)!,
-                                                              width: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .width *
-                                                                  0.33,
-                                                              height: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .height *
-                                                                  1.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            child: inVenuseVenuesRecord
+                                                                    .photos
+                                                                    .length >
+                                                                3
+                                                            ? Image.network(
+                                                                inVenuseVenuesRecord
+                                                                    .photos[3],
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                height: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .height *
+                                                                    1.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                errorBuilder: (context,
+                                                                        error,
+                                                                        stackTrace) =>
+                                                                    Container(
+                                                                        color: const Color(
+                                                                            0xFF1A1A1A)),
+                                                              )
+                                                            : Container(
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                color:
+                                                                    const Color(
+                                                                        0xFF1A1A1A),
+                                                              ),
                                                           ),
                                                         ),
                                                         InkWell(
@@ -3372,24 +3538,42 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                 BorderRadius
                                                                     .circular(
                                                                         0.0),
-                                                            child:
-                                                                Image.network(
-                                                              inVenuseVenuesRecord
-                                                                  .photos
-                                                                  .elementAtOrNull(
-                                                                      4)!,
-                                                              width: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .width *
-                                                                  0.33,
-                                                              height: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .height *
-                                                                  1.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            child: inVenuseVenuesRecord
+                                                                    .photos
+                                                                    .length >
+                                                                4
+                                                            ? Image.network(
+                                                                inVenuseVenuesRecord
+                                                                    .photos[4],
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                height: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .height *
+                                                                    1.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                errorBuilder: (context,
+                                                                        error,
+                                                                        stackTrace) =>
+                                                                    Container(
+                                                                        color: const Color(
+                                                                            0xFF1A1A1A)),
+                                                              )
+                                                            : Container(
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                color:
+                                                                    const Color(
+                                                                        0xFF1A1A1A),
+                                                              ),
                                                           ),
                                                         ),
                                                         InkWell(
@@ -3446,24 +3630,42 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                 BorderRadius
                                                                     .circular(
                                                                         0.0),
-                                                            child:
-                                                                Image.network(
-                                                              inVenuseVenuesRecord
-                                                                  .photos
-                                                                  .elementAtOrNull(
-                                                                      5)!,
-                                                              width: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .width *
-                                                                  0.33,
-                                                              height: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .height *
-                                                                  1.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            child: inVenuseVenuesRecord
+                                                                    .photos
+                                                                    .length >
+                                                                5
+                                                            ? Image.network(
+                                                                inVenuseVenuesRecord
+                                                                    .photos[5],
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                height: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .height *
+                                                                    1.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                errorBuilder: (context,
+                                                                        error,
+                                                                        stackTrace) =>
+                                                                    Container(
+                                                                        color: const Color(
+                                                                            0xFF1A1A1A)),
+                                                              )
+                                                            : Container(
+                                                                width: MediaQuery
+                                                                            .sizeOf(
+                                                                                context)
+                                                                        .width *
+                                                                    0.33,
+                                                                color:
+                                                                    const Color(
+                                                                        0xFF1A1A1A),
+                                                              ),
                                                           ),
                                                         ),
                                                       ],
@@ -3593,10 +3795,9 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 10.0),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 10.0),
                             child: Container(
                               height: 170.0,
                               decoration: BoxDecoration(),
@@ -4495,76 +4696,92 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                               ),
                             ),
                           ),
-                        ),
-                        StreamBuilder<UserInVenuesRecord>(
-                          stream: UserInVenuesRecord.getDocument(
-                              inVenuseVenuesRecord.refUserInVenues!),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.transparent,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-
-                            final stackUserInVenuesRecord = snapshot.data!;
-
-                            return Container(
-                              width: double.infinity,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF0D0D0D),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(20.0),
-                                        topRight: Radius.circular(20.0),
+                        if (inVenuseVenuesRecord.hasRefUserInVenues())
+                          StreamBuilder<UserInVenuesRecord>(
+                            stream: UserInVenuesRecord.getDocument(
+                                inVenuseVenuesRecord.refUserInVenues!),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.transparent,
                                       ),
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 15.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(25.0, 0.0,
-                                                                0.0, 3.0),
-                                                    child: Text(
-                                                      valueOrDefault<String>(
-                                                        functions.month(
-                                                            FFAppState()
-                                                                .dateclick),
-                                                        'ไม่ระบุ',
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
+                                  ),
+                                );
+                              }
+
+                              final stackUserInVenuesRecord = snapshot.data!;
+
+                              return Container(
+                                width: double.infinity,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF0D0D0D),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(20.0),
+                                          topRight: Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 15.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  25.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  3.0),
+                                                      child: Text(
+                                                        valueOrDefault<String>(
+                                                          functions.month(
+                                                              FFAppState()
+                                                                  .dateclick),
+                                                          'ไม่ระบุ',
+                                                        ),
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                              fontSize: 16.0,
+                                                              letterSpacing:
+                                                                  0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -4574,346 +4791,430 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                       .bodyMedium
                                                                       .fontStyle,
                                                             ),
-                                                            fontSize: 16.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        child: Image.asset(
+                                                          'assets/images/MEE2.png',
+                                                          width: 20.0,
+                                                          height: 20.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        FFLocalizations.of(
+                                                                context)
+                                                            .getText(
+                                                          'vamjb92x' /* 20 */,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font: GoogleFonts
+                                                                      .openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      FFLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                        'l5csrspf' /* / */,
+                                                      ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font: GoogleFonts
+                                                                    .openSans(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
                                                                     .fontStyle,
-                                                          ),
+                                                              ),
                                                     ),
-                                                  ),
-                                                ],
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        FFLocalizations.of(
+                                                                context)
+                                                            .getText(
+                                                          'h7vgc50h' /* 120 */,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font: GoogleFonts
+                                                                      .openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Icon(
+                                                        Icons.people_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        size: 25.0,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  25.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        stackUserInVenuesRecord
+                                                            .user
+                                                            .where((e) =>
+                                                                functions.checkdate(
+                                                                    e.date,
+                                                                    selectedDate) ??
+                                                                false)
+                                                            .toList()
+                                                            .length
+                                                            .toString(),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font: GoogleFonts
+                                                                      .openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    15.0, 7.0, 15.0, 0.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 80.0,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
                                               ),
-                                              Row(
+                                              child: Container(
+                                                width: 45.0,
+                                                height: 75.0,
+                                                child: custom_widgets
+                                                    .Calendarslide(
+                                                  width: 45.0,
+                                                  height: 75.0,
+                                                  colorPicker:
+                                                      Color(0xFFFF0000),
+                                                  icon: Icon(
+                                                    Icons.star_rate,
+                                                    color: Color(0xFFFF0000),
+                                                    size: 15.0,
+                                                  ),
+                                                  dateNow: getCurrentTimestamp,
+                                                  dateclickwidget: selectedDate,
+                                                  dateEvent:
+                                                      inVenuseVenuesRecord
+                                                          .dateEvents,
+                                                  onselect: () async {
+                                                    safeSetState(() {});
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      25.0, 10.0, 0.0, 8.0),
+                                              child: Row(
                                                 mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.asset(
-                                                        'assets/images/MEE2.png',
-                                                        width: 20.0,
-                                                        height: 20.0,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                2.0, 0.0),
+                                                                1.0, 0.0),
                                                     child: Text(
                                                       FFLocalizations.of(
                                                               context)
                                                           .getText(
-                                                        'vamjb92x' /* 20 */,
+                                                        '2ron4yx3' /* Check in */,
                                                       ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                            ),
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'l5csrspf' /* / */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(2.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'h7vgc50h' /* 120 */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                            ),
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(15.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Icon(
-                                                      Icons.people_rounded,
-                                                      color:
+                                                      style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
-                                                      size: 25.0,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                                25.0, 0.0),
-                                                    child: Text(
-                                                      stackUserInVenuesRecord
-                                                          .user
-                                                          .where((e) => functions
-                                                              .checkdate(
-                                                                  e.date,
-                                                                  FFAppState()
-                                                                      .dateclick)!)
-                                                          .toList()
-                                                          .length
-                                                          .toString(),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
+                                                              .bodyMedium
+                                                              .override(
+                                                                font: GoogleFonts
+                                                                    .openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontStyle: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
                                                                       .fontStyle,
-                                                            ),
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
+                                                                ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
                                                                     .fontStyle,
-                                                          ),
+                                                              ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 7.0, 15.0, 0.0),
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 80.0,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Container(
-                                              width: 45.0,
-                                              height: 75.0,
-                                              child:
-                                                  custom_widgets.Calendarslide(
-                                                width: 45.0,
-                                                height: 75.0,
-                                                colorPicker: Color(0xFFFF0000),
-                                                icon: Icon(
-                                                  Icons.star_rate,
-                                                  color: Color(0xFFFF0000),
-                                                  size: 15.0,
-                                                ),
-                                                dateNow: getCurrentTimestamp,
-                                                dateclickwidget:
-                                                    FFAppState().dateclick,
-                                                dateEvent: inVenuseVenuesRecord
-                                                    .dateEvents,
-                                                onselect: () async {
-                                                  safeSetState(() {});
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    25.0, 10.0, 0.0, 8.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 1.0, 0.0),
-                                                  child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      '2ron4yx3' /* Check in */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBtnText,
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                25.0, 0.0),
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        if (functions.check2position(
-                                                                _model.location,
-                                                                inVenuseVenuesRecord
-                                                                    .position,
-                                                                10000000000000.0) ==
-                                                            true) {
-                                                          if (currentUserDocument
-                                                                  ?.loginVenuesRoom !=
-                                                              null) {
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  25.0,
+                                                                  0.0),
+                                                      child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          if (functions.check2position(
+                                                                  _model
+                                                                      .location,
+                                                                  inVenuseVenuesRecord
+                                                                      .position,
+                                                                  10000000000000.0) ==
+                                                              true) {
                                                             if (currentUserDocument
                                                                     ?.loginVenuesRoom !=
-                                                                inVenuseVenuesRecord
-                                                                    .reference) {
-                                                              await DeletepeoplefromvenueCall
-                                                                  .call(
-                                                                uid:
-                                                                    currentUserReference
-                                                                        ?.id,
-                                                                userinvenueid: (currentUserDocument
-                                                                            ?.iDROOMVenues
-                                                                            .toList() ??
-                                                                        [])
-                                                                    .firstOrNull
-                                                                    ?.id,
-                                                                datetodelete:
-                                                                    getCurrentTimestamp
-                                                                        .secondsSinceEpoch,
-                                                              );
+                                                                null) {
+                                                              if (currentUserDocument
+                                                                      ?.loginVenuesRoom !=
+                                                                  inVenuseVenuesRecord
+                                                                      .reference) {
+                                                                await DeletepeoplefromvenueCall
+                                                                    .call(
+                                                                  uid:
+                                                                      currentUserReference
+                                                                          ?.id,
+                                                                  userinvenueid:
+                                                                      (currentUserDocument?.iDROOMVenues.toList() ??
+                                                                              [])
+                                                                          .firstOrNull
+                                                                          ?.id,
+                                                                  datetodelete:
+                                                                      getCurrentTimestamp
+                                                                          .secondsSinceEpoch,
+                                                                );
 
-                                                              _model.dataVV =
+                                                                _model.dataVV =
+                                                                    await queryVenuesRecordOnce();
+
+                                                                await currentUserReference!
+                                                                    .update({
+                                                                  ...createUsersRecordData(
+                                                                    popupEditProfile:
+                                                                        true,
+                                                                    loginVenuesRoom:
+                                                                        inVenuseVenuesRecord
+                                                                            .reference,
+                                                                    nameLoginVenues:
+                                                                        inVenuseVenuesRecord
+                                                                            .nameVenuse,
+                                                                    logoRoom:
+                                                                        inVenuseVenuesRecord
+                                                                            .logo,
+                                                                  ),
+                                                                  ...mapToSupabase(
+                                                                    {
+                                                                      'IDROOMVenues': functions
+                                                                          .connectVenuse(
+                                                                              _model.dataVV?.toList(),
+                                                                              inVenuseVenuesRecord.position,
+                                                                              50.0)
+                                                                          ?.map((e) => e.refUserInVenues)
+                                                                          .withoutNulls
+                                                                          .toList(),
+                                                                    },
+                                                                  ),
+                                                                });
+
+                                                                await stackUserInVenuesRecord
+                                                                    .reference
+                                                                    .update({
+                                                                  ...mapToSupabase(
+                                                                    {
+                                                                      'user': FieldValue
+                                                                          .arrayUnion([
+                                                                        getDaSupabaseData(
+                                                                          updateDaStruct(
+                                                                            DaStruct(
+                                                                              date: getCurrentTimestamp,
+                                                                              user: DatauserStruct(
+                                                                                userinstore: currentUserReference,
+                                                                                photoprofile: currentUserPhoto,
+                                                                                name: currentUserDisplayName,
+                                                                              ),
+                                                                            ),
+                                                                            clearUnsetFields:
+                                                                                false,
+                                                                          ),
+                                                                          true,
+                                                                        )
+                                                                      ]),
+                                                                    },
+                                                                  ),
+                                                                });
+
+                                                                context.pushNamed(
+                                                                    HomeWidget
+                                                                        .routeName);
+                                                              } else {
+                                                                context.pushNamed(
+                                                                    HomeWidget
+                                                                        .routeName);
+                                                              }
+                                                            } else {
+                                                              _model.dataVVV =
                                                                   await queryVenuesRecordOnce();
 
                                                               await currentUserReference!
@@ -4927,15 +5228,12 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                   nameLoginVenues:
                                                                       inVenuseVenuesRecord
                                                                           .nameVenuse,
-                                                                  logoRoom:
-                                                                      inVenuseVenuesRecord
-                                                                          .logo,
                                                                 ),
                                                                 ...mapToSupabase(
                                                                   {
                                                                     'IDROOMVenues': functions
                                                                         .connectVenuse(
-                                                                            _model.dataVV
+                                                                            _model.dataVVV
                                                                                 ?.toList(),
                                                                             inVenuseVenuesRecord
                                                                                 .position,
@@ -4980,253 +5278,110 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                               context.pushNamed(
                                                                   HomeWidget
                                                                       .routeName);
-                                                            } else {
-                                                              context.pushNamed(
-                                                                  HomeWidget
-                                                                      .routeName);
                                                             }
                                                           } else {
-                                                            _model.dataVVV =
-                                                                await queryVenuesRecordOnce();
-
-                                                            await currentUserReference!
-                                                                .update({
-                                                              ...createUsersRecordData(
-                                                                popupEditProfile:
-                                                                    true,
-                                                                loginVenuesRoom:
-                                                                    inVenuseVenuesRecord
-                                                                        .reference,
-                                                                nameLoginVenues:
-                                                                    inVenuseVenuesRecord
-                                                                        .nameVenuse,
-                                                              ),
-                                                              ...mapToSupabase(
-                                                                {
-                                                                  'IDROOMVenues': functions
-                                                                      .connectVenuse(
-                                                                          _model
-                                                                              .dataVVV
-                                                                              ?.toList(),
-                                                                          inVenuseVenuesRecord
-                                                                              .position,
-                                                                          50.0)
-                                                                      ?.map((e) =>
-                                                                          e.refUserInVenues)
-                                                                      .withoutNulls
-                                                                      .toList(),
-                                                                },
-                                                              ),
-                                                            });
-
-                                                            await stackUserInVenuesRecord
-                                                                .reference
-                                                                .update({
-                                                              ...mapToSupabase(
-                                                                {
-                                                                  'user': FieldValue
-                                                                      .arrayUnion([
-                                                                    getDaSupabaseData(
-                                                                      updateDaStruct(
-                                                                        DaStruct(
-                                                                          date:
-                                                                              getCurrentTimestamp,
-                                                                          user:
-                                                                              DatauserStruct(
-                                                                            userinstore:
-                                                                                currentUserReference,
-                                                                            photoprofile:
-                                                                                currentUserPhoto,
-                                                                            name:
-                                                                                currentUserDisplayName,
-                                                                          ),
-                                                                        ),
-                                                                        clearUnsetFields:
-                                                                            false,
-                                                                      ),
-                                                                      true,
-                                                                    )
-                                                                  ]),
-                                                                },
-                                                              ),
-                                                            });
-
-                                                            context.pushNamed(
-                                                                HomeWidget
-                                                                    .routeName);
-                                                          }
-                                                        } else {
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return GestureDetector(
-                                                                onTap: () {
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus();
-                                                                  FocusManager
-                                                                      .instance
-                                                                      .primaryFocus
-                                                                      ?.unfocus();
-                                                                },
-                                                                child: Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
                                                                   child:
-                                                                      YouarenothereWidget(
-                                                                    poperror:
-                                                                        false,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ).then((value) =>
-                                                              safeSetState(
-                                                                  () {}));
-                                                        }
-
-                                                        safeSetState(() {});
-                                                      },
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0xFF58BB2F),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      90.0),
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          12.0,
-                                                                          2.0,
-                                                                          12.0,
-                                                                          4.0),
-                                                                  child: Text(
-                                                                    FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'e4fx9nlv' /* join room */,
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        YouarenothereWidget(
+                                                                      poperror:
+                                                                          false,
                                                                     ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                safeSetState(
+                                                                    () {}));
+                                                          }
+
+                                                          safeSetState(() {});
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF58BB2F),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        90.0),
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12.0,
+                                                                            2.0,
+                                                                            12.0,
+                                                                            4.0),
+                                                                    child: Text(
+                                                                      FFLocalizations.of(
+                                                                              context)
+                                                                          .getText(
+                                                                        'e4fx9nlv' /* join room */,
+                                                                      ),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.openSans(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                1.2,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             fontStyle:
                                                                                 FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            lineHeight:
+                                                                                0.0,
                                                                           ),
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          letterSpacing:
-                                                                              1.2,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                          lineHeight:
-                                                                              0.0,
-                                                                        ),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 1.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 150.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: functions.scaleshowuser(
-                                                  MediaQuery.sizeOf(context)
-                                                      .width,
-                                                  stackUserInVenuesRecord.user
-                                                      .where((e) =>
-                                                          functions.checkdate(
-                                                              e.date,
-                                                              FFAppState()
-                                                                  .dateclick)!)
-                                                      .toList()
-                                                      .length
-                                                      .toDouble()),
-                                              decoration: BoxDecoration(),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
-                                                      child: Container(
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      50.0),
-                                                          child: wrapWithModel(
-                                                            model: _model
-                                                                .showpeopleModel,
-                                                            updateCallback: () =>
-                                                                safeSetState(
-                                                                    () {}),
-                                                            child:
-                                                                ShowpeopleWidget(
-                                                              refdoc: inVenuseVenuesRecord
-                                                                  .refUserInVenues!,
-                                                              date: FFAppState()
-                                                                  .dateclick!,
-                                                            ),
+                                                                ],
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                       ),
@@ -5236,20 +5391,93 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 100.0,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(),
-                                        ),
-                                      ],
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 1.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 150.0),
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: functions.scaleshowuser(
+                                                    MediaQuery.sizeOf(context)
+                                                        .width,
+                                                    stackUserInVenuesRecord.user
+                                                        .where((e) =>
+                                                            functions.checkdate(
+                                                                e.date,
+                                                                selectedDate) ??
+                                                            false)
+                                                        .toList()
+                                                        .length
+                                                        .toDouble()),
+                                                decoration: BoxDecoration(),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    0.0),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        50.0),
+                                                            child:
+                                                                wrapWithModel(
+                                                              model: _model
+                                                                  .showpeopleModel,
+                                                              updateCallback: () =>
+                                                                  safeSetState(
+                                                                      () {}),
+                                                              child:
+                                                                  ShowpeopleWidget(
+                                                                refdoc: inVenuseVenuesRecord
+                                                                    .refUserInVenues!,
+                                                                date:
+                                                                    selectedDate,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 100.0,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -5392,7 +5620,8 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                       currentUser != null;
                                                   if (!isLoggedIn) {
                                                     context.pushNamed(
-                                                        PhoneLoginWidget.routeName);
+                                                        PhoneLoginWidget
+                                                            .routeName);
                                                     return;
                                                   }
                                                   context.pushNamed(
@@ -5579,7 +5808,8 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                     currentUser != null;
                                                 if (!isLoggedIn) {
                                                   context.pushNamed(
-                                                      PhoneLoginWidget.routeName);
+                                                      PhoneLoginWidget
+                                                          .routeName);
                                                   return;
                                                 }
                                                 var groupInviteRecordReference =
@@ -5765,14 +5995,6 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                             BoxDecoration(
                                                           color:
                                                               Color(0xFF00B42C),
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image:
-                                                                Image.network(
-                                                              '',
-                                                            ).image,
-                                                          ),
                                                           boxShadow: [
                                                             BoxShadow(
                                                               blurRadius: 2.0,
@@ -5950,15 +6172,27 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                 Radius.circular(
                                                                     0.0),
                                                           ),
-                                                          child: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .bg,
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                          child: inVenuseVenuesRecord
+                                                                  .bg.isNotEmpty
+                                                              ? Image.network(
+                                                                  inVenuseVenuesRecord
+                                                                      .bg,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: double
+                                                                      .infinity,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Container(
+                                                                          color: const Color(
+                                                                              0xFF1A1A1A)),
+                                                                )
+                                                              : Container(
+                                                                  color: const Color(
+                                                                      0xFF1A1A1A)),
                                                         ),
                                                       ),
                                                     ),
@@ -5966,13 +6200,16 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                       width: double.infinity,
                                                       height: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .bg,
-                                                          ).image,
-                                                        ),
+                                                        image: inVenuseVenuesRecord
+                                                                .bg.isNotEmpty
+                                                            ? DecorationImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                image: NetworkImage(
+                                                                    inVenuseVenuesRecord
+                                                                        .bg),
+                                                              )
+                                                            : null,
                                                         borderRadius:
                                                             BorderRadius.only(
                                                           bottomLeft:
@@ -6168,15 +6405,27 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                 Radius.circular(
                                                                     0.0),
                                                           ),
-                                                          child: Image.network(
-                                                            inVenuseVenuesRecord
-                                                                .bg,
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                          child: inVenuseVenuesRecord
+                                                                  .bg.isNotEmpty
+                                                              ? Image.network(
+                                                                  inVenuseVenuesRecord
+                                                                      .bg,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: double
+                                                                      .infinity,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Container(
+                                                                          color: const Color(
+                                                                              0xFF1A1A1A)),
+                                                                )
+                                                              : Container(
+                                                                  color: const Color(
+                                                                      0xFF1A1A1A)),
                                                         ),
                                                       ),
                                                     ),
@@ -6395,16 +6644,28 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                   .circular(
                                                                       90.0),
                                                             ),
-                                                            child:
-                                                                Image.network(
-                                                              inVenuseVenuesRecord
-                                                                  .bg,
-                                                              width: double
-                                                                  .infinity,
-                                                              height: double
-                                                                  .infinity,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            child: inVenuseVenuesRecord
+                                                                    .bg
+                                                                    .isNotEmpty
+                                                                ? Image.network(
+                                                                    inVenuseVenuesRecord
+                                                                        .bg,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: double
+                                                                        .infinity,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    errorBuilder: (context,
+                                                                            error,
+                                                                            stackTrace) =>
+                                                                        Container(
+                                                                            color:
+                                                                                const Color(0xFF1A1A1A)),
+                                                                  )
+                                                                : Container(
+                                                                    color: const Color(
+                                                                        0xFF1A1A1A)),
                                                           ),
                                                         ),
                                                       ),
@@ -6600,12 +6861,25 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                     topRight:
                                                         Radius.circular(20.0),
                                                   ),
-                                                  child: Image.network(
-                                                    inVenuseVenuesRecord.bg,
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                  child: inVenuseVenuesRecord
+                                                          .bg.isNotEmpty
+                                                      ? Image.network(
+                                                          inVenuseVenuesRecord
+                                                              .bg,
+                                                          width: double.infinity,
+                                                          height:
+                                                              double.infinity,
+                                                          fit: BoxFit.cover,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Container(
+                                                                  color: const Color(
+                                                                      0xFF1A1A1A)),
+                                                        )
+                                                      : Container(
+                                                          color: const Color(
+                                                              0xFF1A1A1A)),
                                                 ),
                                               ),
                                             ),
@@ -7135,12 +7409,12 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                                         height: 50.0,
                                                                                         decoration: BoxDecoration(
                                                                                           color: Color(0xFF1D1D1D),
-                                                                                          image: DecorationImage(
-                                                                                            fit: BoxFit.cover,
-                                                                                            image: Image.network(
-                                                                                              friendItem.photoPath,
-                                                                                            ).image,
-                                                                                          ),
+                                                                                          image: friendItem.photoPath.isNotEmpty
+                                                                                              ? DecorationImage(
+                                                                                                  fit: BoxFit.cover,
+                                                                                                  image: NetworkImage(friendItem.photoPath),
+                                                                                                )
+                                                                                              : null,
                                                                                           shape: BoxShape.circle,
                                                                                         ),
                                                                                       ),

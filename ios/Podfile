@@ -36,12 +36,14 @@ target 'Runner' do
 end
 
 post_install do |installer|
-  # These ObjC pods use double-quoted includes in public headers which fail
-  # Xcode's VerifyModule step. Setting DEFINES_MODULE = NO prevents module
-  # verification entirely for these pods (they are not imported directly in Swift).
-  no_module_pods = [
-    'AppAuth', 'Mantle', 'PromisesObjC'
-  ]
+  # ════════════════════════════════════════════════════════════════════════
+  #  MINIMAL SURGICAL FIX — Do NOT disable modules for any pod.
+  #  All pods keep DEFINES_MODULE = YES (CocoaPods default).
+  #
+  #  The ONLY fix: GTMSessionFetcher's modulemap — remove the wildcard
+  #  `module * { export * }` that creates implicit submodules causing
+  #  "different definitions in different modules" for GTMReadMonitorInputStream.
+  # ════════════════════════════════════════════════════════════════════════
 
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
@@ -49,15 +51,19 @@ post_install do |installer|
       config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
       config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
       config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
-      if no_module_pods.include?(target.name)
-        config.build_settings['DEFINES_MODULE'] = 'NO'
-      end
     end
   end
 
-  # Apply at project level too
   installer.pods_project.build_configurations.each do |config|
     config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+  end
+
+  # ── GTMSessionFetcher: flat modulemap (the ONLY real fix needed) ────
+  # Remove `module * { export * }` to prevent implicit submodules.
+  # Keep umbrella + export so Swift can still `import GTMSessionFetcher`.
+  gtm_mm = "#{installer.sandbox.root}/Target Support Files/GTMSessionFetcher/GTMSessionFetcher.modulemap"
+  if File.exist?(gtm_mm)
+    File.write(gtm_mm, "framework module GTMSessionFetcher {\n  umbrella header \"GTMSessionFetcher-umbrella.h\"\n  export *\n}\n")
   end
 end
 

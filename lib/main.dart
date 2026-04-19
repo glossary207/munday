@@ -21,7 +21,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = false;
+  GoogleFonts.config.allowRuntimeFetching = true;
 
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
@@ -92,6 +92,18 @@ class _MyAppState extends State<MyApp> {
   final authUserSub = authenticatedUserStream.listen((_) {});
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
+  Future<void> _bootstrapPersistedSession(User? persistedUser) async {
+    if (persistedUser != null) {
+      try {
+        await maybeCreateUser(persistedUser);
+      } catch (_) {}
+    }
+    if (!mounted) {
+      return;
+    }
+    _appStateNotifier.stopShowingSplashImage();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -105,21 +117,15 @@ class _MyAppState extends State<MyApp> {
     final persistedUser = Supabase.instance.client.auth.currentUser;
     if (persistedUser != null) {
       _appStateNotifier.update(MundaySupabaseUser(persistedUser));
-      // Ensure UsersRecord exists so currentUserDocument is always non-null
-      // for returning users who didn't go through OTP flow this session.
-      maybeCreateUser(persistedUser).catchError((_) {});
     }
 
     _router = createRouter(_appStateNotifier);
+    _bootstrapPersistedSession(persistedUser);
     userStream = mundaySupabaseUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
     jwtTokenStream.listen((_) {});
-    Future.delayed(
-      Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
-    );
   }
 
   @override

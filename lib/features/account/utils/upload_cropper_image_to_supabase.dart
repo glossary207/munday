@@ -46,7 +46,11 @@ Future<String?> uploadCropperImageToSupabase(String uid) async {
         ((orig.name?.split('.').first ?? 'cropped')) + '.jpg';
     final Uint8List data = Uint8List.fromList(outBytes);
 
-    final String? downloadUrl = await uploadData('/users/$uid/$safeName', data);
+    final String? downloadUrl = await uploadData(
+      '$uid/uploads/$safeName',
+      data,
+      bucket: 'Users',
+    );
 
     if (downloadUrl != null) {
       debugPrint('Firestore url $downloadUrl');
@@ -54,7 +58,7 @@ Future<String?> uploadCropperImageToSupabase(String uid) async {
     }
     return null;
   } catch (e, st) {
-    debugPrint('uploadCropperImageToFirebase error: $e');
+    debugPrint('uploadCropperImageToSupabase error: $e');
     debugPrintStack(stackTrace: st);
     return null;
   } finally {

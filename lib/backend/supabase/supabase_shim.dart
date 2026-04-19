@@ -68,13 +68,42 @@ String _generateAutoId() {
   return DateTime.now().millisecondsSinceEpoch.toString();
 }
 
+Map<String, dynamic> _normalizeMap(
+  Map data,
+  dynamic Function(dynamic value) mapValue,
+) {
+  return Map<String, dynamic>.fromEntries(
+    data.entries.where((entry) => entry.key != null).map(
+          (entry) => MapEntry(
+            entry.key.toString(),
+            mapValue(entry.value),
+          ),
+        ),
+  );
+}
+
+Timestamp? _timestampFromMap(Map data) {
+  final dynamic secondsValue = data['_seconds'] ?? data['seconds'];
+  if (secondsValue is! num) {
+    return null;
+  }
+
+  final dynamic nanosecondsValue = data['_nanoseconds'] ?? data['nanoseconds'];
+  final int nanoseconds =
+      nanosecondsValue is num ? nanosecondsValue.toInt() : 0;
+
+  return Timestamp(secondsValue.toInt(), nanoseconds);
+}
+
 dynamic _sanitizeData(dynamic data) {
   if (data is DateTime) {
     return data.toIso8601String();
   } else if (data is Timestamp) {
     return data.toDate().toIso8601String();
+  } else if (data is SupabaseDocRef) {
+    return data.id;
   } else if (data is Map) {
-    return data.map((key, value) => MapEntry(key, _sanitizeData(value)));
+    return _normalizeMap(data, _sanitizeData);
   } else if (data is Iterable) {
     return data.map((item) => _sanitizeData(item)).toList();
   }
@@ -97,7 +126,11 @@ dynamic _processReadData(dynamic data) {
     } catch (_) {}
     return data;
   } else if (data is Map) {
-    return data.map((key, value) => MapEntry(key, _processReadData(value)));
+    final timestamp = _timestampFromMap(data);
+    if (timestamp != null) {
+      return timestamp;
+    }
+    return _normalizeMap(data, _processReadData);
   } else if (data is List) {
     return data.map((item) => _processReadData(item)).toList();
   }
@@ -169,7 +202,7 @@ class SupabaseDocRef {
 
       await Supabase.instance.client
           .from(path)
-          .update(currentData)
+          .update(_sanitizeData(currentData))
           .eq('id', id);
     } else {
       // Direct update
@@ -198,8 +231,13 @@ class SupabaseDocRef {
     }
   }
 
-  Stream<SupabaseDocSnapshot> snapshots({bool includeMetadataChanges = false}) {
-    return Supabase.instance.client
+  Stream<SupabaseDocSnapshot> snapshots(
+      {bool includeMetadataChanges = false}) async* {
+    try {
+      yield await get();
+    } catch (_) {}
+
+    final realtimeStream = Supabase.instance.client
         .from(path)
         .stream(primaryKey: ['id'])
         .eq('id', id)
@@ -209,7 +247,10 @@ class SupabaseDocRef {
           }
           return SupabaseDocSnapshot(
               id, _processReadData(data.first), true, this);
-        });
+        })
+        .handleError((_, __) {});
+
+    yield* realtimeStream;
   }
 }
 

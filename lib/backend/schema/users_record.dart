@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -98,8 +97,7 @@ class UsersRecord extends SupabaseRecord {
 
   // "showprofilecheers" field.
   List<SupabaseDocRef>? _showprofilecheers;
-  List<SupabaseDocRef> get showprofilecheers =>
-      _showprofilecheers ?? const [];
+  List<SupabaseDocRef> get showprofilecheers => _showprofilecheers ?? const [];
   bool hasShowprofilecheers() => _showprofilecheers != null;
 
   // "list_store" field.
@@ -257,18 +255,18 @@ class UsersRecord extends SupabaseRecord {
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
     _uid = snapshotData['uid'] as String?;
-    _createdTime = snapshotData['created_time'] as DateTime?;
+    _createdTime = snapshotData['created_at'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _caption = snapshotData['caption'] as String?;
     _photoshow = snapshotData['photoshow'] is UserphotoshowStruct
         ? snapshotData['photoshow']
         : UserphotoshowStruct.maybeFromMap(snapshotData['photoshow']);
-    _checkin = snapshotData['checkin'] as String?;
+    _checkin = snapshotData['chekin'] as String?;
     _unread = castToType<int>(snapshotData['unread']);
     _cheers = getDataList(snapshotData['cheers']);
     _usermassage = getDataList(snapshotData['usermassage']);
-    _cheersEnd = getDataList(snapshotData['cheersEnd']);
-    _usermassageRead = getDataList(snapshotData['usermassageRead']);
+    _cheersEnd = getDataList(snapshotData['cheers_end']);
+    _usermassageRead = getDataList(snapshotData['usermassage_read']);
     _seeusercheers = snapshotData['seeusercheers'] as bool?;
     _usercheerme = getDataList(snapshotData['usercheerme']);
     _showprofilecheers = getDataList(snapshotData['showprofilecheers']);
@@ -292,8 +290,8 @@ class UsersRecord extends SupabaseRecord {
     _roomrecive = getDataList(snapshotData['roomrecive']);
     _popupEditProfile = snapshotData['PopupEditProfile'] as bool?;
     _fCMtoken = snapshotData['FCMtoken'] as String?;
-    _loveEvent = getDataList(snapshotData['loveEvent']);
-    _loveVenuse = getDataList(snapshotData['loveVenuse']);
+    _loveEvent = getSupabaseDocRefList(snapshotData['loveEvent'], 'events');
+    _loveVenuse = getSupabaseDocRefList(snapshotData['loveVenuse'], 'venues');
     _tickets = getDataList(snapshotData['tickets']);
     _iDROOMVenues = getDataList(snapshotData['IDROOMVenues']);
     _loginVenuesRoom = snapshotData['loginVenuesRoom'] as SupabaseDocRef?;
@@ -313,9 +311,10 @@ class UsersRecord extends SupabaseRecord {
   static Future<UsersRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => UsersRecord.fromSnapshot(s));
 
-  static UsersRecord fromSnapshot(SupabaseDocSnapshot snapshot) => UsersRecord._(
+  static UsersRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>
+      UsersRecord._(
         snapshot.reference,
-        mapFromSupabase((snapshot.data() as Map<String, dynamic>?) ?? {}),
+        mapFromSupabase(getDataMap(snapshot.data()) ?? <String, dynamic>{}),
       );
 
   static UsersRecord getDocumentFromData(
@@ -373,35 +372,16 @@ Map<String, dynamic> createUsersRecordData({
       'email': email,
       'display_name': displayName,
       'photo_url': photoUrl,
-      'uid': uid,
-      'created_time': createdTime,
+      'created_at': createdTime,
       'phone_number': phoneNumber,
       'caption': caption,
-      'photoshow': UserphotoshowStruct().toMap(),
-      'checkin': checkin,
+      'chekin': checkin,
       'unread': unread,
       'seeusercheers': seeusercheers,
-      'unlimitcheers': unlimitcheers,
-      'newuser': newuser,
-      'online': online,
-      'IDIG': idig,
-      'IDFacebook': iDFacebook,
-      'Report': report,
-      'view': view,
-      'checkinID': checkinID,
-      'readcheers': readcheers,
-      'freeseeuser': freeseeuser,
-      'PopupEditProfile': popupEditProfile,
-      'FCMtoken': fCMtoken,
-      'loginVenuesRoom': loginVenuesRoom,
-      'nameLoginVenues': nameLoginVenues,
-      'cheers_limit': cheersLimit,
-      'set_cheers': setCheers,
-      'logo_room': logoRoom,
-      'Group_invite_ID': groupInviteID,
     }.withoutNulls,
   );
 
+  // IDIG/IDFacebook are not present in the current Supabase users schema.
   // Handle nested data for "photoshow" field.
   addUserphotoshowStructData(supabaseData, photoshow, 'photoshow');
 

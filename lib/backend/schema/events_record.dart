@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -81,20 +80,40 @@ class EventsRecord extends SupabaseRecord {
   String get priceDetail => _priceDetail ?? '';
   bool hasPriceDetail() => _priceDetail != null;
 
+  static LatLng? _parseLatLng(dynamic value) {
+    if (value == null) return null;
+    if (value is LatLng) return value;
+    if (value is Map) {
+      final lat = (value['latitude'] ?? value['lat']) as num?;
+      final lng = (value['longitude'] ?? value['lng']) as num?;
+      if (lat != null && lng != null)
+        return LatLng(lat.toDouble(), lng.toDouble());
+    }
+    return null;
+  }
+
   void _initializeFields() {
-    _nameStore = snapshotData['Name_store'] as String?;
-    _nameArtise = getDataList(snapshotData['Name_artise']);
-    _location = snapshotData['location'] as LatLng?;
-    _date = snapshotData['Date'] as DateTime?;
-    _poster = snapshotData['Poster'] as String?;
+    _nameStore =
+        (snapshotData['name_store'] ?? snapshotData['Name_store']) as String?;
+    _nameArtise =
+        getDataList(snapshotData['name_artise'] ?? snapshotData['Name_artise']);
+    _location = _parseLatLng(snapshotData['location']);
+    _date =
+        snapshotData['date'] as DateTime? ?? snapshotData['Date'] as DateTime?;
+    _poster = (snapshotData['poster'] ?? snapshotData['Poster']) as String?;
     _capacity = castToType<int>(snapshotData['capacity']);
     _maxCapacity = castToType<int>(snapshotData['max_capacity']);
     _musicstyle = snapshotData['musicstyle'] as String?;
-    _iDVenues = snapshotData['ID_Venues'] as SupabaseDocRef?;
+    _iDVenues = getSupabaseDocRef(
+      snapshotData['venue_id'] ?? snapshotData['ID_Venues'],
+      'venues',
+    );
     _detail = snapshotData['detail'] as String?;
-    _styleVenues = getDataList(snapshotData['styleVenues']);
-    _free = snapshotData['FREE'] as bool?;
-    _priceDetail = snapshotData['PriceDetail'] as String?;
+    _styleVenues = getDataList(
+        snapshotData['style_venues'] ?? snapshotData['styleVenues']);
+    _free = (snapshotData['free'] ?? snapshotData['FREE']) as bool?;
+    _priceDetail = (snapshotData['price_detail'] ?? snapshotData['PriceDetail'])
+        as String?;
   }
 
   static SupabaseCollectionRef get collection =>
@@ -106,9 +125,10 @@ class EventsRecord extends SupabaseRecord {
   static Future<EventsRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => EventsRecord.fromSnapshot(s));
 
-  static EventsRecord fromSnapshot(SupabaseDocSnapshot snapshot) => EventsRecord._(
+  static EventsRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>
+      EventsRecord._(
         snapshot.reference,
-        mapFromSupabase(snapshot.data() as Map<String, dynamic>),
+        mapFromSupabase(getDataMap(snapshot.data()) ?? <String, dynamic>{}),
       );
 
   static EventsRecord getDocumentFromData(

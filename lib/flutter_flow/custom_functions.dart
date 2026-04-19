@@ -669,27 +669,43 @@ List<dynamic>? dataEvent(
     return double.parse(distance.toStringAsFixed(2));
   }
 
+  String normalizeTag(String? value) => value?.trim().toLowerCase() ?? '';
+
   // ฟังก์ชันกรองอีเวนต์ตามเงื่อนไขที่ต้องการ
   List<Map<String, dynamic>> filterEvents(List<EventsRecord> sourceEvents) {
     return sourceEvents.where((event) {
-      // ตรวจสอบ location ของอีเวนต์
-      if (event.location == null) return false;
-      LatLng eventLocation =
-          LatLng(event.location!.latitude, event.location!.longitude);
+      // ถ้า event ไม่มี location ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
+      final bool eventHasLocation = event.location != null;
 
-      // คำนวณระยะทาง
-      double distance = calculateDistance(userLocation, eventLocation);
+      // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
+      double distance = 0.0;
+      if (eventHasLocation && hasValidLocation) {
+        LatLng eventLocation =
+            LatLng(event.location!.latitude, event.location!.longitude);
+        distance = calculateDistance(userLocation, eventLocation);
+      }
 
       // ตรวจสอบ music style
-      bool matchesMusicStyle = musicstyle == null ||
-          musicstyle.isEmpty ||
-          musicstyle.contains(event.musicstyle);
+      final normalizedEventMusicStyle = normalizeTag(event.musicstyle);
+      final normalizedMusicFilters =
+          musicstyle?.map(normalizeTag).where((e) => e.isNotEmpty).toList() ??
+              const <String>[];
+      final matchesMusicStyle = normalizedMusicFilters.isEmpty ||
+          normalizedEventMusicStyle.isEmpty ||
+          normalizedMusicFilters.contains(normalizedEventMusicStyle);
 
       // ตรวจสอบ styleVenues
-      bool matchesStyleVenues = styleVenues == null ||
-          styleVenues.isEmpty ||
-          styleVenues
-              .every((style) => event.styleVenues?.contains(style) ?? false);
+      final normalizedEventVenueStyles = event.styleVenues
+          .map(normalizeTag)
+          .where((e) => e.isNotEmpty)
+          .toSet();
+      final normalizedVenueFilters =
+          styleVenues?.map(normalizeTag).where((e) => e.isNotEmpty).toList() ??
+              const <String>[];
+      final matchesStyleVenues = normalizedVenueFilters.isEmpty ||
+          normalizedEventVenueStyles.isEmpty ||
+          normalizedVenueFilters
+              .every((style) => normalizedEventVenueStyles.contains(style));
 
       // ตรวจสอบวันที่ หากมีการค้นหาตามวันที่
       bool matchesDate = true;
@@ -701,19 +717,21 @@ List<dynamic>? dataEvent(
         matchesDate = eventDate == selectedDate;
       }
 
-      // ส่งคืนเฉพาะอีเวนต์ที่เข้าเงื่อนไข
-      // ถ้าไม่มี location ที่ถูกต้อง ข้าม distance filter
+      // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ event) ข้าม distance filter
       final bool withinDistance =
-          !hasValidLocation || distance <= maxDistance;
+          !hasValidLocation || !eventHasLocation || distance <= maxDistance;
       return withinDistance &&
           matchesMusicStyle &&
           matchesStyleVenues &&
           matchesDate;
     }).map((event) {
       // สร้างข้อมูลอีเวนต์เป็น Map เพื่อนำไปใช้ง่าย ๆ
-      LatLng eventLocation =
-          LatLng(event.location!.latitude, event.location!.longitude);
-      double distance = calculateDistance(userLocation, eventLocation);
+      double distance = 0.0;
+      if (event.location != null && hasValidLocation) {
+        LatLng eventLocation =
+            LatLng(event.location!.latitude, event.location!.longitude);
+        distance = calculateDistance(userLocation, eventLocation);
+      }
 
       return {
         'Name_artise': event.nameArtise,
@@ -725,7 +743,7 @@ List<dynamic>? dataEvent(
         'musicstyle': event.musicstyle,
         'Date': event.date,
         'doc_ref': event.reference,
-        'position': event.location!,
+        'position': event.location ?? const LatLng(0.0, 0.0),
         'iDVenuse': event.iDVenues,
         'FREE': event.free,
         'PriceDetail': event.priceDetail,
@@ -738,17 +756,22 @@ List<dynamic>? dataEvent(
 
   // ขั้นตอนการเรียงลำดับ (Date -> Distance)
   int compareEvents(Map<String, dynamic> a, Map<String, dynamic> b) {
-    DateTime dateA = a['Date'];
-    DateTime dateB = b['Date'];
+    final DateTime? dateA = a['Date'] as DateTime?;
+    final DateTime? dateB = b['Date'] as DateTime?;
+    if (dateA == null && dateB == null) return 0;
+    if (dateA == null) return 1;
+    if (dateB == null) return -1;
     int dateComparison = dateA.compareTo(dateB);
     if (dateComparison != 0) {
       return dateComparison;
     }
-    return a['distance'].compareTo(b['distance']);
+    return (a['distance'] as num).compareTo(b['distance'] as num);
   }
 
   // เรียงอีเวนต์ตาม Date ก่อน แล้วตาม Distance
-  filteredEvents.sort(compareEvents);
+  try {
+    filteredEvents.sort(compareEvents);
+  } catch (_) {}
 
   // หาก loveEventonly == true ให้เหลือเฉพาะอีเวนต์ใน loveEvents
   if (loveEventonly == true && loveEvents != null) {
@@ -847,6 +870,8 @@ List<dynamic>? dataVenuse(
   final bool hasValidLocation =
       !(userLocation.latitude == 0.0 && userLocation.longitude == 0.0);
 
+  String normalizeTag(String? value) => value?.trim().toLowerCase() ?? '';
+
   // ฟังก์ชันคำนวณระยะทางแบบคร่าว ๆ ระหว่าง 2 พิกัด (Euclidean + ปรับตามละติจูด)
   double calculateDistance(LatLng start, LatLng end) {
     const double degreeToKm = 111.32; // 1 องศาของ latitude ~ 111.32 กม.
@@ -862,36 +887,58 @@ List<dynamic>? dataVenuse(
 
   // กรองและ Map venues ให้เป็นโครงสร้างข้อมูลที่เราต้องการ
   List<Map<String, dynamic>> filteredVenues = data.where((venue) {
-    // ตรวจสอบว่ามีตำแหน่งหรือไม่
-    if (venue.position == null) return false;
+    // ถ้า venue ไม่มี position ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
+    final bool venueHasLocation = venue.position != null;
 
-    // คำนวณระยะทาง
-    final venueLocation =
-        LatLng(venue.position!.latitude, venue.position!.longitude);
-    final distance = calculateDistance(userLocation, venueLocation);
+    // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
+    double distance = 0.0;
+    if (venueHasLocation && hasValidLocation) {
+      final venueLocation =
+          LatLng(venue.position!.latitude, venue.position!.longitude);
+      distance = calculateDistance(userLocation, venueLocation);
+    }
 
     // เช็คเงื่อนไข styleMusicfilter (ถ้าไม่มีการกรอง ก็ผ่าน)
-    bool matchesMusicStyle = styleMusicfilter == null ||
-        styleMusicfilter.isEmpty ||
-        styleMusicfilter
-            .any((style) => venue.styleMusic?.contains(style) ?? false);
+    final normalizedVenueMusicStyles =
+        venue.styleMusic.map(normalizeTag).where((e) => e.isNotEmpty).toSet();
+    final normalizedMusicFilters = styleMusicfilter
+            ?.map(normalizeTag)
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        const <String>[];
+    final matchesMusicStyle = normalizedMusicFilters.isEmpty ||
+        normalizedVenueMusicStyles.isEmpty ||
+        normalizedMusicFilters
+            .any((style) => normalizedVenueMusicStyles.contains(style));
 
     // เช็คเงื่อนไข styleVenusefilter (ถ้าไม่มีการกรอง ก็ผ่าน)
-    bool matchesVenueStyle = styleVenusefilter == null ||
-        styleVenusefilter.isEmpty ||
-        styleVenusefilter
-            .any((style) => venue.styleVenuse?.contains(style) ?? false);
+    final normalizedVenueStyles =
+        venue.styleVenuse.map(normalizeTag).where((e) => e.isNotEmpty).toSet();
+    final normalizedVenueFilters = styleVenusefilter
+            ?.map(normalizeTag)
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        const <String>[];
+    final matchesVenueStyle = normalizedVenueFilters.isEmpty ||
+        normalizedVenueStyles.isEmpty ||
+        normalizedVenueFilters
+            .any((style) => normalizedVenueStyles.contains(style));
 
-    // ถ้าไม่มี location ที่ถูกต้อง ข้าม distance filter
-    final bool withinDistance = !hasValidLocation || distance <= maxDistance;
+    // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ venue) ข้าม distance filter
+    final bool withinDistance =
+        !hasValidLocation || !venueHasLocation || distance <= maxDistance;
 
     // เงื่อนไขหลักคือ ระยะทางไม่เกิน maxDistance และต้องตรงกับ style ที่กำหนด (Music หรือ Venuse)
     return withinDistance && (matchesMusicStyle || matchesVenueStyle);
   }).map((venue) {
     // แปลงเป็น Map เพื่อสะดวกในการส่งออก
-    final venueLocation =
-        LatLng(venue.position!.latitude, venue.position!.longitude);
-    final distance = calculateDistance(userLocation, venueLocation);
+    double distance = 0.0;
+    final venuePosition = venue.position ?? const LatLng(0.0, 0.0);
+    if (venue.position != null && hasValidLocation) {
+      final venueLocation =
+          LatLng(venue.position!.latitude, venue.position!.longitude);
+      distance = calculateDistance(userLocation, venueLocation);
+    }
 
     return {
       'Name_Venuse': venue.nameVenuse,
@@ -900,12 +947,12 @@ List<dynamic>? dataVenuse(
       'max_capacity': venue.maxCapacity,
       'Open_Close_time': venue.openCloseTime,
       'styleVenuse': venue.styleVenuse,
-      'StyleMusic': venue.styleMusic,
+      'styleMusic': venue.styleMusic,
       'Logo': venue.logo,
       'Events': venue.events,
       'distance': distance,
       'doc_ref': venue.reference,
-      'position': venue.position!,
+      'Position': venuePosition,
       'iDVenuse': venue.reference,
       'EventID': venue.events,
       'rating': venue.rating,

@@ -1,5 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/shared/widgets/dialogs/profilepopup_widget.dart';
+import '/shared/widgets/media/showphoto_copy_widget.dart';
 import '/shared/widgets/layout/nav_bar_widget.dart';
 import '/shared/widgets/misc/review_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -22,6 +24,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'main_model.dart';
 export 'main_model.dart';
+
+const _kMainFallbackPosterUrl =
+    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+const _kMainFallbackProfileUrl =
+    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+
+String _safeMainImageUrl(
+  String? url, {
+  required String fallback,
+}) {
+  final normalized = url?.trim();
+  if (normalized == null || normalized.isEmpty) {
+    return fallback;
+  }
+
+  final uri = Uri.tryParse(normalized);
+  if (uri == null || (uri.scheme != 'http' && uri.scheme != 'https')) {
+    return fallback;
+  }
+
+  return normalized;
+}
 
 class MainWidget extends StatefulWidget {
   const MainWidget({super.key});
@@ -51,10 +75,60 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       _model.wlid = MediaQuery.sizeOf(context).width;
       safeSetState(() {});
       await lock_orientation_library_opafp4_actions.lockOrientation();
+
+      if (valueOrDefault<bool>(currentUserDocument?.popupEditProfile, false) &&
+          FFAppState().lockeditprofilepopup) {
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: Padding(
+                padding: MediaQuery.viewInsetsOf(context),
+                child: ProfilepopupWidget(),
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+
+        FFAppState().lockeditprofilepopup = false;
+        safeSetState(() {});
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: Padding(
+                padding: MediaQuery.viewInsetsOf(context),
+                child: ShowphotoCopyWidget(),
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+      }
     });
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => safeSetState(() => currentUserLocationValue = loc));
+        .then((loc) {
+      FFAppState().locationsearch = loc;
+      safeSetState(() => currentUserLocationValue = loc);
+    });
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0)).then((loc) {
+      FFAppState().locationsearch = loc;
+      safeSetState(() => currentUserLocationValue = loc);
+    });
     animationsMap.addAll({
       'containerOnActionTriggerAnimation': AnimationInfo(
         trigger: AnimationTrigger.onActionTrigger,
@@ -222,7 +296,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                       null; // Handle null user
                                                   if (!isLoggedIn) {
                                                     context.pushNamed(
-                                                        PhoneLoginWidget.routeName);
+                                                        PhoneLoginWidget
+                                                            .routeName);
                                                     return;
                                                   }
                                                   context.pushNamed(
@@ -255,10 +330,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                 BoxShape.circle,
                                                           ),
                                                           child: Image.network(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            _safeMainImageUrl(
                                                               currentUserPhoto,
-                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                                                              fallback:
+                                                                  _kMainFallbackProfileUrl,
                                                             ),
                                                             fit: BoxFit.cover,
                                                           ),
@@ -496,7 +571,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                       currentUser != null;
                                                   if (!isLoggedIn) {
                                                     context.pushNamed(
-                                                        PhoneLoginWidget.routeName);
+                                                        PhoneLoginWidget
+                                                            .routeName);
                                                     return;
                                                   }
                                                   context.pushNamed(
@@ -619,7 +695,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                       currentUser != null;
                                                   if (!isLoggedIn) {
                                                     context.pushNamed(
-                                                        PhoneLoginWidget.routeName);
+                                                        PhoneLoginWidget
+                                                            .routeName);
                                                     return;
                                                   }
                                                   context.pushNamed(
@@ -1542,7 +1619,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                           builder: (context) {
                                             final dataeventmainhome = functions
                                                     .dataEvent(
-                                                        10.0,
+                                                        FFAppState()
+                                                            .Filterdistance,
                                                         containerEventsRecordList
                                                             .toList(),
                                                         currentUserLocationValue,
@@ -1651,10 +1729,14 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                             fit: BoxFit.cover,
                                                             image:
                                                                 Image.network(
-                                                              DataEventsStruct
-                                                                      .maybeFromMap(
-                                                                          dataeventmainhomeItem)!
-                                                                  .poster,
+                                                              _safeMainImageUrl(
+                                                                DataEventsStruct
+                                                                        .maybeFromMap(
+                                                                            dataeventmainhomeItem)
+                                                                    ?.poster,
+                                                                fallback:
+                                                                    _kMainFallbackPosterUrl,
+                                                              ),
                                                             ).image,
                                                           ),
                                                           borderRadius:
@@ -2377,11 +2459,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                         .cover,
                                                                     image: Image
                                                                         .network(
-                                                                      valueOrDefault<
-                                                                          String>(
+                                                                      _safeMainImageUrl(
                                                                         DataVenuesStruct.maybeFromMap(dataVItem)
                                                                             ?.bg,
-                                                                        'ไม่ระบุ',
+                                                                        fallback:
+                                                                            _kMainFallbackPosterUrl,
                                                                       ),
                                                                     ).image,
                                                                   ),
@@ -2859,9 +2941,9 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                                   shape: BoxShape.circle,
                                                                                 ),
                                                                                 child: Image.network(
-                                                                                  valueOrDefault<String>(
+                                                                                  _safeMainImageUrl(
                                                                                     DataVenuesStruct.maybeFromMap(dataVItem)?.logo,
-                                                                                    'ไม่ระบุ',
+                                                                                    fallback: _kMainFallbackPosterUrl,
                                                                                   ),
                                                                                   fit: BoxFit.cover,
                                                                                 ),
@@ -3102,131 +3184,233 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 10.0, 0.0),
                                     child: AuthUserStreamWidget(
-                                      builder: (context) =>
-                                          StreamBuilder<UserInVenuesRecord>(
-                                        stream: UserInVenuesRecord.getDocument(
+                                      builder: (context) {
+                                        final firstVenueRoomRef =
                                             (currentUserDocument?.iDROOMVenues
                                                         .toList() ??
                                                     [])
-                                                .firstOrNull!),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: SizedBox(
-                                                width: 50.0,
-                                                height: 50.0,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(
-                                                    Colors.transparent,
+                                                .firstOrNull;
+                                        if (firstVenueRoomRef == null) {
+                                          return SizedBox.shrink();
+                                        }
+                                        return StreamBuilder<
+                                            UserInVenuesRecord>(
+                                          stream:
+                                              UserInVenuesRecord.getDocument(
+                                                  firstVenueRoomRef),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      Colors.transparent,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            );
-                                          }
+                                              );
+                                            }
 
-                                          final containerUserInVenuesRecord =
-                                              snapshot.data!;
+                                            final containerUserInVenuesRecord =
+                                                snapshot.data!;
 
-                                          return InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                  HomeWidget.routeName);
+                                            return InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                    HomeWidget.routeName);
 
-                                              FFAppState().StyleVenuse = [];
-                                              safeSetState(() {});
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(90.0),
-                                              ),
+                                                FFAppState().StyleVenuse = [];
+                                                safeSetState(() {});
+                                              },
                                               child: Container(
-                                                width: 70.0,
-                                                height: 70.0,
                                                 decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          90.0),
                                                 ),
-                                                child: Stack(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child: Container(
-                                                        width: 70.0,
-                                                        height: 70.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
+                                                child: Container(
+                                                  width: 70.0,
+                                                  height: 70.0,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0.0, 0.0),
+                                                        child: Container(
+                                                          width: 70.0,
+                                                          height: 70.0,
+                                                          decoration:
+                                                              BoxDecoration(
                                                             image:
-                                                                Image.network(
-                                                              valueOrDefault(
+                                                                DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image:
+                                                                  Image.network(
+                                                                _safeMainImageUrl(
                                                                   currentUserDocument
                                                                       ?.logoRoom,
-                                                                  ''),
-                                                            ).image,
+                                                                  fallback:
+                                                                      _kMainFallbackProfileUrl,
+                                                                ),
+                                                              ).image,
+                                                            ),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                blurRadius: 4.0,
+                                                                color: Color(
+                                                                    0x34000000),
+                                                                offset: Offset(
+                                                                  0.0,
+                                                                  2.0,
+                                                                ),
+                                                              )
+                                                            ],
+                                                            shape:
+                                                                BoxShape.circle,
                                                           ),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              blurRadius: 4.0,
-                                                              color: Color(
-                                                                  0x34000000),
-                                                              offset: Offset(
-                                                                0.0,
-                                                                2.0,
-                                                              ),
-                                                            )
-                                                          ],
-                                                          shape:
-                                                              BoxShape.circle,
                                                         ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              1.05, -1.0),
-                                                      child: Container(
-                                                        width: 25.0,
-                                                        height: 25.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Stack(
-                                                          children: [
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Container(
-                                                                width: 25.0,
-                                                                height: 25.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                1.05, -1.0),
+                                                        child: Container(
+                                                          width: 25.0,
+                                                          height: 25.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          child: Stack(
+                                                            children: [
+                                                              Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child:
+                                                                    Container(
+                                                                  width: 25.0,
+                                                                  height: 25.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Stack(
+                                                                    children: [
+                                                                      if (containerUserInVenuesRecord
+                                                                              .user
+                                                                              .where((e) => functions.checkdate(e.date, getCurrentTimestamp)!)
+                                                                              .toList()
+                                                                              .length !=
+                                                                          0)
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Container(
+                                                                            width:
+                                                                                23.0,
+                                                                            height:
+                                                                                23.0,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Color(0xFFFF0000),
+                                                                              boxShadow: [
+                                                                                BoxShadow(
+                                                                                  blurRadius: 4.0,
+                                                                                  color: Color(0x4C000000),
+                                                                                  offset: Offset(
+                                                                                    0.0,
+                                                                                    2.0,
+                                                                                  ),
+                                                                                  spreadRadius: 0.5,
+                                                                                )
+                                                                              ],
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                            child:
+                                                                                Stack(
+                                                                              children: [
+                                                                                Align(
+                                                                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                                                                                    child: Text(
+                                                                                      containerUserInVenuesRecord.user.where((e) => functions.checkdate(e.date, getCurrentTimestamp)!).toList().length.toString(),
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            font: GoogleFonts.openSans(
+                                                                                              fontWeight: FontWeight.w800,
+                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                            ),
+                                                                                            fontSize: 11.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w800,
+                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                                child: Stack(
-                                                                  children: [
-                                                                    if (containerUserInVenuesRecord
-                                                                            .user
-                                                                            .where((e) =>
-                                                                                functions.checkdate(e.date, getCurrentTimestamp)!)
-                                                                            .toList()
-                                                                            .length !=
-                                                                        0)
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                1.05, 1.0),
+                                                        child: Container(
+                                                          width: 25.0,
+                                                          height: 25.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          child: Stack(
+                                                            children: [
+                                                              Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child:
+                                                                    Container(
+                                                                  width: 25.0,
+                                                                  height: 25.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Stack(
+                                                                    children: [
                                                                       Align(
                                                                         alignment: AlignmentDirectional(
                                                                             0.0,
@@ -3234,20 +3418,15 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                         child:
                                                                             Container(
                                                                           width:
-                                                                              23.0,
+                                                                              27.0,
                                                                           height:
-                                                                              23.0,
+                                                                              27.0,
                                                                           decoration:
                                                                               BoxDecoration(
                                                                             color:
-                                                                                Color(0xFFFF0000),
+                                                                                Color(0xFF07B53B),
                                                                             image:
-                                                                                DecorationImage(
-                                                                              fit: BoxFit.cover,
-                                                                              image: Image.network(
-                                                                                '',
-                                                                              ).image,
-                                                                            ),
+                                                                                null,
                                                                             boxShadow: [
                                                                               BoxShadow(
                                                                                 blurRadius: 4.0,
@@ -3256,7 +3435,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                                   0.0,
                                                                                   2.0,
                                                                                 ),
-                                                                                spreadRadius: 0.5,
+                                                                                spreadRadius: 0.0,
                                                                               )
                                                                             ],
                                                                             shape:
@@ -3268,19 +3447,12 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0.0, 0.0),
                                                                                 child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
-                                                                                  child: Text(
-                                                                                    containerUserInVenuesRecord.user.where((e) => functions.checkdate(e.date, getCurrentTimestamp)!).toList().length.toString(),
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          font: GoogleFonts.openSans(
-                                                                                            fontWeight: FontWeight.w800,
-                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                          ),
-                                                                                          fontSize: 11.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w800,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        ),
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
+                                                                                  child: Image.network(
+                                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
+                                                                                    width: 16.0,
+                                                                                    height: 16.0,
+                                                                                    fit: BoxFit.cover,
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -3288,114 +3460,22 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              1.05, 1.0),
-                                                      child: Container(
-                                                        width: 25.0,
-                                                        height: 25.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Stack(
-                                                          children: [
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Container(
-                                                                width: 25.0,
-                                                                height: 25.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                                child: Stack(
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            27.0,
-                                                                        height:
-                                                                            27.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFF07B53B),
-                                                                          image:
-                                                                              DecorationImage(
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                            image:
-                                                                                Image.network(
-                                                                              '',
-                                                                            ).image,
-                                                                          ),
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                              blurRadius: 4.0,
-                                                                              color: Color(0x4C000000),
-                                                                              offset: Offset(
-                                                                                0.0,
-                                                                                2.0,
-                                                                              ),
-                                                                              spreadRadius: 0.0,
-                                                                            )
-                                                                          ],
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                        ),
-                                                                        child:
-                                                                            Stack(
-                                                                          children: [
-                                                                            Align(
-                                                                              alignment: AlignmentDirectional(0.0, 0.0),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
-                                                                                child: Image.network(
-                                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
-                                                                                  width: 16.0,
-                                                                                  height: 16.0,
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),

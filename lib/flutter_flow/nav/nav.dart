@@ -6,12 +6,14 @@ import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
+import '/auth/supabase_auth/auth_util.dart';
 
 import '/backend/push_notifications/push_notifications_handler.dart'
     show PushNotificationsHandler;
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
+import '/features/auth/presentation/welcome/welcome_new_account_widget.dart';
 import 'package:lock_orientation_library_opafp4/index.dart'
     as $lock_orientation_library_opafp4;
 import 'package:f_f_story_view_live_zhm3f3/index.dart'
@@ -101,12 +103,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
 
       final loggedIn = appStateNotifier.loggedIn;
       final uri = state.uri.toString();
-      final isAuthPage =
-          uri == '/phone-login' || uri.startsWith('/otp-verify');
+      final isAuthPage = uri == '/phone-login' || uri.startsWith('/otp-verify');
 
       if (!loggedIn && !isAuthPage) {
         return '/phone-login';
       }
+
+      // Redirect users who have not completed onboarding yet.
+      final isWelcomePage = uri == '/welcome-new-account';
+      final needsOnboarding = currentUserNeedsOnboarding;
+      if (loggedIn && needsOnboarding && !isWelcomePage && !isAuthPage) {
+        return '/welcome-new-account';
+      }
+
       return null;
     },
     routes: [
@@ -178,6 +187,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             ),
           ),
           FFRoute(
+            name: WelcomeNewAccountWidget.routeName,
+            path: WelcomeNewAccountWidget.routePath,
+            builder: (context, params) => const WelcomeNewAccountWidget(),
+          ),
+          FFRoute(
             name: HomeWidget.routeName,
             path: HomeWidget.routePath,
             requireAuth: true,
@@ -201,8 +215,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: true,
             builder: (context, params) => SupportWidget(),
           ),
-
-
           FFRoute(
             name: BlocklistWidget.routeName,
             path: BlocklistWidget.routePath,
@@ -227,7 +239,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: false,
             builder: (context, params) => VenuesWidget(),
           ),
-
           FFRoute(
             name: PromotionWidget.routeName,
             path: PromotionWidget.routePath,
@@ -243,7 +254,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 'idVenues',
                 ParamType.SupabaseDocRef,
                 isList: false,
-                collectionNamePath: ['Venues'],
+                collectionNamePath: ['venues'],
               ),
               distance: params.getParam(
                 'distance',
@@ -265,7 +276,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             requireAuth: true,
             builder: (context, params) => VeerWidget(),
           ),
-
           FFRoute(
             name: TicketWidget.routeName,
             path: TicketWidget.routePath,
@@ -281,7 +291,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 'id',
                 ParamType.SupabaseDocRef,
                 isList: false,
-                collectionNamePath: ['Venues'],
+                collectionNamePath: ['venues'],
               ),
               location: params.getParam(
                 'location',
@@ -301,8 +311,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-
-
           FFRoute(
             name: ShowallphotoWidget.routeName,
             path: ShowallphotoWidget.routePath,
@@ -315,7 +323,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-
           FFRoute(
             name: SharepageWidget.routeName,
             path: SharepageWidget.routePath,
@@ -325,7 +332,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 'idVenues',
                 ParamType.SupabaseDocRef,
                 isList: false,
-                collectionNamePath: ['Venues'],
+                collectionNamePath: ['venues'],
               ),
               distance: params.getParam(
                 'distance',
@@ -341,14 +348,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               ),
             ),
           ),
-
           FFRoute(
             name: PayreservenormdayWidget.routeName,
             path: PayreservenormdayWidget.routePath,
             requireAuth: true,
             builder: (context, params) => PayreservenormdayWidget(),
           ),
-
           FFRoute(
             name: $lock_orientation_library_opafp4.HomePageWidget.routeName,
             path: $lock_orientation_library_opafp4.HomePageWidget.routePath,
@@ -446,7 +451,7 @@ extension GoRouterExtensions on GoRouter {
 
 extension _GoRouterStateExtensions on GoRouterState {
   Map<String, dynamic> get extraMap =>
-      extra != null ? extra as Map<String, dynamic> : {};
+      extra is Map ? Map<String, dynamic>.from(extra as Map) : {};
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
     ..addAll(uri.queryParameters)

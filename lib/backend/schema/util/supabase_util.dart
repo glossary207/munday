@@ -54,19 +54,57 @@ Map<String, dynamic> mapFromSupabase(Map<String, dynamic> data) =>
       }
       // Handle nested data.
       if (value is Map) {
-        value = mapFromSupabase(value as Map<String, dynamic>);
+        final dataMap = getDataMap(value);
+        if (dataMap != null) {
+          value = mapFromSupabase(dataMap);
+        }
       }
       // Handle list of nested data.
       if (value is Iterable && value.isNotEmpty && value.first is Map) {
-        value = value
-            .map((v) => mapFromSupabase(v as Map<String, dynamic>))
-            .toList();
+        value = value.map((v) {
+          final dataMap = getDataMap(v);
+          return dataMap != null ? mapFromSupabase(dataMap) : v;
+        }).toList();
       }
       return MapEntry(key, value);
     });
 
+SupabaseDocRef? getSupabaseDocRef(
+  dynamic value,
+  String collectionPath,
+) {
+  if (value is SupabaseDocRef) {
+    return value;
+  }
+  if (value is String && value.isNotEmpty) {
+    return SupabaseFirestore.instance.collection(collectionPath).doc(value);
+  }
+  return null;
+}
+
+List<SupabaseDocRef>? getSupabaseDocRefList(
+  dynamic value,
+  String collectionPath,
+) {
+  if (value is! List) {
+    return null;
+  }
+  return value
+      .map((item) => getSupabaseDocRef(item, collectionPath))
+      .whereType<SupabaseDocRef>()
+      .toList();
+}
+
 Map<String, dynamic> mapToSupabase(Map<String, dynamic> data) =>
     data.where((k, v) => k != SupabaseUtilData.name).map((key, value) {
+      if (value is SupabaseDocRef) {
+        value = value.id;
+      }
+      if (value is Iterable &&
+          value.isNotEmpty &&
+          value.first is SupabaseDocRef) {
+        value = value.map((v) => (v as SupabaseDocRef).id).toList();
+      }
       // Handle GeoPoint
       if (value is LatLng) {
         value = value.toGeoPoint();
@@ -92,12 +130,17 @@ Map<String, dynamic> mapToSupabase(Map<String, dynamic> data) =>
       }
       // Handle nested data.
       if (value is Map) {
-        value = mapToSupabase(value as Map<String, dynamic>);
+        final dataMap = getDataMap(value);
+        if (dataMap != null) {
+          value = mapToSupabase(dataMap);
+        }
       }
       // Handle list of nested data.
       if (value is Iterable && value.isNotEmpty && value.first is Map) {
-        value =
-            value.map((v) => mapToSupabase(v as Map<String, dynamic>)).toList();
+        value = value.map((v) {
+          final dataMap = getDataMap(v);
+          return dataMap != null ? mapToSupabase(dataMap) : v;
+        }).toList();
       }
       return MapEntry(key, value);
     });
@@ -135,16 +178,18 @@ Map<String, dynamic> mergeNestedFields(Map<String, dynamic> data) {
           .where((k, _) => k.split('.').first == name)
           .map((k, v) => MapEntry(k.split('.').skip(1).join('.'), v)),
     );
-    final existingValue = data[name];
+    final existingValue = getDataMap(data[name]);
     data[name] = {
-      if (existingValue != null && existingValue is Map)
-        ...existingValue as Map<String, dynamic>,
+      if (existingValue != null) ...existingValue,
       ...mergedValues,
     };
   });
   // Merge any nested maps inside any of the fields as well.
   data.where((_, v) => v is Map).forEach((k, v) {
-    data[k] = mergeNestedFields(v as Map<String, dynamic>);
+    final dataMap = getDataMap(v);
+    if (dataMap != null) {
+      data[k] = mergeNestedFields(dataMap);
+    }
   });
 
   return data;

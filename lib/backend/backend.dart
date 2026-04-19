@@ -558,21 +558,50 @@ Future<FFSupabasePage<T>> queryCollectionPage<T>(
 }
 
 // Creates a Firestore document representing the logged in user if it doesn't yet exist
+String? _initialDisplayNameForUser(User user) {
+  final fullName = user.userMetadata?['full_name']?.toString().trim() ?? '';
+  if (fullName.isNotEmpty) {
+    return fullName;
+  }
+
+  final email = user.email?.trim() ?? '';
+  if (email.isEmpty || email.endsWith('@phone.munday.app')) {
+    return null;
+  }
+  return email;
+}
+
 Future maybeCreateUser(User user) async {
   // User is now Supabase User
   final userRecord = UsersRecord.collection.doc(user.id);
   final userExists = await userRecord.get().then((u) => u.exists);
+  final displayName = _initialDisplayNameForUser(user);
+  final photoUrl = user.userMetadata?['avatar_url']?.toString();
   if (userExists) {
     currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
+    if (currentUserDocument != null) {
+      final backfillData = createUsersRecordData(
+        email: currentUserDocument!.hasEmail() ? null : user.email,
+        displayName:
+            currentUserDocument!.hasDisplayName() ? null : displayName,
+        photoUrl: currentUserDocument!.hasPhotoUrl() ? null : photoUrl,
+        phoneNumber: currentUserDocument!.hasPhoneNumber() ? null : user.phone,
+        createdTime: currentUserDocument!.hasCreatedTime()
+            ? null
+            : getCurrentTimestamp,
+      );
+      if (backfillData.isNotEmpty) {
+        await userRecord.update(backfillData);
+      }
+      currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
+    }
     return;
   }
 
   final userData = createUsersRecordData(
     email: user.email,
-    displayName:
-        user.userMetadata?['full_name'] ?? user.email, // Best guess mapping
-    photoUrl: user.userMetadata?['avatar_url'],
-    uid: user.id,
+    displayName: displayName,
+    photoUrl: photoUrl,
     phoneNumber: user.phone,
     createdTime: getCurrentTimestamp,
   );

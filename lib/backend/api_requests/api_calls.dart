@@ -676,6 +676,76 @@ class LogerrorCall {
   }
 }
 
+class GetInstagramProfileInfoCall {
+  static Future<ApiCallResponse> call({
+    String? username = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getInstagramProfileInfo',
+      apiUrl:
+          'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/getInstagramProfileInfo',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'username': username,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? followersCount(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.followers_count''',
+      ));
+
+  static int? followingCount(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.following_count''',
+      ));
+
+  static String? username(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.username''',
+      ));
+}
+
+class GetInstagramPublicProfileCall {
+  static Future<ApiCallResponse> call({
+    String? username = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getInstagramPublicProfile',
+      apiUrl: 'https://www.instagram.com/api/v1/users/web_profile_info/',
+      callType: ApiCallType.GET,
+      headers: {
+        'x-ig-app-id': '936619743392459',
+        'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+      },
+      params: {
+        'username': username,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? followersCount(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.user.edge_followed_by.count''',
+      ));
+}
+
 String _toEncodable(dynamic item) {
   if (item is SupabaseDocRef) {
     return item.path;

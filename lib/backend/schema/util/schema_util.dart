@@ -18,6 +18,23 @@ abstract class BaseStruct {
   String serialize() => json.encode(toSerializableMap());
 }
 
+Map<String, dynamic>? getDataMap(dynamic value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is Map<String, dynamic>) {
+    return value;
+  }
+  if (value is! Map) {
+    return null;
+  }
+  return Map<String, dynamic>.fromEntries(
+    value.entries
+        .where((entry) => entry.key != null)
+        .map((entry) => MapEntry(entry.key.toString(), entry.value)),
+  );
+}
+
 dynamic deserializeStructParam<T>(
   dynamic param,
   ParamType paramType,
@@ -40,8 +57,12 @@ dynamic deserializeStructParam<T>(
         .map<T>((e) => deserializeStructParam<T>(e, paramType, false,
             structBuilder: structBuilder))
         .toList();
-  } else if (param is Map<String, dynamic>) {
-    return structBuilder(param);
+  } else if (param is Map) {
+    final dataMap = getDataMap(param);
+    if (dataMap == null) {
+      return null;
+    }
+    return structBuilder(dataMap);
   } else {
     return deserializeParam<T>(
       param,
@@ -59,8 +80,9 @@ List<T>? getStructList<T>(
     value is! List
         ? null
         : value
-            .where((e) => e is Map<String, dynamic>)
-            .map((e) => structBuilder(e as Map<String, dynamic>))
+            .map(getDataMap)
+            .whereType<Map<String, dynamic>>()
+            .map(structBuilder)
             .toList();
 
 List<T>? getEnumList<T>(dynamic value) => value is! List

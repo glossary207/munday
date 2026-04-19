@@ -157,9 +157,10 @@ class DataEventsStruct extends FFSupabaseStruct {
         priceDetail: data['PriceDetail'] as String?,
       );
 
-  static DataEventsStruct? maybeFromMap(dynamic data) => data is Map
-      ? DataEventsStruct.fromMap(data.cast<String, dynamic>())
-      : null;
+  static DataEventsStruct? maybeFromMap(dynamic data) {
+    final dataMap = getDataMap(data);
+    return dataMap != null ? DataEventsStruct.fromMap(dataMap) : null;
+  }
 
   Map<String, dynamic> toMap() => {
         'Name_artise': _nameArtise,
@@ -291,7 +292,7 @@ class DataEventsStruct extends FFSupabaseStruct {
           data['iDVenuse'],
           ParamType.SupabaseDocRef,
           false,
-          collectionNamePath: ['Venues'],
+          collectionNamePath: ['venues'],
         ),
         free: deserializeParam(
           data['FREE'],
@@ -418,8 +419,7 @@ void addDataEventsStructData(
   final nestedData = dataEventsData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = dataEvents.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getDataEventsFirestoreData(

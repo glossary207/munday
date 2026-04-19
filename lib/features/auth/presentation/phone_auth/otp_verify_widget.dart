@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/otp_api_calls.dart';
 import '/backend/backend.dart';
 import '/services/auth_manager.dart';
@@ -186,10 +187,15 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
 
       if (!mounted) return;
 
-      // Explicitly navigate to root — replaces the entire Navigator stack
+      // Navigate new users to profile setup, returning users to home
       // This is needed because OtpVerifyWidget was pushed via Navigator.push()
       // (not GoRouter), so GoRouter's redirect alone won't pop this screen.
-      context.go('/');
+      final needsOnboarding = currentUserNeedsOnboarding;
+      if (needsOnboarding) {
+        context.go('/welcome-new-account');
+      } else {
+        context.go('/');
+      }
     } catch (e) {
       if (!mounted) return;
       setState(() {
