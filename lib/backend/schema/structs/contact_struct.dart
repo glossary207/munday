@@ -68,11 +68,11 @@ class ContactStruct extends FFSupabaseStruct {
 
   static ContactStruct fromMap(Map<String, dynamic> data) => ContactStruct(
         phone: data['phone'] as String?,
-        ig: data['IG'] as String?,
+        ig: (data['IG'] ?? data['ig']) as String?,
         facebook: data['facebook'] as String?,
         line: data['line'] as String?,
-        tiktok: data['Tiktok'] as String?,
-        name: data['Name'] as String?,
+        tiktok: (data['Tiktok'] ?? data['tiktok']) as String?,
+        name: (data['Name'] ?? data['name']) as String?,
       );
 
   static ContactStruct? maybeFromMap(dynamic data) {

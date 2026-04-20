@@ -4,7 +4,6 @@ import '/backend/backend.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
 import '/shared/widgets/dialogs/edit_image_modal_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -12,6 +11,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
     as f_f_story_view_live_zhm3f3_app_state;
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -39,40 +39,421 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget>
     with TickerProviderStateMixin {
+  static const int _photoshowSlotCount = 6;
+  static const String _profileMainHeroPrefix = 'profile_photo_main';
+  static const String _profilePreviewHeroPrefix = 'profile_photo_preview';
+  static const String _photoshowPlaceholderUrl =
+      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/usv8wtdkx6c9/%E0%B8%9C%E0%B8%B7%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%9B%E0%B8%A3%E0%B8%B0.png';
+
   late ProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
+  List<String?>? _photoshowDraftUrls;
+  bool _isSavingPhotoshow = false;
+  bool _instagramFollowersLoading = false;
+  int? _instagramFollowersCount;
+  int _instagramRequestToken = 0;
+  String _instagramLookupInput = '';
 
   String? _normalizedPhotoUrl(String? url) {
     final trimmed = url?.trim() ?? '';
     return trimmed.isEmpty ? null : trimmed;
   }
 
-  Future<void> _openPhotoshowViewer(String? url, String heroTag) async {
-    final resolvedUrl = _normalizedPhotoUrl(url);
-    if (resolvedUrl == null) {
+  String _currentInstagramHandle() {
+    final persistedHandle = FFAppState().profileInstagramHandle.trim();
+    if (persistedHandle.isNotEmpty) {
+      return persistedHandle;
+    }
+    return valueOrDefault(currentUserDocument?.idig, '').trim();
+  }
+
+  void _storeInstagramHandle(String value) {
+    final trimmedValue = value.trim();
+    FFAppState().update(() {
+      FFAppState().profileInstagramHandle = trimmedValue;
+    });
+  }
+
+  String _normalizeInstagramInput(String? rawInput) {
+    var value = (rawInput ?? '').trim();
+    if (value.isEmpty) {
+      return '';
+    }
+
+    value = value.replaceFirst(RegExp(r'^@+'), '');
+
+    if (value.contains('instagram.com')) {
+      try {
+        final parsedUrl = Uri.parse(
+          value.startsWith('http') ? value : 'https://$value',
+        );
+        value = parsedUrl.pathSegments
+                .where((segment) => segment.isNotEmpty)
+                .firstOrNull ??
+            '';
+      } catch (_) {}
+    }
+
+    value = value.replaceFirst(RegExp(r'^@+'), '');
+    value = value.split(RegExp(r'[/?#]')).first.trim();
+    return value;
+  }
+
+  void _syncInstagramFollowersForInput(String? rawInput) {
+    final nextInput = _normalizeInstagramInput(rawInput);
+    if (_instagramLookupInput == nextInput) {
       return;
     }
-    await Navigator.push(
-      context,
-      PageTransition(
-        type: PageTransitionType.fade,
-        child: FlutterFlowExpandedImageView(
-          image: Image.network(
-            resolvedUrl,
-            fit: BoxFit.contain,
+    _instagramLookupInput = nextInput;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      _refreshInstagramFollowers(nextInput);
+    });
+  }
+
+  Future<void> _refreshInstagramFollowers(String rawInput) async {
+    final requestToken = ++_instagramRequestToken;
+    final hasUsername = rawInput.trim().isNotEmpty;
+    if (!hasUsername) {
+      setState(() {
+        _instagramFollowersLoading = false;
+        _instagramFollowersCount = null;
+      });
+      return;
+    }
+
+    setState(() {
+      _instagramFollowersLoading = true;
+    });
+
+    var followersCount = 0;
+    var hasFollowersCount = false;
+    try {
+      final response =
+          await GetInstagramProfileInfoCall.call(username: rawInput);
+      if (!mounted || requestToken != _instagramRequestToken) {
+        return;
+      }
+
+      if (response.succeeded) {
+        final backendFollowersCount =
+            GetInstagramProfileInfoCall.followersCount(response.jsonBody);
+        if (backendFollowersCount != null) {
+          followersCount = backendFollowersCount;
+          hasFollowersCount = true;
+        }
+      }
+    } catch (_) {}
+
+    if (!mounted || requestToken != _instagramRequestToken) {
+      return;
+    }
+
+    if (!hasFollowersCount) {
+      try {
+        final publicResponse =
+            await GetInstagramPublicProfileCall.call(username: rawInput);
+        if (!mounted || requestToken != _instagramRequestToken) {
+          return;
+        }
+        final publicFollowersCount =
+            GetInstagramPublicProfileCall.followersCount(
+                publicResponse.jsonBody);
+        if (publicResponse.succeeded && publicFollowersCount != null) {
+          followersCount = publicFollowersCount;
+          hasFollowersCount = true;
+        }
+      } catch (_) {}
+    }
+
+    if (!mounted || requestToken != _instagramRequestToken) {
+      return;
+    }
+
+    setState(() {
+      _instagramFollowersLoading = false;
+      _instagramFollowersCount = hasFollowersCount ? followersCount : null;
+    });
+  }
+
+  String _instagramFollowersText() {
+    if ((_model.textController3?.text.trim() ?? '').isEmpty) {
+      return '';
+    }
+    if (_instagramFollowersLoading) {
+      return '...';
+    }
+    if (_instagramFollowersCount == null) {
+      return '-';
+    }
+    return formatNumber(
+      _instagramFollowersCount,
+      formatType: FormatType.compact,
+    );
+  }
+
+  void _clearInstagramHandle() {
+    EasyDebounce.cancel('_profileInstagramFollowersLookup');
+    setState(() {
+      _model.textController3?.clear();
+      _instagramLookupInput = '';
+      _instagramFollowersLoading = false;
+      _instagramFollowersCount = null;
+    });
+    _storeInstagramHandle('');
+  }
+
+  Widget _buildInstagramSection() {
+    final followersText = _instagramFollowersText();
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
+        child: Container(
+          width: double.infinity,
+          height: 50.0,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: const Color(0xFF1D1D1D),
+              width: 2.0,
+            ),
           ),
-          allowRotation: false,
-          tag: heroTag,
-          useHeroAnimation: true,
+          child: Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: FaIcon(
+                  FontAwesomeIcons.instagram,
+                  color: Colors.white,
+                  size: 25.0,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    15.0,
+                    0.0,
+                    10.0,
+                    0.0,
+                  ),
+                  child: TextFormField(
+                    controller: _model.textController3,
+                    focusNode: _model.textFieldFocusNode3,
+                    autofocus: false,
+                    obscureText: false,
+                    onChanged: (_) {
+                      _storeInstagramHandle(_model.textController3?.text ?? '');
+                      EasyDebounce.debounce(
+                        '_profileInstagramFollowersLookup',
+                        const Duration(milliseconds: 500),
+                        () => _syncInstagramFollowersForInput(
+                          _model.textController3?.text,
+                        ),
+                      );
+                    },
+                    decoration: InputDecoration(
+                      hintText: FFLocalizations.of(context).getText(
+                        'eihlwqu6' /* Name Instagram */,
+                      ),
+                      hintStyle: GoogleFonts.openSans(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
+                      border: InputBorder.none,
+                      isDense: true,
+                    ),
+                    style: GoogleFonts.openSans(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                    validator:
+                        _model.textController3Validator.asValidator(context),
+                  ),
+                ),
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: _clearInstagramHandle,
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 220),
+                switchInCurve: Curves.easeOut,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, animation) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SizeTransition(
+                      sizeFactor: animation,
+                      axis: Axis.horizontal,
+                      axisAlignment: -1.0,
+                      child: child,
+                    ),
+                  );
+                },
+                child: followersText.isEmpty
+                    ? const SizedBox.shrink(key: ValueKey('empty'))
+                    : Container(
+                        key: ValueKey('followers_$followersText'),
+                        height: 50.0,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF131313),
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(18.0),
+                            topRight: Radius.circular(18.0),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 15.0,
+                                right: 7.0,
+                              ),
+                              child: Text(
+                                followersText,
+                                style: GoogleFonts.openSans(
+                                  color: _instagramFollowersCount == null &&
+                                          !_instagramFollowersLoading
+                                      ? const Color(0xFF9A9A9A)
+                                      : Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 15.0),
+                              child: Icon(
+                                Icons.person_sharp,
+                                color: Colors.white,
+                                size: 20.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildPhotoshowImage(String? url, String heroTag) {
+  String _profileHeroTag(String prefix, String url) => '${prefix}_$url';
+
+  _PhotoshowGalleryItem? _profileGalleryItem({
+    Object? heroTagOverride,
+  }) {
+    final resolvedUrl = _normalizedPhotoUrl(currentUserPhoto);
+    if (resolvedUrl == null) {
+      return null;
+    }
+    return _PhotoshowGalleryItem(
+      url: resolvedUrl,
+      heroTag:
+          heroTagOverride ?? _profileHeroTag(_profileMainHeroPrefix, resolvedUrl),
+      isProfile: true,
+    );
+  }
+
+  List<_PhotoshowGalleryItem> _photoshowGalleryItems({
+    Object? profileHeroTagOverride,
+  }) {
+    final photoshowUrls = _effectivePhotoshowUrls();
+    final galleryItems = <_PhotoshowGalleryItem>[];
+    final profileItem = _profileGalleryItem(
+      heroTagOverride: profileHeroTagOverride,
+    );
+    if (profileItem != null) {
+      galleryItems.add(profileItem);
+    }
+    for (var index = 0; index < photoshowUrls.length; index++) {
+      final resolvedUrl = _normalizedPhotoUrl(photoshowUrls[index]);
+      if (resolvedUrl == null) {
+        continue;
+      }
+      galleryItems.add(
+        _PhotoshowGalleryItem(
+          url: resolvedUrl,
+          heroTag: 'photo${index + 1}_$resolvedUrl',
+          isProfile: false,
+        ),
+      );
+    }
+    return galleryItems;
+  }
+
+  Future<void> _openPhotoshowViewer(
+    String? url,
+    Object heroTag, {
+    Object? profileHeroTagOverride,
+  }) async {
+    final resolvedUrl = _normalizedPhotoUrl(url);
+    if (resolvedUrl == null) {
+      return;
+    }
+    final galleryItems = _photoshowGalleryItems(
+      profileHeroTagOverride: profileHeroTagOverride,
+    );
+    final initialIndex = galleryItems.indexWhere(
+      (item) => item.heroTag == heroTag,
+    );
+    if (galleryItems.isEmpty || initialIndex < 0) {
+      return;
+    }
+    await Navigator.push(
+      context,
+      PageRouteBuilder<void>(
+        opaque: false,
+        transitionDuration: const Duration(milliseconds: 280),
+        reverseTransitionDuration: const Duration(milliseconds: 280),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            _PhotoshowGalleryViewer(
+          items: galleryItems,
+          initialIndex: initialIndex,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return child;
+        },
+      ),
+    );
+  }
+
+  Future<void> _openProfileGalleryViewer(Object heroTag) async {
+    final profileItem = _profileGalleryItem(
+      heroTagOverride: heroTag,
+    );
+    if (profileItem == null) {
+      return;
+    }
+    await _openPhotoshowViewer(
+      profileItem.url,
+      heroTag,
+      profileHeroTagOverride: heroTag,
+    );
+  }
+
+  Widget _buildPhotoshowImage(String? url, Object heroTag) {
     final resolvedUrl = _normalizedPhotoUrl(url);
     if (resolvedUrl == null) {
       return const SizedBox.expand();
@@ -99,18 +480,470 @@ class _ProfileWidgetState extends State<ProfileWidget>
     );
   }
 
+  List<String?> _photoshowUrlsFromDocument() {
+    final photoshow = currentUserDocument?.photoshow;
+    return <String?>[
+      _normalizedPhotoUrl(photoshow?.photo1),
+      _normalizedPhotoUrl(photoshow?.photo2),
+      _normalizedPhotoUrl(photoshow?.photo3),
+      _normalizedPhotoUrl(photoshow?.photo4),
+      _normalizedPhotoUrl(photoshow?.photo5),
+      _normalizedPhotoUrl(photoshow?.photo6),
+    ];
+  }
+
+  List<String?> _effectivePhotoshowUrls() => List<String?>.from(
+        _photoshowDraftUrls ?? _photoshowUrlsFromDocument(),
+      );
+
+  UserphotoshowStruct _photoshowStructFromUrls(
+    List<String?> urls, {
+    bool clearUnsetFields = true,
+  }) {
+    String? valueAt(int index) =>
+        index < urls.length ? _normalizedPhotoUrl(urls[index]) : null;
+
+    return createUserphotoshowStruct(
+      photo1: valueAt(0),
+      photo2: valueAt(1),
+      photo3: valueAt(2),
+      photo4: valueAt(3),
+      photo5: valueAt(4),
+      photo6: valueAt(5),
+      clearUnsetFields: clearUnsetFields,
+    );
+  }
+
+  Future<void> _persistPhotoshowUrls(
+    List<String?> urls, {
+    required String errorMessage,
+  }) async {
+    if (currentUserReference == null) {
+      return;
+    }
+
+    final sanitizedUrls = List<String?>.generate(
+      _photoshowSlotCount,
+      (index) => index < urls.length ? _normalizedPhotoUrl(urls[index]) : null,
+    );
+    final previousDraft = _photoshowDraftUrls == null
+        ? null
+        : List<String?>.from(_photoshowDraftUrls!);
+
+    safeSetState(() {
+      _photoshowDraftUrls = List<String?>.from(sanitizedUrls);
+      _isSavingPhotoshow = true;
+    });
+
+    try {
+      await currentUserReference!.update(createUsersRecordData(
+        photoshow: _photoshowStructFromUrls(
+          sanitizedUrls,
+          clearUnsetFields: true,
+        ),
+      ));
+    } catch (error) {
+      debugPrint('Failed to persist photoshow urls: $error');
+      safeSetState(() {
+        _photoshowDraftUrls = previousDraft;
+      });
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+          ),
+        );
+    } finally {
+      if (mounted) {
+        safeSetState(() {
+          _isSavingPhotoshow = false;
+        });
+      }
+    }
+  }
+
   Future<void> _savePhotoshowImage(int slot, String imageUrl) async {
-    await currentUserReference!.update(createUsersRecordData(
-      photoshow: createUserphotoshowStruct(
-        photo1: slot == 1 ? imageUrl : null,
-        photo2: slot == 2 ? imageUrl : null,
-        photo3: slot == 3 ? imageUrl : null,
-        photo4: slot == 4 ? imageUrl : null,
-        photo5: slot == 5 ? imageUrl : null,
-        photo6: slot == 6 ? imageUrl : null,
-        clearUnsetFields: false,
+    final photoshowUrls = _effectivePhotoshowUrls();
+    final targetIndex = slot - 1;
+    if (targetIndex < 0 || targetIndex >= _photoshowSlotCount) {
+      return;
+    }
+    photoshowUrls[targetIndex] = _normalizedPhotoUrl(imageUrl);
+    await _persistPhotoshowUrls(
+      photoshowUrls,
+      errorMessage: 'อัปโหลดรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+    );
+  }
+
+  Future<void> _removePhotoshowImage(int slot) async {
+    final photoshowUrls = _effectivePhotoshowUrls();
+    final targetIndex = slot - 1;
+    if (targetIndex < 0 || targetIndex >= _photoshowSlotCount) {
+      return;
+    }
+    photoshowUrls[targetIndex] = null;
+    await _persistPhotoshowUrls(
+      photoshowUrls,
+      errorMessage: 'ลบรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+    );
+  }
+
+  Future<void> _reorderPhotoshowImages(int fromIndex, int toIndex) async {
+    if (fromIndex == toIndex) {
+      return;
+    }
+
+    final photoshowUrls = _effectivePhotoshowUrls();
+    if (fromIndex < 0 ||
+        fromIndex >= photoshowUrls.length ||
+        toIndex < 0 ||
+        toIndex >= photoshowUrls.length) {
+      return;
+    }
+
+    final movingUrl = photoshowUrls[fromIndex];
+    if (movingUrl == null) {
+      return;
+    }
+
+    photoshowUrls[fromIndex] = photoshowUrls[toIndex];
+    photoshowUrls[toIndex] = movingUrl;
+
+    await _persistPhotoshowUrls(
+      photoshowUrls,
+      errorMessage: 'จัดลำดับรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+    );
+  }
+
+  Future<void> _pickAndUploadPhotoshowImage(int slot) async {
+    final selectedMedia = await selectMedia(
+      maxWidth: 800.0,
+      maxHeight: 800.0,
+      imageQuality: 90,
+      mediaSource: MediaSource.photoGallery,
+      multiImage: false,
+    );
+    if (selectedMedia == null ||
+        !selectedMedia.every(
+          (media) => validateFileFormat(media.storagePath, context),
+        )) {
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+
+    FFUploadedFile? selectedImage;
+    try {
+      showUploadMessage(
+        context,
+        'Preparing image...',
+        showLoading: true,
+      );
+      selectedImage = selectedMedia.isNotEmpty
+          ? FFUploadedFile(
+              name: selectedMedia.first.storagePath.split('/').last,
+              bytes: selectedMedia.first.bytes,
+              height: selectedMedia.first.dimensions?.height,
+              width: selectedMedia.first.dimensions?.width,
+              blurHash: selectedMedia.first.blurHash,
+              originalFilename: selectedMedia.first.originalFilename,
+            )
+          : null;
+    } finally {
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      }
+    }
+
+    if (selectedImage == null ||
+        !(selectedImage.bytes?.isNotEmpty ?? false) ||
+        !mounted) {
+      return;
+    }
+
+    final croppedImageUrl = await showModalBottomSheet<String>(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: const Color(0x00000000),
+      enableDrag: false,
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Padding(
+            padding: MediaQuery.viewInsetsOf(context),
+            child: SizedBox(
+              height: double.infinity,
+              child: EditImageModalWidget(
+                croppShape: 'square',
+                cropPercentage: 0.8,
+                selectedImage: selectedImage,
+                direct: 0,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (!mounted || !(croppedImageUrl?.isNotEmpty ?? false)) {
+      return;
+    }
+
+    await _savePhotoshowImage(slot, croppedImageUrl!);
+  }
+
+  Widget _buildPhotoshowTileSurface({
+    required int index,
+    required String? imageUrl,
+    required bool isActiveTarget,
+  }) {
+    final resolvedUrl = _normalizedPhotoUrl(imageUrl);
+    final hasPhoto = resolvedUrl != null;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: Image.network(_photoshowPlaceholderUrl).image,
+        ),
+        border: isActiveTarget
+            ? Border.all(
+                color: const Color(0xFF00D333),
+                width: 2.5,
+              )
+            : null,
       ),
-    ));
+      child: Stack(
+        children: [
+          _buildPhotoshowImage(
+            resolvedUrl,
+            'photo${index + 1}_${resolvedUrl ?? 'empty'}',
+          ),
+          if (!hasPhoto)
+            Align(
+              alignment: const AlignmentDirectional(1.05, -1.04),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  8.0,
+                  8.0,
+                  0.0,
+                ),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: _isSavingPhotoshow
+                      ? null
+                      : () => _pickAndUploadPhotoshowImage(index + 1),
+                  child: Container(
+                    width: 23.0,
+                    height: 23.0,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF00D333),
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 4.0,
+                          color: Color(0x33000000),
+                          offset: Offset(0.0, 2.0),
+                          spreadRadius: 1.0,
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          if (hasPhoto && _model.editphoto)
+            Align(
+              alignment: const AlignmentDirectional(1.05, -1.04),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  8.0,
+                  8.0,
+                  0.0,
+                ),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: _isSavingPhotoshow
+                      ? null
+                      : () => _removePhotoshowImage(index + 1),
+                  child: Container(
+                    width: 23.0,
+                    height: 23.0,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF2D38),
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 4.0,
+                          color: Color(0x33000000),
+                          offset: Offset(0.0, 2.0),
+                          spreadRadius: 1.0,
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 18.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          if (_isSavingPhotoshow)
+            const Positioned.fill(
+              child: IgnorePointer(
+                child: ColoredBox(
+                  color: Color(0x22000000),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPhotoshowTile(int index, List<String?> photoshowUrls) {
+    final resolvedUrl = _normalizedPhotoUrl(photoshowUrls[index]);
+    final dragEnabled = resolvedUrl != null &&
+        !_isSavingPhotoshow &&
+        photoshowUrls.where((url) => _normalizedPhotoUrl(url) != null).length > 1;
+    final targetEnabled = !_isSavingPhotoshow;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return DragTarget<int>(
+          onWillAcceptWithDetails: (details) =>
+              targetEnabled && details.data != index,
+          onAcceptWithDetails: (details) async {
+            await _reorderPhotoshowImages(details.data, index);
+          },
+          builder: (context, candidateData, rejectedData) {
+            final tile = _buildPhotoshowTileSurface(
+              index: index,
+              imageUrl: resolvedUrl,
+              isActiveTarget: candidateData.isNotEmpty,
+            );
+
+            if (!dragEnabled) {
+              return tile;
+            }
+
+            return LongPressDraggable<int>(
+              data: index,
+              delay: const Duration(milliseconds: 140),
+              dragAnchorStrategy: pointerDragAnchorStrategy,
+              feedbackOffset: Offset.zero,
+              feedback: Material(
+                color: Colors.transparent,
+                child: Transform.translate(
+                  offset: Offset(
+                    -constraints.maxWidth / 2,
+                    -constraints.maxHeight / 2,
+                  ),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    height: constraints.maxHeight,
+                    child: _buildPhotoshowTileSurface(
+                      index: index,
+                      imageUrl: resolvedUrl,
+                      isActiveTarget: false,
+                    ),
+                  ),
+                ),
+              ),
+              childWhenDragging: Opacity(
+                opacity: 0.35,
+                child: _buildPhotoshowTileSurface(
+                  index: index,
+                  imageUrl: resolvedUrl,
+                  isActiveTarget: false,
+                ),
+              ),
+              child: tile,
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildPhotoshowSection() {
+    return AuthUserStreamWidget(
+      builder: (context) {
+        final photoshowUrls = _effectivePhotoshowUrls();
+        return Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            20.0,
+            0.0,
+            20.0,
+            0.0,
+          ),
+          child: Container(
+            width: double.infinity,
+            height: 260.0,
+            decoration: const BoxDecoration(
+              color: Color(0xFF0E0E0E),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15.0),
+                bottomRight: Radius.circular(15.0),
+                topLeft: Radius.circular(0.0),
+                topRight: Radius.circular(0.0),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 250.0,
+                  child: AbsorbPointer(
+                    absorbing: _isSavingPhotoshow,
+                    child: GridView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 1.5,
+                        mainAxisSpacing: 1.5,
+                        childAspectRatio: 1.0,
+                      ),
+                      itemCount: _photoshowSlotCount,
+                      itemBuilder: (context, index) =>
+                          _buildPhotoshowTile(index, photoshowUrls),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -154,16 +987,29 @@ class _ProfileWidgetState extends State<ProfileWidget>
         _model.datachange = true;
       },
     );
-    _model.textController3 ??= TextEditingController(
-        text: valueOrDefault(currentUserDocument?.idig, ''));
+    final initialInstagramHandle = _currentInstagramHandle();
+    _model.textController3 ??=
+        TextEditingController(text: initialInstagramHandle);
     _model.textFieldFocusNode3 ??= FocusNode();
     _model.textFieldFocusNode3!.addListener(
       () async {
-        await currentUserReference!.update(createUsersRecordData(
-          idig: _model.textController3.text,
-        ));
+        if (_model.textFieldFocusNode3?.hasFocus ?? false) {
+          return;
+        }
+        _storeInstagramHandle(_model.textController3?.text ?? '');
+        _syncInstagramFollowersForInput(_model.textController3?.text);
       },
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      if (FFAppState().profileInstagramHandle.isEmpty &&
+          initialInstagramHandle.isNotEmpty) {
+        _storeInstagramHandle(initialInstagramHandle);
+      }
+      _syncInstagramFollowersForInput(_model.textController3?.text);
+    });
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -196,6 +1042,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancel('_profileInstagramFollowersLookup');
     _model.dispose();
 
     super.dispose();
@@ -358,7 +1205,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         ),
                                         onPressed: () async {
                                           context.pushNamed(
-                                              Profile06Widget.routeName);
+                                              AccountSettingsWidget.routeName);
                                         },
                                       ),
                                     ),
@@ -393,27 +1240,76 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                               Stack(
                                                 children: [
                                                   AuthUserStreamWidget(
-                                                    builder: (context) =>
-                                                        Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        image: DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: Image.network(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              currentUserPhoto,
-                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
-                                                            ),
-                                                          ).image,
+                                                    builder: (context) {
+                                                      final resolvedUrl =
+                                                          _normalizedPhotoUrl(
+                                                              currentUserPhoto);
+                                                      final mainHeroTag =
+                                                          resolvedUrl == null
+                                                              ? null
+                                                              : _profileHeroTag(
+                                                                  _profileMainHeroPrefix,
+                                                                  resolvedUrl,
+                                                                );
+                                                      final profileItem =
+                                                          _profileGalleryItem(
+                                                        heroTagOverride:
+                                                            mainHeroTag,
+                                                      );
+                                                      final imageUrl =
+                                                          profileItem?.url ??
+                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+                                                      final avatar =
+                                                          Container(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image:
+                                                                Image.network(
+                                                              imageUrl,
+                                                            ).image,
+                                                          ),
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                    ),
+                                                      );
+
+                                                      if (profileItem == null) {
+                                                        return avatar;
+                                                      }
+
+                                                      return InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: mainHeroTag ==
+                                                                null
+                                                            ? null
+                                                            : () =>
+                                                                _openProfileGalleryViewer(
+                                                                  mainHeroTag,
+                                                                ),
+                                                        child: Hero(
+                                                          tag: profileItem
+                                                              .heroTag,
+                                                          transitionOnUserGestures:
+                                                              true,
+                                                          child: avatar,
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
                                                   Align(
                                                     alignment:
@@ -1112,72 +2008,67 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             child: Stack(
                                               children: [
                                                 AuthUserStreamWidget(
-                                                  builder: (context) => InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          child:
-                                                              FlutterFlowExpandedImageView(
-                                                            image:
-                                                                Image.network(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                currentUserPhoto,
-                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                                                  builder: (context) {
+                                                    final resolvedUrl =
+                                                        _normalizedPhotoUrl(
+                                                            currentUserPhoto);
+                                                    final previewHeroTag =
+                                                        resolvedUrl == null
+                                                            ? null
+                                                            : _profileHeroTag(
+                                                                _profilePreviewHeroPrefix,
+                                                                resolvedUrl,
+                                                              );
+                                                    final profileItem =
+                                                        _profileGalleryItem(
+                                                      heroTagOverride:
+                                                          previewHeroTag,
+                                                    );
+                                                    final imageUrl =
+                                                        profileItem?.url ??
+                                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+                                                    final previewImage =
+                                                        ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              90.0),
+                                                      child: Image.network(
+                                                        imageUrl,
+                                                        width: 57.0,
+                                                        height: 57.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    );
+
+                                                    if (profileItem == null) {
+                                                      return previewImage;
+                                                    }
+
+                                                    return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: previewHeroTag ==
+                                                              null
+                                                          ? null
+                                                          : () =>
+                                                              _openProfileGalleryViewer(
+                                                                previewHeroTag,
                                                               ),
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                            ),
-                                                            allowRotation:
-                                                                false,
-                                                            tag: valueOrDefault<
-                                                                String>(
-                                                              currentUserPhoto,
-                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
-                                                            ),
-                                                            useHeroAnimation:
-                                                                true,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Hero(
-                                                      tag: valueOrDefault<
-                                                          String>(
-                                                        currentUserPhoto,
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                                                      child: Hero(
+                                                        tag:
+                                                            profileItem.heroTag,
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: previewImage,
                                                       ),
-                                                      transitionOnUserGestures:
-                                                          true,
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(90.0),
-                                                        child: Image.network(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            currentUserPhoto,
-                                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
-                                                          ),
-                                                          width: 57.0,
-                                                          height: 57.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                    );
+                                                  },
                                                 ),
                                                 Align(
                                                   alignment:
@@ -1466,7 +2357,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                   ),
                                 ),
                               ),
-                              Padding(
+                              _buildPhotoshowSection(),
+                              if (false)
+                                Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20.0, 0.0, 20.0, 0.0),
                                 child: Container(
@@ -3396,322 +4289,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                             ],
                           ).animateOnPageLoad(
                               animationsMap['columnOnPageLoadAnimation']!),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 20.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 10.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          border: Border.all(
-                                            color: Color(0xFF1D1D1D),
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      20.0, 0.0, 0.0, 0.0),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.instagram,
-                                                color: Colors.white,
-                                                size: 25.0,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 0.0, 10.0, 0.0),
-                                                child: AuthUserStreamWidget(
-                                                  builder: (context) =>
-                                                      TextFormField(
-                                                    controller:
-                                                        _model.textController3,
-                                                    focusNode: _model
-                                                        .textFieldFocusNode3,
-                                                    autofocus: false,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                fontSize: 16.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                      alignLabelWithHint: false,
-                                                      hintText:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                        'eihlwqu6' /* Name Instagram */,
-                                                      ),
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                      enabledBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                      ),
-                                                      errorBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                      ),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          fontSize: 16.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                    validator: _model
-                                                        .textController3Validator
-                                                        .asValidator(context),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 15.0, 0.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  FFAppState().update(() {
-                                                    FFAppState()
-                                                        .profileInstagramHandle = '';
-                                                  });
-                                                  safeSetState(() {
-                                                    _model.textController3
-                                                        ?.clear();
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  Icons.close,
-                                                  color: Colors.white,
-                                                  size: 20.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: 50.0,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFF131313),
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0.0),
-                                                  bottomRight:
-                                                      Radius.circular(18.0),
-                                                  topLeft: Radius.circular(0.0),
-                                                  topRight:
-                                                      Radius.circular(18.0),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(15.0, 0.0,
-                                                                7.0, 0.0),
-                                                    child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'gqwxd6cb' /* 143.5 k */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                fontSize: 16.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
-                                                    child: Icon(
-                                                      Icons.person_sharp,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      size: 21.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          _buildInstagramSection(),
                         ].addToEnd(SizedBox(height: 80.0)),
                       ),
                     ),
@@ -3802,6 +4380,225 @@ class _ProfileWidgetState extends State<ProfileWidget>
           ),
         );
       },
+    );
+  }
+}
+
+class _PhotoshowGalleryItem {
+  const _PhotoshowGalleryItem({
+    required this.url,
+    required this.heroTag,
+    required this.isProfile,
+  });
+
+  final String url;
+  final Object heroTag;
+  final bool isProfile;
+}
+
+class _PhotoshowGalleryViewer extends StatefulWidget {
+  const _PhotoshowGalleryViewer({
+    required this.items,
+    required this.initialIndex,
+  });
+
+  final List<_PhotoshowGalleryItem> items;
+  final int initialIndex;
+
+  @override
+  State<_PhotoshowGalleryViewer> createState() => _PhotoshowGalleryViewerState();
+}
+
+class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
+  late final PageController _pageController;
+  late int _currentIndex;
+  double _verticalDragOffset = 0.0;
+  bool _isClosing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _closeViewer() {
+    if (_isClosing || !mounted) {
+      return;
+    }
+    _isClosing = true;
+    Navigator.of(context).pop();
+  }
+
+  void _handleVerticalDragUpdate(DragUpdateDetails details) {
+    final nextOffset = (_verticalDragOffset + details.delta.dy).clamp(0.0, 400.0);
+    if (nextOffset == _verticalDragOffset) {
+      return;
+    }
+    setState(() {
+      _verticalDragOffset = nextOffset;
+    });
+  }
+
+  void _handleVerticalDragEnd(DragEndDetails details) {
+    final shouldClose = _verticalDragOffset > 120.0 ||
+        (details.primaryVelocity ?? 0.0) > 900.0;
+    if (shouldClose) {
+      _closeViewer();
+      return;
+    }
+    setState(() {
+      _verticalDragOffset = 0.0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentItem = widget.items[_currentIndex];
+    final backgroundOpacity = (1.0 - (_verticalDragOffset / 260.0))
+        .clamp(0.0, 1.0)
+        .toDouble();
+
+    return Material(
+      color: Colors.black.withValues(alpha: backgroundOpacity),
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ColoredBox(
+                color: Colors.black.withValues(alpha: backgroundOpacity),
+              ),
+            ),
+            Positioned.fill(
+              child: Transform.translate(
+                offset: Offset(0.0, _verticalDragOffset),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onVerticalDragUpdate: _handleVerticalDragUpdate,
+                  onVerticalDragEnd: _handleVerticalDragEnd,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: widget.items.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      final item = widget.items[index];
+                      final imageWidget = Image.network(
+                        item.url,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/error_image.png',
+                          fit: BoxFit.contain,
+                        ),
+                      );
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: _closeViewer,
+                            child: const SizedBox.expand(),
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: index == _currentIndex
+                                  ? Hero(
+                                      tag: item.heroTag,
+                                      transitionOnUserGestures: true,
+                                      child: imageWidget,
+                                    )
+                                  : imageWidget,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 16.0,
+              left: 16.0,
+              child: currentItem.isProfile
+                  ? IgnorePointer(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 7.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0x99000000),
+                          borderRadius: BorderRadius.circular(999.0),
+                          border: Border.all(
+                            color: const Color(0x55FFFFFF),
+                          ),
+                        ),
+                        child: const Text(
+                          'รูปโปรไฟล์',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+            Positioned(
+              top: 16.0,
+              right: 16.0,
+              child: IconButton(
+                onPressed: _closeViewer,
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 28.0,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: 24.0,
+              child: IgnorePointer(
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14.0,
+                      vertical: 8.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0x88000000),
+                      borderRadius: BorderRadius.circular(999.0),
+                    ),
+                    child: Text(
+                      '${_currentIndex + 1} / ${widget.items.length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

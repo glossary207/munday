@@ -198,10 +198,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             builder: (context, params) => HomeWidget(),
           ),
           FFRoute(
-            name: Profile06Widget.routeName,
-            path: Profile06Widget.routePath,
+            name: AccountSettingsWidget.routeName,
+            path: AccountSettingsWidget.routePath,
             requireAuth: true,
-            builder: (context, params) => Profile06Widget(),
+            builder: (context, params) => const AccountSettingsWidget(),
+          ),
+          FFRoute(
+            name: 'Profile06',
+            path: 'profile06',
+            requireAuth: true,
+            builder: (context, params) => const AccountSettingsWidget(),
           ),
           FFRoute(
             name: PrivacyPolicyWidget.routeName,

@@ -35,6 +35,13 @@ import 'package:url_launcher/url_launcher.dart';
 import 'in_venuse_model.dart';
 export 'in_venuse_model.dart';
 
+const _kInVenuseFallbackPosterUrl =
+    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+const _supportsVenueFavorites = false;
+const _supportsVenueGroupInvites = false;
+const _venuePresenceCollection = 'user_in_venues';
+const _venueCheckInRadius = 10000000000000.0;
+
 class InVenuseWidget extends StatefulWidget {
   const InVenuseWidget({
     super.key,
@@ -129,6 +136,711 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
           ),
         ),
       ),
+    );
+  }
+
+  bool _hasValidNetworkImageUrl(String? url) {
+    final normalized = url?.trim();
+    if (normalized == null || normalized.isEmpty) {
+      return false;
+    }
+
+    final uri = Uri.tryParse(normalized);
+    return uri != null &&
+        (uri.scheme == 'http' || uri.scheme == 'https') &&
+        uri.host.isNotEmpty;
+  }
+
+  ImageProvider? _networkImageProviderOrNull(String? url) {
+    if (!_hasValidNetworkImageUrl(url)) {
+      return null;
+    }
+    return NetworkImage(url!.trim());
+  }
+
+  String _safeNetworkImageUrl(
+    String? url, {
+    required String fallback,
+  }) {
+    if (_hasValidNetworkImageUrl(url)) {
+      return url!.trim();
+    }
+    return fallback;
+  }
+
+  void _showSchemaUnavailableMessage(
+    BuildContext context, {
+    required String feature,
+  }) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text('$feature ยังไม่รองรับใน schema ปัจจุบัน'),
+        ),
+      );
+  }
+
+  Stream<List<Map<String, dynamic>>> _streamVenuePresenceRows(String venueId) {
+    return Supabase.instance.client
+        .from(_venuePresenceCollection)
+        .stream(primaryKey: ['id'])
+        .eq('venue_id', venueId)
+        .order('created_time', ascending: false)
+        .map(
+          (rows) => rows
+              .map((row) => Map<String, dynamic>.from(row))
+              .toList(growable: false),
+        );
+  }
+
+  List<String> _distinctVenueMemberIds(List<Map<String, dynamic>> rows) {
+    final orderedIds = <String>[];
+    final seen = <String>{};
+
+    for (final row in rows) {
+      final userId = row['user_id']?.toString().trim();
+      if (userId == null || userId.isEmpty || !seen.add(userId)) {
+        continue;
+      }
+      orderedIds.add(userId);
+    }
+
+    return orderedIds;
+  }
+
+  Future<List<UsersRecord>> _loadVenueMemberUsers(List<String> userIds) async {
+    if (userIds.isEmpty) {
+      return const [];
+    }
+
+    final users = await queryUsersRecordOnce(
+      queryBuilder: (q) => q.where('id', whereIn: userIds),
+    );
+    final usersById = {
+      for (final user in users) user.reference.id: user,
+    };
+
+    return userIds
+        .map((userId) => usersById[userId])
+        .whereType<UsersRecord>()
+        .toList(growable: false);
+  }
+
+  List<PromotionDataSubStruct> _resolvedVenuePromotions(VenuesRecord venue) {
+    if (venue.listpromotion.isNotEmpty) {
+      final validLegacyPromotions = venue.listpromotion
+          .where((promotion) => _hasValidNetworkImageUrl(promotion.photo))
+          .toList(growable: false);
+      if (validLegacyPromotions.isNotEmpty) {
+        return validLegacyPromotions;
+      }
+    }
+
+    return venue.promotion
+        .where(_hasValidNetworkImageUrl)
+        .map(
+          (photoUrl) => PromotionDataSubStruct(
+            photo: photoUrl.trim(),
+            mon: true,
+            tue: true,
+            wed: true,
+            thu: true,
+            fri: true,
+            sat: true,
+            sun: true,
+          ),
+        )
+        .toList(growable: false);
+  }
+
+  List<String> _resolvedVenuePhotoUrls(VenuesRecord venue) {
+    return venue.photos
+        .where(_hasValidNetworkImageUrl)
+        .map((photoUrl) => photoUrl.trim())
+        .toList(growable: false);
+  }
+
+  Future<void> _showVenuePhotoSheet(
+    BuildContext context,
+    VenuesRecord venue,
+    int index,
+  ) async {
+    final photoUrls = _resolvedVenuePhotoUrls(venue);
+    if (index < 0 || index >= photoUrls.length) {
+      return;
+    }
+
+    final orderedPhotos = List<String>.from(photoUrls);
+    final selectedPhoto = orderedPhotos.removeAt(index);
+    orderedPhotos.insert(0, selectedPhoto);
+
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Padding(
+            padding: MediaQuery.viewInsetsOf(context),
+            child: ShowphotoWidget(
+              photo: orderedPhotos,
+            ),
+          ),
+        );
+      },
+    ).then((value) => safeSetState(() {}));
+  }
+
+  Widget _buildVenuePhotoTile(
+    BuildContext context,
+    VenuesRecord venue,
+    int index,
+  ) {
+    final photoUrls = _resolvedVenuePhotoUrls(venue);
+    final photoUrl = index < photoUrls.length ? photoUrls[index] : null;
+    final tileWidth = MediaQuery.sizeOf(context).width * 0.33;
+
+    return InkWell(
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap:
+          photoUrl == null ? null : () => _showVenuePhotoSheet(context, venue, index),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(0.0),
+        child: photoUrl != null
+            ? Image.network(
+                photoUrl,
+                width: tileWidth,
+                height: MediaQuery.sizeOf(context).height * 1.0,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: const Color(0xFF1A1A1A),
+                ),
+              )
+            : Container(
+                width: tileWidth,
+                color: const Color(0xFF1A1A1A),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildVenuePhotoGrid(BuildContext context, VenuesRecord venue) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              3,
+              (index) => _buildVenuePhotoTile(context, venue, index),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(
+                3,
+                (index) => _buildVenuePhotoTile(context, venue, index + 3),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  bool _canCheckInToVenue(VenuesRecord venue) {
+    if (venue.position == null || _model.location == null) {
+      return true;
+    }
+
+    return functions.check2position(
+          _model.location,
+          venue.position,
+          _venueCheckInRadius,
+        ) ??
+        true;
+  }
+
+  Future<void> _showNotAtVenueSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Padding(
+            padding: MediaQuery.viewInsetsOf(context),
+            child: YouarenothereWidget(
+              poperror: false,
+            ),
+          ),
+        );
+      },
+    ).then((value) => safeSetState(() {}));
+  }
+
+  Future<void> _handleVenueCheckIn(
+    BuildContext context,
+    VenuesRecord venue,
+  ) async {
+    if (currentUser == null || currentUserReference == null) {
+      context.pushNamed(PhoneLoginWidget.routeName);
+      return;
+    }
+
+    if (!_canCheckInToVenue(venue)) {
+      await _showNotAtVenueSheet(context);
+      return;
+    }
+
+    final existingRows = await Supabase.instance.client
+        .from(_venuePresenceCollection)
+        .select('id')
+        .eq('venue_id', venue.reference.id)
+        .eq('user_id', currentUserReference!.id)
+        .limit(1);
+
+    final alreadyCheckedIn =
+        existingRows is List && existingRows.isNotEmpty;
+    if (alreadyCheckedIn) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text('คุณเช็กอินร้านนี้แล้ว'),
+          ),
+        );
+      return;
+    }
+
+    await Supabase.instance.client.from(_venuePresenceCollection).insert({
+      'user_id': currentUserReference!.id,
+      'venue_id': venue.reference.id,
+    });
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        const SnackBar(
+          content: Text('เช็กอินเรียบร้อย'),
+        ),
+      );
+  }
+
+  Widget _buildVenueMemberTile(BuildContext context, UsersRecord user) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width * 0.21,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: MediaQuery.sizeOf(context).width * 0.17,
+            height: MediaQuery.sizeOf(context).width * 0.17,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(999.0),
+              child: Image.network(
+                _safeNetworkImageUrl(
+                  user.photoUrl,
+                  fallback: _kInVenuseFallbackPosterUrl,
+                ),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: const Color(0xFF1A1A1A),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
+            child: Text(
+              valueOrDefault<String>(
+                user.displayName,
+                'Member',
+              ).maybeHandleOverflow(maxChars: 12),
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    font: GoogleFonts.openSans(
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    fontSize: 10.0,
+                    letterSpacing: 0.0,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVenueAudienceSection(
+    BuildContext context,
+    VenuesRecord venue,
+    DateTime selectedDate,
+  ) {
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: _streamVenuePresenceRows(venue.reference.id),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF0D0D0D),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(24.0, 28.0, 24.0, 170.0),
+              child: Text(
+                'โหลดข้อมูลสมาชิกในร้านไม่สำเร็จ',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+
+        if (!snapshot.hasData) {
+          return Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF0D0D0D),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 190.0),
+              child: Center(
+                child: SizedBox(
+                  width: 40.0,
+                  height: 40.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF0000)),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        final rows = snapshot.data!;
+        final memberIds = _distinctVenueMemberIds(rows);
+        final currentUserId = currentUserReference?.id;
+        final hasCheckedIn =
+            currentUserId != null && memberIds.contains(currentUserId);
+
+        return Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Color(0xFF0D0D0D),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          25.0, 0.0, 0.0, 3.0),
+                      child: Text(
+                        valueOrDefault<String>(
+                          functions.month(selectedDate),
+                          'ไม่ระบุ',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w600,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                              fontSize: 16.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 25.0, 0.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${venue.capacity}',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                          Text(
+                            ' / ${venue.maxCapacity}',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                15.0, 0.0, 0.0, 0.0),
+                            child: Icon(
+                              Icons.people_rounded,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 25.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              memberIds.length.toString(),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                    15.0, 7.0, 15.0, 0.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 80.0,
+                  child: custom_widgets.Calendarslide(
+                    width: 45.0,
+                    height: 75.0,
+                    colorPicker: const Color(0xFFFF0000),
+                    icon: const Icon(
+                      Icons.star_rate,
+                      color: Color(0xFFFF0000),
+                      size: 15.0,
+                    ),
+                    dateNow: getCurrentTimestamp,
+                    dateclickwidget: selectedDate,
+                    dateEvent: venue.dateEvents,
+                    onselect: () async {
+                      safeSetState(() {});
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(25.0, 10.0, 25.0, 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Check in',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.openSans(
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            color:
+                                FlutterFlowTheme.of(context).primaryBtnText,
+                            fontSize: 14.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () => _handleVenueCheckIn(context, venue),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: hasCheckedIn
+                              ? const Color(0xFF2E7D32)
+                              : const Color(0xFF58BB2F),
+                          borderRadius: BorderRadius.circular(90.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              12.0, 3.0, 12.0, 5.0),
+                          child: Text(
+                            hasCheckedIn ? 'checked in' : 'check in',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 12.0,
+                                  letterSpacing: 1.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(14.0, 8.0, 14.0, 150.0),
+                child: FutureBuilder<List<UsersRecord>>(
+                  future: _loadVenueMemberUsers(memberIds),
+                  builder: (context, usersSnapshot) {
+                    if (usersSnapshot.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24.0),
+                        child: Center(
+                          child: SizedBox(
+                            width: 32.0,
+                            height: 32.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFFFF0000)),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    final users = usersSnapshot.data ?? const <UsersRecord>[];
+                    if (users.isEmpty) {
+                      return Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        child: Text(
+                          'ยังไม่มีคนเช็กอินร้านนี้',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                                color: const Color(0xFFB3B3B3),
+                                fontSize: 13.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                        ),
+                      );
+                    }
+
+                    return Wrap(
+                      alignment: WrapAlignment.start,
+                      runSpacing: 16.0,
+                      spacing: 8.0,
+                      children: users
+                          .map((user) => _buildVenueMemberTile(context, user))
+                          .toList(growable: false),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -312,6 +1024,10 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
         }
 
         final inVenuseVenuesRecord = snapshot.data!;
+        final venueBgImage =
+            _networkImageProviderOrNull(inVenuseVenuesRecord.bg);
+        final venueLogoImage =
+            _networkImageProviderOrNull(inVenuseVenuesRecord.logo);
 
         return GestureDetector(
           onTap: () {
@@ -338,11 +1054,10 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                 width: MediaQuery.sizeOf(context).width * 1.0,
                                 height: 339.0,
                                 decoration: BoxDecoration(
-                                  image: inVenuseVenuesRecord.bg.isNotEmpty
+                                  image: venueBgImage != null
                                       ? DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              inVenuseVenuesRecord.bg),
+                                          image: venueBgImage,
                                         )
                                       : null,
                                 ),
@@ -444,15 +1159,13 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                         height: 100.0,
                                                         decoration:
                                                             BoxDecoration(
-                                                          image: inVenuseVenuesRecord
-                                                                  .logo
-                                                                  .isNotEmpty
+                                                          image: venueLogoImage !=
+                                                                  null
                                                               ? DecorationImage(
                                                                   fit: BoxFit
                                                                       .cover,
-                                                                  image: NetworkImage(
-                                                                      inVenuseVenuesRecord
-                                                                          .logo),
+                                                                  image:
+                                                                      venueLogoImage,
                                                                 )
                                                               : null,
                                                           shape:
@@ -2064,6 +2777,14 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
+                                                        if (!_supportsVenueFavorites) {
+                                                          _showSchemaUnavailableMessage(
+                                                            context,
+                                                            feature:
+                                                                'บันทึกร้านโปรด',
+                                                          );
+                                                          return;
+                                                        }
                                                         if ((currentUserDocument
                                                                     ?.loveVenuse
                                                                     .toList() ??
@@ -2581,8 +3302,12 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                           .cover,
                                                                       image:
                                                                           CachedNetworkImageProvider(
-                                                                        containerEventsRecord
-                                                                            .poster,
+                                                                        _safeNetworkImageUrl(
+                                                                          containerEventsRecord
+                                                                              .poster,
+                                                                          fallback:
+                                                                              _kInVenuseFallbackPosterUrl,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                     borderRadius:
@@ -2973,15 +3698,16 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                       safeSetState(() {}),
                                                   child: RowpromotionWidget(
                                                     dataPro:
-                                                        inVenuseVenuesRecord
-                                                            .listpromotion,
+                                                        _resolvedVenuePromotions(
+                                                            inVenuseVenuesRecord),
                                                     todaycheck: true,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            if (!(inVenuseVenuesRecord
-                                                .listpromotion.isNotEmpty))
+                                            if (_resolvedVenuePromotions(
+                                                    inVenuseVenuesRecord)
+                                                .isEmpty)
                                               Align(
                                                 alignment: AlignmentDirectional(
                                                     0.0, -1.0),
@@ -3100,7 +3826,12 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                             0.0, 10.0, 0.0, 0.0),
                                         child: Stack(
                                           children: [
-                                            Column(
+                                            _buildVenuePhotoGrid(
+                                              context,
+                                              inVenuseVenuesRecord,
+                                            ),
+                                            if (false)
+                                              Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -3674,8 +4405,9 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                 ),
                                               ],
                                             ),
-                                            if (inVenuseVenuesRecord
-                                                    .photos.length >
+                                            if (_resolvedVenuePhotoUrls(
+                                                        inVenuseVenuesRecord)
+                                                    .length >
                                                 6)
                                               Align(
                                                 alignment: AlignmentDirectional(
@@ -3713,8 +4445,8 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                             child:
                                                                 AllphotoWidget(
                                                               dataphoto:
-                                                                  inVenuseVenuesRecord
-                                                                      .photos,
+                                                                  _resolvedVenuePhotoUrls(
+                                                                      inVenuseVenuesRecord),
                                                             ),
                                                           ),
                                                         );
@@ -4696,788 +5428,11 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                               ),
                             ),
                           ),
-                        if (inVenuseVenuesRecord.hasRefUserInVenues())
-                          StreamBuilder<UserInVenuesRecord>(
-                            stream: UserInVenuesRecord.getDocument(
-                                inVenuseVenuesRecord.refUserInVenues!),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              final stackUserInVenuesRecord = snapshot.data!;
-
-                              return Container(
-                                width: double.infinity,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF0D0D0D),
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(0.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(20.0),
-                                          topRight: Radius.circular(20.0),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  25.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  3.0),
-                                                      child: Text(
-                                                        valueOrDefault<String>(
-                                                          functions.month(
-                                                              FFAppState()
-                                                                  .dateclick),
-                                                          'ไม่ระบุ',
-                                                        ),
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                              fontSize: 16.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                        child: Image.asset(
-                                                          'assets/images/MEE2.png',
-                                                          width: 20.0,
-                                                          height: 20.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  2.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          'vamjb92x' /* 20 */,
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'l5csrspf' /* / */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  2.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          'h7vgc50h' /* 120 */,
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  15.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Icon(
-                                                        Icons.people_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        size: 25.0,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  25.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        stackUserInVenuesRecord
-                                                            .user
-                                                            .where((e) =>
-                                                                functions.checkdate(
-                                                                    e.date,
-                                                                    selectedDate) ??
-                                                                false)
-                                                            .toList()
-                                                            .length
-                                                            .toString(),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 7.0, 15.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 80.0,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ),
-                                              child: Container(
-                                                width: 45.0,
-                                                height: 75.0,
-                                                child: custom_widgets
-                                                    .Calendarslide(
-                                                  width: 45.0,
-                                                  height: 75.0,
-                                                  colorPicker:
-                                                      Color(0xFFFF0000),
-                                                  icon: Icon(
-                                                    Icons.star_rate,
-                                                    color: Color(0xFFFF0000),
-                                                    size: 15.0,
-                                                  ),
-                                                  dateNow: getCurrentTimestamp,
-                                                  dateclickwidget: selectedDate,
-                                                  dateEvent:
-                                                      inVenuseVenuesRecord
-                                                          .dateEvents,
-                                                  onselect: () async {
-                                                    safeSetState(() {});
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      25.0, 10.0, 0.0, 8.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                1.0, 0.0),
-                                                    child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '2ron4yx3' /* Check in */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  25.0,
-                                                                  0.0),
-                                                      child: InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          if (functions.check2position(
-                                                                  _model
-                                                                      .location,
-                                                                  inVenuseVenuesRecord
-                                                                      .position,
-                                                                  10000000000000.0) ==
-                                                              true) {
-                                                            if (currentUserDocument
-                                                                    ?.loginVenuesRoom !=
-                                                                null) {
-                                                              if (currentUserDocument
-                                                                      ?.loginVenuesRoom !=
-                                                                  inVenuseVenuesRecord
-                                                                      .reference) {
-                                                                await DeletepeoplefromvenueCall
-                                                                    .call(
-                                                                  uid:
-                                                                      currentUserReference
-                                                                          ?.id,
-                                                                  userinvenueid:
-                                                                      (currentUserDocument?.iDROOMVenues.toList() ??
-                                                                              [])
-                                                                          .firstOrNull
-                                                                          ?.id,
-                                                                  datetodelete:
-                                                                      getCurrentTimestamp
-                                                                          .secondsSinceEpoch,
-                                                                );
-
-                                                                _model.dataVV =
-                                                                    await queryVenuesRecordOnce();
-
-                                                                await currentUserReference!
-                                                                    .update({
-                                                                  ...createUsersRecordData(
-                                                                    popupEditProfile:
-                                                                        true,
-                                                                    loginVenuesRoom:
-                                                                        inVenuseVenuesRecord
-                                                                            .reference,
-                                                                    nameLoginVenues:
-                                                                        inVenuseVenuesRecord
-                                                                            .nameVenuse,
-                                                                    logoRoom:
-                                                                        inVenuseVenuesRecord
-                                                                            .logo,
-                                                                  ),
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'IDROOMVenues': functions
-                                                                          .connectVenuse(
-                                                                              _model.dataVV?.toList(),
-                                                                              inVenuseVenuesRecord.position,
-                                                                              50.0)
-                                                                          ?.map((e) => e.refUserInVenues)
-                                                                          .withoutNulls
-                                                                          .toList(),
-                                                                    },
-                                                                  ),
-                                                                });
-
-                                                                await stackUserInVenuesRecord
-                                                                    .reference
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'user': FieldValue
-                                                                          .arrayUnion([
-                                                                        getDaSupabaseData(
-                                                                          updateDaStruct(
-                                                                            DaStruct(
-                                                                              date: getCurrentTimestamp,
-                                                                              user: DatauserStruct(
-                                                                                userinstore: currentUserReference,
-                                                                                photoprofile: currentUserPhoto,
-                                                                                name: currentUserDisplayName,
-                                                                              ),
-                                                                            ),
-                                                                            clearUnsetFields:
-                                                                                false,
-                                                                          ),
-                                                                          true,
-                                                                        )
-                                                                      ]),
-                                                                    },
-                                                                  ),
-                                                                });
-
-                                                                context.pushNamed(
-                                                                    HomeWidget
-                                                                        .routeName);
-                                                              } else {
-                                                                context.pushNamed(
-                                                                    HomeWidget
-                                                                        .routeName);
-                                                              }
-                                                            } else {
-                                                              _model.dataVVV =
-                                                                  await queryVenuesRecordOnce();
-
-                                                              await currentUserReference!
-                                                                  .update({
-                                                                ...createUsersRecordData(
-                                                                  popupEditProfile:
-                                                                      true,
-                                                                  loginVenuesRoom:
-                                                                      inVenuseVenuesRecord
-                                                                          .reference,
-                                                                  nameLoginVenues:
-                                                                      inVenuseVenuesRecord
-                                                                          .nameVenuse,
-                                                                ),
-                                                                ...mapToSupabase(
-                                                                  {
-                                                                    'IDROOMVenues': functions
-                                                                        .connectVenuse(
-                                                                            _model.dataVVV
-                                                                                ?.toList(),
-                                                                            inVenuseVenuesRecord
-                                                                                .position,
-                                                                            50.0)
-                                                                        ?.map((e) =>
-                                                                            e.refUserInVenues)
-                                                                        .withoutNulls
-                                                                        .toList(),
-                                                                  },
-                                                                ),
-                                                              });
-
-                                                              await stackUserInVenuesRecord
-                                                                  .reference
-                                                                  .update({
-                                                                ...mapToSupabase(
-                                                                  {
-                                                                    'user': FieldValue
-                                                                        .arrayUnion([
-                                                                      getDaSupabaseData(
-                                                                        updateDaStruct(
-                                                                          DaStruct(
-                                                                            date:
-                                                                                getCurrentTimestamp,
-                                                                            user:
-                                                                                DatauserStruct(
-                                                                              userinstore: currentUserReference,
-                                                                              photoprofile: currentUserPhoto,
-                                                                              name: currentUserDisplayName,
-                                                                            ),
-                                                                          ),
-                                                                          clearUnsetFields:
-                                                                              false,
-                                                                        ),
-                                                                        true,
-                                                                      )
-                                                                    ]),
-                                                                  },
-                                                                ),
-                                                              });
-
-                                                              context.pushNamed(
-                                                                  HomeWidget
-                                                                      .routeName);
-                                                            }
-                                                          } else {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        YouarenothereWidget(
-                                                                      poperror:
-                                                                          false,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-                                                          }
-
-                                                          safeSetState(() {});
-                                                        },
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0xFF58BB2F),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        90.0),
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            12.0,
-                                                                            2.0,
-                                                                            12.0,
-                                                                            4.0),
-                                                                    child: Text(
-                                                                      FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'e4fx9nlv' /* join room */,
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                1.2,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            lineHeight:
-                                                                                0.0,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 1.0),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 150.0),
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: functions.scaleshowuser(
-                                                    MediaQuery.sizeOf(context)
-                                                        .width,
-                                                    stackUserInVenuesRecord.user
-                                                        .where((e) =>
-                                                            functions.checkdate(
-                                                                e.date,
-                                                                selectedDate) ??
-                                                            false)
-                                                        .toList()
-                                                        .length
-                                                        .toDouble()),
-                                                decoration: BoxDecoration(),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Flexible(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    10.0,
-                                                                    0.0),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        50.0),
-                                                            child:
-                                                                wrapWithModel(
-                                                              model: _model
-                                                                  .showpeopleModel,
-                                                              updateCallback: () =>
-                                                                  safeSetState(
-                                                                      () {}),
-                                                              child:
-                                                                  ShowpeopleWidget(
-                                                                refdoc: inVenuseVenuesRecord
-                                                                    .refUserInVenues!,
-                                                                date:
-                                                                    selectedDate,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 100.0,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
+                        _buildVenueAudienceSection(
+                          context,
+                          inVenuseVenuesRecord,
+                          selectedDate,
+                        ),
                       ],
                     ),
                   ),
@@ -5812,6 +5767,13 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                           .routeName);
                                                   return;
                                                 }
+                                                if (!_supportsVenueGroupInvites) {
+                                                  _showSchemaUnavailableMessage(
+                                                    context,
+                                                    feature: 'Invite',
+                                                  );
+                                                  return;
+                                                }
                                                 var groupInviteRecordReference =
                                                     GroupInviteRecord.collection
                                                         .doc();
@@ -6062,7 +6024,8 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                     ),
                   ),
                 ),
-                if (currentUserDocument?.groupInviteID != null)
+                if (_supportsVenueGroupInvites &&
+                    currentUserDocument?.groupInviteID != null)
                   Align(
                     alignment: AlignmentDirectional(0.0, 1.0),
                     child: AuthUserStreamWidget(

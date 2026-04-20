@@ -170,7 +170,8 @@ class SupabaseDocRef {
     bool hasSpecialFields = data.values.any((v) =>
         v is _FieldValueArrayUnion ||
         v is _FieldValueArrayRemove ||
-        v is _FieldValueIncrement);
+        v is _FieldValueIncrement ||
+        v is _FieldValueMapMerge);
 
     if (hasSpecialFields) {
       // Read-Modify-Write strategy
@@ -195,6 +196,14 @@ class SupabaseDocRef {
         } else if (value is _FieldValueIncrement) {
           num existing = (currentData[key] ?? 0) as num;
           currentData[key] = existing + value.value;
+        } else if (value is _FieldValueMapMerge) {
+          final existing = value.replace || currentData[key] is! Map
+              ? <String, dynamic>{}
+              : Map<String, dynamic>.from(currentData[key] as Map);
+          currentData[key] = {
+            ...existing,
+            ...value.values,
+          };
         } else {
           currentData[key] = value;
         }
@@ -523,6 +532,13 @@ class FieldValue {
     return _FieldValueIncrement(value);
   }
 
+  static dynamic mapMerge(
+    Map<String, dynamic> values, {
+    bool replace = false,
+  }) {
+    return _FieldValueMapMerge(values, replace: replace);
+  }
+
   static dynamic serverTimestamp() {
     return DateTime.now()
         .toIso8601String(); // Supabase uses ISO strings usually.
@@ -546,6 +562,12 @@ class _FieldValueArrayRemove {
 class _FieldValueIncrement {
   final num value;
   _FieldValueIncrement(this.value);
+}
+
+class _FieldValueMapMerge {
+  final Map<String, dynamic> values;
+  final bool replace;
+  _FieldValueMapMerge(this.values, {this.replace = false});
 }
 
 // Shims for Data Types

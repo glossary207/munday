@@ -5,7 +5,8 @@ export '/features/social/presentation/home_page/home_page_widget.dart' show Home
 export '/features/social/presentation/chats/chats_widget.dart' show ChatsWidget;
 export '/features/account/presentation/profile/profile_widget.dart' show ProfileWidget;
 export '/features/social/presentation/home/home_widget.dart' show HomeWidget;
-export '/features/account/presentation/profile/profile06_widget.dart' show Profile06Widget;
+export '/features/account/presentation/profile/account_settings_widget.dart'
+    show AccountSettingsWidget;
 export '/features/account/presentation/privacy_policy/privacy_policy_widget.dart' show PrivacyPolicyWidget;
 export '/features/account/presentation/support/support_widget.dart' show SupportWidget;
 
@@ -29,4 +30,3 @@ export '/features/venue_detail/presentation/sharepage/sharepage_widget.dart' sho
 
 export '/features/booking/presentation/payreservenormday/payreservenormday_widget.dart'
     show PayreservenormdayWidget;
-

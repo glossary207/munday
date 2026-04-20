@@ -130,6 +130,7 @@ final parametersBuilderMap =
         },
       ),
   'home': ParameterData.none(),
+  'AccountSettings': ParameterData.none(),
   'Profile06': ParameterData.none(),
   'privacyPolicy': ParameterData.none(),
   'Support': ParameterData.none(),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 
+import '/backend/supabase/supabase_shim.dart';
 import '/backend/schema/util/supabase_util.dart';
 
 import 'index.dart';
@@ -382,8 +383,19 @@ Map<String, dynamic> createUsersRecordData({
   );
 
   // IDIG/IDFacebook are not present in the current Supabase users schema.
-  // Handle nested data for "photoshow" field.
-  addUserphotoshowStructData(supabaseData, photoshow, 'photoshow');
+  if (photoshow != null) {
+    if (photoshow.supabaseUtilData.delete) {
+      supabaseData['photoshow'] = FieldValue.delete();
+    } else {
+      final photoshowData = getUserphotoshowFirestoreData(photoshow);
+      final replacePhotoshow =
+          photoshow.supabaseUtilData.create ||
+              photoshow.supabaseUtilData.clearUnsetFields;
+      supabaseData['photoshow'] = replacePhotoshow
+          ? photoshowData
+          : FieldValue.mapMerge(photoshowData);
+    }
+  }
 
   return supabaseData;
 }

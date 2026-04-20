@@ -14,22 +14,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'profile06_model.dart';
-export 'profile06_model.dart';
+import 'account_settings_model.dart';
+export 'account_settings_model.dart';
 
-class Profile06Widget extends StatefulWidget {
-  const Profile06Widget({super.key});
+class AccountSettingsWidget extends StatefulWidget {
+  const AccountSettingsWidget({super.key});
 
-  static String routeName = 'Profile06';
-  static String routePath = 'profile06';
+  static String routeName = 'AccountSettings';
+  static String routePath = 'accountSettings';
 
   @override
-  State<Profile06Widget> createState() => _Profile06WidgetState();
+  State<AccountSettingsWidget> createState() => _AccountSettingsWidgetState();
 }
 
-class _Profile06WidgetState extends State<Profile06Widget>
+class _AccountSettingsWidgetState extends State<AccountSettingsWidget>
     with TickerProviderStateMixin {
-  late Profile06Model _model;
+  late AccountSettingsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -38,7 +38,7 @@ class _Profile06WidgetState extends State<Profile06Widget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => Profile06Model());
+    _model = createModel(context, () => AccountSettingsModel());
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation1': AnimationInfo(

@@ -988,7 +988,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'zh_Hans': '家',
     },
   },
-  // Profile06
+  // AccountSettings
   {
     '7pvmel5f': {
       'th': 'General',

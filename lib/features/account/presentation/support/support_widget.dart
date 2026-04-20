@@ -68,7 +68,7 @@ class _SupportWidgetState extends State<SupportWidget>
                     size: 30.0,
                   ),
                   onPressed: () async {
-                    context.pushNamed(Profile06Widget.routeName);
+                    context.pushNamed(AccountSettingsWidget.routeName);
                   },
                 ),
                 title: Text(

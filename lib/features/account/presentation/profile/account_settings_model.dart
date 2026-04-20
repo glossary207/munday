@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'profile06_widget.dart' show Profile06Widget;
+import 'account_settings_widget.dart' show AccountSettingsWidget;
 import 'package:flutter/material.dart';
 
-class Profile06Model extends FlutterFlowModel<Profile06Widget> {
+class AccountSettingsModel extends FlutterFlowModel<AccountSettingsWidget> {
   @override
   void initState(BuildContext context) {}
 

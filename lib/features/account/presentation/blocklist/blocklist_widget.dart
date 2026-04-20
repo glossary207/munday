@@ -69,7 +69,7 @@ class _BlocklistWidgetState extends State<BlocklistWidget> {
                     size: 30.0,
                   ),
                   onPressed: () async {
-                    context.pushNamed(Profile06Widget.routeName);
+                    context.pushNamed(AccountSettingsWidget.routeName);
                   },
                 ),
                 title: Text(
