@@ -95,33 +95,59 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                final posterUrl = widget.poster ?? '';
+                                if (posterUrl.isEmpty) return;
                                 await Navigator.push(
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.fade,
                                     child: FlutterFlowExpandedImageView(
                                       image: Image.network(
-                                        widget.poster!,
+                                        posterUrl,
                                         fit: BoxFit.contain,
                                       ),
                                       allowRotation: false,
-                                      tag: widget.poster!,
+                                      tag: posterUrl,
                                       useHeroAnimation: true,
                                     ),
                                   ),
                                 );
                               },
-                              child: Hero(
-                                tag: widget.poster!,
-                                transitionOnUserGestures: true,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.network(
-                                    widget.poster!,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              child: Builder(
+                                builder: (context) {
+                                  final posterUrl = widget.poster ?? '';
+                                  if (posterUrl.isEmpty) {
+                                    return Container(
+                                      width: double.infinity,
+                                      height: 200.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF1A1A1A),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    );
+                                  }
+                                  return Hero(
+                                    tag: posterUrl,
+                                    transitionOnUserGestures: true,
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        posterUrl,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
+                                          width: double.infinity,
+                                          height: 200.0,
+                                          color: const Color(0xFF1A1A1A),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),

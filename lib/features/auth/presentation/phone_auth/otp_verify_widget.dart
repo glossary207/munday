@@ -4,11 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/otp_api_calls.dart';
 import '/backend/backend.dart';
 import '/services/auth_manager.dart';
+
+const _otpBg = Color(0xFF0D0D0D);
+const _otpPanel = Color(0xFF1A1A1A);
+const _otpBorder = Color(0xFF2E2021);
+const _otpAccent = Color(0xFFE53935);
+const _otpAccentDark = Color(0xFF7A1217);
+const _otpBadgeBg = Color(0xFF231315);
+const _otpBadgeBorder = Color(0xFF4A2022);
 
 class OtpVerifyWidget extends StatefulWidget {
   const OtpVerifyWidget({
@@ -43,7 +50,6 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
   void initState() {
     super.initState();
     _startCountdown();
-    // SMS auto-fill: mobile only
     if (!kIsWeb) _listenForSms();
   }
 
@@ -73,7 +79,6 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
     }
   }
 
-  /// Called automatically by CodeAutoFill mixin when SMS OTP is detected
   @override
   void codeUpdated() {
     if (kIsWeb) return;
@@ -164,7 +169,6 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
 
       await AuthManager.saveLoginType(widget.loginType);
 
-      // Set Supabase session — triggers AppStateNotifier via auth stream
       await Supabase.instance.client.auth.setSession(refreshToken);
 
       final session = Supabase.instance.client.auth.currentSession;
@@ -179,7 +183,6 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
         user: userMap,
       );
 
-      // Ensure user record exists in the users table and populate currentUserDocument
       final supabaseUser = Supabase.instance.client.auth.currentUser;
       if (supabaseUser != null) {
         await maybeCreateUser(supabaseUser);
@@ -187,9 +190,6 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
 
       if (!mounted) return;
 
-      // Navigate new users to profile setup, returning users to home
-      // This is needed because OtpVerifyWidget was pushed via Navigator.push()
-      // (not GoRouter), so GoRouter's redirect alone won't pop this screen.
       final needsOnboarding = currentUserNeedsOnboarding;
       if (needsOnboarding) {
         context.go('/welcome-new-account');
@@ -241,9 +241,9 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: const Color(0xFF0D0D0D),
+        backgroundColor: _otpBg,
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0D0D0D),
+          backgroundColor: _otpBg,
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -278,7 +278,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                       TextSpan(
                         text: _maskedPhone,
                         style: const TextStyle(
-                          color: Color(0xFFE8C46E),
+                          color: _otpAccent,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -286,10 +286,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 40),
-
-                // OTP Label
                 Row(
                   children: [
                     const Text(
@@ -301,27 +298,25 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                       ),
                     ),
                     const Spacer(),
-                    // Show auto-fill badge on mobile
                     if (!kIsWeb)
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A2A1A),
+                          color: _otpBadgeBg,
                           borderRadius: BorderRadius.circular(6),
-                          border:
-                              Border.all(color: const Color(0xFF2A4A2A)),
+                          border: Border.all(color: _otpBadgeBorder),
                         ),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.sms_outlined,
-                                color: Color(0xFF4CAF50), size: 12),
+                                color: _otpAccent, size: 12),
                             SizedBox(width: 4),
                             Text(
                               'รับอัตโนมัติจาก SMS',
                               style: TextStyle(
-                                color: Color(0xFF4CAF50),
+                                color: _otpAccent,
                                 fontSize: 11,
                               ),
                             ),
@@ -331,18 +326,14 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                   ],
                 ),
                 const SizedBox(height: 12),
-
-                // OTP TextField — works on all platforms
-                // On mobile: CodeAutoFill mixin fills this automatically
-                // On web: user types manually
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A1A1A),
+                    color: _otpPanel,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: _errorMessage != null
                           ? Colors.redAccent
-                          : const Color(0xFF2A2A2A),
+                          : _otpBorder,
                     ),
                   ),
                   child: TextField(
@@ -376,13 +367,11 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                       if (_errorMessage != null) {
                         setState(() => _errorMessage = null);
                       }
-                      // Auto-verify on manual 6-digit entry
                       if (val.length == 6) _verifyOtp();
                     },
                     onSubmitted: (_) => _verifyOtp(),
                   ),
                 ),
-
                 if (_errorMessage != null) ...[
                   const SizedBox(height: 12),
                   Row(
@@ -402,19 +391,16 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                     ],
                   ),
                 ],
-
                 const SizedBox(height: 36),
-
-                // Verify Button
                 SizedBox(
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _verifyOtp,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFE8C46E),
-                      foregroundColor: Colors.black,
-                      disabledBackgroundColor: const Color(0xFF4A3E2A),
+                      backgroundColor: _otpAccent,
+                      foregroundColor: Colors.white,
+                      disabledBackgroundColor: _otpAccentDark,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -426,7 +412,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                             height: 22,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                           )
                         : const Text(
@@ -439,9 +425,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                           ),
                   ),
                 ),
-
                 const SizedBox(height: 24),
-
                 Center(
                   child: GestureDetector(
                     onTap: _resendCountdown == 0 ? _resendOtp : null,
@@ -451,7 +435,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                             height: 18,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              color: Color(0xFFE8C46E),
+                              color: _otpAccent,
                             ),
                           )
                         : RichText(
@@ -470,7 +454,7 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                                   style: TextStyle(
                                     color: _resendCountdown > 0
                                         ? const Color(0xFF555555)
-                                        : const Color(0xFFE8C46E),
+                                        : _otpAccent,
                                     fontWeight: _resendCountdown == 0
                                         ? FontWeight.w600
                                         : FontWeight.normal,
@@ -481,20 +465,19 @@ class _OtpVerifyWidgetState extends State<OtpVerifyWidget> with CodeAutoFill {
                           ),
                   ),
                 ),
-
                 if (widget.isTestPhone) ...[
                   const SizedBox(height: 24),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1A1A1A),
+                      color: _otpPanel,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFF333333)),
+                      border: Border.all(color: _otpBorder),
                     ),
                     child: const Row(
                       children: [
                         Icon(Icons.info_outline,
-                            color: Color(0xFF888888), size: 16),
+                            color: Color(0xFFFF9A95), size: 16),
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(

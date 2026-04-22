@@ -4411,21 +4411,57 @@ class _PhotoshowGalleryViewer extends StatefulWidget {
 
 class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
   late final PageController _pageController;
+  late final List<TransformationController> _transformControllers;
   late int _currentIndex;
   double _verticalDragOffset = 0.0;
   bool _isClosing = false;
+  bool _isZoomed = false;
+  Size _viewportSize = Size.zero;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
     _pageController = PageController(initialPage: widget.initialIndex);
+    _transformControllers = List.generate(
+      widget.items.length,
+      (_) => TransformationController(),
+    );
+    _transformControllers[_currentIndex].addListener(_updateZoomState);
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    for (final ctrl in _transformControllers) {
+      ctrl.removeListener(_updateZoomState);
+      ctrl.dispose();
+    }
     super.dispose();
+  }
+
+  void _updateZoomState() {
+    final scale =
+        _transformControllers[_currentIndex].value.getMaxScaleOnAxis();
+    final isZoomed = scale > 1.05;
+    if (isZoomed != _isZoomed) {
+      setState(() => _isZoomed = isZoomed);
+    }
+  }
+
+  void _toggleZoom(int index) {
+    final ctrl = _transformControllers[index];
+    final scale = ctrl.value.getMaxScaleOnAxis();
+    if (scale > 1.05) {
+      ctrl.value = Matrix4.identity();
+    } else {
+      const s = 2.5;
+      final cx = _viewportSize.width / 2;
+      final cy = _viewportSize.height / 2;
+      // Scale around center: translate so center maps to origin, scale, translate back
+      ctrl.value = Matrix4.translationValues((1 - s) * cx, (1 - s) * cy, 0)
+        ..multiply(Matrix4.diagonal3Values(s, s, 1.0));
+    }
   }
 
   void _closeViewer() {
@@ -4437,7 +4473,8 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
   }
 
   void _handleVerticalDragUpdate(DragUpdateDetails details) {
-    final nextOffset = (_verticalDragOffset + details.delta.dy).clamp(0.0, 400.0);
+    final nextOffset =
+        (_verticalDragOffset + details.delta.dy).clamp(0.0, 400.0);
     if (nextOffset == _verticalDragOffset) {
       return;
     }
@@ -4460,6 +4497,12 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final padding = MediaQuery.paddingOf(context);
+    _viewportSize = Size(
+      screenSize.width,
+      screenSize.height - padding.top - padding.bottom,
+    );
     final currentItem = widget.items[_currentIndex];
     final backgroundOpacity = (1.0 - (_verticalDragOffset / 260.0))
         .clamp(0.0, 1.0)
@@ -4480,19 +4523,34 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
                 offset: Offset(0.0, _verticalDragOffset),
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
-                  onVerticalDragUpdate: _handleVerticalDragUpdate,
-                  onVerticalDragEnd: _handleVerticalDragEnd,
+                  // Disable swipe-to-dismiss while zoomed in
+                  onVerticalDragUpdate:
+                      _isZoomed ? null : _handleVerticalDragUpdate,
+                  onVerticalDragEnd:
+                      _isZoomed ? null : _handleVerticalDragEnd,
                   child: PageView.builder(
                     controller: _pageController,
+                    // Block page swipe while zoomed so pan works correctly
+                    physics: _isZoomed
+                        ? const NeverScrollableScrollPhysics()
+                        : const PageScrollPhysics(),
                     itemCount: widget.items.length,
                     onPageChanged: (index) {
+                      // Reset zoom on the old page and start listening to new
+                      _transformControllers[_currentIndex]
+                          .removeListener(_updateZoomState);
+                      _transformControllers[_currentIndex].value =
+                          Matrix4.identity();
                       setState(() {
                         _currentIndex = index;
+                        _isZoomed = false;
                       });
+                      _transformControllers[index]
+                          .addListener(_updateZoomState);
                     },
                     itemBuilder: (context, index) {
                       final item = widget.items[index];
-                      final imageWidget = Image.network(
+                      final image = Image.network(
                         item.url,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) =>
@@ -4501,6 +4559,10 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
                           fit: BoxFit.contain,
                         ),
                       );
+                      // SizedBox.expand forces the image to fill the full
+                      // InteractiveViewer so BoxFit.contain centers it properly
+                      // and the zoom-to-center calculation is accurate.
+                      final imageWidget = SizedBox.expand(child: image);
                       return Stack(
                         fit: StackFit.expand,
                         children: [
@@ -4509,9 +4571,17 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
                             onTap: _closeViewer,
                             child: const SizedBox.expand(),
                           ),
-                          Center(
-                            child: GestureDetector(
-                              onTap: () {},
+                          GestureDetector(
+                            onTap: () {},
+                            onDoubleTap: () => _toggleZoom(index),
+                            child: InteractiveViewer(
+                              transformationController:
+                                  _transformControllers[index],
+                              minScale: 1.0,
+                              maxScale: 5.0,
+                              clipBehavior: Clip.none,
+                              panEnabled: _isZoomed,
+                              scaleEnabled: true,
                               child: index == _currentIndex
                                   ? Hero(
                                       tag: item.heroTag,

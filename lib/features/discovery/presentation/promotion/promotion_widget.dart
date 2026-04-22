@@ -1442,67 +1442,65 @@ class _PromotionWidgetState extends State<PromotionWidget>
                                                   children: [
                                                     if (_model.selectdate ??
                                                         true)
-                                                      Expanded(
-                                                        child: Container(
-                                                          height: 30.0,
-                                                          decoration:
-                                                              BoxDecoration(),
-                                                          child: Align(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    0.0, -1.3),
-                                                            child: Stack(
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
+                                                      Container(
+                                                        height: 30.0,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.0, -1.3),
+                                                          child: Stack(
+                                                            children: [
+                                                              Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child:
+                                                                    Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
                                                                           0.0,
+                                                                          0.0,
+                                                                          15.0,
                                                                           0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            15.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        functions
-                                                                            .month(FFAppState().dateclick),
-                                                                        'ไม่ระบุ',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                15.0,
-                                                                            letterSpacing:
-                                                                                1.2,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            lineHeight:
-                                                                                0.9,
-                                                                          ),
+                                                                  child: Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      functions
+                                                                          .month(FFAppState().dateclick),
+                                                                      'ไม่ระบุ',
                                                                     ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.openSans(
+                                                                            fontWeight: FontWeight.w600,
+                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          fontSize:
+                                                                              15.0,
+                                                                          letterSpacing:
+                                                                              1.2,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle:
+                                                                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          lineHeight:
+                                                                              0.9,
+                                                                        ),
                                                                   ),
                                                                 ),
-                                                              ],
-                                                            ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ).animateOnPageLoad(
-                                                            animationsMap[
-                                                                'containerOnPageLoadAnimation1']!),
-                                                      ),
+                                                        ),
+                                                      ).animateOnPageLoad(
+                                                          animationsMap[
+                                                              'containerOnPageLoadAnimation1']!),
                                                     Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,

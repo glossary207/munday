@@ -3,6 +3,12 @@ import 'package:flutter/services.dart';
 import '/backend/api_requests/otp_api_calls.dart';
 import 'otp_verify_widget.dart';
 
+const _authBg = Color(0xFF0D0D0D);
+const _authPanel = Color(0xFF1A1A1A);
+const _authBorder = Color(0xFF2E2021);
+const _authAccent = Color(0xFFE53935);
+const _authAccentDark = Color(0xFF7A1217);
+
 class PhoneLoginWidget extends StatefulWidget {
   const PhoneLoginWidget({super.key});
 
@@ -24,17 +30,20 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
 
   static const _slides = [
     _SlideData(
-      image: 'assets/images/colorful-vibrant-holographic-pastel-foil-background-texture-toxic-rave-party-backdrop_232693-243_3.jpeg',
+      image:
+          'assets/images/colorful-vibrant-holographic-pastel-foil-background-texture-toxic-rave-party-backdrop_232693-243_3.jpeg',
       title: 'Community Night Party',
       subtitle: 'ค้นพบปาร์ตี้และสถานที่ยามค่ำคืนใกล้คุณ',
     ),
     _SlideData(
-      image: 'assets/images/455040334_886884533466916_1650523449501590794_n.jpg',
+      image:
+          'assets/images/455040334_886884533466916_1650523449501590794_n.jpg',
       title: 'จองโต๊ะล่วงหน้า',
       subtitle: 'จองที่นั่งได้ทันที ไม่ต้องรอคิว',
     ),
     _SlideData(
-      image: 'assets/images/480550932_923908646619366_4284518964252663928_n.jpg',
+      image:
+          'assets/images/480550932_923908646619366_4284518964252663928_n.jpg',
       title: 'สนุกได้ทุกคืน',
       subtitle: 'โปรโมชั่นพิเศษและกิจกรรมสุดเอ็กซ์คลูซีฟ',
     ),
@@ -112,11 +121,10 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: const Color(0xFF0D0D0D),
+        backgroundColor: _authBg,
         resizeToAvoidBottomInset: true,
         body: Column(
           children: [
-            // ── Carousel (shrinks when keyboard opens) ──────────────────
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeOut,
@@ -125,7 +133,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                   : screenHeight * 0.58,
               child: Stack(
                 children: [
-                  // Slides
                   PageView.builder(
                     controller: _pageController,
                     itemCount: _slides.length,
@@ -134,8 +141,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                       return _buildSlide(_slides[index]);
                     },
                   ),
-
-                  // Logo top-left
                   Positioned(
                     top: 48,
                     left: 24,
@@ -153,25 +158,25 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                       ),
                     ),
                   ),
-
-                  // Gradient overlay at bottom of carousel
                   Positioned(
-                    left: 0, right: 0, bottom: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     height: 160,
                     child: Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
-                          colors: [Color(0xFF0D0D0D), Colors.transparent],
+                          colors: [_authBg, Colors.transparent],
                         ),
                       ),
                     ),
                   ),
-
-                  // Title + dots at bottom of carousel
                   Positioned(
-                    left: 24, right: 24, bottom: 16,
+                    left: 24,
+                    right: 24,
+                    bottom: 16,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -203,7 +208,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                           ),
                         ),
                         const SizedBox(height: 14),
-                        // Dot indicators
                         Row(
                           children: List.generate(_slides.length, (i) {
                             final active = i == _currentSlide;
@@ -213,9 +217,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                               width: active ? 20 : 6,
                               height: 6,
                               decoration: BoxDecoration(
-                                color: active
-                                    ? const Color(0xFFE8C46E)
-                                    : const Color(0xFF555555),
+                                color: active ? _authAccent : const Color(0xFF555555),
                                 borderRadius: BorderRadius.circular(3),
                               ),
                             );
@@ -227,8 +229,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                 ],
               ),
             ),
-
-            // ── Bottom Section ───────────────────────────────────────────
             Expanded(
               child: SingleChildScrollView(
                 padding:
@@ -245,16 +245,14 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                       ),
                     ),
                     const SizedBox(height: 10),
-
-                    // Phone input
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1A1A1A),
+                        color: _authPanel,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: _errorMessage != null
                               ? Colors.redAccent
-                              : const Color(0xFF2A2A2A),
+                              : _authBorder,
                         ),
                       ),
                       child: Row(
@@ -264,14 +262,13 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                                 horizontal: 14, vertical: 16),
                             decoration: const BoxDecoration(
                               border: Border(
-                                right:
-                                    BorderSide(color: Color(0xFF2A2A2A)),
+                                right: BorderSide(color: _authBorder),
                               ),
                             ),
                             child: const Text(
                               '+66',
                               style: TextStyle(
-                                color: Color(0xFFE8C46E),
+                                color: _authAccent,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -309,8 +306,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                         ],
                       ),
                     ),
-
-                    // Error message
                     if (_errorMessage != null) ...[
                       const SizedBox(height: 8),
                       Row(
@@ -330,19 +325,16 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                         ],
                       ),
                     ],
-
                     const SizedBox(height: 20),
-
-                    // Send OTP Button
                     SizedBox(
                       width: double.infinity,
                       height: 52,
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _sendOtp,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFE8C46E),
-                          foregroundColor: Colors.black,
-                          disabledBackgroundColor: const Color(0xFF4A3E2A),
+                          backgroundColor: _authAccent,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor: _authAccentDark,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -354,7 +346,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                                 height: 22,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2.5,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               )
                             : const Text(
@@ -367,9 +359,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                               ),
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
                     const Center(
                       child: Text(
                         'ระบบจะส่งรหัส OTP ไปยังเบอร์โทรของคุณ\nรหัสมีอายุ 5 นาที',
@@ -404,7 +394,6 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                 color: Color(0xFF444444), size: 80),
           ),
         ),
-        // Dark overlay
         Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -412,7 +401,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
               end: Alignment.bottomCenter,
               colors: [
                 Color(0x66000000),
-                Color(0xCC000000),
+                Color(0xCC120607),
               ],
             ),
           ),

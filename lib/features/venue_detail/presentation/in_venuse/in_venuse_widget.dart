@@ -14,6 +14,7 @@ import '/shared/widgets/media/story_view_widget.dart';
 import '/shared/widgets/dialogs/youarenothere_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:math' as math;
 import 'dart:ui';
 import '/core/utils/index.dart' as actions;
 import '/shared/widgets/index.dart' as custom_widgets;
@@ -333,34 +334,50 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
   }
 
   Widget _buildVenuePhotoGrid(BuildContext context, VenuesRecord venue) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              3,
-              (index) => _buildVenuePhotoTile(context, venue, index),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                3,
-                (index) => _buildVenuePhotoTile(context, venue, index + 3),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final gridHeight =
+            constraints.maxHeight.isFinite && constraints.maxHeight > 0.0
+                ? constraints.maxHeight
+                : 260.0;
+        final rowHeight = (gridHeight - 1.0) / 2;
+
+        return SizedBox(
+          height: gridHeight,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: rowHeight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    3,
+                    (index) => _buildVenuePhotoTile(context, venue, index),
+                  ),
+                ),
               ),
-            ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                child: SizedBox(
+                  height: rowHeight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: List.generate(
+                      3,
+                      (index) => _buildVenuePhotoTile(context, venue, index + 3),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -3095,73 +3112,83 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                           child: Container(
                             height: 334.0,
                             decoration: BoxDecoration(),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment(-1.0, 0),
-                                  child: TabBar(
-                                    labelColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    unselectedLabelColor: Color(0xFFB1B1B1),
-                                    labelPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 10.0, 0.0),
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .override(
-                                          font: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final tabViewHeight = math.max(
+                                  0.0,
+                                  constraints.maxHeight - kTextTabBarHeight,
+                                );
+
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment(-1.0, 0),
+                                      child: TabBar(
+                                        labelColor: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        unselectedLabelColor:
+                                            Color(0xFFB1B1B1),
+                                        labelPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                10.0, 0.0, 10.0, 0.0),
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .override(
+                                              font: GoogleFonts.openSans(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .fontStyle,
+                                              ),
+                                              fontSize: 18.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleMedium
+                                                      .fontStyle,
+                                              lineHeight: 0.0,
+                                            ),
+                                        unselectedLabelStyle: TextStyle(),
+                                        indicatorColor: Color(0xFFFF0000),
+                                        indicatorWeight: 2.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            13.0, 0.0, 0.0, 0.0),
+                                        tabs: [
+                                          Tab(
+                                            text: FFLocalizations.of(context)
+                                                .getText(
+                                              'z0ulu30f' /* Events */,
+                                            ),
                                           ),
-                                          fontSize: 18.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                          lineHeight: 0.0,
-                                        ),
-                                    unselectedLabelStyle: TextStyle(),
-                                    indicatorColor: Color(0xFFFF0000),
-                                    indicatorWeight: 2.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        13.0, 0.0, 0.0, 0.0),
-                                    tabs: [
-                                      Tab(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          'z0ulu30f' /* Events */,
-                                        ),
+                                          Tab(
+                                            text: FFLocalizations.of(context)
+                                                .getText(
+                                              'l41wx1tf' /* Promotion */,
+                                            ),
+                                          ),
+                                          Tab(
+                                            text: FFLocalizations.of(context)
+                                                .getText(
+                                              'jo5htnm4' /* Photos */,
+                                            ),
+                                          ),
+                                        ],
+                                        controller: _model.tabBarController,
+                                        onTap: (i) async {
+                                          [
+                                            () async {},
+                                            () async {},
+                                            () async {}
+                                          ][i]();
+                                        },
                                       ),
-                                      Tab(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          'l41wx1tf' /* Promotion */,
-                                        ),
-                                      ),
-                                      Tab(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          'jo5htnm4' /* Photos */,
-                                        ),
-                                      ),
-                                    ],
-                                    controller: _model.tabBarController,
-                                    onTap: (i) async {
-                                      [
-                                        () async {},
-                                        () async {},
-                                        () async {}
-                                      ][i]();
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TabBarView(
+                                    ),
+                                    SizedBox(
+                                      height: tabViewHeight,
+                                      child: TabBarView(
                                     controller: _model.tabBarController,
                                     children: [
                                       Container(
@@ -3292,6 +3319,7 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                               context)
                                                                           .width *
                                                                       0.44,
+                                                                  height: 250.0,
                                                                   decoration:
                                                                       BoxDecoration(
                                                                     color: Color(
@@ -3318,6 +3346,9 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                     mainAxisSize:
                                                                         MainAxisSize
                                                                             .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                     children: [
                                                                       Row(
                                                                         mainAxisSize:
@@ -3385,17 +3416,6 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                             ),
                                                                           ),
                                                                         ],
-                                                                      ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          height:
-                                                                              double.infinity,
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                        ),
                                                                       ),
                                                                       Container(
                                                                         width: double
@@ -4524,6 +4544,8 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                   ),
                                 ),
                               ],
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -4728,39 +4750,36 @@ class _InVenuseWidgetState extends State<InVenuseWidget>
                                                                     Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
-                                                                              .max,
+                                                                              .min,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Expanded(
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(-1.0, 0.0),
-                                                                                child: Text(
-                                                                                  FFLocalizations.of(context).getText(
-                                                                                    'rxpcsy4y' /* Halloween */,
-                                                                                  ),
-                                                                                  maxLines: 30,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        font: GoogleFonts.openSans(
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        ),
-                                                                                        color: FlutterFlowTheme.of(context).primaryText,
-                                                                                        fontSize: 16.0,
-                                                                                        letterSpacing: 0.0,
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(-1.0, 0.0),
+                                                                              child: Text(
+                                                                                FFLocalizations.of(context).getText(
+                                                                                  'rxpcsy4y' /* Halloween */,
+                                                                                ),
+                                                                                maxLines: 30,
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
                                                                                         fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                       ),
-                                                                                ),
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      fontSize: 16.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
                                                                               ),
-                                                                            ],
-                                                                          ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(

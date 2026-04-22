@@ -14,8 +14,10 @@ class SupabaseFirestore {
   }
 
   SupabaseDocRef doc(String path) {
-    // path is usually "collection/docId"
-    final parts = path.split('/');
+    // Strip leading slash — _deserializeSupabaseDocRef produces "/collection/id"
+    final normalizedPath =
+        path.startsWith('/') ? path.substring(1) : path;
+    final parts = normalizedPath.split('/');
     if (parts.length >= 2) {
       return SupabaseCollectionRef(parts[0]).doc(parts[1]);
     }
