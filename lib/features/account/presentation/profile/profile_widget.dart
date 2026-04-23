@@ -4559,20 +4559,19 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
                           fit: BoxFit.contain,
                         ),
                       );
-                      // SizedBox.expand forces the image to fill the full
-                      // InteractiveViewer so BoxFit.contain centers it properly
-                      // and the zoom-to-center calculation is accurate.
-                      final imageWidget = SizedBox.expand(child: image);
                       return Stack(
                         fit: StackFit.expand,
                         children: [
+                          // Background tap-to-close layer (receives taps that
+                          // fall through the image GestureDetector below).
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: _closeViewer,
                             child: const SizedBox.expand(),
                           ),
+                          // No onTap here — single taps fall through to the
+                          // background close handler; only double-tap is claimed.
                           GestureDetector(
-                            onTap: () {},
                             onDoubleTap: () => _toggleZoom(index),
                             child: InteractiveViewer(
                               transformationController:
@@ -4582,13 +4581,21 @@ class _PhotoshowGalleryViewerState extends State<_PhotoshowGalleryViewer> {
                               clipBehavior: Clip.none,
                               panEnabled: _isZoomed,
                               scaleEnabled: true,
-                              child: index == _currentIndex
-                                  ? Hero(
-                                      tag: item.heroTag,
-                                      transitionOnUserGestures: true,
-                                      child: imageWidget,
-                                    )
-                                  : imageWidget,
+                              // Center fills the full viewport (tight constraints
+                              // from InteractiveViewer) and gives the Image loose
+                              // constraints so it sizes to its natural pixel
+                              // dimensions. Hero rect = image rect only — no
+                              // black letterbox bars — so the fly animation
+                              // matches the actual image content.
+                              child: Center(
+                                child: index == _currentIndex
+                                    ? Hero(
+                                        tag: item.heroTag,
+                                        transitionOnUserGestures: true,
+                                        child: image,
+                                      )
+                                    : image,
+                              ),
                             ),
                           ),
                         ],
