@@ -100,13 +100,26 @@ class _HomePageWidgetState extends State<HomePageWidget>
           body: SafeArea(
             top: true,
             child: AuthUserStreamWidget(
-              builder: (context) => StreamBuilder<StoreRecord>(
-                stream:
-                    StoreRecord.getDocument(currentUserDocument!.checkinID!),
+              builder: (context) {
+                final checkinRef = currentUserDocument?.checkinID;
+                if (currentUserDocument == null || checkinRef == null) {
+                  return const Center(
+                    child: SizedBox(
+                      width: 50.0,
+                      height: 50.0,
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.transparent),
+                      ),
+                    ),
+                  );
+                }
+                return StreamBuilder<StoreRecord>(
+                stream: StoreRecord.getDocument(checkinRef),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: SizedBox(
                         width: 50.0,
                         height: 50.0,
