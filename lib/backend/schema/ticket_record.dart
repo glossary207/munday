@@ -98,12 +98,12 @@ class TicketRecord extends SupabaseRecord {
     _zone = snapshotData['zone'] as String?;
     _seatCode = snapshotData['SeatCode'] as String?;
     _bg = snapshotData['BG'] as String?;
-    _idVenues = snapshotData['Id_Venues'] as SupabaseDocRef?;
+    _idVenues = getSupabaseDocRef(snapshotData['Id_Venues'], 'venues');
     _scanAmont = castToType<int>(snapshotData['scan_amont']);
     _timeEvent = snapshotData['time_event'] as String?;
     _scannedAmont = castToType<int>(snapshotData['scanned_amont']);
     _poster = snapshotData['Poster'] as String?;
-    _iDticket = snapshotData['IDticket'] as SupabaseDocRef?;
+    _iDticket = getSupabaseDocRef(snapshotData['IDticket'], 'Ticket');
     _nameVenues = snapshotData['NameVenues'] as String?;
     _dateEvent = snapshotData['date_Event'] as DateTime?;
     _location = snapshotData['location'] as LatLng?;

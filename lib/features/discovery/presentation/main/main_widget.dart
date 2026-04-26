@@ -700,7 +700,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                     return;
                                                   }
                                                   context.pushNamed(
-                                                      HomePageWidget.routeName);
+                                                      MainChatWidget.routeName);
                                                 },
                                                 child: Container(
                                                   width: 40.0,
@@ -3228,7 +3228,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 context.pushNamed(
-                                                    HomeWidget.routeName);
+                                                    SocialInVenuseWidget.routeName);
 
                                                 FFAppState().StyleVenuse = [];
                                                 safeSetState(() {});

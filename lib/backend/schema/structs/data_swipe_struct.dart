@@ -81,7 +81,7 @@ class DataSwipeStruct extends FFSupabaseStruct {
   bool hasNameSW() => _nameSW != null;
 
   static DataSwipeStruct fromMap(Map<String, dynamic> data) => DataSwipeStruct(
-        iDuserSW: data['IDuser_SW'] as SupabaseDocRef?,
+        iDuserSW: getSupabaseDocRef(data['IDuser_SW'], 'users'),
         photoprofileSW: data['photoprofile_SW'] as String?,
         userphotoshowSW: data['userphotoshow_SW'] is UserphotoshowStruct
             ? data['userphotoshow_SW']

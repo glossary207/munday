@@ -83,7 +83,7 @@ class _DelallchatWidgetState extends State<DelallchatWidget> {
                   await widget.idroom!.delete();
                   Navigator.pop(context);
 
-                  context.pushNamed(HomePageWidget.routeName);
+                  context.pushNamed(MainChatWidget.routeName);
 
                   await currentUserReference!.update({
                     ...mapToSupabase(

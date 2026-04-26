@@ -187,7 +187,7 @@ class DataVenuesStruct extends FFSupabaseStruct {
         styleMusic: getDataList(data['styleMusic']),
         distance: castToType<double>(data['distance']),
         logo: data['Logo'] as String?,
-        iDVenuse: data['iDVenuse'] as SupabaseDocRef?,
+        iDVenuse: getSupabaseDocRef(data['iDVenuse'], 'venues'),
         eventID: getDataList(data['EventID']),
         rating: castToType<double>(data['rating']),
         promotion: getDataList(data['promotion']),

@@ -69,7 +69,7 @@ class DatapageroomStruct extends FFSupabaseStruct {
 
   static DatapageroomStruct fromMap(Map<String, dynamic> data) =>
       DatapageroomStruct(
-        userinstore: data['userinstore'] as SupabaseDocRef?,
+        userinstore: getSupabaseDocRef(data['userinstore'], 'UserInVenues'),
         view: castToType<int>(data['view']),
         photoprofile: data['photoprofile'] as String?,
         online: data['online'] as bool?,

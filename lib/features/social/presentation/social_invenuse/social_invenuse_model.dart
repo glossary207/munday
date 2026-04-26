@@ -2,10 +2,10 @@ import '/backend/api_requests/api_calls.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'home_widget.dart' show HomeWidget;
+import 'social_invenuse_widget.dart' show SocialInVenuseWidget;
 import 'package:flutter/material.dart';
 
-class HomeModel extends FlutterFlowModel<HomeWidget> {
+class SocialInVenuseModel extends FlutterFlowModel<SocialInVenuseWidget> {
   ///  Local state fields for this page.
 
   int? textnonread;

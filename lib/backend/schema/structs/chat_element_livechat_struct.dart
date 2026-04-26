@@ -49,7 +49,7 @@ class ChatElementLivechatStruct extends FFSupabaseStruct {
 
   static ChatElementLivechatStruct fromMap(Map<String, dynamic> data) =>
       ChatElementLivechatStruct(
-        id: data['id'] as SupabaseDocRef?,
+        id: getSupabaseDocRef(data['id'], 'users'),
         name: data['name'] as String?,
         message: data['message'] as String?,
         photo: data['photo'] as String?,

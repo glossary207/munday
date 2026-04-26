@@ -126,17 +126,17 @@ class _ChatsWidgetState extends State<ChatsWidget> {
           backgroundColor: Colors.black,
           body: SafeArea(
             top: true,
-            child: StreamBuilder<RoomRecord>(
+            child: StreamBuilder<ChatRoomsRecord>(
               stream: FFAppState().datachat(
                 uniqueQueryKey: valueOrDefault<String>(
                   widget.roomref?.id,
                   'aaa',
                 ),
-                requestFn: () => RoomRecord.getDocument(widget.roomref!),
-              )..listen((stackRoomRecord) async {
+                requestFn: () => ChatRoomsRecord.getDocument(widget.roomref!),
+              )..listen((stackChatRoomsRecord) async {
                   if (_model.stackPreviousSnapshot != null &&
-                      !RoomRecordDocumentEquality().equals(
-                          stackRoomRecord, _model.stackPreviousSnapshot)) {
+                      !ChatRoomsRecordDocumentEquality().equals(
+                          stackChatRoomsRecord, _model.stackPreviousSnapshot)) {
                     await _model.columnController?.animateTo(
                       _model.columnController!.position.maxScrollExtent,
                       duration: Duration(milliseconds: 100),
@@ -145,7 +145,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
 
                     safeSetState(() {});
                   }
-                  _model.stackPreviousSnapshot = stackRoomRecord;
+                  _model.stackPreviousSnapshot = stackChatRoomsRecord;
                 }),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
@@ -163,7 +163,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                   );
                 }
 
-                final stackRoomRecord = snapshot.data!;
+                final stackChatRoomsRecord = snapshot.data!;
 
                 return Stack(
                   children: [
@@ -197,11 +197,17 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                 -1.0, -1.0),
                                             child: Builder(
                                               builder: (context) {
-                                                final datachat = stackRoomRecord
-                                                    .message
-                                                    .toList();
+                                                return StreamBuilder<List<MessagesRecord>>(
+                                                  stream: queryMessagesRecord(
+                                                    queryBuilder: (query) => query
+                                                        .where('chat_room_id', isEqualTo: widget.roomref!.id)
+                                                        .orderBy('timestamp', descending: false),
+                                                  ),
+                                                  builder: (context, messagesSnapshot) {
+                                                    if (!messagesSnapshot.hasData) return const Center(child: CircularProgressIndicator());
+                                                    final datachat = messagesSnapshot.data!;
 
-                                                return ListView.builder(
+                                                    return ListView.builder(
                                                   padding: EdgeInsets.zero,
                                                   primary: false,
                                                   shrinkWrap: true,
@@ -217,10 +223,10 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                           MainAxisSize.max,
                                                       children: [
                                                         if ((datachatItem
-                                                                    .messagephoto !=
+                                                                    .imageUrl !=
                                                                 '') &&
                                                             (datachatItem
-                                                                    .who?.id !=
+                                                                    .senderId !=
                                                                 currentUserReference
                                                                     ?.id) &&
                                                             !functions.checklist(
@@ -232,7 +238,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         e.id)
                                                                     .toList(),
                                                                 datachatItem
-                                                                    .who?.id)!)
+                                                                    .senderId)!)
                                                           Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
@@ -289,7 +295,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         valueOrDefault<
                                                                             String>(
                                                                           datachatItem
-                                                                              .userphoto,
+                                                                              .senderPhoto,
                                                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
                                                                         ),
                                                                         fit: BoxFit
@@ -353,11 +359,11 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                   type: PageTransitionType.fade,
                                                                                   child: FlutterFlowExpandedImageView(
                                                                                     image: Image.network(
-                                                                                      datachatItem.messagephoto,
+                                                                                      datachatItem.imageUrl,
                                                                                       fit: BoxFit.contain,
                                                                                     ),
                                                                                     allowRotation: false,
-                                                                                    tag: datachatItem.messagephoto,
+                                                                                    tag: datachatItem.imageUrl,
                                                                                     useHeroAnimation: true,
                                                                                   ),
                                                                                 ),
@@ -365,12 +371,12 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                             },
                                                                             child:
                                                                                 Hero(
-                                                                              tag: datachatItem.messagephoto,
+                                                                              tag: datachatItem.imageUrl,
                                                                               transitionOnUserGestures: true,
                                                                               child: ClipRRect(
                                                                                 borderRadius: BorderRadius.circular(8.0),
                                                                                 child: Image.network(
-                                                                                  datachatItem.messagephoto,
+                                                                                  datachatItem.imageUrl,
                                                                                   width: 300.0,
                                                                                   height: 200.0,
                                                                                   fit: BoxFit.cover,
@@ -401,7 +407,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                   child: Text(
                                                                                     dateTimeFormat(
                                                                                       "Hm",
-                                                                                      datachatItem.timeup!,
+                                                                                      datachatItem.timestamp!,
                                                                                       locale: FFLocalizations.of(context).languageCode,
                                                                                     ),
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -428,10 +434,10 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                             ),
                                                           ),
                                                         if ((datachatItem
-                                                                    .messagephoto !=
+                                                                    .imageUrl !=
                                                                 '') &&
                                                             (datachatItem
-                                                                    .who?.id ==
+                                                                    .senderId ==
                                                                 currentUserReference
                                                                     ?.id))
                                                           Padding(
@@ -481,17 +487,17 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         child:
                                                                             DelchatWidget(
                                                                           chatID:
-                                                                              datachatItem.idchat,
+                                                                              datachatItem.reference.id.hashCode,
                                                                           room:
                                                                               widget.roomref!,
-                                                                          who: datachatItem
-                                                                              .who!,
+                                                                          who: SupabaseFirestore.instance
+                                                                              .collection('users').doc(datachatItem.senderId),
                                                                           testmessage:
-                                                                              datachatItem.messagetext,
+                                                                              datachatItem.text,
                                                                           photomessage:
-                                                                              datachatItem.messagephoto,
+                                                                              datachatItem.imageUrl,
                                                                           time:
-                                                                              datachatItem.timeup!,
+                                                                              datachatItem.timestamp!,
                                                                         ),
                                                                       ),
                                                                     );
@@ -560,11 +566,11 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                 type: PageTransitionType.fade,
                                                                                 child: FlutterFlowExpandedImageView(
                                                                                   image: Image.network(
-                                                                                    datachatItem.messagephoto,
+                                                                                    datachatItem.imageUrl,
                                                                                     fit: BoxFit.contain,
                                                                                   ),
                                                                                   allowRotation: false,
-                                                                                  tag: datachatItem.messagephoto,
+                                                                                  tag: datachatItem.imageUrl,
                                                                                   useHeroAnimation: true,
                                                                                 ),
                                                                               ),
@@ -573,14 +579,14 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                           child:
                                                                               Hero(
                                                                             tag:
-                                                                                datachatItem.messagephoto,
+                                                                                datachatItem.imageUrl,
                                                                             transitionOnUserGestures:
                                                                                 true,
                                                                             child:
                                                                                 ClipRRect(
                                                                               borderRadius: BorderRadius.circular(8.0),
                                                                               child: Image.network(
-                                                                                datachatItem.messagephoto,
+                                                                                datachatItem.imageUrl,
                                                                                 width: 300.0,
                                                                                 height: 200.0,
                                                                                 fit: BoxFit.cover,
@@ -617,7 +623,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                 child: Text(
                                                                                   dateTimeFormat(
                                                                                     "Hm",
-                                                                                    datachatItem.timeup!,
+                                                                                    datachatItem.timestamp!,
                                                                                     locale: FFLocalizations.of(context).languageCode,
                                                                                   ),
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -643,10 +649,10 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                             ),
                                                           ),
                                                         if ((datachatItem
-                                                                    .messagetext !=
+                                                                    .text !=
                                                                 '') &&
                                                             (datachatItem
-                                                                    .who?.id !=
+                                                                    .senderId !=
                                                                 currentUserReference
                                                                     ?.id) &&
                                                             !functions.checklist(
@@ -658,7 +664,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         e.id)
                                                                     .toList(),
                                                                 datachatItem
-                                                                    .who?.id)!)
+                                                                    .senderId)!)
                                                           Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
@@ -715,7 +721,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         valueOrDefault<
                                                                             String>(
                                                                           datachatItem
-                                                                              .userphoto,
+                                                                              .senderPhoto,
                                                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
                                                                         ),
                                                                         fit: BoxFit
@@ -784,7 +790,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                     color: Color(0xFF131313),
                                                                                   ),
                                                                                   child: Text(
-                                                                                    datachatItem.messagetext,
+                                                                                    datachatItem.text,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           font: GoogleFonts.openSans(
                                                                                             fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
@@ -806,7 +812,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                 Text(
                                                                                   dateTimeFormat(
                                                                                     "Hm",
-                                                                                    datachatItem.timeup!,
+                                                                                    datachatItem.timestamp!,
                                                                                     locale: FFLocalizations.of(context).languageCode,
                                                                                   ),
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -833,10 +839,10 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                             ),
                                                           ),
                                                         if ((datachatItem
-                                                                    .messagetext !=
+                                                                    .text !=
                                                                 '') &&
                                                             (datachatItem
-                                                                    .who?.id ==
+                                                                    .senderId ==
                                                                 currentUserReference
                                                                     ?.id))
                                                           Padding(
@@ -886,17 +892,17 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                         child:
                                                                             DelchatWidget(
                                                                           chatID:
-                                                                              datachatItem.idchat,
+                                                                              datachatItem.reference.id.hashCode,
                                                                           room:
                                                                               widget.roomref!,
-                                                                          who: datachatItem
-                                                                              .who!,
+                                                                          who: SupabaseFirestore.instance
+                                                                              .collection('users').doc(datachatItem.senderId),
                                                                           testmessage:
-                                                                              datachatItem.messagetext,
+                                                                              datachatItem.text,
                                                                           photomessage:
-                                                                              datachatItem.messagephoto,
+                                                                              datachatItem.imageUrl,
                                                                           time:
-                                                                              datachatItem.timeup!,
+                                                                              datachatItem.timestamp!,
                                                                         ),
                                                                       ),
                                                                     );
@@ -967,7 +973,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                 width: 160.0,
                                                                                 decoration: BoxDecoration(),
                                                                                 child: Text(
-                                                                                  datachatItem.messagetext,
+                                                                                  datachatItem.text,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         font: GoogleFonts.openSans(
                                                                                           fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
@@ -995,7 +1001,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                                   Text(
                                                                                     dateTimeFormat(
                                                                                       "Hm",
-                                                                                      datachatItem.timeup!,
+                                                                                      datachatItem.timestamp!,
                                                                                       locale: FFLocalizations.of(context).languageCode,
                                                                                     ),
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1027,7 +1033,9 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                   },
                                                   controller:
                                                       _model.listViewController,
-                                                );
+                                                 );
+                                              },
+                                            );  // end StreamBuilder
                                               },
                                             ),
                                           ),
@@ -1108,58 +1116,64 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                     .textController
                                                                     .text !=
                                                                 '') {
+                                                              // 1. Update chat_rooms metadata
                                                               await widget
                                                                   .roomref!
                                                                   .update({
-                                                                ...createRoomRecordData(
-                                                                  lastmassage:
+                                                                ...createChatRoomsRecordData(
+                                                                  lastMessage:
                                                                       _model
                                                                           .textController
                                                                           .text,
-                                                                  timeupdate:
+                                                                  lastMessageTime:
                                                                       getCurrentTimestamp,
-                                                                  lastpersonUpdate:
-                                                                      currentUserReference,
-                                                                  startchat:
-                                                                      true,
-                                                                ),
-                                                                ...mapToSupabase(
-                                                                  {
-                                                                    'message':
-                                                                        FieldValue
-                                                                            .arrayUnion([
-                                                                      getDatamassageFirestoreData(
-                                                                        updateDatamassageStruct(
-                                                                          DatamassageStruct(
-                                                                            who:
-                                                                                currentUserReference,
-                                                                            messagetext:
-                                                                                _model.textController.text,
-                                                                            timeup:
-                                                                                getCurrentTimestamp,
-                                                                            idchat:
-                                                                                random_data.randomInteger(0, 100000),
-                                                                            userphoto:
-                                                                                currentUserPhoto,
-                                                                            name:
-                                                                                currentUserDisplayName,
-                                                                          ),
-                                                                          clearUnsetFields:
-                                                                              false,
-                                                                        ),
-                                                                        true,
-                                                                      )
-                                                                    ]),
-                                                                  },
+                                                                  lastMessageSenderId:
+                                                                      currentUserReference?.id,
                                                                 ),
                                                               });
+
+                                                              // 2. Insert new message row
+                                                              await MessagesRecord
+                                                                  .collection
+                                                                  .add(
+                                                                      createMessagesRecordData(
+                                                                chatRoomId: widget
+                                                                    .roomref!
+                                                                    .id,
+                                                                text: _model
+                                                                    .textController
+                                                                    .text,
+                                                                senderId:
+                                                                    currentUserReference
+                                                                        ?.id,
+                                                                senderName:
+                                                                    currentUserDisplayName,
+                                                                senderPhoto:
+                                                                    currentUserPhoto,
+                                                                timestamp:
+                                                                    getCurrentTimestamp,
+                                                              ));
+
+                                                              // 3. Notify other user(s)
                                                               if (!widget
                                                                   .openchat!) {
-                                                                if (stackRoomRecord
-                                                                        .usersend ==
-                                                                    currentUserReference) {
-                                                                  await stackRoomRecord
-                                                                      .userrecive!
+                                                                // Derive the other user from user_ids
+                                                                final otherUserIds = stackChatRoomsRecord
+                                                                    .userIds
+                                                                    .where((id) =>
+                                                                        id !=
+                                                                        currentUserReference
+                                                                            ?.id)
+                                                                    .toList();
+                                                                for (final otherUserId
+                                                                    in otherUserIds) {
+                                                                  final otherUserRef = SupabaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'users')
+                                                                      .doc(
+                                                                          otherUserId);
+                                                                  await otherUserRef
                                                                       .update({
                                                                     ...mapToSupabase(
                                                                       {
@@ -1178,8 +1192,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                             .textController
                                                                             .text,
                                                                     userRefs: [
-                                                                      stackRoomRecord
-                                                                          .userrecive!
+                                                                      otherUserRef
                                                                     ],
                                                                     initialPageName:
                                                                         'HomePage',
@@ -1192,49 +1205,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                       {
                                                                         'usermassageRead':
                                                                             FieldValue.arrayUnion([
-                                                                          stackRoomRecord
-                                                                              .userrecive
-                                                                        ]),
-                                                                      },
-                                                                    ),
-                                                                  });
-                                                                } else {
-                                                                  await stackRoomRecord
-                                                                      .usersend!
-                                                                      .update({
-                                                                    ...mapToSupabase(
-                                                                      {
-                                                                        'usermassage':
-                                                                            FieldValue.arrayUnion([
-                                                                          currentUserReference
-                                                                        ]),
-                                                                      },
-                                                                    ),
-                                                                  });
-                                                                  triggerPushNotification(
-                                                                    notificationTitle:
-                                                                        currentUserDisplayName,
-                                                                    notificationText:
-                                                                        _model
-                                                                            .textController
-                                                                            .text,
-                                                                    userRefs: [
-                                                                      stackRoomRecord
-                                                                          .usersend!
-                                                                    ],
-                                                                    initialPageName:
-                                                                        'HomePage',
-                                                                    parameterData: {},
-                                                                  );
-
-                                                                  await currentUserReference!
-                                                                      .update({
-                                                                    ...mapToSupabase(
-                                                                      {
-                                                                        'usermassageRead':
-                                                                            FieldValue.arrayUnion([
-                                                                          stackRoomRecord
-                                                                              .usersend
+                                                                          otherUserRef
                                                                         ]),
                                                                       },
                                                                     ),
@@ -1572,56 +1543,60 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                           if (_model
                                                                   .uploadedFileUrl_uploadData1ir !=
                                                               '') {
+                                                            // 1. Update chat_rooms metadata
                                                             await widget
                                                                 .roomref!
                                                                 .update({
-                                                              ...createRoomRecordData(
-                                                                timeupdate:
+                                                              ...createChatRoomsRecordData(
+                                                                lastMessageTime:
                                                                     getCurrentTimestamp,
-                                                                lastmassage:
+                                                                lastMessage:
                                                                     'รูปภาพ',
-                                                                lastpersonUpdate:
-                                                                    currentUserReference,
-                                                                startchat: true,
-                                                              ),
-                                                              ...mapToSupabase(
-                                                                {
-                                                                  'message':
-                                                                      FieldValue
-                                                                          .arrayUnion([
-                                                                    getDatamassageFirestoreData(
-                                                                      updateDatamassageStruct(
-                                                                        DatamassageStruct(
-                                                                          who:
-                                                                              currentUserReference,
-                                                                          messagephoto:
-                                                                              _model.uploadedFileUrl_uploadData1ir,
-                                                                          timeup:
-                                                                              getCurrentTimestamp,
-                                                                          idchat: random_data.randomInteger(
-                                                                              0,
-                                                                              100000),
-                                                                          userphoto:
-                                                                              currentUserPhoto,
-                                                                          name:
-                                                                              currentUserDisplayName,
-                                                                        ),
-                                                                        clearUnsetFields:
-                                                                            false,
-                                                                      ),
-                                                                      true,
-                                                                    )
-                                                                  ]),
-                                                                },
+                                                                lastMessageSenderId:
+                                                                    currentUserReference?.id,
                                                               ),
                                                             });
+
+                                                            // 2. Insert new message row with image
+                                                            await MessagesRecord
+                                                                .collection
+                                                                .add(
+                                                                    createMessagesRecordData(
+                                                              chatRoomId: widget
+                                                                  .roomref!.id,
+                                                              text: '',
+                                                              imageUrl: _model
+                                                                  .uploadedFileUrl_uploadData1ir,
+                                                              senderId:
+                                                                  currentUserReference
+                                                                      ?.id,
+                                                              senderName:
+                                                                  currentUserDisplayName,
+                                                              senderPhoto:
+                                                                  currentUserPhoto,
+                                                              timestamp:
+                                                                  getCurrentTimestamp,
+                                                            ));
+
+                                                            // 3. Notify other user(s)
                                                             if (!widget
                                                                 .openchat!) {
-                                                              if (stackRoomRecord
-                                                                      .usersend ==
-                                                                  currentUserReference) {
-                                                                await stackRoomRecord
-                                                                    .userrecive!
+                                                              final otherUserIds = stackChatRoomsRecord
+                                                                  .userIds
+                                                                  .where((id) =>
+                                                                      id !=
+                                                                      currentUserReference
+                                                                          ?.id)
+                                                                  .toList();
+                                                              for (final otherUserId
+                                                                  in otherUserIds) {
+                                                                final otherUserRef = SupabaseFirestore
+                                                                    .instance
+                                                                    .collection(
+                                                                        'users')
+                                                                    .doc(
+                                                                        otherUserId);
+                                                                await otherUserRef
                                                                     .update({
                                                                   ...mapToSupabase(
                                                                     {
@@ -1639,8 +1614,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                   notificationText:
                                                                       'มีข้อความรูปภาพ',
                                                                   userRefs: [
-                                                                    stackRoomRecord
-                                                                        .userrecive!
+                                                                    otherUserRef
                                                                   ],
                                                                   initialPageName:
                                                                       'HomePage',
@@ -1654,49 +1628,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                                       'usermassageRead':
                                                                           FieldValue
                                                                               .arrayUnion([
-                                                                        stackRoomRecord
-                                                                            .userrecive
-                                                                      ]),
-                                                                    },
-                                                                  ),
-                                                                });
-                                                              } else {
-                                                                await stackRoomRecord
-                                                                    .usersend!
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'usermassage':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        currentUserReference
-                                                                      ]),
-                                                                    },
-                                                                  ),
-                                                                });
-                                                                triggerPushNotification(
-                                                                  notificationTitle:
-                                                                      currentUserDisplayName,
-                                                                  notificationText:
-                                                                      'มีข้อความรูปภาพ',
-                                                                  userRefs: [
-                                                                    stackRoomRecord
-                                                                        .usersend!
-                                                                  ],
-                                                                  initialPageName:
-                                                                      'HomePage',
-                                                                  parameterData: {},
-                                                                );
-
-                                                                await currentUserReference!
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'usermassageRead':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        stackRoomRecord
-                                                                            .usersend
+                                                                        otherUserRef
                                                                       ]),
                                                                     },
                                                                   ),
@@ -1829,53 +1761,50 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                             safeSetState(() {});
                                             if (_model.textController.text !=
                                                 '') {
+                                              // 1. Update chat_rooms metadata
                                               await widget.roomref!.update({
-                                                ...createRoomRecordData(
-                                                  lastmassage: _model
+                                                ...createChatRoomsRecordData(
+                                                  lastMessage: _model
                                                       .textController.text,
-                                                  timeupdate:
+                                                  lastMessageTime:
                                                       getCurrentTimestamp,
-                                                  lastpersonUpdate:
-                                                      currentUserReference,
-                                                  startchat: true,
-                                                ),
-                                                ...mapToSupabase(
-                                                  {
-                                                    'message':
-                                                        FieldValue.arrayUnion([
-                                                      getDatamassageFirestoreData(
-                                                        updateDatamassageStruct(
-                                                          DatamassageStruct(
-                                                            who:
-                                                                currentUserReference,
-                                                            messagetext: _model
-                                                                .textController
-                                                                .text,
-                                                            timeup:
-                                                                getCurrentTimestamp,
-                                                            idchat: random_data
-                                                                .randomInteger(
-                                                                    0, 100000),
-                                                            userphoto:
-                                                                currentUserPhoto,
-                                                            name:
-                                                                currentUserDisplayName,
-                                                          ),
-                                                          clearUnsetFields:
-                                                              false,
-                                                        ),
-                                                        true,
-                                                      )
-                                                    ]),
-                                                  },
+                                                  lastMessageSenderId:
+                                                      currentUserReference?.id,
                                                 ),
                                               });
+
+                                              // 2. Insert new message row
+                                              await MessagesRecord.collection
+                                                  .add(createMessagesRecordData(
+                                                chatRoomId:
+                                                    widget.roomref!.id,
+                                                text: _model
+                                                    .textController.text,
+                                                senderId:
+                                                    currentUserReference?.id,
+                                                senderName:
+                                                    currentUserDisplayName,
+                                                senderPhoto:
+                                                    currentUserPhoto,
+                                                timestamp:
+                                                    getCurrentTimestamp,
+                                              ));
+
+                                              // 3. Notify other user(s)
                                               if (!widget.openchat!) {
-                                                if (stackRoomRecord.usersend ==
-                                                    currentUserReference) {
-                                                  await stackRoomRecord
-                                                      .userrecive!
-                                                      .update({
+                                                final otherUserIds = stackChatRoomsRecord
+                                                    .userIds
+                                                    .where((id) =>
+                                                        id !=
+                                                        currentUserReference?.id)
+                                                    .toList();
+                                                for (final otherUserId
+                                                    in otherUserIds) {
+                                                  final otherUserRef =
+                                                      SupabaseFirestore.instance
+                                                          .collection('users')
+                                                          .doc(otherUserId);
+                                                  await otherUserRef.update({
                                                     ...mapToSupabase(
                                                       {
                                                         'usermassage':
@@ -1895,10 +1824,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                         getCurrentTimestamp,
                                                     notificationSound:
                                                         'default',
-                                                    userRefs: [
-                                                      stackRoomRecord
-                                                          .userrecive!
-                                                    ],
+                                                    userRefs: [otherUserRef],
                                                     initialPageName: 'HomePage',
                                                     parameterData: {},
                                                   );
@@ -1910,51 +1836,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                         'usermassageRead':
                                                             FieldValue
                                                                 .arrayUnion([
-                                                          stackRoomRecord
-                                                              .userrecive
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
-                                                } else {
-                                                  await stackRoomRecord
-                                                      .usersend!
-                                                      .update({
-                                                    ...mapToSupabase(
-                                                      {
-                                                        'usermassage':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          currentUserReference
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
-                                                  triggerPushNotification(
-                                                    notificationTitle:
-                                                        currentUserDisplayName,
-                                                    notificationText: _model
-                                                        .textController.text,
-                                                    scheduledTime:
-                                                        getCurrentTimestamp,
-                                                    notificationSound:
-                                                        'default',
-                                                    userRefs: [
-                                                      stackRoomRecord.usersend!
-                                                    ],
-                                                    initialPageName: 'HomePage',
-                                                    parameterData: {},
-                                                  );
-
-                                                  await currentUserReference!
-                                                      .update({
-                                                    ...mapToSupabase(
-                                                      {
-                                                        'usermassageRead':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          stackRoomRecord
-                                                              .usersend
+                                                          otherUserRef
                                                         ]),
                                                       },
                                                     ),
@@ -2058,51 +1940,30 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
                                             context.pushNamed(
-                                                HomePageWidget.routeName);
+                                                MainChatWidget.routeName);
 
                                             if (!widget.openchat!) {
-                                              if (stackRoomRecord.usersend ==
-                                                  currentUserReference) {
+                                              // Derive other user from user_ids
+                                              final otherIds = stackChatRoomsRecord
+                                                  .userIds
+                                                  .where((id) => id != currentUserReference?.id)
+                                                  .toList();
+                                              for (final otherId in otherIds) {
+                                                final otherRef = SupabaseFirestore.instance
+                                                    .collection('users').doc(otherId);
                                                 await currentUserReference!
                                                     .update({
                                                   ...mapToSupabase(
                                                     {
                                                       'usermassage': FieldValue
                                                           .arrayRemove([
-                                                        stackRoomRecord
-                                                            .userrecive
+                                                        otherRef
                                                       ]),
                                                     },
                                                   ),
                                                 });
 
-                                                await stackRoomRecord
-                                                    .userrecive!
-                                                    .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'usermassageRead':
-                                                          FieldValue
-                                                              .arrayRemove([
-                                                        currentUserReference
-                                                      ]),
-                                                    },
-                                                  ),
-                                                });
-                                              } else {
-                                                await currentUserReference!
-                                                    .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'usermassage': FieldValue
-                                                          .arrayRemove([
-                                                        stackRoomRecord.usersend
-                                                      ]),
-                                                    },
-                                                  ),
-                                                });
-
-                                                await stackRoomRecord.usersend!
+                                                await otherRef
                                                     .update({
                                                   ...mapToSupabase(
                                                     {
@@ -2328,12 +2189,13 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                                                   context),
                                               child: DelallchatWidget(
                                                 idroom: widget.roomref!,
-                                                userref: stackRoomRecord
-                                                            .usersend?.id ==
-                                                        currentUserReference?.id
-                                                    ? stackRoomRecord
-                                                        .userrecive!
-                                                    : stackRoomRecord.usersend!,
+                                                userref: SupabaseFirestore.instance
+                                                    .collection('users')
+                                                    .doc(stackChatRoomsRecord.userIds
+                                                        .firstWhere(
+                                                          (id) => id != currentUserReference?.id,
+                                                          orElse: () => '',
+                                                        )),
                                               ),
                                             ),
                                           );
@@ -2389,7 +2251,7 @@ class _ChatsWidgetState extends State<ChatsWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed(HomePageWidget.routeName);
+                                context.pushNamed(MainChatWidget.routeName);
 
                                 await currentUserReference!.update({
                                   ...mapToSupabase(

@@ -27,7 +27,7 @@ class RoomVenuesLiveChatRecord extends SupabaseRecord {
   bool hasChat() => _chat != null;
 
   void _initializeFields() {
-    _idVenue = snapshotData['id_venue'] as SupabaseDocRef?;
+    _idVenue = getSupabaseDocRef(snapshotData['id_venue'], 'venues');
     _chat = getStructList(
       snapshotData['chat'],
       ChatElementLivechatStruct.fromMap,

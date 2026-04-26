@@ -86,7 +86,7 @@ class StoreRecord extends SupabaseRecord {
       DatauserStruct.fromMap,
     );
     _logo = snapshotData['logo'] as String?;
-    _iDroom = snapshotData['IDroom'] as SupabaseDocRef?;
+    _iDroom = getSupabaseDocRef(snapshotData['IDroom'], 'room');
     _goodprofile = getDataList(snapshotData['goodprofile']);
     _qr = snapshotData['qr'] as String?;
     _bGshow1 = snapshotData['BGshow1'] as String?;

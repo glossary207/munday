@@ -283,7 +283,7 @@ class UsersRecord extends SupabaseRecord {
     _iDFacebook = snapshotData['IDFacebook'] as String?;
     _report = castToType<int>(snapshotData['Report']);
     _view = castToType<int>(snapshotData['view']);
-    _checkinID = snapshotData['checkinID'] as SupabaseDocRef?;
+    _checkinID = getSupabaseDocRef(snapshotData['checkinID'], 'store');
     _readcheers = castToType<int>(snapshotData['readcheers']);
     _openseeuser = getDataList(snapshotData['openseeuser']);
     _freeseeuser = castToType<int>(snapshotData['freeseeuser']);
@@ -295,12 +295,12 @@ class UsersRecord extends SupabaseRecord {
     _loveVenuse = getSupabaseDocRefList(snapshotData['loveVenuse'], 'venues');
     _tickets = getDataList(snapshotData['tickets']);
     _iDROOMVenues = getDataList(snapshotData['IDROOMVenues']);
-    _loginVenuesRoom = snapshotData['loginVenuesRoom'] as SupabaseDocRef?;
+    _loginVenuesRoom = getSupabaseDocRef(snapshotData['loginVenuesRoom'], 'room');
     _nameLoginVenues = snapshotData['nameLoginVenues'] as String?;
     _cheersLimit = castToType<int>(snapshotData['cheers_limit']);
     _setCheers = snapshotData['set_cheers'] as bool?;
     _logoRoom = snapshotData['logo_room'] as String?;
-    _groupInviteID = snapshotData['Group_invite_ID'] as SupabaseDocRef?;
+    _groupInviteID = getSupabaseDocRef(snapshotData['Group_invite_ID'], 'Group_invite');
   }
 
   static SupabaseCollectionRef get collection =>

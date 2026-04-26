@@ -4339,7 +4339,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed(HomePageWidget.routeName);
+                                  context.pushNamed(MainChatWidget.routeName);
 
                                   await currentUserReference!.update({
                                     ...mapToSupabase(

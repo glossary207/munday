@@ -324,9 +324,9 @@ class SupabaseQuery {
     if (isGreaterThanOrEqualTo != null)
       q._constraints
           .add(QueryConstraint(fieldName, 'gte', isGreaterThanOrEqualTo));
-    if (arrayContains != null)
-      q._constraints.add(QueryConstraint(fieldName, 'cs',
-          '{path: [arrayContains]}')); // Complex mapping needed
+    if (arrayContains != null) {
+      q._constraints.add(QueryConstraint(fieldName, 'arrayContains', arrayContains));
+    }
     if (whereIn != null)
       q._constraints.add(QueryConstraint(fieldName, 'in', whereIn));
 
@@ -391,13 +391,33 @@ class SupabaseQuery {
     for (var c in _constraints) {
       if (c.op == 'eq') {
         streamBuilder = streamBuilder.eq(c.field, c.value);
+      } else if (c.op == 'arrayContains') {
+        // Warning: Supabase stream API might not fully support array contains server-side effectively.
+        // We attempt to map it as a postgrest filter if supported, but typically streaming filters are limited.
       }
     }
 
     // Cast the result of the stream to the expected type
     return (streamBuilder as Stream<List<Map<String, dynamic>>>)
         .map((List<Map<String, dynamic>> data) {
-      return SupabaseQuerySnapshot(data
+      
+      var filteredData = data;
+      for (var c in _constraints) {
+        if (c.op == 'arrayContains') {
+          String valId = c.value is SupabaseDocRef ? (c.value as SupabaseDocRef).id : c.value.toString();
+          filteredData = filteredData.where((d) {
+            var arr = d[c.field];
+            if (arr == null) return false;
+            // arr might be a List<dynamic>
+            if (arr is List) {
+              return arr.map((e) => e.toString()).contains(valId);
+            }
+            return false;
+          }).toList();
+        }
+      }
+
+      return SupabaseQuerySnapshot(filteredData
           .map((e) => SupabaseQueryDocSnapshot(
               e['id'].toString(),
               _processReadData(e),
@@ -434,6 +454,13 @@ class SupabaseQuery {
           break;
         case 'in':
           query = query.inFilter(c.field, c.value as List);
+          break;
+        case 'arrayContains':
+          if (c.value is SupabaseDocRef) {
+             query = query.contains(c.field, [(c.value as SupabaseDocRef).id]);
+          } else {
+             query = query.contains(c.field, [c.value]);
+          }
           break;
         case 'filter':
           Filter f = c.value;

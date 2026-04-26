@@ -32,7 +32,7 @@ class UserInVenuesRecord extends SupabaseRecord {
   bool hasNameVenues() => _nameVenues != null;
 
   void _initializeFields() {
-    _iDVenues = snapshotData['IDVenues'] as SupabaseDocRef?;
+    _iDVenues = getSupabaseDocRef(snapshotData['IDVenues'], 'venues');
     _user = getStructList(
       snapshotData['user'],
       DaStruct.fromMap,

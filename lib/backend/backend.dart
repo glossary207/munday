@@ -8,7 +8,8 @@ import 'schema/util/supabase_util.dart';
 
 import 'schema/users_record.dart';
 import 'schema/store_record.dart';
-import 'schema/room_record.dart';
+import 'schema/chat_rooms_record.dart';
+import 'schema/messages_record.dart';
 import 'schema/events_record.dart';
 import 'schema/venues_record.dart';
 import 'schema/ticket_record.dart';
@@ -27,7 +28,8 @@ export 'schema/util/schema_util.dart';
 
 export 'schema/users_record.dart';
 export 'schema/store_record.dart';
-export 'schema/room_record.dart';
+export 'schema/chat_rooms_record.dart';
+export 'schema/messages_record.dart';
 export 'schema/events_record.dart';
 export 'schema/venues_record.dart';
 export 'schema/ticket_record.dart';
@@ -175,38 +177,75 @@ Future<List<StoreRecord>> queryStoreRecordOnce({
       singleRecord: singleRecord,
     );
 
-// --- RoomRecord ---
-Future<int> queryRoomRecordCount({
+// --- ChatRoomsRecord ---
+Future<int> queryChatRoomsRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      RoomRecord.collection,
+      ChatRoomsRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<RoomRecord>> queryRoomRecord({
+Stream<List<ChatRoomsRecord>> queryChatRoomsRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      RoomRecord.collection,
-      RoomRecord.fromSnapshot,
+      ChatRoomsRecord.collection,
+      ChatRoomsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<RoomRecord>> queryRoomRecordOnce({
+Future<List<ChatRoomsRecord>> queryChatRoomsRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      RoomRecord.collection,
-      RoomRecord.fromSnapshot,
+      ChatRoomsRecord.collection,
+      ChatRoomsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+// --- MessagesRecord ---
+Future<int> queryMessagesRecordCount({
+  SupabaseQuery Function(SupabaseQuery)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      MessagesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<MessagesRecord>> queryMessagesRecord({
+  SupabaseQuery Function(SupabaseQuery)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MessagesRecord.collection,
+      MessagesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MessagesRecord>> queryMessagesRecordOnce({
+  SupabaseQuery Function(SupabaseQuery)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MessagesRecord.collection,
+      MessagesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

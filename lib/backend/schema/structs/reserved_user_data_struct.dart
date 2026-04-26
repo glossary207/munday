@@ -41,7 +41,7 @@ class ReservedUserDataStruct extends FFSupabaseStruct {
   static ReservedUserDataStruct fromMap(Map<String, dynamic> data) =>
       ReservedUserDataStruct(
         username: data['username'] as String?,
-        uid: data['uid'] as SupabaseDocRef?,
+        uid: getSupabaseDocRef(data['uid'], 'users'),
         photoPath: data['photo_path'] as String?,
       );
 

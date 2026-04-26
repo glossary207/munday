@@ -104,34 +104,13 @@ class _BlockWidgetState extends State<BlockWidget> {
                       },
                     ),
                   });
-                  _model.aaaCopy = await queryRoomRecordOnce(
-                    queryBuilder: (roomRecord) => roomRecord
-                        .where(
-                          'usersend',
-                          isEqualTo: currentUserReference,
-                        )
-                        .where(
-                          'userrecive',
-                          isEqualTo: widget.iduser,
-                        ),
+                  _model.aaaCopy = await queryChatRoomsRecordOnce(
+                    queryBuilder: (q) => q
+                        .where('user_ids', arrayContains: currentUserReference),
                     singleRecord: true,
-                  ).then((s) => s.firstOrNull);
-                  _model.bbbCopy = await queryRoomRecordOnce(
-                    queryBuilder: (roomRecord) => roomRecord
-                        .where(
-                          'usersend',
-                          isEqualTo: widget.iduser,
-                        )
-                        .where(
-                          'userrecive',
-                          isEqualTo: currentUserReference,
-                        ),
-                    singleRecord: true,
-                  ).then((s) => s.firstOrNull);
+                  ).then((s) => s.where((r) => r.userIds.contains(widget.iduser?.id)).firstOrNull);
                   if (_model.aaaCopy?.reference != null) {
                     await _model.aaaCopy!.reference.delete();
-                  } else {
-                    await _model.bbbCopy!.reference.delete();
                   }
 
                   Navigator.pop(context);
@@ -199,34 +178,13 @@ class _BlockWidgetState extends State<BlockWidget> {
                       },
                     ),
                   });
-                  _model.aaa = await queryRoomRecordOnce(
-                    queryBuilder: (roomRecord) => roomRecord
-                        .where(
-                          'usersend',
-                          isEqualTo: currentUserReference,
-                        )
-                        .where(
-                          'userrecive',
-                          isEqualTo: widget.iduser,
-                        ),
+                  _model.aaa = await queryChatRoomsRecordOnce(
+                    queryBuilder: (q) => q
+                        .where('user_ids', arrayContains: currentUserReference),
                     singleRecord: true,
-                  ).then((s) => s.firstOrNull);
-                  _model.bbb = await queryRoomRecordOnce(
-                    queryBuilder: (roomRecord) => roomRecord
-                        .where(
-                          'usersend',
-                          isEqualTo: widget.iduser,
-                        )
-                        .where(
-                          'userrecive',
-                          isEqualTo: currentUserReference,
-                        ),
-                    singleRecord: true,
-                  ).then((s) => s.firstOrNull);
+                  ).then((s) => s.where((r) => r.userIds.contains(widget.iduser?.id)).firstOrNull);
                   if (_model.aaa?.reference != null) {
                     await _model.aaa!.reference.delete();
-                  } else {
-                    await _model.bbb!.reference.delete();
                   }
 
                   Navigator.pop(context);

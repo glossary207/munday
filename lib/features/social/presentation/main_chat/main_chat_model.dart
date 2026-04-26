@@ -1,10 +1,10 @@
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'home_page_widget.dart' show HomePageWidget;
+import 'main_chat_widget.dart' show MainChatWidget;
 import 'package:flutter/material.dart';
 
-class HomePageModel extends FlutterFlowModel<HomePageWidget> {
+class MainChatModel extends FlutterFlowModel<MainChatWidget> {
   ///  Local state fields for this page.
 
   List<SupabaseDocRef> roomrefer = [];

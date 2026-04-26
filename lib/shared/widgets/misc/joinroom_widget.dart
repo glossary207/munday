@@ -1052,7 +1052,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                             });
 
                                                             context.pushNamed(
-                                                                HomeWidget
+                                                                SocialInVenuseWidget
                                                                     .routeName);
 
                                                             safeSetState(() {});

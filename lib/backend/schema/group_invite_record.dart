@@ -42,7 +42,7 @@ class GroupInviteRecord extends SupabaseRecord {
       snapshotData['User_in_group'],
       UserInGroupInviteStruct.fromMap,
     );
-    _iDVenues = snapshotData['ID_venues'] as SupabaseDocRef?;
+    _iDVenues = getSupabaseDocRef(snapshotData['ID_venues'], 'venues');
     _chatRoom = getStructList(
       snapshotData['chat_room'],
       ChatElementLivechatStruct.fromMap,

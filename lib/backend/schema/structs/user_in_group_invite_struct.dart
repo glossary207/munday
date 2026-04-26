@@ -57,7 +57,7 @@ class UserInGroupInviteStruct extends FFSupabaseStruct {
   static UserInGroupInviteStruct fromMap(Map<String, dynamic> data) =>
       UserInGroupInviteStruct(
         username: data['username'] as String?,
-        uid: data['uid'] as SupabaseDocRef?,
+        uid: getSupabaseDocRef(data['uid'], 'users'),
         photoPath: data['photo_path'] as String?,
         status: castToType<int>(data['status']),
       );

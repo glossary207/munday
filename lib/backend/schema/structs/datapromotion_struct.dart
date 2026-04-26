@@ -53,7 +53,7 @@ class DatapromotionStruct extends FFSupabaseStruct {
       DatapromotionStruct(
         namevenuse: data['namevenuse'] as String?,
         distance: castToType<double>(data['distance']),
-        iDvenuse: data['IDvenuse'] as SupabaseDocRef?,
+        iDvenuse: getSupabaseDocRef(data['IDvenuse'], 'venues'),
         logo: data['logo'] as String?,
       );
 

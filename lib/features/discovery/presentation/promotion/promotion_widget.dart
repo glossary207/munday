@@ -827,7 +827,7 @@ class _PromotionWidgetState extends State<PromotionWidget>
                                                         Colors.transparent,
                                                     onTap: () async {
                                                       context.pushNamed(
-                                                          HomePageWidget
+                                                          MainChatWidget
                                                               .routeName);
                                                     },
                                                     child: Container(
@@ -2705,7 +2705,7 @@ class _PromotionWidgetState extends State<PromotionWidget>
                                                       Colors.transparent,
                                                   onTap: () async {
                                                     context.pushNamed(
-                                                        HomeWidget.routeName);
+                                                        SocialInVenuseWidget.routeName);
 
                                                     FFAppState().StyleVenuse =
                                                         [];

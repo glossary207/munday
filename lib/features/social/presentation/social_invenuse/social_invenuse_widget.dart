@@ -28,21 +28,21 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'home_model.dart';
-export 'home_model.dart';
+import 'social_invenuse_model.dart';
+export 'social_invenuse_model.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({super.key});
+class SocialInVenuseWidget extends StatefulWidget {
+  const SocialInVenuseWidget({super.key});
 
-  static String routeName = 'home';
-  static String routePath = 'home';
+  static String routeName = 'socialInvenuse';
+  static String routePath = 'socialInvenuse';
 
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<SocialInVenuseWidget> createState() => _SocialInVenuseWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
-  late HomeModel _model;
+class _SocialInVenuseWidgetState extends State<SocialInVenuseWidget> with TickerProviderStateMixin {
+  late SocialInVenuseModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -51,7 +51,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomeModel());
+    _model = createModel(context, () => SocialInVenuseModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -284,10 +284,26 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               height: 5000.0,
                               decoration: BoxDecoration(),
                               child: AuthUserStreamWidget(
-                                builder: (context) =>
-                                    StreamBuilder<VenuesRecord>(
-                                  stream: VenuesRecord.getDocument(
-                                      currentUserDocument!.loginVenuesRoom!),
+                                builder: (context) {
+                                  final venueRef =
+                                      currentUserDocument?.loginVenuesRoom;
+                                  if (currentUserDocument == null ||
+                                      venueRef == null) {
+                                    return const Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            Colors.transparent,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  return StreamBuilder<VenuesRecord>(
+                                  stream: VenuesRecord.getDocument(venueRef),
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {
@@ -978,7 +994,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         onTap:
                                                                             () async {
                                                                           context
-                                                                              .pushNamed(HomePageWidget.routeName);
+                                                                              .pushNamed(MainChatWidget.routeName);
                                                                         },
                                                                         child:
                                                                             Container(
@@ -9853,7 +9869,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       ],
                                     );
                                   },
-                                ),
+                                );
+                                },
                               ),
                             ),
                           ),
@@ -9915,7 +9932,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed(HomePageWidget.routeName);
+                            context.pushNamed(MainChatWidget.routeName);
 
                             await currentUserReference!.update({
                               ...mapToSupabase(
@@ -9978,11 +9995,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 child: Stack(
                                   children: [
                                     AuthUserStreamWidget(
-                                      builder: (context) =>
-                                          StreamBuilder<VenuesRecord>(
+                                      builder: (context) {
+                                        final venueRef = currentUserDocument?.loginVenuesRoom;
+                                        if (venueRef == null) {
+                                          return const SizedBox.shrink();
+                                        }
+                                        return StreamBuilder<VenuesRecord>(
                                         stream: VenuesRecord.getDocument(
-                                            currentUserDocument!
-                                                .loginVenuesRoom!),
+                                            venueRef),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
                                           if (!snapshot.hasData) {
@@ -10267,7 +10287,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             ],
                                           );
                                         },
-                                      ),
+                                      );
+                                    },
                                     ),
                                   ],
                                 ),

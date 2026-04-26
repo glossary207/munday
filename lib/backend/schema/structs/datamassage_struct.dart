@@ -78,7 +78,7 @@ class DatamassageStruct extends FFSupabaseStruct {
 
   static DatamassageStruct fromMap(Map<String, dynamic> data) =>
       DatamassageStruct(
-        who: data['who'] as SupabaseDocRef?,
+        who: getSupabaseDocRef(data['who'], 'users'),
         messagetext: data['messagetext'] as String?,
         messagephoto: data['messagephoto'] as String?,
         timeup: data['timeup'] as DateTime?,

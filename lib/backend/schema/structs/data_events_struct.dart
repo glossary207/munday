@@ -150,9 +150,9 @@ class DataEventsStruct extends FFSupabaseStruct {
         maxCapacity: castToType<int>(data['max_capacity']),
         musicstyle: data['musicstyle'] as String?,
         date: data['Date'] as DateTime?,
-        docRef: data['doc_ref'] as SupabaseDocRef?,
+        docRef: getSupabaseDocRef(data['doc_ref'], 'events'),
         position: data['position'] as LatLng?,
-        iDVenuse: data['iDVenuse'] as SupabaseDocRef?,
+        iDVenuse: getSupabaseDocRef(data['iDVenuse'], 'venues'),
         free: data['FREE'] as bool?,
         priceDetail: data['PriceDetail'] as String?,
       );

@@ -1,10 +1,10 @@
 // Export pages
 export '/features/auth/presentation/phone_auth/phone_login_widget.dart' show PhoneLoginWidget;
 export '/features/auth/presentation/phone_auth/otp_verify_widget.dart' show OtpVerifyWidget;
-export '/features/social/presentation/home_page/home_page_widget.dart' show HomePageWidget;
+export '/features/social/presentation/main_chat/main_chat_widget.dart' show MainChatWidget;
 export '/features/social/presentation/chats/chats_widget.dart' show ChatsWidget;
 export '/features/account/presentation/profile/profile_widget.dart' show ProfileWidget;
-export '/features/social/presentation/home/home_widget.dart' show HomeWidget;
+export '/features/social/presentation/social_invenuse/social_invenuse_widget.dart' show SocialInVenuseWidget;
 export '/features/account/presentation/profile/account_settings_widget.dart'
     show AccountSettingsWidget;
 export '/features/account/presentation/privacy_policy/privacy_policy_widget.dart' show PrivacyPolicyWidget;

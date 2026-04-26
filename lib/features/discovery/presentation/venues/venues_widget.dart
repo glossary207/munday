@@ -1671,7 +1671,7 @@ class _VenuesWidgetState extends State<VenuesWidget>
                                                       Colors.transparent,
                                                   onTap: () async {
                                                     context.pushNamed(
-                                                        HomeWidget.routeName);
+                                                        SocialInVenuseWidget.routeName);
 
                                                     FFAppState().StyleVenuse =
                                                         [];
@@ -3610,7 +3610,7 @@ class _VenuesWidgetState extends State<VenuesWidget>
                                                   Colors.transparent,
                                               onTap: () async {
                                                 context.pushNamed(
-                                                    HomePageWidget.routeName);
+                                                    MainChatWidget.routeName);
                                               },
                                               child: Container(
                                                 width: 40.0,

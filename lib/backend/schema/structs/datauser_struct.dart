@@ -68,7 +68,7 @@ class DatauserStruct extends FFSupabaseStruct {
   bool hasCaption() => _caption != null;
 
   static DatauserStruct fromMap(Map<String, dynamic> data) => DatauserStruct(
-        userinstore: data['userinstore'] as SupabaseDocRef?,
+        userinstore: getSupabaseDocRef(data['userinstore'], 'UserInVenues'),
         photoprofile: data['photoprofile'] as String?,
         name: data['name'] as String?,
         online: data['online'] as bool?,

@@ -28,7 +28,7 @@ class VenueLayoutsRecord extends SupabaseRecord {
   bool hasTableLayout() => _tableLayout != null;
 
   void _initializeFields() {
-    _venueRef = snapshotData['venue_ref'] as SupabaseDocRef?;
+    _venueRef = getSupabaseDocRef(snapshotData['venue_ref'], 'venues');
     _tableLayout = getStructList(
       snapshotData['table_layout'],
       TableLayoutStruct.fromMap,

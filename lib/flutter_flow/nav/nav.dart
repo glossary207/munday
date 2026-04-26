@@ -125,10 +125,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         builder: (context, _) => MainWidget(),
         routes: [
           FFRoute(
-            name: HomePageWidget.routeName,
-            path: HomePageWidget.routePath,
+            name: MainChatWidget.routeName,
+            path: MainChatWidget.routePath,
             requireAuth: true,
-            builder: (context, params) => HomePageWidget(),
+            builder: (context, params) => MainChatWidget(),
           ),
           FFRoute(
             name: ChatsWidget.routeName,
@@ -192,10 +192,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             builder: (context, params) => const WelcomeNewAccountWidget(),
           ),
           FFRoute(
-            name: HomeWidget.routeName,
-            path: HomeWidget.routePath,
+            name: SocialInVenuseWidget.routeName,
+            path: SocialInVenuseWidget.routePath,
             requireAuth: true,
-            builder: (context, params) => HomeWidget(),
+            builder: (context, params) => SocialInVenuseWidget(),
           ),
           FFRoute(
             name: AccountSettingsWidget.routeName,

@@ -21,7 +21,7 @@ class UserdataStruct extends FFSupabaseStruct {
   bool hasIduser() => _iduser != null;
 
   static UserdataStruct fromMap(Map<String, dynamic> data) => UserdataStruct(
-        iduser: data['iduser'] as SupabaseDocRef?,
+        iduser: getSupabaseDocRef(data['iduser'], 'users'),
       );
 
   static UserdataStruct? maybeFromMap(dynamic data) =>

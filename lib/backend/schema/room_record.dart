@@ -83,12 +83,12 @@ class RoomRecord extends SupabaseRecord {
 
   void _initializeFields() {
     _lastmassage = snapshotData['lastmassage'] as String?;
-    _usersend = snapshotData['usersend'] as SupabaseDocRef?;
-    _userrecive = snapshotData['userrecive'] as SupabaseDocRef?;
+    _usersend = getSupabaseDocRef(snapshotData['usersend'], 'users');
+    _userrecive = getSupabaseDocRef(snapshotData['userrecive'], 'users');
     _timeupdate = snapshotData['timeupdate'] as DateTime?;
     _namesend = snapshotData['namesend'] as String?;
     _namerecive = snapshotData['namerecive'] as String?;
-    _lastpersonUpdate = snapshotData['LastpersonUpdate'] as SupabaseDocRef?;
+    _lastpersonUpdate = getSupabaseDocRef(snapshotData['LastpersonUpdate'], 'users');
     _startchat = snapshotData['startchat'] as bool?;
     _photosend = snapshotData['photosend'] as String?;
     _photorecive = snapshotData['photorecive'] as String?;

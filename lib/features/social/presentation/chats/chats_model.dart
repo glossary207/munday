@@ -29,7 +29,7 @@ class ChatsModel extends FlutterFlowModel<ChatsWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  RoomRecord? stackPreviousSnapshot;
+  ChatRoomsRecord? stackPreviousSnapshot;
   // State field(s) for Column widget.
   ScrollController? columnController;
   // State field(s) for ListView widget.

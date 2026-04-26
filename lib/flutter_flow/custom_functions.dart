@@ -21,7 +21,7 @@ import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
     as f_f_story_view_live_zhm3f3_enums;
 
 bool? checkRoomGetReference(
-  RoomRecord? dataroom,
+  ChatRoomsRecord? dataroom,
   SupabaseDocRef? sendID,
   SupabaseDocRef? receiveID,
 ) {
@@ -29,12 +29,9 @@ bool? checkRoomGetReference(
     return false;
   }
 
-  bool condition1 =
-      (dataroom.usersend == sendID && dataroom.userrecive == receiveID);
-  bool condition2 =
-      (dataroom.usersend == receiveID && dataroom.userrecive == sendID);
-
-  return condition1 || condition2;
+  // Check if both users are participants in this chat room
+  return dataroom.userIds.contains(sendID.id) &&
+      dataroom.userIds.contains(receiveID.id);
 }
 
 double? posterscaleCopy(double? scalewile) {
@@ -477,20 +474,25 @@ List<dynamic>? flipdoc(List<dynamic>? data1) {
 
 List<dynamic>? jsonDataRoomAndStore(
   SupabaseDocRef? mainuser,
-  List<RoomRecord>? roomdata,
+  List<ChatRoomsRecord>? roomdata,
   StoreRecord? storedata,
 ) {
   return roomdata?.map((room) {
-    var userRef, photoProfile, name, online;
-    if (room.usersend == mainuser) {
-      userRef = room.userrecive;
-      photoProfile = room.photorecive;
-      name = room.namerecive;
-    } else {
-      userRef = room.usersend;
-      photoProfile = room.photosend;
-      name = room.namesend;
+    // Derive "other user" from user_ids array
+    String? otherUserId;
+    if (mainuser != null && room.userIds.isNotEmpty) {
+      otherUserId = room.userIds.firstWhere(
+        (id) => id != mainuser.id,
+        orElse: () => room.userIds.first,
+      );
     }
+    
+    var userRef = otherUserId != null 
+        ? SupabaseFirestore.instance.collection('users').doc(otherUserId) 
+        : null;
+    var photoProfile = room.imageUrl;
+    var name = room.name;
+    var online = false;
 
     // Update photoprofile, name, and online from storedata if userinstore and user_ref match
     storedata?.user?.forEach((user) {
@@ -505,12 +507,14 @@ List<dynamic>? jsonDataRoomAndStore(
       'room_ref': room.reference,
       'user_ref': userRef,
       'photoprofile': photoProfile,
-      'timeupdate': room.timeupdate,
-      'lastmassage': room.lastmassage,
-      'online': online ?? false, // Updated from storedata
+      'timeupdate': room.lastMessageTime,
+      'lastmassage': room.lastMessage,
+      'online': online,
       'name': name,
-      'startchat': room.startchat,
-      'LastpersonUpdate': room.lastpersonUpdate,
+      'startchat': room.lastMessage.isNotEmpty,
+      'LastpersonUpdate': room.lastMessageSenderId.isNotEmpty
+          ? SupabaseFirestore.instance.collection('users').doc(room.lastMessageSenderId)
+          : null,
     };
   }).toList();
 }

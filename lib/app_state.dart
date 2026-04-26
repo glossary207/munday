@@ -677,11 +677,11 @@ class FFAppState extends ChangeNotifier {
     storylist.insert(index, value);
   }
 
-  final _datachatManager = StreamRequestManager<RoomRecord>();
-  Stream<RoomRecord> datachat({
+  final _datachatManager = StreamRequestManager<ChatRoomsRecord>();
+  Stream<ChatRoomsRecord> datachat({
     String? uniqueQueryKey,
     bool? overrideCache,
-    required Stream<RoomRecord> Function() requestFn,
+    required Stream<ChatRoomsRecord> Function() requestFn,
   }) =>
       _datachatManager.performRequest(
         uniqueQueryKey: uniqueQueryKey,

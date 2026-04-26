@@ -94,15 +94,15 @@ class DatainstoreStruct extends FFSupabaseStruct {
 
   static DatainstoreStruct fromMap(Map<String, dynamic> data) =>
       DatainstoreStruct(
-        roomRef: data['room_ref'] as SupabaseDocRef?,
-        userRef: data['user_ref'] as SupabaseDocRef?,
+        roomRef: getSupabaseDocRef(data['room_ref'], 'room'),
+        userRef: getSupabaseDocRef(data['user_ref'], 'users'),
         photoprofile: data['photoprofile'] as String?,
         timeupdate: data['timeupdate'] as DateTime?,
         lastmassage: data['lastmassage'] as String?,
         online: data['online'] as bool?,
         name: data['name'] as String?,
         startchat: data['startchat'] as bool?,
-        lastpersonUpdate: data['LastpersonUpdate'] as SupabaseDocRef?,
+        lastpersonUpdate: getSupabaseDocRef(data['LastpersonUpdate'], 'users'),
       );
 
   static DatainstoreStruct? maybeFromMap(dynamic data) => data is Map
