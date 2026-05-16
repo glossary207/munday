@@ -48,6 +48,8 @@ class ChatsWidget extends StatefulWidget {
 }
 
 class _ChatsWidgetState extends State<ChatsWidget> {
+  static const bool _mockMode = true;
+
   late ChatsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -109,10 +111,229 @@ class _ChatsWidgetState extends State<ChatsWidget> {
     super.dispose();
   }
 
+  Widget _buildMockBody(BuildContext context) {
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 38.0, 0.0, 0.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Divider(
+                      height: 48.0,
+                      thickness: 2.5,
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: const AlignmentDirectional(-1.0, -1.0),
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    bool isMe = index % 2 == 1;
+                                    return Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          if (!isMe)
+                                            Container(
+                                              width: 36.0,
+                                              height: 36.0,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: const BoxDecoration(shape: BoxShape.circle),
+                                              child: Image.network(
+                                                valueOrDefault<String>(
+                                                  widget.userProfile,
+                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          if (!isMe)
+                                            const SizedBox(width: 16.0),
+                                          Container(
+                                            constraints: const BoxConstraints(maxWidth: 260.0),
+                                            decoration: BoxDecoration(
+                                              color: isMe ? const Color(0xFFB50000) : const Color(0xFF131313),
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: const Radius.circular(24.0),
+                                                bottomRight: const Radius.circular(24.0),
+                                                topLeft: isMe ? const Radius.circular(24.0) : const Radius.circular(3.0),
+                                                topRight: isMe ? const Radius.circular(3.0) : const Radius.circular(24.0),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                                              child: Column(
+                                                crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    isMe ? 'Sounds great!' : 'Hello! How are you doing today?',
+                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      font: GoogleFonts.openSans(),
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 4.0),
+                                                  Text(
+                                                    '10:30',
+                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      font: GoogleFonts.openSans(),
+                                                      color: isMe ? Colors.white70 : const Color(0xFFE0E0E0),
+                                                      fontSize: 10.0,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Input bar
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 28.0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 38.0,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1D1D1D),
+                            borderRadius: BorderRadius.circular(45.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 6.0, 12.0, 6.0),
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Text('Message...',
+                                    style: TextStyle(color: Color(0xFFBDBDBD)),
+                                  ),
+                                ),
+                                Image.asset('assets/images/camera.png', height: 16.0),
+                                const SizedBox(width: 10.0),
+                                Image.network('https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/w5g3s4lkc5m8/%E0%B9%80%E0%B8%9E%E0%B8%B4%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%83%E0%B8%99%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%A2_(3).png', width: 20.0, height: 20.0),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      Container(
+                        width: 38.0,
+                        height: 38.0,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFFF0000),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.send_rounded, color: Colors.white, size: 20.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Top app bar section
+        Container(
+          height: 58.0,
+          padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () => context.safePop(),
+                    child: const Icon(Icons.arrow_back_ios_new, color: Color(0xFFBDBDBD), size: 30.0),
+                  ),
+                  const SizedBox(width: 10.0),
+                  Container(
+                    width: 42.0,
+                    height: 42.0,
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.network(
+                      valueOrDefault<String>(
+                        widget.userProfile,
+                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Text(
+                    widget.name,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      font: GoogleFonts.openSans(fontWeight: FontWeight.w600),
+                      color: Colors.white,
+                      fontSize: 17.0,
+                    ),
+                  ),
+                ],
+              ),
+              const Icon(Icons.more_vert_sharp, color: Color(0xFFBDBDBD), size: 30.0),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
     context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+
+    if (_mockMode) {
+      return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            top: true,
+            child: _buildMockBody(context),
+          ),
+        ),
+      );
+    }
 
     return GestureDetector(
       onTap: () {

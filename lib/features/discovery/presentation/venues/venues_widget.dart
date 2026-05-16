@@ -23,6 +23,16 @@ import 'package:provider/provider.dart';
 import 'venues_model.dart';
 export 'venues_model.dart';
 
+DecorationImage? _safeDecorationImage(String? url,
+    {BoxFit fit = BoxFit.cover}) {
+  if (url == null || url.isEmpty) return null;
+  final uri = Uri.tryParse(url);
+  if (uri == null || (uri.scheme != 'http' && uri.scheme != 'https')) {
+    return null;
+  }
+  return DecorationImage(fit: fit, image: NetworkImage(url));
+}
+
 class VenuesWidget extends StatefulWidget {
   const VenuesWidget({super.key});
 
@@ -612,18 +622,8 @@ class _VenuesWidgetState extends State<VenuesWidget>
                                                                         BoxDecoration(
                                                                       color: Color(
                                                                           0xFE000000),
-                                                                      image:
-                                                                          DecorationImage(
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                        image: Image
-                                                                            .network(
-                                                                          valueOrDefault<
-                                                                              String>(
-                                                                            DataVenuesStruct.maybeFromMap(dataVenuseItem)?.bg,
-                                                                            'ไม่ระบุ',
-                                                                          ),
-                                                                        ).image,
+                                                                      image: _safeDecorationImage(
+                                                                        DataVenuesStruct.maybeFromMap(dataVenuseItem)?.bg,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
@@ -3388,40 +3388,18 @@ class _VenuesWidgetState extends State<VenuesWidget>
                                                                       0.0,
                                                                       0.0,
                                                                       0.0),
-                                                          child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'kgh2do3h' /* ดอนเมือง,สงค์ประภา */,
+                                                          child: Container(
+                                                            width: 130.0,
+                                                            height: 15.0,
+                                                            child:
+                                                                custom_widgets
+                                                                    .LocationName(
+                                                              width: 130.0,
+                                                              height: 15.0,
+                                                              locationNow:
+                                                                  FFAppState()
+                                                                      .locationsearch,
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .roboto(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: Color(
-                                                                      0xFFBCBCBC),
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontStyle,
-                                                                ),
                                                           ),
                                                         ),
                                                       ],
@@ -3484,233 +3462,127 @@ class _VenuesWidgetState extends State<VenuesWidget>
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 5.0, 17.0, 0.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                    TicketWidget.routeName);
-                                              },
-                                              child: Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  border: Border.all(
-                                                    color: Colors.transparent,
+                                                const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 5.0, 10.0, 0.0),
+                                            child: GestureDetector(
+                                              onTap: () => context.pushNamed(
+                                                  TicketWidget.routeName),
+                                              child: AuthUserStreamWidget(
+                                                builder: (context) => Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.black,
+                                                    shape: BoxShape.circle,
                                                   ),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child: Image.network(
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/vkqck67kmjo7/22.png',
-                                                        width: 40.0,
-                                                        height: 40.0,
-                                                        fit: BoxFit.cover,
+                                                  child: Stack(
+                                                    children: [
+                                                      Center(
+                                                        child: Image.asset(
+                                                          'assets/images/icon_ticket.png',
+                                                          width: 27.0,
+                                                          height: 27.0,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    if ((currentUserDocument
-                                                                    ?.usermassage
-                                                                    .toList() ??
-                                                                [])
-                                                            .length !=
-                                                        0)
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                1.2, -1.2),
-                                                        child:
-                                                            AuthUserStreamWidget(
-                                                          builder: (context) =>
-                                                              Container(
-                                                            width: 18.0,
-                                                            height: 18.0,
+                                                      if ((currentUserDocument
+                                                                  ?.tickets ??
+                                                              [])
+                                                          .isNotEmpty)
+                                                        Positioned(
+                                                          top: 6.0,
+                                                          right: 6.0,
+                                                          child: Container(
+                                                            width: 14.0,
+                                                            height: 14.0,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Color(
-                                                                  0xFFFF0000),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          180.0),
-                                                            ),
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            1.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                child: Text(
-                                                                  FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'pmv6w9qo' /* 5 */,
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            10.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                ),
+                                                              color: const Color(
+                                                                  0xFFE52020),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              border: Border.all(
+                                                                color:
+                                                                    Colors.black,
+                                                                width: 1.5,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 5.0, 20.0, 0.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                    MainChatWidget.routeName);
-                                              },
-                                              child: Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  border: Border.all(
-                                                    color: Colors.transparent,
+                                                const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 5.0, 10.0, 0.0),
+                                            child: GestureDetector(
+                                              onTap: () => context.pushNamed(
+                                                  MainChatWidget.routeName),
+                                              child: AuthUserStreamWidget(
+                                                builder: (context) => Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.black,
+                                                    shape: BoxShape.circle,
                                                   ),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child: Image.network(
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
-                                                        width: 36.0,
-                                                        height: 36.0,
-                                                        fit: BoxFit.cover,
+                                                  child: Stack(
+                                                    children: [
+                                                      Center(
+                                                        child: Image.asset(
+                                                          'assets/images/icon_message.png',
+                                                          width: 22.0,
+                                                          height: 22.0,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    if ((currentUserDocument
-                                                                    ?.usermassage
-                                                                    .toList() ??
-                                                                [])
-                                                            .length !=
-                                                        0)
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                1.2, -1.2),
-                                                        child:
-                                                            AuthUserStreamWidget(
-                                                          builder: (context) =>
-                                                              Container(
-                                                            width: 18.0,
-                                                            height: 18.0,
+                                                      if ((currentUserDocument
+                                                                  ?.usermassage ??
+                                                              [])
+                                                          .isNotEmpty)
+                                                        Positioned(
+                                                          top: 6.0,
+                                                          right: 6.0,
+                                                          child: Container(
+                                                            width: 14.0,
+                                                            height: 14.0,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Color(
-                                                                  0xFFFF0000),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          180.0),
-                                                            ),
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            1.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                child: Text(
-                                                                  FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'j9qedsry' /* 5 */,
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            10.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                ),
+                                                              color: const Color(
+                                                                  0xFFE52020),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              border: Border.all(
+                                                                color:
+                                                                    Colors.black,
+                                                                width: 1.5,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 5.0, 16.0, 0.0),
+                                            child: AuthUserStreamWidget(
+                                              builder: (context) =>
+                                                  NotificationBadgeButton(
+                                                onTap: () => context.pushNamed(
+                                                    NotificationPageWidget
+                                                        .routeName),
                                               ),
                                             ),
                                           ),

@@ -286,7 +286,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             name: TicketWidget.routeName,
             path: TicketWidget.routePath,
             requireAuth: true,
-            builder: (context, params) => TicketWidget(),
+            // TODO: swap back to TicketWidget() when backend is ready
+            builder: (context, params) => const TicketMockWidget(),
           ),
           FFRoute(
             name: BookingWidget.routeName,
@@ -359,6 +360,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             path: PayreservenormdayWidget.routePath,
             requireAuth: true,
             builder: (context, params) => PayreservenormdayWidget(),
+          ),
+          FFRoute(
+            name: NotificationPageWidget.routeName,
+            path: NotificationPageWidget.routePath,
+            requireAuth: true,
+            builder: (context, params) => const NotificationPageWidget(),
           ),
           FFRoute(
             name: $lock_orientation_library_opafp4.HomePageWidget.routeName,

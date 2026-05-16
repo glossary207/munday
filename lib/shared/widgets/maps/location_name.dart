@@ -38,98 +38,83 @@ class LocationName extends StatefulWidget {
 }
 
 class _LocationNameState extends State<LocationName> {
-  Future<String?> _getSubArea(double lat, double lng) async {
-    const String apiKey =
-        'AIzaSyCvraDTa5qHL6xNKTWn3JOKPUu5IBU18Fc'; // ใส่ API Key ของคุณ
+  static const TextStyle _style = TextStyle(
+    color: Color(0xFFBCBCBC),
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+  );
+
+  Future<String?>? _locationFuture;
+  double? _lastLat;
+  double? _lastLng;
+
+  bool get _hasValidLocation {
+    final loc = widget.locationNow;
+    if (loc == null) return false;
+    return !(loc.latitude == 0.0 && loc.longitude == 0.0);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (_hasValidLocation) {
+      _lastLat = widget.locationNow!.latitude;
+      _lastLng = widget.locationNow!.longitude;
+      _locationFuture = _getProvince(_lastLat!, _lastLng!);
+    }
+  }
+
+  @override
+  void didUpdateWidget(LocationName oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final loc = widget.locationNow;
+    if (loc == null || (loc.latitude == 0.0 && loc.longitude == 0.0)) return;
+    if (loc.latitude != _lastLat || loc.longitude != _lastLng) {
+      _lastLat = loc.latitude;
+      _lastLng = loc.longitude;
+      setState(() {
+        _locationFuture = _getProvince(_lastLat!, _lastLng!);
+      });
+    }
+  }
+
+  Future<String?> _getProvince(double lat, double lng) async {
+    const String apiKey = 'AIzaSyCvraDTa5qHL6xNKTWn3JOKPUu5IBU18Fc';
     final String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
 
     try {
       final response = await http.get(Uri.parse(url));
-
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-
         if (data['results'].isNotEmpty) {
-          String? level1; // จังหวัดหรือกรุงเทพ
-          String? level2; // อำเภอ หรือ เขต
-          String? level3; // ตำบล หรือ แขวง
-
           for (var component in data['results'][0]['address_components']) {
-            List<dynamic> types = component['types'];
+            final types = component['types'] as List<dynamic>;
             if (types.contains('administrative_area_level_1')) {
-              level1 = component['long_name'];
-            }
-            if (types.contains('administrative_area_level_2')) {
-              level2 = component['long_name'];
-            }
-            if (types.contains('administrative_area_level_3')) {
-              level3 = component['long_name'];
-            }
-          }
-
-          // ตรวจสอบว่าอยู่กรุงเทพหรือไม่
-          if (level1 != null && level1.contains('กรุงเทพมหานคร')) {
-            // กรุงเทพมหานคร: administrative_area_level_3 คือ แขวง
-            if (level3 != null) {
-              return level3; // แขวง
-            } else if (level2 != null) {
-              return level2; // เผื่อกรณีไม่เจอ level3
-            }
-          } else {
-            // ต่างจังหวัด: administrative_area_level_3 คือ ตำบล ถ้าไม่มีลอง fallback ไป level2
-            if (level3 != null) {
-              return level3; // ตำบล
-            } else if (level2 != null) {
-              return level2; // อำเภอ
+              return component['long_name'] as String?;
             }
           }
         }
-        return null; // No data found
-      } else {
-        throw Exception('Failed to fetch location');
       }
+      return null;
     } catch (e) {
-      return 'Error: ${e.toString()}';
+      return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.locationNow == null) {
-      return const Text(
-        'No location provided',
-        style: TextStyle(fontSize: 12),
-      );
-    }
+    if (!_hasValidLocation) return const SizedBox.shrink();
 
     return FutureBuilder<String?>(
-      future: _getSubArea(
-        widget.locationNow!.latitude,
-        widget.locationNow!.longitude,
-      ),
+      future: _locationFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text(
-            'Loading...',
-            style: TextStyle(fontSize: 12),
-          );
-        } else if (snapshot.hasError) {
-          return Text(
-            'Error: ${snapshot.error}',
-            style: const TextStyle(fontSize: 12),
-          );
-        } else if (snapshot.hasData && snapshot.data != null) {
-          return Text(
-            snapshot.data!,
-            style: const TextStyle(fontSize: 12),
-          );
-        } else {
-          return const Text(
-            'No data available',
-            style: TextStyle(fontSize: 12),
-          );
+          return const SizedBox.shrink();
         }
+        final name = snapshot.data;
+        if (name == null || name.isEmpty) return const SizedBox.shrink();
+        return Text(name, style: _style);
       },
     );
   }

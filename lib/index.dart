@@ -21,6 +21,7 @@ export '/features/venue_detail/presentation/in_venuse/in_venuse_widget.dart' sho
 export '/features/booking/presentation/veer/veer_widget.dart' show VeerWidget;
 
 export '/features/booking/presentation/ticket/ticket_widget.dart' show TicketWidget;
+export '/features/booking/presentation/ticket/ticket_mock_widget.dart' show TicketMockWidget;
 export '/features/booking/presentation/booking/booking_widget.dart' show BookingWidget;
 
 
@@ -30,3 +31,6 @@ export '/features/venue_detail/presentation/sharepage/sharepage_widget.dart' sho
 
 export '/features/booking/presentation/payreservenormday/payreservenormday_widget.dart'
     show PayreservenormdayWidget;
+
+export '/features/notifications/presentation/notification_page_widget.dart'
+    show NotificationPageWidget, NotificationBadgeButton;
