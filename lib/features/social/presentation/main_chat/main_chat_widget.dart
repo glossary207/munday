@@ -330,16 +330,18 @@ class _MainChatWidgetState extends State<MainChatWidget>
                                     ),
                                   ),
                                   child: Column(children: [
-                                    const Containerborder(
+                                    Container(
                                       width: 60.0,
                                       height: 60.0,
-                                      dashWidth: 8.0,
-                                      dashSpace: 4.0,
-                                      borderColor: Colors.white,
-                                      borderWidth: 1.5,
-                                      icon: Icons.add,
-                                      iconColor: Color(0xFFFF0000),
-                                      iconSize: 28.0,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 28.0,
+                                      ),
                                     ),
                                     const SizedBox(height: 5.0),
                                     const Text('Add friend',
@@ -472,44 +474,120 @@ class _MainChatWidgetState extends State<MainChatWidget>
                       SizedBox(
                         height: 195.0,
                         child: groupChats.isEmpty
-                            ? ListView(
-                                scrollDirection: Axis.horizontal,
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, top: 10.0, bottom: 6.0),
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.90,
-                                    margin: const EdgeInsets.only(right: 12.0),
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 6.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // TODO: Navigate to group creation
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF1A1A1A),
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      border: Border.all(
-                                          color: const Color(0xFF333333),
-                                          width: 1.5),
+                                      gradient: const LinearGradient(
+                                        colors: [Color(0xFFE52020), Color(0xFF990000)],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0xFF990000).withOpacity(0.4),
+                                          blurRadius: 16.0,
+                                          offset: const Offset(0, 8),
+                                        )
+                                      ],
                                     ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    child: Stack(
+                                      alignment: Alignment.center,
                                       children: [
-                                        const Icon(Icons.add_circle_outline,
-                                            color: Color(0xFF555555),
-                                            size: 28.0),
-                                        const SizedBox(height: 8.0),
-                                        Text('Create a Group',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                    font: GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                    color:
-                                                        const Color(0xFF555555),
-                                                    fontSize: 13.0)),
+                                        // Background design elements
+                                        Positioned(
+                                          right: -40,
+                                          top: -40,
+                                          child: Container(
+                                            width: 140,
+                                            height: 140,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.06),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: -30,
+                                          bottom: -50,
+                                          child: Container(
+                                            width: 150,
+                                            height: 150,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.04),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                        // Content
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 28.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.all(12),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white.withOpacity(0.15),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.group_add_rounded,
+                                                  color: Colors.white,
+                                                  size: 26.0,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 14.0),
+                                              Text(
+                                                'ตอนนี้คุณไม่มีกลุ่ม',
+                                                style: GoogleFonts.openSans(
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4.0),
+                                              Text(
+                                                'ลองสร้างกลุ่มเพื่อชวนเพื่อนและพูดคุยกัน',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.openSans(
+                                                  color: Colors.white.withOpacity(0.85),
+                                                  fontSize: 12.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 14,
+                                          top: 14,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black.withOpacity(0.1),
+                                                  blurRadius: 8.0,
+                                                  offset: const Offset(0, 2),
+                                                )
+                                              ],
+                                            ),
+                                            child: const Icon(Icons.arrow_forward_rounded, color: Color(0xFFE52020), size: 16),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ],
+                                ),
                               )
                             : ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -824,6 +902,51 @@ class _MainChatWidgetState extends State<MainChatWidget>
                         if (_selectedTab == 2) return isCheers;
                         return true;
                       }).toList();
+
+                      if (filteredDms.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 20.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                              Container(
+                                width: 80,
+                                height: 80,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF1A1A1A),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.chat_bubble_outline_rounded, size: 36.0, color: Color(0xFF444444)),
+                                ),
+                              ),
+                              const SizedBox(height: 16.0),
+                              Text(
+                                'ยังไม่มีข้อความ',
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 6.0),
+                              Text(
+                                'ข้อความหรือการทักทายของคุณจะปรากฏที่นี่\nเมื่อคุณเริ่มพูดคุยกับเพื่อน',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFF9E9E9E),
+                                  fontSize: 13.0,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      }
 
                       return ListView.builder(
                         padding: EdgeInsets.zero,
@@ -1368,16 +1491,18 @@ class _MainChatWidgetState extends State<MainChatWidget>
                                   },
                                   child: Column(
                                     children: [
-                                      const Containerborder(
+                                      Container(
                                         width: 60.0,
                                         height: 60.0,
-                                        dashWidth: 8.0,
-                                        dashSpace: 4.0,
-                                        borderColor: Colors.white,
-                                        borderWidth: 1.5,
-                                        icon: Icons.add,
-                                        iconColor: Color(0xFFFF0000),
-                                        iconSize: 28.0,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                          size: 28.0,
+                                        ),
                                       ),
                                       const SizedBox(height: 5.0),
                                       const Text(

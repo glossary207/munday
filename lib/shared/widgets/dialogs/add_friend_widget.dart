@@ -66,7 +66,17 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     );
 
     try {
-      final userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: phone).get();
+      var userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: phone).get();
+      
+      // Fallback for Thai phone numbers if exact match fails
+      if (userQuery.docs.isEmpty && phone.startsWith('0')) {
+        final altPhone1 = '+66${phone.substring(1)}';
+        userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: altPhone1).get();
+        if (userQuery.docs.isEmpty) {
+          final altPhone2 = '66${phone.substring(1)}';
+          userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: altPhone2).get();
+        }
+      }
       Navigator.pop(context); // Hide loading
 
       if (userQuery.docs.isNotEmpty) {
@@ -368,7 +378,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Text(
-                          'Search by phone number',
+                          'Add by phone',
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                 font: GoogleFonts.openSans(fontWeight: FontWeight.w600),
                                 fontSize: 14.0,
@@ -418,7 +428,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(
-                                      Icons.arrow_forward_rounded,
+                                      Icons.person_add_rounded,
                                       color: Colors.white,
                                       size: 20.0,
                                     ),

@@ -308,12 +308,9 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
         final senderId = row['sender_id'] as String?;
         if (senderId == null) continue;
         try {
-          final userResult = await UsersRecord.collection
-              .where('uid', isEqualTo: senderId)
-              .limit(1)
-              .get();
-          if (userResult.docs.isNotEmpty) {
-            final userDoc = UsersRecord.fromSnapshot(userResult.docs.first);
+          final userSnap = await UsersRecord.collection.doc(senderId).get();
+          if (userSnap.exists) {
+            final userDoc = UsersRecord.fromSnapshot(userSnap);
             enriched.add({
               'requestId': row['id'],
               'senderId': senderId,
@@ -346,10 +343,17 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
   Future<void> _respondToRequest(
       String requestId, String senderId, bool accept) async {
     try {
-      await Supabase.instance.client
-          .from('friend_request')
-          .update({'status': accept ? 'accepted' : 'rejected'})
-          .eq('id', requestId);
+      if (accept) {
+        await Supabase.instance.client
+            .from('friend_request')
+            .update({'status': 'accepted'})
+            .eq('id', requestId);
+      } else {
+        await Supabase.instance.client
+            .from('friend_request')
+            .delete()
+            .eq('id', requestId);
+      }
 
       if (accept) {
         final String lowId = currentUserUid.compareTo(senderId) < 0 ? currentUserUid : senderId;
@@ -622,33 +626,31 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
             ...usermassage.map((ref) => _buildMessageNotifItem(context, ref)),
             ...usercheerme.map((ref) => _buildCheersNotifItem(context, ref)),
           ],
-          _buildFeedHeader('ข่าวสารและอีเวนต์'),
           StreamBuilder<List<EventsRecord>>(
             stream: queryEventsRecord(
               queryBuilder: (q) => q.orderBy('Date', descending: true),
               limit: 20,
             ),
             builder: (context, snapshot) {
-              final events = snapshot.data ?? [];
-              if (!snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Padding(
                   padding: EdgeInsets.all(24),
                   child: Center(
                       child: CircularProgressIndicator(color: _kRed)),
                 );
               }
-              if (events.isEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text('ยังไม่มีข่าวสาร',
-                      style: GoogleFonts.openSans(
-                          color: _kTextSub, fontSize: 14)),
-                );
+              
+              final events = snapshot.data ?? [];
+              if (snapshot.hasError || events.isEmpty) {
+                return const SizedBox.shrink();
               }
+              
               return Column(
-                children: events
-                    .map((e) => _buildEventNotifCard(context, e))
-                    .toList(),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildFeedHeader('ข่าวสารและอีเวนต์'),
+                  ...events.map((e) => _buildEventNotifCard(context, e)),
+                ],
               );
             },
           ),
