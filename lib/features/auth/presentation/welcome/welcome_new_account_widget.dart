@@ -960,7 +960,7 @@ class _WelcomeNewAccountWidgetState extends State<WelcomeNewAccountWidget> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : const Icon(FontAwesomeIcons.pen,
+                                  : const FaIcon(FontAwesomeIcons.pen,
                                       color: Colors.white, size: 13),
                             ),
                           ),

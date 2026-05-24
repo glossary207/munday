@@ -80,6 +80,41 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
           return;
         }
 
+        final String lowId = currentUserUid.compareTo(receiverId) < 0 ? currentUserUid : receiverId;
+        final String highId = currentUserUid.compareTo(receiverId) > 0 ? currentUserUid : receiverId;
+
+        final isFriend = await Supabase.instance.client
+            .from('friend')
+            .select('user_low_id')
+            .eq('user_low_id', lowId)
+            .eq('user_high_id', highId)
+            .maybeSingle();
+
+        if (isFriend != null) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('You are already friends with this user.')),
+            );
+          }
+          return;
+        }
+
+        final pendingRequest = await Supabase.instance.client
+            .from('friend_request')
+            .select('id')
+            .eq('status', 'pending')
+            .or('and(sender_id.eq.$currentUserUid,receiver_id.eq.$receiverId),and(sender_id.eq.$receiverId,receiver_id.eq.$currentUserUid)')
+            .maybeSingle();
+
+        if (pendingRequest != null) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('A friend request is already pending.')),
+            );
+          }
+          return;
+        }
+
         // Send friend request
         await Supabase.instance.client.from('friend_request').insert({
           'sender_id': currentUserUid,
@@ -87,9 +122,11 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
           'status': 'pending',
         });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Friend request sent!')),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Friend request sent!')),
+          );
+        }
         _model.textController?.clear();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -404,7 +441,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
   }
 
   Widget _buildShareIcon({
-    required IconData icon,
+    required dynamic icon,
     required String label,
     required Color color,
     required VoidCallback onTap,
@@ -424,11 +461,9 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 26.0,
-                ),
+                child: icon is FaIconData
+                    ? FaIcon(icon, color: Colors.white, size: 26.0)
+                    : Icon(icon as IconData, color: Colors.white, size: 26.0),
               ),
             ),
             const SizedBox(height: 8.0),

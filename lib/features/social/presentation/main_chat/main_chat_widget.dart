@@ -368,7 +368,7 @@ class _MainChatWidgetState extends State<MainChatWidget>
                                   queryParameters: {
                                     'userProfile':
                                         serializeParam(photo, ParamType.String),
-                                    'roomref': serializeParam(parsed.roomRef,edwd
+                                    'roomref': serializeParam(parsed.roomRef,
                                         ParamType.SupabaseDocRef),
                                     'name':
                                         serializeParam(name, ParamType.String),
