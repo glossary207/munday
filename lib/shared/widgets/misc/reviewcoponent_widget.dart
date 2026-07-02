@@ -1,13 +1,14 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'reviewcoponent_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'reviewcoponent_model.dart';
 
-class ReviewcoponentWidget extends StatefulWidget {
+class ReviewcoponentWidget extends ConsumerStatefulWidget {
   const ReviewcoponentWidget({
     super.key,
     required this.rate,
@@ -24,10 +25,10 @@ class ReviewcoponentWidget extends StatefulWidget {
   final String? profile;
 
   @override
-  State<ReviewcoponentWidget> createState() => _ReviewcoponentWidgetState();
+  ConsumerState<ReviewcoponentWidget> createState() => _ReviewcoponentWidgetState();
 }
 
-class _ReviewcoponentWidgetState extends State<ReviewcoponentWidget>
+class _ReviewcoponentWidgetState extends ConsumerState<ReviewcoponentWidget>
     with TickerProviderStateMixin {
   late ReviewcoponentModel _model;
 
@@ -40,7 +41,7 @@ class _ReviewcoponentWidgetState extends State<ReviewcoponentWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ReviewcoponentModel());
+    _model = ReviewcoponentModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -133,26 +134,29 @@ class _ReviewcoponentWidgetState extends State<ReviewcoponentWidget>
                                     widget.name,
                                     'ไม่ระบุ',
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                         fontSize: 18.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                 ),
@@ -161,27 +165,32 @@ class _ReviewcoponentWidgetState extends State<ReviewcoponentWidget>
                                 dateTimeFormat(
                                   "d/M/y",
                                   widget.date,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
+                                  locale: Localizations.localeOf(context)
+                                      .languageCode,
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .labelSmall
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
                                     .override(
                                       font: GoogleFonts.roboto(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelSmall
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelSmall
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
                                             .fontStyle,
                                       ),
                                       color: Color(0xFFC3C3C3),
                                       letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelSmall
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelSmall
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
                                           .fontStyle,
                                     ),
                               ),
@@ -202,20 +211,23 @@ class _ReviewcoponentWidgetState extends State<ReviewcoponentWidget>
                               widget.comment,
                               'ไม่ระบุ',
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .labelLarge
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
                                 .override(
                                   font: GoogleFonts.roboto(
                                     fontWeight: FontWeight.normal,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelLarge
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
                                         .fontStyle,
                                   ),
                                   color: Color(0xFFC4C4C4),
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelLarge
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
                                       .fontStyle,
                                 ),
                           ),

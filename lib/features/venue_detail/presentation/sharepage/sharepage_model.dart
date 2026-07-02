@@ -1,10 +1,12 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/cards/showpeople_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'sharepage_widget.dart' show SharepageWidget;
+import 'share_page.dart' show SharePage;
 import 'package:flutter/material.dart';
+import 'package:munday/shared/widgets/cards/showpeople_model.dart';
 
-class SharepageModel extends FlutterFlowModel<SharepageWidget> {
+class SharepageModel extends BaseModel {
   ///  Local state fields for this page.
 
   bool? zoom;
@@ -27,7 +29,7 @@ class SharepageModel extends FlutterFlowModel<SharepageWidget> {
 
   @override
   void initState(BuildContext context) {
-    showpeopleModel = createModel(context, () => ShowpeopleModel());
+    showpeopleModel = ShowpeopleModel()..internalInit(context);
   }
 
   @override

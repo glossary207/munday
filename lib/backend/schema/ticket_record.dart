@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase_shim.dart';
 import 'dart:async';
 
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class TicketRecord extends SupabaseRecord {
   TicketRecord._(
@@ -118,7 +119,8 @@ class TicketRecord extends SupabaseRecord {
   static Future<TicketRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => TicketRecord.fromSnapshot(s));
 
-  static TicketRecord fromSnapshot(SupabaseDocSnapshot snapshot) => TicketRecord._(
+  static TicketRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>
+      TicketRecord._(
         snapshot.reference,
         mapFromSupabase(snapshot.data() as Map<String, dynamic>),
       );

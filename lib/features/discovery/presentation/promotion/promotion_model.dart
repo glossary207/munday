@@ -1,17 +1,20 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/layout/nav_bar_widget.dart';
 import '/shared/widgets/misc/rowpromotion_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'promotion_widget.dart' show PromotionWidget;
+import 'promotion_page.dart' show PromotionWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/layout/nav_bar_model.dart';
+import '/shared/widgets/misc/rowpromotion_model.dart';
 
-class PromotionModel extends FlutterFlowModel<PromotionWidget> {
+class PromotionModel extends BaseModel {
   ///  Local state fields for this page.
 
   int? page = 1;
 
-  bool? selectdate = true;
+  bool? selectdate = false;
 
   bool? mapon = false;
 
@@ -42,8 +45,8 @@ class PromotionModel extends FlutterFlowModel<PromotionWidget> {
   void initState(BuildContext context) {
     rowController = ScrollController();
     columnController = ScrollController();
-    navBarModel = createModel(context, () => NavBarModel());
-    rowpromotionModel2 = createModel(context, () => RowpromotionModel());
+    navBarModel = NavBarModel()..internalInit(context);
+    rowpromotionModel2 = RowpromotionModel()..internalInit(context);
   }
 
   @override

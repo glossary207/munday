@@ -1,9 +1,11 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/layout/header_appbar_menu_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/layout/header_appbar_menu_model.dart';
+import '/core/utils/app_util.dart';
 import 'appbarmenu_copy_widget.dart' show AppbarmenuCopyWidget;
 import 'package:flutter/material.dart';
 
-class AppbarmenuCopyModel extends FlutterFlowModel<AppbarmenuCopyWidget> {
+class AppbarmenuCopyModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   // Model for headerAppbarMenu component.
@@ -21,7 +23,7 @@ class AppbarmenuCopyModel extends FlutterFlowModel<AppbarmenuCopyWidget> {
 
   @override
   void initState(BuildContext context) {
-    headerAppbarMenuModel = createModel(context, () => HeaderAppbarMenuModel());
+    headerAppbarMenuModel = HeaderAppbarMenuModel()..internalInit(context);
   }
 
   @override

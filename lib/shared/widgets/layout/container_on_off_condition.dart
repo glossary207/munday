@@ -1,24 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:munday/core/theme/theme.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-class ContainerOnOffCondition extends StatefulWidget {
+class ContainerOnOffCondition extends ConsumerStatefulWidget {
   const ContainerOnOffCondition({
     super.key,
     this.width,
@@ -33,17 +29,17 @@ class ContainerOnOffCondition extends StatefulWidget {
   final double? heightfalse; // ความสูงเมื่อ on = false
 
   @override
-  State<ContainerOnOffCondition> createState() =>
+  ConsumerState<ContainerOnOffCondition> createState() =>
       _ContainerOnOffConditionState();
 }
 
-class _ContainerOnOffConditionState extends State<ContainerOnOffCondition> {
+class _ContainerOnOffConditionState extends ConsumerState<ContainerOnOffCondition> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: FFAppState(), // ฟัง state ตลอด
+      animation: AppState(), // ฟัง state ตลอด
       builder: (context, _) {
-        final bool isOn = FFAppState().logtap; // true = on
+        final bool isOn = context.appState.logtap; // true = on
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300), // ปรับได้ตามชอบ

@@ -1,28 +1,32 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'option_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'option_model.dart';
 
-class OptionWidget extends StatefulWidget {
+class OptionWidget extends ConsumerStatefulWidget {
   const OptionWidget({super.key});
 
   @override
-  State<OptionWidget> createState() => _OptionWidgetState();
+  ConsumerState<OptionWidget> createState() => _OptionWidgetState();
 }
 
-class _OptionWidgetState extends State<OptionWidget>
+class _OptionWidgetState extends ConsumerState<OptionWidget>
     with TickerProviderStateMixin {
   late OptionModel _model;
 
@@ -37,7 +41,7 @@ class _OptionWidgetState extends State<OptionWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OptionModel());
+    _model = OptionModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation1': AnimationInfo(
@@ -123,8 +127,7 @@ class _OptionWidgetState extends State<OptionWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
@@ -191,7 +194,8 @@ class _OptionWidgetState extends State<OptionWidget>
                                           },
                                           child: Icon(
                                             Icons.arrow_back_ios,
-                                            color: FlutterFlowTheme.of(context)
+                                            color: Theme.of(context)
+                                                .extension<CustomColors>()!
                                                 .primaryText,
                                             size: 30.0,
                                           ),
@@ -228,23 +232,24 @@ class _OptionWidgetState extends State<OptionWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'u2te43sd' /* Cheers Package */,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineMedium
+                                AppLocalizations.of(context)!.k_u2te43sd,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
                                     .override(
                                       font: GoogleFonts.roboto(
                                         fontWeight: FontWeight.bold,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .headlineMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium!
                                             .fontStyle,
                                       ),
                                       fontSize: 28.0,
                                       letterSpacing: 0.5,
                                       fontWeight: FontWeight.bold,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
                                           .fontStyle,
                                     ),
                               ),
@@ -253,29 +258,33 @@ class _OptionWidgetState extends State<OptionWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 5.0, 0.0, 10.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'qdjyp8zy' /* ชำระเงินด้วยระบบ  PromptPay  ส... */,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
+                                AppLocalizations.of(context)!.k_qdjyp8zy,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
                                     .override(
                                       font: GoogleFonts.roboto(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontStyle,
                                       ),
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       fontSize: 14.0,
                                       letterSpacing: 0.8,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
                               ),
@@ -292,25 +301,24 @@ class _OptionWidgetState extends State<OptionWidget>
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         15.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        'xx981ba6' /* เลือก   Package */,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      AppLocalizations.of(context)!.k_xx981ba6,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                     ),
                                   ),
@@ -333,9 +341,9 @@ class _OptionWidgetState extends State<OptionWidget>
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            if (FFAppState().apione != '') {
+                                            if (context.appState.apione != '') {
                                               await launchURL(
-                                                  FFAppState().apione);
+                                                  context.appState.apione);
                                               _model.re1 =
                                                   await CreatecheckoutoneCall
                                                       .call(
@@ -343,8 +351,7 @@ class _OptionWidgetState extends State<OptionWidget>
                                                 email: currentUserEmail,
                                               );
 
-                                              FFAppState().apione =
-                                                  getJsonField(
+                                              context.appState.apione = getJsonField(
                                                 (_model.re1?.jsonBody ?? ''),
                                                 r'''$.url''',
                                               ).toString();
@@ -357,14 +364,13 @@ class _OptionWidgetState extends State<OptionWidget>
                                                 email: currentUserEmail,
                                               );
 
-                                              FFAppState().apione =
-                                                  getJsonField(
+                                              context.appState.apione = getJsonField(
                                                 (_model.re11?.jsonBody ?? ''),
                                                 r'''$.url''',
                                               ).toString();
                                               safeSetState(() {});
                                               await launchURL(
-                                                  FFAppState().apione);
+                                                  context.appState.apione);
                                             }
 
                                             safeSetState(() {});
@@ -448,23 +454,23 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              FFLocalizations.of(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .k_6d4njuve,
+                                                              style: Theme.of(
                                                                       context)
-                                                                  .getText(
-                                                                '6d4njuve' /* X */,
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .bodyMedium
+                                                                          .textTheme
+                                                                          .bodyMedium!
                                                                           .fontStyle,
                                                                     ),
                                                                     letterSpacing:
@@ -472,9 +478,10 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .bodyMedium
+                                                                        .textTheme
+                                                                        .bodyMedium!
                                                                         .fontStyle,
                                                                   ),
                                                             ),
@@ -554,16 +561,17 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                           .toString(),
                                                                       '0',
                                                                     ),
-                                                                    style: FlutterFlowTheme.of(
+                                                                    style: Theme.of(
                                                                             context)
-                                                                        .bodyMedium
+                                                                        .textTheme
+                                                                        .bodyMedium!
                                                                         .override(
                                                                           font:
                                                                               GoogleFonts.openSans(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                           ),
                                                                           fontSize:
                                                                               22.0,
@@ -571,8 +579,9 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                               0.0,
                                                                           fontWeight:
                                                                               FontWeight.bold,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
+                                                                          fontStyle: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyMedium!
                                                                               .fontStyle,
                                                                         ),
                                                                   );
@@ -609,37 +618,37 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                       0.0,
                                                                       5.0),
                                                           child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              '9fp2n6rz' /* ฿ 29 .00 */,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_9fp2n6rz,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                           ),
                                                         ),
                                                       ],
@@ -663,9 +672,9 @@ class _OptionWidgetState extends State<OptionWidget>
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            if (FFAppState().apitwo != '') {
+                                            if (context.appState.apitwo != '') {
                                               await launchURL(
-                                                  FFAppState().apitwo);
+                                                  context.appState.apitwo);
                                               _model.re2 =
                                                   await CreatecheckoutoneCall
                                                       .call(
@@ -673,8 +682,7 @@ class _OptionWidgetState extends State<OptionWidget>
                                                 email: currentUserEmail,
                                               );
 
-                                              FFAppState().apione =
-                                                  getJsonField(
+                                              context.appState.apione = getJsonField(
                                                 (_model.re2?.jsonBody ?? ''),
                                                 r'''$.url''',
                                               ).toString();
@@ -687,14 +695,13 @@ class _OptionWidgetState extends State<OptionWidget>
                                                 email: currentUserEmail,
                                               );
 
-                                              FFAppState().apione =
-                                                  getJsonField(
+                                              context.appState.apione = getJsonField(
                                                 (_model.re22?.jsonBody ?? ''),
                                                 r'''$.url''',
                                               ).toString();
                                               safeSetState(() {});
                                               await launchURL(
-                                                  FFAppState().apitwo);
+                                                  context.appState.apitwo);
                                             }
 
                                             safeSetState(() {});
@@ -778,23 +785,23 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              FFLocalizations.of(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .k_iw5wjf5x,
+                                                              style: Theme.of(
                                                                       context)
-                                                                  .getText(
-                                                                'iw5wjf5x' /* X */,
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .bodyMedium
+                                                                          .textTheme
+                                                                          .bodyMedium!
                                                                           .fontStyle,
                                                                     ),
                                                                     letterSpacing:
@@ -802,9 +809,10 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .bodyMedium
+                                                                        .textTheme
+                                                                        .bodyMedium!
                                                                         .fontStyle,
                                                                   ),
                                                             ),
@@ -820,8 +828,10 @@ class _OptionWidgetState extends State<OptionWidget>
                                                             child: FaIcon(
                                                               FontAwesomeIcons
                                                                   .infinity,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .extension<
+                                                                      CustomColors>()!
                                                                   .primaryText,
                                                               size: 24.0,
                                                             ),
@@ -855,37 +865,37 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                       0.0,
                                                                       5.0),
                                                           child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'jxm19659' /* ฿ 49 .00 */,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_jxm19659,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                           ),
                                                         ),
                                                       ],
@@ -910,15 +920,15 @@ class _OptionWidgetState extends State<OptionWidget>
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      if (FFAppState().apithree != '') {
-                                        await launchURL(FFAppState().apithree);
+                                      if (context.appState.apithree != '') {
+                                        await launchURL(context.appState.apithree);
                                         _model.re3 =
                                             await CreatecheckoutoneCall.call(
                                           uid: currentUserUid,
                                           email: currentUserEmail,
                                         );
 
-                                        FFAppState().apione = getJsonField(
+                                        context.appState.apione = getJsonField(
                                           (_model.re3?.jsonBody ?? ''),
                                           r'''$.url''',
                                         ).toString();
@@ -930,12 +940,12 @@ class _OptionWidgetState extends State<OptionWidget>
                                           email: currentUserEmail,
                                         );
 
-                                        FFAppState().apione = getJsonField(
+                                        context.appState.apione = getJsonField(
                                           (_model.re33?.jsonBody ?? ''),
                                           r'''$.url''',
                                         ).toString();
                                         safeSetState(() {});
-                                        await launchURL(FFAppState().apithree);
+                                        await launchURL(context.appState.apithree);
                                       }
 
                                       safeSetState(() {});
@@ -1014,37 +1024,37 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                       0.0,
                                                                       0.0),
                                                           child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'fxmmzfdq' /* x */,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_fxmmzfdq,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                           ),
                                                         ),
                                                         Padding(
@@ -1058,8 +1068,10 @@ class _OptionWidgetState extends State<OptionWidget>
                                                           child: FaIcon(
                                                             FontAwesomeIcons
                                                                 .infinity,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .extension<
+                                                                    CustomColors>()!
                                                                 .primaryText,
                                                             size: 24.0,
                                                           ),
@@ -1107,37 +1119,37 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                       0.0,
                                                                       0.0),
                                                           child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              '12bdn60y' /* x */,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_12bdn60y,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                           ),
                                                         ),
                                                         Padding(
@@ -1149,37 +1161,37 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                       0.0,
                                                                       0.0),
                                                           child: Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'y14bta82' /* เห็นทุกคนที่  Cheers  คุณ */,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_y14bta82,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                           ),
                                                         ),
                                                       ],
@@ -1209,36 +1221,38 @@ class _OptionWidgetState extends State<OptionWidget>
                                                                     0.0,
                                                                     5.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            't766gvxc' /* ฿ 99 .00 */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                fontSize: 18.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_t766gvxc,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    fontSize:
+                                                                        18.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ],

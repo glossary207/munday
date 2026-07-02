@@ -1,10 +1,11 @@
+import 'package:munday/core/state/base_model.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import 'popupuser_widget.dart' show PopupuserWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-class PopupuserModel extends FlutterFlowModel<PopupuserWidget> {
+class PopupuserModel extends BaseModel {
   ///  Local state fields for this component.
 
   bool showcheers = false;

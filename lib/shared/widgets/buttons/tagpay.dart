@@ -1,24 +1,19 @@
 // Automatic FlutterFlow imports
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:munday/core/theme/theme.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-class Tagpay extends StatefulWidget {
+class Tagpay extends ConsumerStatefulWidget {
   const Tagpay({
     super.key,
     this.width,
@@ -35,10 +30,10 @@ class Tagpay extends StatefulWidget {
   final String? iffalse;
 
   @override
-  State<Tagpay> createState() => _TagpayState();
+  ConsumerState<Tagpay> createState() => _TagpayState();
 }
 
-class _TagpayState extends State<Tagpay> {
+class _TagpayState extends ConsumerState<Tagpay> {
   @override
   Widget build(BuildContext context) {
     final bool isTrue = widget.condition ?? false;
@@ -63,7 +58,7 @@ class _TagpayState extends State<Tagpay> {
             quarterTurns: 3, // หมุน 270 องศา = 90 องศาขึ้น
             child: Text(
               displayText,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
+              style: Theme.of(context).textTheme.bodyMedium!.override(
                     fontFamily: 'Readex Pro',
                     color: Colors.white,
                     fontSize: 6,

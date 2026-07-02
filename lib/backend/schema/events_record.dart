@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 import '/backend/schema/util/supabase_util.dart';
 
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class EventsRecord extends SupabaseRecord {
   EventsRecord._(
@@ -92,14 +92,19 @@ class EventsRecord extends SupabaseRecord {
     return null;
   }
 
+  DateTime? _parseDateTime(dynamic val) {
+    if (val is DateTime) return val;
+    if (val is String) return DateTime.tryParse(val);
+    return null;
+  }
+
   void _initializeFields() {
     _nameStore =
         (snapshotData['name_store'] ?? snapshotData['Name_store']) as String?;
     _nameArtise =
         getDataList(snapshotData['name_artise'] ?? snapshotData['Name_artise']);
     _location = _parseLatLng(snapshotData['location']);
-    _date =
-        snapshotData['date'] as DateTime? ?? snapshotData['Date'] as DateTime?;
+    _date = _parseDateTime(snapshotData['date'] ?? snapshotData['Date']);
     _poster = (snapshotData['poster'] ?? snapshotData['Poster']) as String?;
     _capacity = castToType<int>(snapshotData['capacity']);
     _maxCapacity = castToType<int>(snapshotData['max_capacity']);

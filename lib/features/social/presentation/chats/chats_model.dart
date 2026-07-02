@@ -1,11 +1,13 @@
+import 'package:munday/core/state/base_model.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'chats_widget.dart' show ChatsWidget;
+import 'chats_page.dart' show ChatsWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/cards/card33_user_grid_model.dart';
 
-class ChatsModel extends FlutterFlowModel<ChatsWidget> {
+class ChatsModel extends BaseModel {
   ///  Local state fields for this page.
 
   int? numtext = 0;
@@ -50,7 +52,7 @@ class ChatsModel extends FlutterFlowModel<ChatsWidget> {
   void initState(BuildContext context) {
     columnController = ScrollController();
     listViewController = ScrollController();
-    card33UserGridModel = createModel(context, () => Card33UserGridModel());
+    card33UserGridModel = Card33UserGridModel()..internalInit(context);
   }
 
   @override

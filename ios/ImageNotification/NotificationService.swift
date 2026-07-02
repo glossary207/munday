@@ -1,4 +1,4 @@
-import FirebaseMessaging
+// import FirebaseMessaging
 import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension {
@@ -11,9 +11,9 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent = request.content
           .mutableCopy() as? UNMutableNotificationContent
         guard let bestAttemptContent = bestAttemptContent else { return }
-        FIRMessagingExtensionHelper().populateNotificationContent(
-          bestAttemptContent,
-          withContentHandler: contentHandler)
+        // FIRMessagingExtensionHelper().populateNotificationContent(
+        //   bestAttemptContent,
+        //   withContentHandler: contentHandler)
     }
     
     override func serviceExtensionTimeWillExpire() {

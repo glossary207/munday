@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'showallphoto_widget.dart' show ShowallphotoWidget;
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
+import 'showallphoto_page.dart' show ShowallphotoWidget;
 import 'package:flutter/material.dart';
 
-class ShowallphotoModel extends FlutterFlowModel<ShowallphotoWidget> {
+class ShowallphotoModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

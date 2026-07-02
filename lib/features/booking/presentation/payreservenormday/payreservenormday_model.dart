@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'payreservenormday_widget.dart' show PayreservenormdayWidget;
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
+import 'payreservenormday_page.dart' show PayreservenormdayWidget;
 import 'package:flutter/material.dart';
 
-class PayreservenormdayModel extends FlutterFlowModel<PayreservenormdayWidget> {
+class PayreservenormdayModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

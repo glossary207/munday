@@ -1,24 +1,29 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'dart:ui';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'showphoto_copy_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'showphoto_copy_model.dart';
 
-class ShowphotoCopyWidget extends StatefulWidget {
+class ShowphotoCopyWidget extends ConsumerStatefulWidget {
   const ShowphotoCopyWidget({super.key});
 
   @override
-  State<ShowphotoCopyWidget> createState() => _ShowphotoCopyWidgetState();
+  ConsumerState<ShowphotoCopyWidget> createState() => _ShowphotoCopyWidgetState();
 }
 
-class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
+class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
     with TickerProviderStateMixin {
   late ShowphotoCopyModel _model;
 
@@ -33,7 +38,7 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ShowphotoCopyModel());
+    _model = ShowphotoCopyModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
@@ -213,19 +218,17 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
-                      child: FFButtonWidget(
+                      child: MundayButton(
                         onPressed: () async {
                           await _model.pageViewController?.previousPage(
                             duration: Duration(milliseconds: 300),
                             curve: Curves.ease,
                           );
 
-                          FFAppState().update(() {});
+                          context.appState.update(() {});
                         },
-                        text: FFLocalizations.of(context).getText(
-                          'rnbxlb0h' /* Black */,
-                        ),
-                        options: FFButtonOptions(
+                        text: AppLocalizations.of(context)!.k_rnbxlb0h,
+                        options: MundayButtonOptions(
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 2.0),
@@ -233,22 +236,26 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
                               0.0, 0.0, 0.0, 0.0),
                           color: Colors.transparent,
                           textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
+                              Theme.of(context).textTheme.titleSmall!.override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontStyle,
                                     ),
                                     color: Colors.white,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontStyle,
                                   ),
                           borderSide: BorderSide(
@@ -262,7 +269,7 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
-                      child: FFButtonWidget(
+                      child: MundayButton(
                         onPressed: () async {
                           if (_model.pageViewCurrentIndex == 3) {
                             Navigator.pop(context);
@@ -272,12 +279,12 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
                               curve: Curves.ease,
                             );
 
-                            FFAppState().update(() {});
+                            context.appState.update(() {});
                           }
                         },
                         text:
                             _model.pageViewCurrentIndex == 3 ? 'Close' : 'Next',
-                        options: FFButtonOptions(
+                        options: MundayButtonOptions(
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 2.0),
@@ -287,22 +294,26 @@ class _ShowphotoCopyWidgetState extends State<ShowphotoCopyWidget>
                               ? Color(0xFFCC0303)
                               : Color(0x00000000),
                           textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
+                              Theme.of(context).textTheme.titleSmall!.override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontStyle,
                                     ),
                                     color: Colors.white,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontStyle,
                                   ),
                           borderSide: BorderSide(

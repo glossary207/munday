@@ -1,10 +1,12 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'main_chat_widget.dart' show MainChatWidget;
+import 'main_chat_page.dart' show MainChatWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/cards/card33_user_grid_model.dart';
 
-class MainChatModel extends FlutterFlowModel<MainChatWidget> {
+class MainChatModel extends BaseModel {
   ///  Local state fields for this page.
 
   List<SupabaseDocRef> roomrefer = [];
@@ -13,8 +15,7 @@ class MainChatModel extends FlutterFlowModel<MainChatWidget> {
   void removeAtIndexFromRoomrefer(int index) => roomrefer.removeAt(index);
   void insertAtIndexInRoomrefer(int index, SupabaseDocRef item) =>
       roomrefer.insert(index, item);
-  void updateRoomreferAtIndex(
-          int index, Function(SupabaseDocRef) updateFn) =>
+  void updateRoomreferAtIndex(int index, Function(SupabaseDocRef) updateFn) =>
       roomrefer[index] = updateFn(roomrefer[index]);
 
   ///  State fields for stateful widgets in this page.
@@ -28,7 +29,7 @@ class MainChatModel extends FlutterFlowModel<MainChatWidget> {
 
   @override
   void initState(BuildContext context) {
-    card33UserGridModel = createModel(context, () => Card33UserGridModel());
+    card33UserGridModel = Card33UserGridModel()..internalInit(context);
   }
 
   @override

@@ -1,16 +1,17 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'header_appbar_menu_model.dart';
 export 'header_appbar_menu_model.dart';
 
-class HeaderAppbarMenuWidget extends StatefulWidget {
+class HeaderAppbarMenuWidget extends ConsumerStatefulWidget {
   const HeaderAppbarMenuWidget({super.key});
 
   @override
-  State<HeaderAppbarMenuWidget> createState() => _HeaderAppbarMenuWidgetState();
+  ConsumerState<HeaderAppbarMenuWidget> createState() => _HeaderAppbarMenuWidgetState();
 }
 
-class _HeaderAppbarMenuWidgetState extends State<HeaderAppbarMenuWidget> {
+class _HeaderAppbarMenuWidgetState extends ConsumerState<HeaderAppbarMenuWidget> {
   late HeaderAppbarMenuModel _model;
 
   @override
@@ -22,7 +23,7 @@ class _HeaderAppbarMenuWidgetState extends State<HeaderAppbarMenuWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HeaderAppbarMenuModel());
+    _model = HeaderAppbarMenuModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }

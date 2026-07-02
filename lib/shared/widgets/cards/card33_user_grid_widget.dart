@@ -1,19 +1,21 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'card33_user_grid_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'card33_user_grid_model.dart';
 
-class Card33UserGridWidget extends StatefulWidget {
+class Card33UserGridWidget extends ConsumerStatefulWidget {
   const Card33UserGridWidget({
     super.key,
     required this.name,
@@ -26,10 +28,10 @@ class Card33UserGridWidget extends StatefulWidget {
   final SupabaseDocRef? uid;
 
   @override
-  State<Card33UserGridWidget> createState() => _Card33UserGridWidgetState();
+  ConsumerState<Card33UserGridWidget> createState() => _Card33UserGridWidgetState();
 }
 
-class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
+class _Card33UserGridWidgetState extends ConsumerState<Card33UserGridWidget>
     with TickerProviderStateMixin {
   late Card33UserGridModel _model;
 
@@ -44,7 +46,7 @@ class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => Card33UserGridModel());
+    _model = Card33UserGridModel()..internalInit(context);
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -112,8 +114,7 @@ class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Container(
       width: double.infinity,
@@ -158,29 +159,33 @@ class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'nifsved0' /* Cheers!! */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                              AppLocalizations.of(context)!.k_nifsved0,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
                                   .override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
+                                    color: Theme.of(context)
+                                        .extension<CustomColors>()!
                                         .primaryText,
                                     fontSize: 25.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
                             ),
@@ -288,24 +293,29 @@ class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
                               'ไม่ระบุ',
                             ),
                             textAlign: TextAlign.end,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineSmall
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineSmall
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineSmall
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
                                         .fontStyle,
                                   ),
                                   fontSize: 18.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineSmall
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineSmall
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
                                       .fontStyle,
                                 ),
                           ),
@@ -313,29 +323,33 @@ class _Card33UserGridWidgetState extends State<Card33UserGridWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 5.0, 0.0, 5.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                '7hzb9e7k' /* อีกฝ่าย  Match กับคุณ */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              AppLocalizations.of(context)!.k_7hzb9e7k,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
+                                    color: Theme.of(context)
+                                        .extension<CustomColors>()!
                                         .primaryText,
                                     fontSize: 12.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                             ),

@@ -1,8 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/auth/supabase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,16 +13,17 @@ import '/backend/backend.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'add_friend_model.dart';
 import 'full_qr_widget.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'add_friend_model.dart';
 
-class AddFriendWidget extends StatefulWidget {
+class AddFriendWidget extends ConsumerStatefulWidget {
   const AddFriendWidget({super.key});
 
   @override
-  State<AddFriendWidget> createState() => _AddFriendWidgetState();
+  ConsumerState<AddFriendWidget> createState() => _AddFriendWidgetState();
 }
 
-class _AddFriendWidgetState extends State<AddFriendWidget> {
+class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
   late AddFriendModel _model;
 
   @override
@@ -32,7 +35,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AddFriendModel());
+    _model = AddFriendModel()..internalInit(context);
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -50,7 +53,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     final myId = currentUserUid;
     final shareUrl = 'munday://addfriend?id=\$myId';
     final shareText = 'Add me on Munday! \$shareUrl';
-    
+
     await Share.share(shareText);
   }
 
@@ -62,19 +65,26 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFFE52020))),
+      builder: (context) => const Center(
+          child: CircularProgressIndicator(color: Color(0xFFE52020))),
     );
 
     try {
-      var userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: phone).get();
-      
+      var userQuery = await UsersRecord.collection
+          .where('phone_number', isEqualTo: phone)
+          .get();
+
       // Fallback for Thai phone numbers if exact match fails
       if (userQuery.docs.isEmpty && phone.startsWith('0')) {
         final altPhone1 = '+66${phone.substring(1)}';
-        userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: altPhone1).get();
+        userQuery = await UsersRecord.collection
+            .where('phone_number', isEqualTo: altPhone1)
+            .get();
         if (userQuery.docs.isEmpty) {
           final altPhone2 = '66${phone.substring(1)}';
-          userQuery = await UsersRecord.collection.where('phone_number', isEqualTo: altPhone2).get();
+          userQuery = await UsersRecord.collection
+              .where('phone_number', isEqualTo: altPhone2)
+              .get();
         }
       }
       Navigator.pop(context); // Hide loading
@@ -85,13 +95,18 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
         if (receiverId == currentUserUid) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('You cannot add yourself as a friend.')),
+            const SnackBar(
+                content: Text('You cannot add yourself as a friend.')),
           );
           return;
         }
 
-        final String lowId = currentUserUid.compareTo(receiverId) < 0 ? currentUserUid : receiverId;
-        final String highId = currentUserUid.compareTo(receiverId) > 0 ? currentUserUid : receiverId;
+        final String lowId = currentUserUid.compareTo(receiverId) < 0
+            ? currentUserUid
+            : receiverId;
+        final String highId = currentUserUid.compareTo(receiverId) > 0
+            ? currentUserUid
+            : receiverId;
 
         final isFriend = await Supabase.instance.client
             .from('friend')
@@ -103,7 +118,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
         if (isFriend != null) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('You are already friends with this user.')),
+              const SnackBar(
+                  content: Text('You are already friends with this user.')),
             );
           }
           return;
@@ -119,7 +135,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
         if (pendingRequest != null) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('A friend request is already pending.')),
+              const SnackBar(
+                  content: Text('A friend request is already pending.')),
             );
           }
           return;
@@ -140,7 +157,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
         _model.textController?.clear();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No user found with this phone number.')),
+          const SnackBar(
+              content: Text('No user found with this phone number.')),
         );
       }
     } catch (e) {
@@ -193,7 +211,10 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                           children: [
                             Text(
                               'Add or Invite Friends',
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -236,7 +257,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                             decoration: BoxDecoration(
                               color: const Color(0xFF222222),
                               borderRadius: BorderRadius.circular(16.0),
-                              border: Border.all(color: const Color(0xFF333333)),
+                              border:
+                                  Border.all(color: const Color(0xFF333333)),
                             ),
                             child: Row(
                               children: [
@@ -259,7 +281,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                                 const SizedBox(width: 16.0),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         valueOrDefault<String>(
@@ -309,11 +332,13 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Text(
                           'Share profile via',
-                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                font: GoogleFonts.openSans(fontWeight: FontWeight.w600),
-                                fontSize: 14.0,
-                                color: Colors.white70,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.override(
+                                    font: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.w600),
+                                    fontSize: 14.0,
+                                    color: Colors.white70,
+                                  ),
                         ),
                       ),
                       const SizedBox(height: 16.0),
@@ -329,9 +354,12 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                               color: const Color(0xFF424242),
                               onTap: () async {
                                 final myId = currentUserUid;
-                                await Clipboard.setData(ClipboardData(text: 'munday://addfriend?id=\$myId'));
+                                await Clipboard.setData(ClipboardData(
+                                    text: 'munday://addfriend?id=\$myId'));
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Link copied to clipboard')),
+                                  const SnackBar(
+                                      content:
+                                          Text('Link copied to clipboard')),
                                 );
                               },
                             ),
@@ -339,25 +367,30 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                               icon: FontAwesomeIcons.line,
                               label: 'Line',
                               color: const Color(0xFF00B900),
-                              onTap: () => _shareProfile(context, platform: 'line'),
+                              onTap: () =>
+                                  _shareProfile(context, platform: 'line'),
                             ),
                             _buildShareIcon(
                               icon: FontAwesomeIcons.facebookMessenger,
                               label: 'Messenger',
                               color: const Color(0xFF0084FF),
-                              onTap: () => _shareProfile(context, platform: 'messenger'),
+                              onTap: () =>
+                                  _shareProfile(context, platform: 'messenger'),
                             ),
                             _buildShareIcon(
                               icon: FontAwesomeIcons.instagram,
                               label: 'Instagram',
-                              color: const Color(0xFFE1306C), // Approximate Instagram pink/red
-                              onTap: () => _shareProfile(context, platform: 'instagram'),
+                              color: const Color(
+                                  0xFFE1306C), // Approximate Instagram pink/red
+                              onTap: () =>
+                                  _shareProfile(context, platform: 'instagram'),
                             ),
                             _buildShareIcon(
                               icon: FontAwesomeIcons.whatsapp,
                               label: 'WhatsApp',
                               color: const Color(0xFF25D366),
-                              onTap: () => _shareProfile(context, platform: 'whatsapp'),
+                              onTap: () =>
+                                  _shareProfile(context, platform: 'whatsapp'),
                             ),
                             _buildShareIcon(
                               icon: Icons.more_horiz_rounded,
@@ -368,10 +401,14 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                           ],
                         ),
                       ),
-                      
+
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
-                        child: Divider(color: Color(0xFF333333), height: 1.0, thickness: 1.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.0, vertical: 20.0),
+                        child: Divider(
+                            color: Color(0xFF333333),
+                            height: 1.0,
+                            thickness: 1.0),
                       ),
 
                       // --- ADD BY PHONE NUMBER ---
@@ -379,11 +416,13 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Text(
                           'Add by phone',
-                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                font: GoogleFonts.openSans(fontWeight: FontWeight.w600),
-                                fontSize: 14.0,
-                                color: Colors.white70,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.override(
+                                    font: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.w600),
+                                    fontSize: 14.0,
+                                    color: Colors.white70,
+                                  ),
                         ),
                       ),
                       const SizedBox(height: 12.0),
@@ -399,18 +438,22 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                           child: Row(
                             children: [
                               const Padding(
-                                padding: EdgeInsets.only(left: 18.0, right: 12.0),
-                                child: Icon(Icons.search_rounded, color: Colors.white54, size: 22.0),
+                                padding:
+                                    EdgeInsets.only(left: 18.0, right: 12.0),
+                                child: Icon(Icons.search_rounded,
+                                    color: Colors.white54, size: 22.0),
                               ),
                               Expanded(
                                 child: TextFormField(
                                   controller: _model.textController,
                                   focusNode: _model.textFieldFocusNode,
                                   keyboardType: TextInputType.phone,
-                                  style: const TextStyle(color: Colors.white, fontSize: 15.0),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 15.0),
                                   decoration: const InputDecoration(
                                     hintText: 'Enter phone number...',
-                                    hintStyle: TextStyle(color: Colors.white54, fontSize: 15.0),
+                                    hintStyle: TextStyle(
+                                        color: Colors.white54, fontSize: 15.0),
                                     border: InputBorder.none,
                                     isDense: true,
                                   ),

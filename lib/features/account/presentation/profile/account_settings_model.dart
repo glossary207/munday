@@ -1,9 +1,10 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'account_settings_widget.dart' show AccountSettingsWidget;
+import 'account_settings_page.dart' show AccountSettingsWidget;
 import 'package:flutter/material.dart';
 
-class AccountSettingsModel extends FlutterFlowModel<AccountSettingsWidget> {
+class AccountSettingsModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

@@ -1,25 +1,29 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import '/index.dart';
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'confirmdel_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'confirmdel_model.dart';
 
-class ConfirmdelWidget extends StatefulWidget {
+class ConfirmdelWidget extends ConsumerStatefulWidget {
   const ConfirmdelWidget({super.key});
 
   @override
-  State<ConfirmdelWidget> createState() => _ConfirmdelWidgetState();
+  ConsumerState<ConfirmdelWidget> createState() => _ConfirmdelWidgetState();
 }
 
-class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
+class _ConfirmdelWidgetState extends ConsumerState<ConfirmdelWidget> {
   late ConfirmdelModel _model;
 
   @override
@@ -31,7 +35,7 @@ class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ConfirmdelModel());
+    _model = ConfirmdelModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -45,8 +49,7 @@ class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Container(
       width: double.infinity,
@@ -77,15 +80,15 @@ class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   context.pushNamed(
-                    PhoneLoginWidget.routeName,
+                    PhoneLoginPage.routeName,
                   );
 
-                  FFAppState().ActivePromotion = true;
-                  FFAppState().readyshowcheers = true;
-                  FFAppState().lockfuctionadd = false;
+                  context.appState.ActivePromotion = true;
+                  context.appState.readyshowcheers = true;
+                  context.appState.lockfuctionadd = false;
                   safeSetState(() {});
                   await DeletechatCall.call(
                     uid: currentUserReference?.id,
@@ -106,29 +109,29 @@ class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
 
                   await currentUserReference!.delete();
                 },
-                text: FFLocalizations.of(context).getText(
-                  '1lw0tlcq' /* ยืนยัน ที่จะลบข้อมูลผู้ใช้ทั้ง... */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_1lw0tlcq,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFFB50000),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -140,32 +143,32 @@ class _ConfirmdelWidgetState extends State<ConfirmdelWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  'ka4eqgjx' /* ยกเลิก */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_ka4eqgjx,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFF232323),
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  textStyle: Theme.of(context).textTheme.titleSmall!.override(
                         font: GoogleFonts.lexendDeca(
                           fontWeight: FontWeight.normal,
                           fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                              Theme.of(context).textTheme.titleSmall!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         fontSize: 16.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                         fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                            Theme.of(context).textTheme.titleSmall!.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

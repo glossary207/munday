@@ -1,31 +1,36 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/dialogs/edit_image_modal_widget.dart';
 import '/shared/widgets/media/showphoto_copy_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/shared/widgets/core/munday_expanded_image_view.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
+import '/core/utils/upload_data.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'profilepopup_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'profilepopup_model.dart';
 
-class ProfilepopupWidget extends StatefulWidget {
+class ProfilepopupWidget extends ConsumerStatefulWidget {
   const ProfilepopupWidget({super.key});
 
   @override
-  State<ProfilepopupWidget> createState() => _ProfilepopupWidgetState();
+  ConsumerState<ProfilepopupWidget> createState() => _ProfilepopupWidgetState();
 }
 
-class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
+class _ProfilepopupWidgetState extends ConsumerState<ProfilepopupWidget>
     with TickerProviderStateMixin {
   late ProfilepopupModel _model;
 
@@ -36,7 +41,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
     if (remoteHandle.isNotEmpty) {
       return remoteHandle;
     }
-    return FFAppState().profileInstagramHandle;
+    return context.appState.profileInstagramHandle;
   }
 
   String _currentFacebookHandle() {
@@ -44,20 +49,20 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
     if (remoteHandle.isNotEmpty) {
       return remoteHandle;
     }
-    return FFAppState().profileFacebookHandle;
+    return context.appState.profileFacebookHandle;
   }
 
   void _storeInstagramHandle(String value) {
     final trimmedValue = value.trim();
-    FFAppState().update(() {
-      FFAppState().profileInstagramHandle = trimmedValue;
+    context.appState.update(() {
+      context.appState.profileInstagramHandle = trimmedValue;
     });
   }
 
   void _storeFacebookHandle(String value) {
     final trimmedValue = value.trim();
-    FFAppState().update(() {
-      FFAppState().profileFacebookHandle = trimmedValue;
+    context.appState.update(() {
+      context.appState.profileFacebookHandle = trimmedValue;
     });
   }
 
@@ -70,7 +75,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ProfilepopupModel());
+    _model = ProfilepopupModel()..internalInit(context);
 
     _model.textController1 ??=
         TextEditingController(text: currentUserDisplayName);
@@ -174,22 +179,22 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          FFLocalizations.of(context).getText(
-                            '4zmi1y5v' /* Your  Profile */,
-                          ),
+                          AppLocalizations.of(context)!.k_4zmi1y5v,
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
+                              Theme.of(context).textTheme.bodyMedium!.override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                     fontSize: 21.0,
                                     letterSpacing: 1.0,
                                     fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                         ),
@@ -233,9 +238,9 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               width: 100.0,
                                               height: 100.0,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                color: Theme.of(context)
+                                                    .extension<CustomColors>()!
+                                                    .secondaryBackground,
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: Image.network(
@@ -399,8 +404,10 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                         height: 24.0,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .extension<
+                                                                  CustomColors>()!
                                                               .primaryText,
                                                           shape:
                                                               BoxShape.circle,
@@ -462,71 +469,79 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelMedium!
                                                               .override(
                                                                 font:
                                                                     GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontStyle,
                                                                 ),
                                                                 color: Colors
                                                                     .white,
                                                                 letterSpacing:
                                                                     0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                                fontWeight: Theme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .textTheme
+                                                                    .labelMedium!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
+                                                                fontStyle: Theme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .textTheme
+                                                                    .labelMedium!
                                                                     .fontStyle,
                                                               ),
                                                       hintText:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                        'il4lzk8b' /* Your name */,
-                                                      ),
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_il4lzk8b,
                                                       hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelMedium!
                                                               .override(
                                                                 font:
                                                                     GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontStyle,
                                                                 ),
-                                                                color: FlutterFlowTheme.of(
+                                                                color: Theme.of(
                                                                         context)
+                                                                    .extension<
+                                                                        CustomColors>()!
                                                                     .primaryText,
                                                                 fontSize: 23.0,
                                                                 letterSpacing:
                                                                     0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                                fontWeight: Theme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .textTheme
+                                                                    .labelMedium!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
+                                                                fontStyle: Theme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .textTheme
+                                                                    .labelMedium!
                                                                     .fontStyle,
                                                               ),
                                                       enabledBorder:
@@ -581,19 +596,19 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                                   0.0,
                                                                   8.0),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .override(
                                                           font: GoogleFonts
                                                               .openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                           color: Colors.white,
                                                           fontSize: 23.0,
@@ -601,9 +616,9 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                           lineHeight: 0.0,
                                                         ),
@@ -633,66 +648,74 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                       decoration:
                                                           InputDecoration(
                                                         labelStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelMedium!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .roboto(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .labelMedium
+                                                                        .textTheme
+                                                                        .labelMedium!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .labelMedium
+                                                                        .textTheme
+                                                                        .labelMedium!
                                                                         .fontStyle,
                                                                   ),
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontStyle,
                                                                 ),
                                                         hintText:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          'iteqjwb6' /* Your caption */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_iteqjwb6,
                                                         hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelMedium!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .roboto(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .labelMedium
+                                                                        .textTheme
+                                                                        .labelMedium!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .labelMedium
+                                                                        .textTheme
+                                                                        .labelMedium!
                                                                         .fontStyle,
                                                                   ),
-                                                                  color: FlutterFlowTheme.of(
+                                                                  color: Theme.of(
                                                                           context)
+                                                                      .extension<
+                                                                          CustomColors>()!
                                                                       .primaryText,
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .labelMedium
+                                                                      .textTheme
+                                                                      .labelMedium!
                                                                       .fontStyle,
                                                                   lineHeight:
                                                                       0.0,
@@ -757,35 +780,38 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                                     0.0,
                                                                     10.0),
                                                       ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
+                                                            ),
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .textTheme
+                                                                    .bodyMedium!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                                lineHeight: 0.0,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
+                                                            lineHeight: 0.0,
+                                                          ),
                                                       validator: _model
                                                           .textController2Validator
                                                           .asValidator(context),
@@ -864,7 +890,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               PageTransition(
                                                 type: PageTransitionType.fade,
                                                 child:
-                                                    FlutterFlowExpandedImageView(
+                                                    MundayExpandedImageView(
                                                   image: Image.network(
                                                     currentUserDocument!
                                                         .photoshow.photo1,
@@ -1161,7 +1187,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               PageTransition(
                                                 type: PageTransitionType.fade,
                                                 child:
-                                                    FlutterFlowExpandedImageView(
+                                                    MundayExpandedImageView(
                                                   image: Image.network(
                                                     currentUserDocument!
                                                         .photoshow.photo2,
@@ -1446,7 +1472,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               PageTransition(
                                                 type: PageTransitionType.fade,
                                                 child:
-                                                    FlutterFlowExpandedImageView(
+                                                    MundayExpandedImageView(
                                                   image: Image.network(
                                                     currentUserDocument!
                                                         .photoshow.photo3,
@@ -1734,7 +1760,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                                 PageTransition(
                                                   type: PageTransitionType.fade,
                                                   child:
-                                                      FlutterFlowExpandedImageView(
+                                                      MundayExpandedImageView(
                                                     image: Image.network(
                                                       currentUserDocument!
                                                           .photoshow.photo4,
@@ -2020,7 +2046,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               PageTransition(
                                                 type: PageTransitionType.fade,
                                                 child:
-                                                    FlutterFlowExpandedImageView(
+                                                    MundayExpandedImageView(
                                                   image: Image.network(
                                                     currentUserDocument!
                                                         .photoshow.photo5,
@@ -2305,7 +2331,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                               PageTransition(
                                                 type: PageTransitionType.fade,
                                                 child:
-                                                    FlutterFlowExpandedImageView(
+                                                    MundayExpandedImageView(
                                                   image: Image.network(
                                                     currentUserDocument!
                                                         .photoshow.photo6,
@@ -2616,53 +2642,59 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                 autofocus: false,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  labelStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                   alignLabelWithHint: false,
-                                  hintText: FFLocalizations.of(context).getText(
-                                    '3ewakt6y' /* Name Instagram */,
-                                  ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
+                                  hintText:
+                                      AppLocalizations.of(context)!.k_3ewakt6y,
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
                                       .override(
                                         font: GoogleFonts.roboto(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
                                             .primaryText,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontStyle,
                                       ),
                                   enabledBorder: UnderlineInputBorder(
@@ -2674,7 +2706,8 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
@@ -2682,7 +2715,8 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   errorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
@@ -2690,31 +2724,37 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   focusedErrorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(0.0),
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                       fontSize: 16.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                 validator: _model.textController3Validator
@@ -2788,54 +2828,61 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                 autofocus: false,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
+                                  labelStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
                                       .override(
                                         font: GoogleFonts.roboto(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
                                             .primaryText,
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontStyle,
                                       ),
-                                  hintText: FFLocalizations.of(context).getText(
-                                    '82kov3yv' /* ID  login  Facebook */,
-                                  ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
+                                  hintText:
+                                      AppLocalizations.of(context)!.k_82kov3yv,
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
                                       .override(
                                         font: GoogleFonts.roboto(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
                                             .primaryText,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
                                             .fontStyle,
                                       ),
                                   enabledBorder: UnderlineInputBorder(
@@ -2847,7 +2894,8 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
@@ -2855,7 +2903,8 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   errorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
@@ -2863,31 +2912,37 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                                   ),
                                   focusedErrorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: Theme.of(context)
+                                          .extension<CustomColors>()!
                                           .primaryText,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(0.0),
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                       fontSize: 16.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                 validator: _model.textController4Validator
@@ -2924,7 +2979,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 0.0),
-                child: FFButtonWidget(
+                child: MundayButton(
                   onPressed: () async {
                     await currentUserReference!.update(createUsersRecordData(
                       popupEditProfile: false,
@@ -2971,21 +3026,20 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                       },
                     ).then((value) => safeSetState(() {}));
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'z7555l2i' /* บันทึก โปรไฟล์ */,
-                  ),
-                  options: FFButtonOptions(
+                  text: AppLocalizations.of(context)!.k_z7555l2i,
+                  options: MundayButtonOptions(
                     width: double.infinity,
                     height: 50.0,
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: Colors.white,
-                    textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                    textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                           font: GoogleFonts.openSans(
                             fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyLarge
+                            fontStyle: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
                                 .fontStyle,
                           ),
                           color: Colors.black,
@@ -2993,7 +3047,7 @@ class _ProfilepopupWidgetState extends State<ProfilepopupWidget>
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w500,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
                     elevation: 2.0,
                     borderSide: BorderSide(

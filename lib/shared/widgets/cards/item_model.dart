@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'item_widget.dart' show ItemWidget;
 import 'package:flutter/material.dart';
 
-class ItemModel extends FlutterFlowModel<ItemWidget> {
+class ItemModel extends BaseModel {
   ///  Local state fields for this component.
 
   List<String> photolist = [];

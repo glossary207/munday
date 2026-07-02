@@ -1,30 +1,34 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/dialogs/block_widget.dart';
 import '/shared/widgets/cards/item_widget.dart';
 import '/shared/widgets/misc/showpromotion_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_swipeable_stack.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/shared/widgets/core/munday_expanded_image_view.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/shared/widgets/core/munday_swipeable_stack.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
 import '/core/utils/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'popupuser_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'popupuser_model.dart';
 
-class PopupuserWidget extends StatefulWidget {
+class PopupuserWidget extends ConsumerStatefulWidget {
   const PopupuserWidget({
     super.key,
     required this.offchat,
@@ -37,10 +41,10 @@ class PopupuserWidget extends StatefulWidget {
   final List<SupabaseDocRef>? listref;
 
   @override
-  State<PopupuserWidget> createState() => _PopupuserWidgetState();
+  ConsumerState<PopupuserWidget> createState() => _PopupuserWidgetState();
 }
 
-class _PopupuserWidgetState extends State<PopupuserWidget>
+class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
     with TickerProviderStateMixin {
   late PopupuserModel _model;
 
@@ -55,7 +59,7 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PopupuserModel());
+    _model = PopupuserModel()..internalInit(context);
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -175,8 +179,7 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return InkWell(
       splashColor: Colors.transparent,
@@ -184,9 +187,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        FFAppState().ActiveProfileUserPopup = false;
+        context.appState.ActiveProfileUserPopup = false;
         _model.updatePage(() {});
-        if (!FFAppState().lockfuctionadd) {
+        if (!context.appState.lockfuctionadd) {
           Navigator.pop(context);
         }
       },
@@ -220,7 +223,7 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
             builder: (context) {
               final dataSW = _model.dataload.toList();
 
-              return FlutterFlowSwipeableStack(
+              return MundaySwipeableStack(
                 onSwipeFn: (index) async {
                   final dataSWItem = dataSW[index];
                   if (_model.indexdata == widget.listref?.length) {
@@ -343,7 +346,7 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                                       PageTransitionType
                                                                           .fade,
                                                                   child:
-                                                                      FlutterFlowExpandedImageView(
+                                                                      MundayExpandedImageView(
                                                                     image: Image
                                                                         .network(
                                                                       dataSWItem
@@ -512,18 +515,19 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                                             .displayName,
                                                                         textAlign:
                                                                             TextAlign.start,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
                                                                             .override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                               ),
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.4,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -551,27 +555,30 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                                         TextAlign
                                                                             .start,
                                                                     maxLines: 2,
-                                                                    style: FlutterFlowTheme.of(
+                                                                    style: Theme.of(
                                                                             context)
-                                                                        .bodyMedium
+                                                                        .textTheme
+                                                                        .bodyMedium!
                                                                         .override(
                                                                           font:
                                                                               GoogleFonts.openSans(
                                                                             fontWeight:
                                                                                 FontWeight.normal,
                                                                             fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                           ),
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          color: Theme.of(context)
+                                                                              .extension<CustomColors>()!
+                                                                              .primaryText,
                                                                           fontSize:
                                                                               12.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
                                                                               FontWeight.normal,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
+                                                                          fontStyle: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyMedium!
                                                                               .fontStyle,
                                                                         ),
                                                                   ),
@@ -899,24 +906,23 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: Image.network(
-                                                (dataSWItem
-                                                                    .photoshow.photo1 ==
-                                                                '') &&
+                                                (dataSWItem.photoshow.photo1 ==
+                                                            '') &&
                                                         (dataSWItem
-                                                                    .photoshow.photo2 ==
-                                                                '') &&
+                                                                .photoshow.photo2 ==
+                                                            '') &&
                                                         (dataSWItem
-                                                                    .photoshow.photo3 ==
-                                                                '') &&
+                                                                .photoshow.photo3 ==
+                                                            '') &&
+                                                        (dataSWItem
+                                                                .photoshow.photo4 ==
+                                                            '') &&
                                                         (dataSWItem.photoshow
-                                                                    .photo4 ==
-                                                                '') &&
+                                                                .photo5 ==
+                                                            '') &&
                                                         (dataSWItem.photoshow
-                                                                    .photo5 ==
-                                                                '') &&
-                                                        (dataSWItem.photoshow
-                                                                    .photo6 ==
-                                                                '')
+                                                                .photo6 ==
+                                                            '')
                                                     ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/03t8zus95k5z/Nophoto.png'
                                                     : 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/lcvfw7ee3qy1/null.png',
                                               ).image,
@@ -941,9 +947,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo1 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo1 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -993,9 +999,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo2 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo2 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -1045,9 +1051,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo3 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo3 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -1097,9 +1103,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo4 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo4 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -1149,9 +1155,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo5 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo5 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -1201,9 +1207,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (dataSWItem.photoshow
-                                                              .photo6 !=
-                                                          '') {
+                                                  if (dataSWItem
+                                                          .photoshow.photo6 !=
+                                                      '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
                                                             dataSWItem
@@ -1262,9 +1268,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              FFAppState().ActiveProfileUserPopup = false;
+                              context.appState.ActiveProfileUserPopup = false;
                               _model.updatePage(() {});
-                              if (!FFAppState().lockfuctionadd) {
+                              if (!context.appState.lockfuctionadd) {
                                 Navigator.pop(context);
                               }
                             },
@@ -1331,40 +1337,40 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                         safeSetState(() {}));
                                                   },
                                                   child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'simcn6td' /* Block */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .k_simcn6td,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .override(
                                                           font: GoogleFonts
                                                               .openSans(
                                                             fontWeight:
-                                                                FlutterFlowTheme.of(
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .textTheme
+                                                                    .bodyMedium!
                                                                     .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                           color:
                                                               Color(0xFF7D7D7D),
                                                           fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontWeight,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                           decoration:
                                                               TextDecoration
@@ -1396,16 +1402,16 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                         AlignmentDirectional(
                                                             0.0, 1.0),
                                                     child:
-                                                        FlutterFlowIconButton(
+                                                        MundayIconButton(
                                                       borderRadius: 10.0,
                                                       borderWidth: 2.0,
                                                       buttonSize: 50.0,
                                                       icon: Icon(
                                                         Icons.facebook,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
+                                                        color: Theme.of(context)
+                                                            .extension<
+                                                                CustomColors>()!
+                                                            .primaryText,
                                                         size: 24.0,
                                                       ),
                                                       onPressed: () async {
@@ -1422,32 +1428,31 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                       AlignmentDirectional(
                                                           0.0, -1.0),
                                                   child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'apsy2i5q' /* 2.1 K */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .k_apsy2i5q,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .override(
                                                           font: GoogleFonts
                                                               .openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                           fontSize: 11.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                   ),
@@ -1471,17 +1476,17 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                         AlignmentDirectional(
                                                             0.0, 1.0),
                                                     child:
-                                                        FlutterFlowIconButton(
+                                                        MundayIconButton(
                                                       borderRadius: 10.0,
                                                       borderWidth: 2.0,
                                                       buttonSize: 50.0,
                                                       icon: FaIcon(
                                                         FontAwesomeIcons
                                                             .instagram,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
+                                                        color: Theme.of(context)
+                                                            .extension<
+                                                                CustomColors>()!
+                                                            .primaryText,
                                                         size: 24.0,
                                                       ),
                                                       onPressed: () async {
@@ -1498,32 +1503,31 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                       AlignmentDirectional(
                                                           0.0, -1.0),
                                                   child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'fowb1nw4' /* 12.5 K */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .k_fowb1nw4,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .override(
                                                           font: GoogleFonts
                                                               .openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                           fontSize: 11.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                   ),
@@ -1596,7 +1600,8 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                   alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Icon(
                                     Icons.clear_rounded,
-                                    color: FlutterFlowTheme.of(context)
+                                    color: Theme.of(context)
+                                        .extension<CustomColors>()!
                                         .primaryText,
                                     size: 30.0,
                                   ),
@@ -1615,7 +1620,7 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                _model.swipeableStackController.swipeRight();
+                                _model.swipeableStackController.swipe(CardSwiperDirection.right);
                                 if (animationsMap[
                                         'containerOnActionTriggerAnimation4'] !=
                                     null) {
@@ -1707,22 +1712,20 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                     .fromSTEB(
                                                         0.0, 0.0, 1.0, 3.0),
                                                 child: Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'oe059td2' /* x */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
+                                                  AppLocalizations.of(context)!
+                                                      .k_oe059td2,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
                                                       .override(
                                                         font: GoogleFonts
                                                             .openSans(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                         color: Colors.black,
@@ -1731,9 +1734,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
                                                                 .fontStyle,
                                                       ),
                                                 ),
@@ -1747,22 +1750,20 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 1.0),
                                                 child: Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    '5gvgklgz' /* 12 */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
+                                                  AppLocalizations.of(context)!
+                                                      .k_5gvgklgz,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
                                                       .override(
                                                         font: GoogleFonts
                                                             .openSans(
                                                           fontWeight:
                                                               FontWeight.w800,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                         color: Colors.black,
@@ -1771,9 +1772,9 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                                         fontWeight:
                                                             FontWeight.w800,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
                                                                 .fontStyle,
                                                       ),
                                                 ),
@@ -1825,7 +1826,8 @@ class _PopupuserWidgetState extends State<PopupuserWidget>
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       child: FaIcon(
                                         FontAwesomeIcons.gift,
-                                        color: FlutterFlowTheme.of(context)
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
                                             .primaryText,
                                         size: 26.0,
                                       ),

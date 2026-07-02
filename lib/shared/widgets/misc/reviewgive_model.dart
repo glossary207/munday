@@ -1,9 +1,10 @@
+import 'package:munday/core/state/base_model.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import 'reviewgive_widget.dart' show ReviewgiveWidget;
 import 'package:flutter/material.dart';
 
-class ReviewgiveModel extends FlutterFlowModel<ReviewgiveWidget> {
+class ReviewgiveModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for TextField widget.

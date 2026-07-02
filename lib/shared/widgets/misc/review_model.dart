@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'review_widget.dart' show ReviewWidget;
 import 'package:flutter/material.dart';
 
-class ReviewModel extends FlutterFlowModel<ReviewWidget> {
+class ReviewModel extends BaseModel {
   ///  Local state fields for this component.
 
   double? rateall;

@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'showphoto_copy_widget.dart' show ShowphotoCopyWidget;
 import 'package:flutter/material.dart';
 
-class ShowphotoCopyModel extends FlutterFlowModel<ShowphotoCopyWidget> {
+class ShowphotoCopyModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for PageView widget.

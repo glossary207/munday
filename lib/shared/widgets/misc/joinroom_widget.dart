@@ -1,17 +1,21 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/misc/review_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/core/utils/custom_functions.dart' as functions;
 import '/index.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'joinroom_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'joinroom_model.dart';
 
-class JoinroomWidget extends StatefulWidget {
+class JoinroomWidget extends ConsumerStatefulWidget {
   const JoinroomWidget({
     super.key,
     required this.datavenuse,
@@ -20,10 +24,10 @@ class JoinroomWidget extends StatefulWidget {
   final List<SupabaseDocRef>? datavenuse;
 
   @override
-  State<JoinroomWidget> createState() => _JoinroomWidgetState();
+  ConsumerState<JoinroomWidget> createState() => _JoinroomWidgetState();
 }
 
-class _JoinroomWidgetState extends State<JoinroomWidget> {
+class _JoinroomWidgetState extends ConsumerState<JoinroomWidget> {
   late JoinroomModel _model;
 
   @override
@@ -35,7 +39,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => JoinroomModel());
+    _model = JoinroomModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -85,7 +89,9 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                           },
                           child: Icon(
                             Icons.close_sharp,
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Theme.of(context)
+                                .extension<CustomColors>()!
+                                .primaryText,
                             size: 40.0,
                           ),
                         ),
@@ -124,23 +130,24 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 30.0, 0.0, 8.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'jx86187c' /* Online Chat Room */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              AppLocalizations.of(context)!.k_jx86187c,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                     fontSize: 30.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                             ),
@@ -149,24 +156,25 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 25.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'pxtc8g70' /* select a place near you */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              AppLocalizations.of(context)!.k_pxtc8g70,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                     color: Color(0xFFE9E9E9),
                                     fontSize: 13.0,
                                     letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                             ),
@@ -369,21 +377,19 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                                       Padding(
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                                                                                         child: Text(
-                                                                                          FFLocalizations.of(context).getText(
-                                                                                            'rjsbq731' /* Pub */,
-                                                                                          ),
+                                                                                          AppLocalizations.of(context)!.k_rjsbq731,
                                                                                           textAlign: TextAlign.center,
                                                                                           maxLines: 1,
-                                                                                          style: FlutterFlowTheme.of(context).displaySmall.override(
+                                                                                          style: Theme.of(context).textTheme.displaySmall!.override(
                                                                                                 font: GoogleFonts.roboto(
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                                                                                                  fontWeight: Theme.of(context).textTheme.displaySmall!.fontWeight,
+                                                                                                  fontStyle: Theme.of(context).textTheme.displaySmall!.fontStyle,
                                                                                                 ),
                                                                                                 color: Colors.white,
                                                                                                 fontSize: 12.0,
                                                                                                 letterSpacing: 0.0,
-                                                                                                fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                                                                                                fontWeight: Theme.of(context).textTheme.displaySmall!.fontWeight,
+                                                                                                fontStyle: Theme.of(context).textTheme.displaySmall!.fontStyle,
                                                                                               ),
                                                                                         ),
                                                                                       ),
@@ -406,7 +412,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                                 double.infinity,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
                                                                               borderRadius: BorderRadius.circular(10.0),
                                                                               shape: BoxShape.rectangle,
                                                                             ),
@@ -423,21 +429,19 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                                       Padding(
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                                                                                         child: Text(
-                                                                                          FFLocalizations.of(context).getText(
-                                                                                            'ojlqgeqn' /* LiveMusic */,
-                                                                                          ),
+                                                                                          AppLocalizations.of(context)!.k_ojlqgeqn,
                                                                                           textAlign: TextAlign.center,
                                                                                           maxLines: 1,
-                                                                                          style: FlutterFlowTheme.of(context).displaySmall.override(
+                                                                                          style: Theme.of(context).textTheme.displaySmall!.override(
                                                                                                 font: GoogleFonts.roboto(
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                                                                                                  fontWeight: Theme.of(context).textTheme.displaySmall!.fontWeight,
+                                                                                                  fontStyle: Theme.of(context).textTheme.displaySmall!.fontStyle,
                                                                                                 ),
                                                                                                 color: Color(0xFF15161E),
                                                                                                 fontSize: 12.0,
                                                                                                 letterSpacing: 0.0,
-                                                                                                fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                                                                                                fontWeight: Theme.of(context).textTheme.displaySmall!.fontWeight,
+                                                                                                fontStyle: Theme.of(context).textTheme.displaySmall!.fontStyle,
                                                                                               ),
                                                                                         ),
                                                                                       ),
@@ -474,19 +478,22 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                     maxChars:
                                                                         20,
                                                                   ),
-                                                                  style: FlutterFlowTheme.of(
+                                                                  style: Theme.of(
                                                                           context)
-                                                                      .bodyMedium
+                                                                      .textTheme
+                                                                      .bodyMedium!
                                                                       .override(
                                                                         font: GoogleFonts
                                                                             .openSans(
                                                                           fontWeight:
                                                                               FontWeight.w600,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
+                                                                          fontStyle: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyMedium!
                                                                               .fontStyle,
                                                                         ),
-                                                                        color: FlutterFlowTheme.of(context)
+                                                                        color: Theme.of(context)
+                                                                            .extension<CustomColors>()!
                                                                             .primaryBtnText,
                                                                         fontSize:
                                                                             24.0,
@@ -494,8 +501,9 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             0.0,
                                                                         fontWeight:
                                                                             FontWeight.w600,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
                                                                             .fontStyle,
                                                                       ),
                                                                 ),
@@ -573,7 +581,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                               padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                                                                               child: Icon(
                                                                                 Icons.star_rounded,
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                color: Theme.of(context).extension<CustomColors>()!.primaryText,
                                                                                 size: 15.0,
                                                                               ),
                                                                             ),
@@ -588,16 +596,16 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                                 ).maybeHandleOverflow(
                                                                                   maxChars: 3,
                                                                                 ),
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
-                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
                                                                                       fontSize: 12.0,
                                                                                       letterSpacing: 1.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
@@ -648,18 +656,19 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                           Text(
                                                                         containerVenuesRecord
                                                                             .openCloseTime,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
                                                                             .override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               color: Color(0xFFE8E8E8),
                                                                               fontSize: 13.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -689,18 +698,19 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                         containerVenuesRecord
                                                                             .capacity
                                                                             .toString(),
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium!
                                                                             .override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               color: Color(0xFFE8E8E8),
                                                                               fontSize: 13.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -713,19 +723,18 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             0.0,
                                                                             0.0),
                                                                     child: Text(
-                                                                      FFLocalizations.of(
+                                                                      AppLocalizations.of(
+                                                                              context)!
+                                                                          .k_sr5wx9kx,
+                                                                      style: Theme.of(
                                                                               context)
-                                                                          .getText(
-                                                                        'sr5wx9kx' /* / */,
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
+                                                                          .textTheme
+                                                                          .bodyMedium!
                                                                           .override(
                                                                             font:
                                                                                 GoogleFonts.openSans(
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                             color:
                                                                                 Color(0xFFE8E8E8),
@@ -736,7 +745,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                           ),
                                                                     ),
                                                                   ),
@@ -751,14 +760,15 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                       containerVenuesRecord
                                                                           .maxCapacity
                                                                           .toString(),
-                                                                      style: FlutterFlowTheme.of(
+                                                                      style: Theme.of(
                                                                               context)
-                                                                          .bodyMedium
+                                                                          .textTheme
+                                                                          .bodyMedium!
                                                                           .override(
                                                                             font:
                                                                                 GoogleFonts.openSans(
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                             color:
                                                                                 Color(0xFFE8E8E8),
@@ -769,7 +779,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                           ),
                                                                     ),
                                                                   ),
@@ -1052,7 +1062,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                             });
 
                                                             context.pushNamed(
-                                                                SocialInVenuseWidget
+                                                                SocialInVenusePage
                                                                     .routeName);
 
                                                             safeSetState(() {});
@@ -1088,19 +1098,18 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             0.0,
                                                                             3.0),
                                                                     child: Text(
-                                                                      FFLocalizations.of(
+                                                                      AppLocalizations.of(
+                                                                              context)!
+                                                                          .k_7xe2ctzx,
+                                                                      style: Theme.of(
                                                                               context)
-                                                                          .getText(
-                                                                        '7xe2ctzx' /* Join Room */,
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
+                                                                          .textTheme
+                                                                          .bodyMedium!
                                                                           .override(
                                                                             font:
                                                                                 GoogleFonts.openSans(
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                             fontSize:
                                                                                 12.0,
@@ -1109,7 +1118,7 @@ class _JoinroomWidgetState extends State<JoinroomWidget> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                           ),
                                                                     ),
                                                                   ),

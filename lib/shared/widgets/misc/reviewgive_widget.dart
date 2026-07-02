@@ -1,19 +1,23 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import '/shared/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'reviewgive_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'reviewgive_model.dart';
 
-class ReviewgiveWidget extends StatefulWidget {
+class ReviewgiveWidget extends ConsumerStatefulWidget {
   const ReviewgiveWidget({
     super.key,
     required this.reviewto,
@@ -22,10 +26,10 @@ class ReviewgiveWidget extends StatefulWidget {
   final SupabaseDocRef? reviewto;
 
   @override
-  State<ReviewgiveWidget> createState() => _ReviewgiveWidgetState();
+  ConsumerState<ReviewgiveWidget> createState() => _ReviewgiveWidgetState();
 }
 
-class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
+class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
   late ReviewgiveModel _model;
 
   @override
@@ -37,7 +41,7 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ReviewgiveModel());
+    _model = ReviewgiveModel()..internalInit(context);
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -54,8 +58,7 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -89,28 +92,31 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                       children: [
                         Expanded(
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'xfvpitv9' /* Review */,
-                            ),
+                            AppLocalizations.of(context)!.k_xfvpitv9,
                             textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineSmall
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineSmall
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineSmall
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
                                         .fontStyle,
                                   ),
                                   fontSize: 30.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineSmall
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineSmall
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
                                       .fontStyle,
                                 ),
                           ),
@@ -123,26 +129,26 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'z0f12e5c' /* โปรดให้คะแนนและบอกเล่าประสบการ... */,
-                                  ),
+                                  AppLocalizations.of(context)!.k_z0f12e5c,
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelLarge
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
                                       .override(
                                         font: GoogleFonts.roboto(
                                           fontWeight: FontWeight.w500,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelLarge
-                                                  .fontStyle,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .fontStyle,
                                         ),
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelLarge
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge!
                                             .fontStyle,
                                       ),
                                 ),
@@ -179,47 +185,56 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
                                   .override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
                                     color: Color(0xFFC8C8C8),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
-                              hintText: FFLocalizations.of(context).getText(
-                                'yb1d4pp3' /* เขียนรีวิวร้าน และประสบการณ์ขอ... */,
-                              ),
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                              hintText:
+                                  AppLocalizations.of(context)!.k_yb1d4pp3,
+                              hintStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
                                   .override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
                                     color: Color(0xFFC6C6C6),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -231,46 +246,53 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: Theme.of(context)
+                                      .extension<CustomColors>()!
+                                      .primaryText,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
+                                  color: Theme.of(context).colorScheme.error,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
+                                  color: Theme.of(context).colorScheme.error,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .override(
                                   font: GoogleFonts.openSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: Theme.of(context)
+                                      .extension<CustomColors>()!
+                                      .primaryText,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontStyle,
                                 ),
                             maxLines: 5,
@@ -290,39 +312,43 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Expanded(
-                          child: FFButtonWidget(
+                          child: MundayButton(
                             onPressed: () async {
                               Navigator.pop(context);
                             },
-                            text: FFLocalizations.of(context).getText(
-                              '059j9bih' /* Cancel */,
-                            ),
-                            options: FFButtonOptions(
+                            text: AppLocalizations.of(context)!.k_059j9bih,
+                            options: MundayButtonOptions(
                               width: 150.0,
                               height: 54.0,
                               padding: EdgeInsets.all(0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: Color(0x00292929),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
+                                    color: Theme.of(context)
+                                        .extension<CustomColors>()!
                                         .primaryText,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontStyle,
                                   ),
                               elevation: 0.0,
@@ -335,7 +361,7 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                           ),
                         ),
                         Expanded(
-                          child: FFButtonWidget(
+                          child: MundayButton(
                             onPressed: () async {
                               await widget.reviewto!.update({
                                 ...mapToSupabase(
@@ -346,7 +372,7 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                                           ReviewStruct(
                                             profilePhoto: currentUserPhoto,
                                             comment: _model.textController.text,
-                                            rate: FFAppState().ratingreview,
+                                            rate: context.appState.ratingreview,
                                             dateupdate: getCurrentTimestamp,
                                             nameuser: currentUserDisplayName,
                                           ),
@@ -367,40 +393,43 @@ class _ReviewgiveWidgetState extends State<ReviewgiveWidget> {
                                 rating: functions.listaverage(
                                     _model.dataread?.userReview.toList()),
                               ));
-                              FFAppState().ratingreview = 0;
+                              context.appState.ratingreview = 0;
                               safeSetState(() {});
                               Navigator.pop(context);
 
                               safeSetState(() {});
                             },
-                            text: FFLocalizations.of(context).getText(
-                              '66yuaryw' /* Submit */,
-                            ),
-                            options: FFButtonOptions(
+                            text: AppLocalizations.of(context)!.k_66yuaryw,
+                            options: MundayButtonOptions(
                               height: 54.0,
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: Color(0xFFFF0000),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontStyle,
                                     ),
                                     color: Colors.white,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontStyle,
                                   ),
                               elevation: 10.0,

@@ -5,7 +5,11 @@ class VenueLayoutRepository extends BaseRepository {
 
   Future<Map<String, dynamic>?> getLayoutForVenue(String venueId) async {
     return safeCall(() async {
-      return await client.from(_table).select().eq('venue_id', venueId).maybeSingle();
+      return await client
+          .from(_table)
+          .select()
+          .eq('venue_id', venueId)
+          .maybeSingle();
     });
   }
 }

@@ -11,22 +11,18 @@ abstract class AuthManager {
   Future refreshUser() async => currentUser?.refreshUser();
 }
 
-
-
-mixin AnonymousSignInManager on AuthManager {
+abstract mixin class AnonymousSignInManager implements AuthManager {
   Future<BaseAuthUser?> signInAnonymously(BuildContext context);
 }
 
-
-
-mixin JwtSignInManager on AuthManager {
+abstract mixin class JwtSignInManager implements AuthManager {
   Future<BaseAuthUser?> signInWithJwtToken(
     BuildContext context,
     String jwtToken,
   );
 }
 
-mixin PhoneSignInManager on AuthManager {
+abstract mixin class PhoneSignInManager implements AuthManager {
   Future beginPhoneAuth({
     required BuildContext context,
     required String phoneNumber,
@@ -39,11 +35,11 @@ mixin PhoneSignInManager on AuthManager {
   });
 }
 
-mixin FacebookSignInManager on AuthManager {
+abstract class FacebookSignInManager implements AuthManager {
   Future<BaseAuthUser?> signInWithFacebook(BuildContext context);
 }
 
-mixin MicrosoftSignInManager on AuthManager {
+abstract class MicrosoftSignInManager implements AuthManager {
   Future<BaseAuthUser?> signInWithMicrosoft(
     BuildContext context,
     List<String> scopes,
@@ -51,6 +47,6 @@ mixin MicrosoftSignInManager on AuthManager {
   );
 }
 
-mixin GithubSignInManager on AuthManager {
+abstract mixin class GithubSignInManager implements AuthManager {
   Future<BaseAuthUser?> signInWithGithub(BuildContext context);
 }

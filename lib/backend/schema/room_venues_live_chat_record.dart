@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase_shim.dart';
 import 'dart:async';
 
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class RoomVenuesLiveChatRecord extends SupabaseRecord {
   RoomVenuesLiveChatRecord._(
@@ -40,8 +41,7 @@ class RoomVenuesLiveChatRecord extends SupabaseRecord {
   static Stream<RoomVenuesLiveChatRecord> getDocument(SupabaseDocRef ref) =>
       ref.snapshots().map((s) => RoomVenuesLiveChatRecord.fromSnapshot(s));
 
-  static Future<RoomVenuesLiveChatRecord> getDocumentOnce(
-          SupabaseDocRef ref) =>
+  static Future<RoomVenuesLiveChatRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => RoomVenuesLiveChatRecord.fromSnapshot(s));
 
   static RoomVenuesLiveChatRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>

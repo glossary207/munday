@@ -8,7 +8,8 @@ class UserRepository extends BaseRepository {
   /// Fetch a user profile by ID.
   Future<Map<String, dynamic>?> getUserProfile(String userId) async {
     return safeCall(() async {
-      final response = await client.from(_table).select().eq('id', userId).maybeSingle();
+      final response =
+          await client.from(_table).select().eq('id', userId).maybeSingle();
       return response;
     });
   }

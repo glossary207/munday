@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'stage_widget.dart' show StageWidget;
 import 'package:flutter/material.dart';
 
-class StageModel extends FlutterFlowModel<StageWidget> {
+class StageModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

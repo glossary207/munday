@@ -1,13 +1,17 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'package:map_launcher/map_launcher.dart' as $ml;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'select_app_map_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'select_app_map_model.dart';
 
-class SelectAppMapWidget extends StatefulWidget {
+class SelectAppMapWidget extends ConsumerStatefulWidget {
   const SelectAppMapWidget({
     super.key,
     required this.location,
@@ -18,10 +22,10 @@ class SelectAppMapWidget extends StatefulWidget {
   final String? title;
 
   @override
-  State<SelectAppMapWidget> createState() => _SelectAppMapWidgetState();
+  ConsumerState<SelectAppMapWidget> createState() => _SelectAppMapWidgetState();
 }
 
-class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
+class _SelectAppMapWidgetState extends ConsumerState<SelectAppMapWidget> {
   late SelectAppMapModel _model;
 
   @override
@@ -33,7 +37,7 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SelectAppMapModel());
+    _model = SelectAppMapModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -74,7 +78,7 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            FFButtonWidget(
+            MundayButton(
               onPressed: () async {
                 await launchMap(
                   mapType: $ml.MapType.apple,
@@ -82,28 +86,26 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
                   title: widget.title!,
                 );
               },
-              text: FFLocalizations.of(context).getText(
-                'vs27b27y' /* Apple Map */,
-              ),
-              options: FFButtonOptions(
+              text: AppLocalizations.of(context)!.k_vs27b27y,
+              options: MundayButtonOptions(
                 width: double.infinity,
                 height: 60.0,
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: Color(0xFF131313),
-                textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                       font: GoogleFonts.openSans(
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                       fontSize: 18.0,
                       letterSpacing: 0.0,
                       fontWeight:
-                          FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                          Theme.of(context).textTheme.bodyLarge!.fontWeight,
                       fontStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                          Theme.of(context).textTheme.bodyLarge!.fontStyle,
                     ),
                 elevation: 2.0,
                 borderSide: BorderSide(
@@ -114,7 +116,7 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   await launchMap(
                     mapType: $ml.MapType.google,
@@ -122,29 +124,27 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
                     title: widget.title!,
                   );
                 },
-                text: FFLocalizations.of(context).getText(
-                  'pbykxkt1' /* Google Map */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_pbykxkt1,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFF131313),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
                         fontSize: 18.0,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -156,32 +156,30 @@ class _SelectAppMapWidgetState extends State<SelectAppMapWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  '6sh1ybvc' /* Cancel */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_6sh1ybvc,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Colors.transparent,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  textStyle: Theme.of(context).textTheme.titleSmall!.override(
                         font: GoogleFonts.lexendDeca(
                           fontWeight: FontWeight.normal,
                           fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                              Theme.of(context).textTheme.titleSmall!.fontStyle,
                         ),
                         color: Colors.white,
                         fontSize: 18.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                         fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                            Theme.of(context).textTheme.titleSmall!.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

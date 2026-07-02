@@ -1,9 +1,11 @@
 import '/auth/supabase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:munday/core/theme/theme.dart';
 
 class FullQrWidget extends StatelessWidget {
   const FullQrWidget({super.key});
@@ -50,7 +52,7 @@ class FullQrWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // Profile Info
               Container(
                 width: 80.0,
@@ -74,7 +76,7 @@ class FullQrWidget extends StatelessWidget {
                   currentUserDisplayName,
                   'My Profile',
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                style: Theme.of(context).textTheme.bodyMedium!.override(
                       font: GoogleFonts.openSans(
                         fontWeight: FontWeight.bold,
                       ),
@@ -93,7 +95,7 @@ class FullQrWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32.0),
-              
+
               // Large QR Code Placeholder
               Container(
                 width: 220.0,

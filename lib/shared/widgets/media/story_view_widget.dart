@@ -1,20 +1,21 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import '/shared/widgets/index.dart' as custom_widgets;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/index.dart' as custom_widgets;
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'story_view_model.dart';
 export 'story_view_model.dart';
 
-class StoryViewWidget extends StatefulWidget {
+class StoryViewWidget extends ConsumerStatefulWidget {
   const StoryViewWidget({super.key});
 
   @override
-  State<StoryViewWidget> createState() => _StoryViewWidgetState();
+  ConsumerState<StoryViewWidget> createState() => _StoryViewWidgetState();
 }
 
-class _StoryViewWidgetState extends State<StoryViewWidget> {
+class _StoryViewWidgetState extends ConsumerState<StoryViewWidget> {
   late StoryViewModel _model;
 
   @override
@@ -26,7 +27,7 @@ class _StoryViewWidgetState extends State<StoryViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => StoryViewModel());
+    _model = StoryViewModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -40,8 +41,7 @@ class _StoryViewWidgetState extends State<StoryViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Container(
       width: double.infinity,
@@ -49,7 +49,7 @@ class _StoryViewWidgetState extends State<StoryViewWidget> {
       child: custom_widgets.FullPageStory(
         width: double.infinity,
         height: double.infinity,
-        storyItemList: FFAppState().storylist,
+        storyItemList: context.appState.storylist,
       ),
     );
   }

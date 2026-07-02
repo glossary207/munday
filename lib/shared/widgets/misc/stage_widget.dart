@@ -1,18 +1,20 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'stage_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'stage_model.dart';
 
-class StageWidget extends StatefulWidget {
+class StageWidget extends ConsumerStatefulWidget {
   const StageWidget({super.key});
 
   @override
-  State<StageWidget> createState() => _StageWidgetState();
+  ConsumerState<StageWidget> createState() => _StageWidgetState();
 }
 
-class _StageWidgetState extends State<StageWidget> {
+class _StageWidgetState extends ConsumerState<StageWidget> {
   late StageModel _model;
 
   @override
@@ -24,7 +26,7 @@ class _StageWidgetState extends State<StageWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => StageModel());
+    _model = StageModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -204,25 +206,26 @@ class _StageWidgetState extends State<StageWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    FFLocalizations.of(context).getText(
-                      'oxahnggw' /* STAGE */,
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    AppLocalizations.of(context)!.k_oxahnggw,
+                    style: Theme.of(context).textTheme.bodyMedium!.override(
                           font: GoogleFonts.openSans(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            fontWeight: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            fontStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .fontStyle,
                           ),
                           fontSize: 25.0,
                           letterSpacing: 0.2,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
+                          fontWeight: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
                               .fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
                         ),
                   ),
                 ],

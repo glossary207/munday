@@ -1,18 +1,21 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
 import '/index.dart';
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'nav_bar_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'nav_bar_model.dart';
 
-class NavBarWidget extends StatefulWidget {
+class NavBarWidget extends ConsumerStatefulWidget {
   const NavBarWidget({
     super.key,
     required this.items,
@@ -21,10 +24,10 @@ class NavBarWidget extends StatefulWidget {
   final List<String>? items;
 
   @override
-  State<NavBarWidget> createState() => _NavBarWidgetState();
+  ConsumerState<NavBarWidget> createState() => _NavBarWidgetState();
 }
 
-class _NavBarWidgetState extends State<NavBarWidget>
+class _NavBarWidgetState extends ConsumerState<NavBarWidget>
     with TickerProviderStateMixin {
   late NavBarModel _model;
 
@@ -39,7 +42,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => NavBarModel());
+    _model = NavBarModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation1': AnimationInfo(
@@ -108,8 +111,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Container(
       width: double.infinity,
@@ -196,43 +198,43 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                               onTap: () async {
                                                 if ((menuItemItem ==
                                                         'Events') &&
-                                                    (FFAppState()
+                                                    (AppState()
                                                             .menuActiveitem !=
                                                         'Events')) {
                                                   context.goNamed(
-                                                      EventsWidget.routeName);
+                                                      EventsPage.routeName);
                                                 } else {
                                                   if ((menuItemItem ==
                                                           'Venues') &&
-                                                      (FFAppState()
+                                                      (AppState()
                                                               .menuActiveitem !=
                                                           'Venues')) {
                                                     context.goNamed(
-                                                        VenuesWidget.routeName);
+                                                        VenuesPage.routeName);
                                                   } else {
                                                     if ((menuItemItem ==
                                                             'Promotion') &&
-                                                        (FFAppState()
+                                                        (AppState()
                                                                 .menuActiveitem !=
                                                             'Promotion')) {
                                                       context.goNamed(
-                                                          PromotionWidget
+                                                          PromotionPage
                                                               .routeName);
                                                     } else {
                                                       if ((menuItemItem ==
                                                               'Home') &&
-                                                          (FFAppState()
+                                                          (AppState()
                                                                   .menuActiveitem !=
                                                               'Home')) {
                                                         context.goNamed(
-                                                            MainWidget
+                                                            MainPage
                                                                 .routeName);
                                                       }
                                                     }
                                                   }
                                                 }
 
-                                                FFAppState().menuActiveitem =
+                                                context.appState.menuActiveitem =
                                                     menuItemItem;
                                                 safeSetState(() {});
                                               },
@@ -256,7 +258,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                                                 .spaceEvenly,
                                                         children: [
                                                           if (menuItemItem ==
-                                                              FFAppState()
+                                                              AppState()
                                                                   .menuActiveitem)
                                                             Container(
                                                               width: 1.0,
@@ -270,7 +272,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                                                     0.0, 0.0),
                                                             children: [
                                                               if (menuItemItem ==
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .menuActiveitem)
                                                                 Container(
                                                                   width: 35.0,
@@ -367,7 +369,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                                             ],
                                                           ),
                                                           if (menuItemItem ==
-                                                              FFAppState()
+                                                              AppState()
                                                                   .menuActiveitem)
                                                             Padding(
                                                               padding:
@@ -383,17 +385,20 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                                                     TextAlign
                                                                         .center,
                                                                 maxLines: 1,
-                                                                style: FlutterFlowTheme.of(
+                                                                style: Theme.of(
                                                                         context)
-                                                                    .displaySmall
+                                                                    .textTheme
+                                                                    .displaySmall!
                                                                     .override(
                                                                       font: GoogleFonts
                                                                           .roboto(
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .displaySmall
+                                                                        fontWeight: Theme.of(context)
+                                                                            .textTheme
+                                                                            .displaySmall!
                                                                             .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .displaySmall
+                                                                        fontStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .displaySmall!
                                                                             .fontStyle,
                                                                       ),
                                                                       color: Colors
@@ -402,13 +407,15 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                                                           10.0,
                                                                       letterSpacing:
                                                                           0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .displaySmall
+                                                                          .textTheme
+                                                                          .displaySmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .displaySmall
+                                                                          .textTheme
+                                                                          .displaySmall!
                                                                           .fontStyle,
                                                                     ),
                                                               ).animateOnPageLoad(
@@ -424,7 +431,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                             ),
                                           ),
                                           if (menuItemItem ==
-                                              FFAppState().menuActiveitem)
+                                              context.appState.menuActiveitem)
                                             Container(
                                               width: 45.0,
                                               height: 3.0,

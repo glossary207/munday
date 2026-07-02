@@ -1,18 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/shared/widgets/misc/account_page_widget.dart';
 import '/shared/widgets/layout/header_appbar_menu_widget.dart';
 import '/shared/widgets/layout/tapbarsilver_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import '/shared/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'appbarsilver_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'appbarsilver_model.dart';
 
-class AppbarsilverWidget extends StatefulWidget {
+class AppbarsilverWidget extends ConsumerStatefulWidget {
   const AppbarsilverWidget({
     super.key,
     required this.image,
@@ -21,10 +23,10 @@ class AppbarsilverWidget extends StatefulWidget {
   final String? image;
 
   @override
-  State<AppbarsilverWidget> createState() => _AppbarsilverWidgetState();
+  ConsumerState<AppbarsilverWidget> createState() => _AppbarsilverWidgetState();
 }
 
-class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
+class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
   late AppbarsilverModel _model;
 
   @override
@@ -36,7 +38,7 @@ class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AppbarsilverModel());
+    _model = AppbarsilverModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -134,27 +136,26 @@ class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'zay1saue' /* ฿ 1,500.00 */,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
+                                      AppLocalizations.of(context)!.k_zay1saue,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .fontStyle,
                                             ),
                                             color: Colors.white,
                                             fontSize: 25.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .fontStyle,
                                           ),
                                     ),
                                   ],
@@ -184,29 +185,27 @@ class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
                                           alignment:
                                               AlignmentDirectional(0.0, 0.0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'jph82c73' /* 1 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_jph82c73,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 25.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -275,18 +274,16 @@ class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: FFButtonWidget(
+                          child: MundayButton(
                             onPressed: () {
                               print('Button pressed ...');
                             },
-                            text: FFLocalizations.of(context).getText(
-                              'r5xcsk95' /* Add Order */,
-                            ),
+                            text: AppLocalizations.of(context)!.k_r5xcsk95,
                             icon: Icon(
                               Icons.add,
                               size: 15.0,
                             ),
-                            options: FFButtonOptions(
+                            options: MundayButtonOptions(
                               width: double.infinity,
                               height: 50.0,
                               padding: EdgeInsets.all(0.0),
@@ -294,25 +291,30 @@ class _AppbarsilverWidgetState extends State<AppbarsilverWidget> {
                                   0.0, 0.0, 0.0, 0.0),
                               iconColor: Colors.white,
                               color: Color(0xFFFF0000),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
                                           .fontStyle,
                                     ),
                                     color: Colors.white,
                                     fontSize: 18.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .fontStyle,
                                   ),
                               elevation: 0.0,

@@ -1,11 +1,13 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/layout/nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'venues_widget.dart' show VenuesWidget;
+import 'venues_page.dart' show VenuesWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/layout/nav_bar_model.dart';
 
-class VenuesModel extends FlutterFlowModel<VenuesWidget> {
+class VenuesModel extends BaseModel {
   ///  Local state fields for this page.
 
   int? filterlocation;
@@ -42,7 +44,7 @@ class VenuesModel extends FlutterFlowModel<VenuesWidget> {
   @override
   void initState(BuildContext context) {
     columnController = ScrollController();
-    navBarModel = createModel(context, () => NavBarModel());
+    navBarModel = NavBarModel()..internalInit(context);
     rowController = ScrollController();
   }
 

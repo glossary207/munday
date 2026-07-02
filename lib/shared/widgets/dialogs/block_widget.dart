@@ -1,15 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'package:collection/collection.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'block_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'block_model.dart';
 
-class BlockWidget extends StatefulWidget {
+class BlockWidget extends ConsumerStatefulWidget {
   const BlockWidget({
     super.key,
     required this.iduser,
@@ -18,10 +22,10 @@ class BlockWidget extends StatefulWidget {
   final SupabaseDocRef? iduser;
 
   @override
-  State<BlockWidget> createState() => _BlockWidgetState();
+  ConsumerState<BlockWidget> createState() => _BlockWidgetState();
 }
 
-class _BlockWidgetState extends State<BlockWidget> {
+class _BlockWidgetState extends ConsumerState<BlockWidget> {
   late BlockModel _model;
 
   @override
@@ -33,7 +37,7 @@ class _BlockWidgetState extends State<BlockWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BlockModel());
+    _model = BlockModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -76,7 +80,7 @@ class _BlockWidgetState extends State<BlockWidget> {
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
 
@@ -105,10 +109,12 @@ class _BlockWidgetState extends State<BlockWidget> {
                     ),
                   });
                   _model.aaaCopy = await queryChatRoomsRecordOnce(
-                    queryBuilder: (q) => q
-                        .where('user_ids', arrayContains: currentUserReference),
+                    queryBuilder: (q) => q.where('user_ids',
+                        arrayContains: currentUserReference),
                     singleRecord: true,
-                  ).then((s) => s.where((r) => r.userIds.contains(widget.iduser?.id)).firstOrNull);
+                  ).then((s) => s
+                      .where((r) => r.userIds.contains(widget.iduser?.id))
+                      .firstOrNull);
                   if (_model.aaaCopy?.reference != null) {
                     await _model.aaaCopy!.reference.delete();
                   }
@@ -117,29 +123,29 @@ class _BlockWidgetState extends State<BlockWidget> {
 
                   safeSetState(() {});
                 },
-                text: FFLocalizations.of(context).getText(
-                  '4xgiypcj' /* รายงาน พฤติกรรมไม่เหมาะสม */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_4xgiypcj,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFFB50000),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -151,7 +157,7 @@ class _BlockWidgetState extends State<BlockWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
 
@@ -179,10 +185,12 @@ class _BlockWidgetState extends State<BlockWidget> {
                     ),
                   });
                   _model.aaa = await queryChatRoomsRecordOnce(
-                    queryBuilder: (q) => q
-                        .where('user_ids', arrayContains: currentUserReference),
+                    queryBuilder: (q) => q.where('user_ids',
+                        arrayContains: currentUserReference),
                     singleRecord: true,
-                  ).then((s) => s.where((r) => r.userIds.contains(widget.iduser?.id)).firstOrNull);
+                  ).then((s) => s
+                      .where((r) => r.userIds.contains(widget.iduser?.id))
+                      .firstOrNull);
                   if (_model.aaa?.reference != null) {
                     await _model.aaa!.reference.delete();
                   }
@@ -191,29 +199,29 @@ class _BlockWidgetState extends State<BlockWidget> {
 
                   safeSetState(() {});
                 },
-                text: FFLocalizations.of(context).getText(
-                  '2zyj6fm1' /* Block การมองเห็น */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_2zyj6fm1,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFFB50000),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -225,32 +233,32 @@ class _BlockWidgetState extends State<BlockWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  '6pmw7gnn' /* ยกเลิก */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_6pmw7gnn,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFF232323),
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  textStyle: Theme.of(context).textTheme.titleSmall!.override(
                         font: GoogleFonts.lexendDeca(
                           fontWeight: FontWeight.normal,
                           fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                              Theme.of(context).textTheme.titleSmall!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         fontSize: 16.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                         fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                            Theme.of(context).textTheme.titleSmall!.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

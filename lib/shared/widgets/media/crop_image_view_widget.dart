@@ -1,29 +1,24 @@
 // Automatic FlutterFlow imports
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:munday/core/utils/clear_cropp_image_share_cache.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/shared/widgets/core/munday_button.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
 import 'package:custom_image_crop/custom_image_crop.dart';
+import 'package:munday/core/theme/theme.dart';
 
-class CropImageViewWidget extends StatefulWidget {
+class CropImageViewWidget extends ConsumerStatefulWidget {
   const CropImageViewWidget({
     Key? key,
     this.width,
@@ -54,10 +49,10 @@ class CropImageViewWidget extends StatefulWidget {
   final Future<dynamic> Function() onCrop;
 
   @override
-  _CropImageViewWidgetState createState() => _CropImageViewWidgetState();
+  ConsumerState<CropImageViewWidget> createState() => _CropImageViewWidgetState();
 }
 
-class _CropImageViewWidgetState extends State<CropImageViewWidget> {
+class _CropImageViewWidgetState extends ConsumerState<CropImageViewWidget> {
   late GlobalKey _croperKey;
   late CustomImageCropController _croppController;
   late CropImageWidgetShareState _shareState;
@@ -111,19 +106,19 @@ class _CropImageViewWidgetState extends State<CropImageViewWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: FFButtonWidget(
+                  child: MundayButton(
                     onPressed: () async {
                       await widget.onCancel.call();
                     },
                     text: widget.cancelText,
-                    options: FFButtonOptions(
+                    options: MundayButtonOptions(
                       height: 44,
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                       iconPadding:
                           const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                       color: Colors.transparent,
                       textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
+                          Theme.of(context).textTheme.titleSmall!.override(
                                 fontFamily: 'Inter',
                                 color: const Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -137,19 +132,19 @@ class _CropImageViewWidgetState extends State<CropImageViewWidget> {
                 ),
                 const SizedBox(width: 20),
                 Expanded(
-                  child: FFButtonWidget(
+                  child: MundayButton(
                     onPressed: () async {
                       await _cropImage();
                     },
                     text: widget.saveText,
-                    options: FFButtonOptions(
+                    options: MundayButtonOptions(
                       height: 44,
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                       iconPadding:
                           const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 5),
                       color: const Color.fromARGB(255, 32, 32, 32),
                       textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
+                          Theme.of(context).textTheme.titleSmall!.override(
                                 fontFamily: 'Inter',
                                 color: const Color.fromARGB(255, 255, 255, 255),
                               ),

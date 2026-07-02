@@ -1,12 +1,14 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'youarenothere_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'youarenothere_model.dart';
 
-class YouarenothereWidget extends StatefulWidget {
+class YouarenothereWidget extends ConsumerStatefulWidget {
   const YouarenothereWidget({
     super.key,
     required this.poperror,
@@ -15,10 +17,10 @@ class YouarenothereWidget extends StatefulWidget {
   final bool? poperror;
 
   @override
-  State<YouarenothereWidget> createState() => _YouarenothereWidgetState();
+  ConsumerState<YouarenothereWidget> createState() => _YouarenothereWidgetState();
 }
 
-class _YouarenothereWidgetState extends State<YouarenothereWidget> {
+class _YouarenothereWidgetState extends ConsumerState<YouarenothereWidget> {
   late YouarenothereModel _model;
 
   @override
@@ -30,7 +32,7 @@ class _YouarenothereWidgetState extends State<YouarenothereWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => YouarenothereModel());
+    _model = YouarenothereModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -88,26 +90,29 @@ class _YouarenothereWidgetState extends State<YouarenothereWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 12.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'nyazsf47' /* คุณอยู่ไกลจากร้าน */,
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
+                            AppLocalizations.of(context)!.k_nyazsf47,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
                                         .fontStyle,
                                   ),
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
                                       .fontStyle,
                                 ),
                           ),
@@ -116,27 +121,30 @@ class _YouarenothereWidgetState extends State<YouarenothereWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'mp8ty4ge' /* ขออภัยคุณต้องอยู่ในระยะ 50 เมต... */,
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
+                            AppLocalizations.of(context)!.k_mp8ty4ge,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
                                   color: Color(0xFFBABABA),
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
                                       .fontStyle,
                                 ),
                           ),

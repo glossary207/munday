@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase_shim.dart';
 import 'dart:async';
 
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class RoomRecord extends SupabaseRecord {
   RoomRecord._(
@@ -88,7 +89,8 @@ class RoomRecord extends SupabaseRecord {
     _timeupdate = snapshotData['timeupdate'] as DateTime?;
     _namesend = snapshotData['namesend'] as String?;
     _namerecive = snapshotData['namerecive'] as String?;
-    _lastpersonUpdate = getSupabaseDocRef(snapshotData['LastpersonUpdate'], 'users');
+    _lastpersonUpdate =
+        getSupabaseDocRef(snapshotData['LastpersonUpdate'], 'users');
     _startchat = snapshotData['startchat'] as bool?;
     _photosend = snapshotData['photosend'] as String?;
     _photorecive = snapshotData['photorecive'] as String?;

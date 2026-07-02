@@ -1,18 +1,22 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/shared/widgets/maps/select_app_map_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
 import '/shared/widgets/index.dart' as custom_widgets;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'popupmap_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'popupmap_model.dart';
 
-class PopupmapWidget extends StatefulWidget {
+class PopupmapWidget extends ConsumerStatefulWidget {
   const PopupmapWidget({
     super.key,
     required this.location,
@@ -27,10 +31,10 @@ class PopupmapWidget extends StatefulWidget {
   final String? name;
 
   @override
-  State<PopupmapWidget> createState() => _PopupmapWidgetState();
+  ConsumerState<PopupmapWidget> createState() => _PopupmapWidgetState();
 }
 
-class _PopupmapWidgetState extends State<PopupmapWidget> {
+class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
   late PopupmapModel _model;
 
   LatLng? currentUserLocationValue;
@@ -44,7 +48,7 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PopupmapModel());
+    _model = PopupmapModel()..internalInit(context);
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
         .then((loc) => safeSetState(() => currentUserLocationValue = loc));
@@ -60,11 +64,10 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
     if (currentUserLocationValue == null) {
       return Container(
-        color: FlutterFlowTheme.of(context).primaryBackground,
+        color: Theme.of(context).extension<CustomColors>()!.primaryBackground,
         child: Center(
           child: SizedBox(
             width: 50.0,
@@ -145,20 +148,23 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                   widget.name,
                                   '-',
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                       fontSize: 20.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                               ),
@@ -188,7 +194,9 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                               ),
                               child: Icon(
                                 Icons.close,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: Theme.of(context)
+                                    .extension<CustomColors>()!
+                                    .primaryText,
                                 size: 20.0,
                               ),
                             ),
@@ -255,7 +263,7 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                   compassEnabled: false,
                                   locationVenuse: widget.location,
                                   cerrentlocation: currentUserLocationValue,
-                                  moveMapCondition: FFAppState().MoveMap,
+                                  moveMapCondition: context.appState.MoveMap,
                                 ),
                               ),
                             ),
@@ -329,15 +337,16 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 1.0),
-                                      child: FlutterFlowIconButton(
+                                      child: MundayIconButton(
                                         borderColor: Colors.transparent,
                                         borderRadius: 90.0,
                                         buttonSize: 57.0,
                                         fillColor: Color(0xDD070707),
                                         icon: Icon(
                                           Icons.my_location,
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
+                                          color: Theme.of(context)
+                                              .extension<CustomColors>()!
+                                              .info,
                                           size: 29.0,
                                         ),
                                         onPressed: () async {
@@ -345,10 +354,10 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                               await getCurrentUserLocation(
                                                   defaultLocation:
                                                       LatLng(0.0, 0.0));
-                                          FFAppState().locationsearch =
+                                          context.appState.locationsearch =
                                               currentUserLocationValue;
                                           safeSetState(() {});
-                                          FFAppState().MoveMap = true;
+                                          context.appState.MoveMap = true;
                                           safeSetState(() {});
                                         },
                                       ),
@@ -434,26 +443,25 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                             ).maybeHandleOverflow(
                                               maxChars: 4,
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.5,
                                                   letterSpacing: 0.5,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -462,29 +470,27 @@ class _PopupmapWidgetState extends State<PopupmapWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 1.0, 10.0, 1.0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'gyu7n4jr' /* km */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_gyu7n4jr,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ),

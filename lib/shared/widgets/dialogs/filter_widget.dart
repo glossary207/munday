@@ -1,28 +1,32 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'filter_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'filter_model.dart';
 
-class FilterWidget extends StatefulWidget {
+class FilterWidget extends ConsumerStatefulWidget {
   const FilterWidget({super.key});
 
   @override
-  State<FilterWidget> createState() => _FilterWidgetState();
+  ConsumerState<FilterWidget> createState() => _FilterWidgetState();
 }
 
-class _FilterWidgetState extends State<FilterWidget>
+class _FilterWidgetState extends ConsumerState<FilterWidget>
     with TickerProviderStateMixin {
   late FilterModel _model;
 
@@ -37,7 +41,7 @@ class _FilterWidgetState extends State<FilterWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FilterModel());
+    _model = FilterModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
@@ -66,8 +70,7 @@ class _FilterWidgetState extends State<FilterWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Container(
       width: double.infinity,
@@ -144,7 +147,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
-                                    child: FlutterFlowIconButton(
+                                    child: MundayIconButton(
                                       borderColor: Colors.transparent,
                                       borderRadius: 30.0,
                                       borderWidth: 1.0,
@@ -164,34 +167,34 @@ class _FilterWidgetState extends State<FilterWidget>
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        '61ovuoqq' /* Filters */,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      AppLocalizations.of(context)!.k_61ovuoqq,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .override(
                                             font: GoogleFonts.openSans(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontWeight: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontWeight,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
-                                            color: FlutterFlowTheme.of(context)
+                                            color: Theme.of(context)
+                                                .extension<CustomColors>()!
                                                 .primaryText,
                                             fontSize: 24.0,
                                             letterSpacing: 1.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                     ),
                                   ),
@@ -228,41 +231,43 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'ax962ez4' /* Distance */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .k_ax962ez4,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .override(
                                                           font: GoogleFonts
                                                               .openSans(
                                                             fontWeight:
-                                                                FlutterFlowTheme.of(
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .textTheme
+                                                                    .bodyMedium!
                                                                     .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .extension<
+                                                                  CustomColors>()!
                                                               .primaryBtnText,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontWeight,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                   ),
@@ -281,76 +286,86 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         child: Text(
                                                           _model.sliderValue
                                                               .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .openSans(
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .extension<
+                                                                            CustomColors>()!
+                                                                        .primaryBtnText,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                       Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          'q0tqvw1e' /* km */,
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBtnText,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .k_q0tqvw1e,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .openSans(
+                                                                fontWeight: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                                fontStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                              ),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .extension<
+                                                                      CustomColors>()!
+                                                                  .primaryBtnText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
+                                                            ),
                                                       ),
                                                     ],
                                                   ),
@@ -363,7 +378,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                               min: 1.0,
                                               max: 1000000.0,
                                               value: _model.sliderValue ??=
-                                                  FFAppState().Filterdistance,
+                                                  context.appState.Filterdistance,
                                               label: _model.sliderValue
                                                   ?.toStringAsFixed(1),
                                               divisions: 1999998,
@@ -376,8 +391,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                   '_model.sliderValue',
                                                   Duration(milliseconds: 300),
                                                   () async {
-                                                    FFAppState()
-                                                            .Filterdistance =
+                                                    context.appState.Filterdistance =
                                                         _model.sliderValue!;
                                                     safeSetState(() {});
                                                   },
@@ -403,43 +417,45 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          'nlvb3wjv' /* Type Venuses */,
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBtnText,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .k_nlvb3wjv,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .openSans(
+                                                                fontWeight: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                                fontStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                              ),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .extension<
+                                                                      CustomColors>()!
+                                                                  .primaryBtnText,
+                                                              fontSize: 14.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
+                                                            ),
                                                       ),
                                                     ),
                                                   ],
@@ -465,33 +481,31 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   10.0,
                                                                   0.0),
-                                                      child: FFButtonWidget(
+                                                      child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Pub') ==
                                                               false) {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .addToStyleVenuse(
                                                                     'Pub');
                                                             safeSetState(() {});
                                                           } else {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .removeFromStyleVenuse(
                                                                     'Pub');
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          'gy667nbh' /* Pub */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_gy667nbh,
                                                         options:
-                                                            FFButtonOptions(
+                                                            MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -508,7 +522,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       0.0,
                                                                       0.0),
                                                           color: functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Pub')!
@@ -516,23 +530,25 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0xFFDE0000)
                                                               : Colors.white,
                                                           textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontStyle,
                                                                     ),
                                                                     color: functions.checklist(
-                                                                            FFAppState()
+                                                                            AppState()
                                                                                 .StyleVenuse
                                                                                 .toList(),
                                                                             'Pub')!
@@ -544,13 +560,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                         14.0,
                                                                     letterSpacing:
                                                                         0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                           borderSide:
@@ -574,33 +592,31 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   10.0,
                                                                   0.0),
-                                                      child: FFButtonWidget(
+                                                      child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Bar') ==
                                                               false) {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .addToStyleVenuse(
                                                                     'Bar');
                                                             safeSetState(() {});
                                                           } else {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .removeFromStyleVenuse(
                                                                     'Bar');
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          'u6srszey' /* Bar */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_u6srszey,
                                                         options:
-                                                            FFButtonOptions(
+                                                            MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -617,7 +633,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       0.0,
                                                                       0.0),
                                                           color: functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Bar')!
@@ -625,23 +641,25 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0xFFDE0000)
                                                               : Colors.white,
                                                           textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontStyle,
                                                                     ),
                                                                     color: functions.checklist(
-                                                                            FFAppState()
+                                                                            AppState()
                                                                                 .StyleVenuse
                                                                                 .toList(),
                                                                             'Bar')!
@@ -653,13 +671,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                         14.0,
                                                                     letterSpacing:
                                                                         0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                           borderSide:
@@ -682,33 +702,31 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   10.0,
                                                                   0.0),
-                                                      child: FFButtonWidget(
+                                                      child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Chill') ==
                                                               false) {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .addToStyleVenuse(
                                                                     'Chill');
                                                             safeSetState(() {});
                                                           } else {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .removeFromStyleVenuse(
                                                                     'Chill');
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          'eeyxdmdw' /* Chill */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_eeyxdmdw,
                                                         options:
-                                                            FFButtonOptions(
+                                                            MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -725,7 +743,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       0.0,
                                                                       0.0),
                                                           color: functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Chill')!
@@ -733,23 +751,25 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0xFFDE0000)
                                                               : Colors.white,
                                                           textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontStyle,
                                                                     ),
                                                                     color: functions.checklist(
-                                                                            FFAppState()
+                                                                            AppState()
                                                                                 .StyleVenuse
                                                                                 .toList(),
                                                                             'Chill')!
@@ -761,13 +781,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                         14.0,
                                                                     letterSpacing:
                                                                         0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                           borderSide:
@@ -806,33 +828,31 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   10.0,
                                                                   0.0),
-                                                      child: FFButtonWidget(
+                                                      child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'CraftBeer') ==
                                                               false) {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .addToStyleVenuse(
                                                                     'CraftBeer');
                                                             safeSetState(() {});
                                                           } else {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .removeFromStyleVenuse(
                                                                     'CraftBeer');
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          'rl0ga10m' /* CraftBeer */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_rl0ga10m,
                                                         options:
-                                                            FFButtonOptions(
+                                                            MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -849,7 +869,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       0.0,
                                                                       0.0),
                                                           color: functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'CraftBeer')!
@@ -857,23 +877,25 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0xFFDE0000)
                                                               : Colors.white,
                                                           textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontStyle,
                                                                     ),
                                                                     color: functions.checklist(
-                                                                            FFAppState()
+                                                                            AppState()
                                                                                 .StyleVenuse
                                                                                 .toList(),
                                                                             'CraftBeer')!
@@ -885,13 +907,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                         14.0,
                                                                     letterSpacing:
                                                                         0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                           borderSide:
@@ -915,33 +939,31 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   10.0,
                                                                   0.0),
-                                                      child: FFButtonWidget(
+                                                      child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Out Door') ==
                                                               false) {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .addToStyleVenuse(
                                                                     'Out Door');
                                                             safeSetState(() {});
                                                           } else {
-                                                            FFAppState()
+                                                            AppState()
                                                                 .removeFromStyleVenuse(
                                                                     'Out Door');
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                          's9yaj8wb' /* Out Door */,
-                                                        ),
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .k_s9yaj8wb,
                                                         options:
-                                                            FFButtonOptions(
+                                                            MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -958,7 +980,7 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       0.0,
                                                                       0.0),
                                                           color: functions.checklist(
-                                                                  FFAppState()
+                                                                  AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
                                                                   'Out Door')!
@@ -966,23 +988,25 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0xFFDE0000)
                                                               : Colors.white,
                                                           textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
                                                                   .override(
                                                                     font: GoogleFonts
                                                                         .openSans(
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      fontWeight: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                      fontStyle: Theme.of(
                                                                               context)
-                                                                          .titleSmall
+                                                                          .textTheme
+                                                                          .titleSmall!
                                                                           .fontStyle,
                                                                     ),
                                                                     color: functions.checklist(
-                                                                            FFAppState()
+                                                                            AppState()
                                                                                 .StyleVenuse
                                                                                 .toList(),
                                                                             'Out Door')!
@@ -994,13 +1018,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                         14.0,
                                                                     letterSpacing:
                                                                         0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                           borderSide:
@@ -1035,43 +1061,45 @@ class _FilterWidgetState extends State<FilterWidget>
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          's7cwbfue' /* Style Musics */,
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBtnText,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .k_s7cwbfue,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .override(
+                                                              font: GoogleFonts
+                                                                  .openSans(
+                                                                fontWeight: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                                fontStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                              ),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .extension<
+                                                                      CustomColors>()!
+                                                                  .primaryBtnText,
+                                                              fontSize: 14.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
+                                                            ),
                                                       ),
                                                     ],
                                                   ),
@@ -1085,31 +1113,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
-                                                  child: FFButtonWidget(
+                                                  child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'LiveMusic') ==
                                                           false) {
-                                                        FFAppState()
+                                                        AppState()
                                                             .addToStyleMusic(
                                                                 'LiveMusic');
                                                         safeSetState(() {});
                                                       } else {
-                                                        FFAppState()
+                                                        AppState()
                                                             .removeFromStyleMusic(
                                                                 'LiveMusic');
                                                         safeSetState(() {});
                                                       }
                                                     },
-                                                    text: FFLocalizations.of(
-                                                            context)
-                                                        .getText(
-                                                      'rmzseyr4' /* LiveMusic */,
-                                                    ),
-                                                    options: FFButtonOptions(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .k_rmzseyr4,
+                                                    options: MundayButtonOptions(
                                                       height: 25.0,
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -1126,49 +1152,51 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   0.0),
                                                       color: functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'LiveMusic')!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: functions.checklist(
-                                                                        FFAppState()
-                                                                            .StyleMusic
-                                                                            .toList(),
-                                                                        'LiveMusic')!
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      textStyle: Theme.of(
+                                                              context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                            ),
+                                                            color: functions.checklist(
+                                                                    AppState()
+                                                                        .StyleMusic
+                                                                        .toList(),
+                                                                    'LiveMusic')!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .titleSmall
+                                                                    .textTheme
+                                                                    .titleSmall!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .fontStyle,
+                                                          ),
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -1184,31 +1212,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
-                                                  child: FFButtonWidget(
+                                                  child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'Hiphop') ==
                                                           false) {
-                                                        FFAppState()
+                                                        AppState()
                                                             .addToStyleMusic(
                                                                 'Hiphop');
                                                         safeSetState(() {});
                                                       } else {
-                                                        FFAppState()
+                                                        AppState()
                                                             .removeFromStyleMusic(
                                                                 'Hiphop');
                                                         safeSetState(() {});
                                                       }
                                                     },
-                                                    text: FFLocalizations.of(
-                                                            context)
-                                                        .getText(
-                                                      'zchvxgoo' /* Hiphop */,
-                                                    ),
-                                                    options: FFButtonOptions(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .k_zchvxgoo,
+                                                    options: MundayButtonOptions(
                                                       width: 80.0,
                                                       height: 25.0,
                                                       padding:
@@ -1221,49 +1247,51 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   0.0),
                                                       color: functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'Hiphop')!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: functions.checklist(
-                                                                        FFAppState()
-                                                                            .StyleMusic
-                                                                            .toList(),
-                                                                        'Hiphop')!
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      textStyle: Theme.of(
+                                                              context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                            ),
+                                                            color: functions.checklist(
+                                                                    AppState()
+                                                                        .StyleMusic
+                                                                        .toList(),
+                                                                    'Hiphop')!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .titleSmall
+                                                                    .textTheme
+                                                                    .titleSmall!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .fontStyle,
+                                                          ),
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -1279,31 +1307,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
-                                                  child: FFButtonWidget(
+                                                  child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'ลูกทุ่ง') ==
                                                           false) {
-                                                        FFAppState()
+                                                        AppState()
                                                             .addToStyleMusic(
                                                                 'ลูกทุ่ง');
                                                         safeSetState(() {});
                                                       } else {
-                                                        FFAppState()
+                                                        AppState()
                                                             .removeFromStyleMusic(
                                                                 'ลูกทุ่ง');
                                                         safeSetState(() {});
                                                       }
                                                     },
-                                                    text: FFLocalizations.of(
-                                                            context)
-                                                        .getText(
-                                                      'qtwraypg' /* ลูกทุ่ง */,
-                                                    ),
-                                                    options: FFButtonOptions(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .k_qtwraypg,
+                                                    options: MundayButtonOptions(
                                                       height: 25.0,
                                                       padding:
                                                           EdgeInsets.all(0.0),
@@ -1315,49 +1341,51 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                   0.0,
                                                                   0.0),
                                                       color: functions.checklist(
-                                                              FFAppState()
+                                                              AppState()
                                                                   .StyleMusic
                                                                   .toList(),
                                                               'ลูกทุ่ง')!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: functions.checklist(
-                                                                        FFAppState()
-                                                                            .StyleMusic
-                                                                            .toList(),
-                                                                        'ลูกทุ่ง')!
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      textStyle: Theme.of(
+                                                              context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                            ),
+                                                            color: functions.checklist(
+                                                                    AppState()
+                                                                        .StyleMusic
+                                                                        .toList(),
+                                                                    'ลูกทุ่ง')!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .titleSmall
+                                                                    .textTheme
+                                                                    .titleSmall!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .fontStyle,
+                                                          ),
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -1383,31 +1411,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 10.0, 0.0),
-                                                    child: FFButtonWidget(
+                                                    child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'เพื่อชีวิต') ==
                                                             false) {
-                                                          FFAppState()
+                                                          AppState()
                                                               .addToStyleMusic(
                                                                   'เพื่อชีวิต');
                                                           safeSetState(() {});
                                                         } else {
-                                                          FFAppState()
+                                                          AppState()
                                                               .removeFromStyleMusic(
                                                                   'เพื่อชีวิต');
                                                           safeSetState(() {});
                                                         }
                                                       },
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'hddmmpbl' /* เพื่อชีวิต */,
-                                                      ),
-                                                      options: FFButtonOptions(
+                                                      text: AppLocalizations.of(
+                                                              context)!
+                                                          .k_hddmmpbl,
+                                                      options: MundayButtonOptions(
                                                         width: 80.0,
                                                         height: 25.0,
                                                         padding:
@@ -1420,30 +1446,32 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                     0.0,
                                                                     0.0),
                                                         color: functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'เพื่อชีวิต')!
                                                             ? Color(0xFFDE0000)
                                                             : Colors.white,
                                                         textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .titleSmall!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                                   color: functions.checklist(
-                                                                          FFAppState()
+                                                                          AppState()
                                                                               .StyleMusic
                                                                               .toList(),
                                                                           'เพื่อชีวิต')!
@@ -1455,13 +1483,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       14.0,
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontStyle,
                                                                 ),
                                                         borderSide: BorderSide(
@@ -1480,31 +1510,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 10.0, 0.0),
-                                                    child: FFButtonWidget(
+                                                    child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'EDM') ==
                                                             false) {
-                                                          FFAppState()
+                                                          AppState()
                                                               .addToStyleMusic(
                                                                   'EDM');
                                                           safeSetState(() {});
                                                         } else {
-                                                          FFAppState()
+                                                          AppState()
                                                               .removeFromStyleMusic(
                                                                   'EDM');
                                                           safeSetState(() {});
                                                         }
                                                       },
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'kcsysckt' /* EDM */,
-                                                      ),
-                                                      options: FFButtonOptions(
+                                                      text: AppLocalizations.of(
+                                                              context)!
+                                                          .k_kcsysckt,
+                                                      options: MundayButtonOptions(
                                                         height: 25.0,
                                                         padding:
                                                             EdgeInsets.all(0.0),
@@ -1516,30 +1544,32 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                     0.0,
                                                                     0.0),
                                                         color: functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'EDM')!
                                                             ? Color(0xFFDE0000)
                                                             : Colors.white,
                                                         textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .titleSmall!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                                   color: functions.checklist(
-                                                                          FFAppState()
+                                                                          AppState()
                                                                               .StyleMusic
                                                                               .toList(),
                                                                           'EDM')!
@@ -1551,13 +1581,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       14.0,
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontStyle,
                                                                 ),
                                                         borderSide: BorderSide(
@@ -1576,31 +1608,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 10.0, 0.0),
-                                                    child: FFButtonWidget(
+                                                    child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'Jazz') ==
                                                             false) {
-                                                          FFAppState()
+                                                          AppState()
                                                               .addToStyleMusic(
                                                                   'Jazz');
                                                           safeSetState(() {});
                                                         } else {
-                                                          FFAppState()
+                                                          AppState()
                                                               .removeFromStyleMusic(
                                                                   'Jazz');
                                                           safeSetState(() {});
                                                         }
                                                       },
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '3kdu52bs' /* Jazz */,
-                                                      ),
-                                                      options: FFButtonOptions(
+                                                      text: AppLocalizations.of(
+                                                              context)!
+                                                          .k_3kdu52bs,
+                                                      options: MundayButtonOptions(
                                                         height: 25.0,
                                                         padding:
                                                             EdgeInsets.all(0.0),
@@ -1612,30 +1642,32 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                     0.0,
                                                                     0.0),
                                                         color: functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'Jazz')!
                                                             ? Color(0xFFDE0000)
                                                             : Colors.white,
                                                         textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .titleSmall!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                                   color: functions.checklist(
-                                                                          FFAppState()
+                                                                          AppState()
                                                                               .StyleMusic
                                                                               .toList(),
                                                                           'Jazz')!
@@ -1647,13 +1679,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       14.0,
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontStyle,
                                                                 ),
                                                         borderSide: BorderSide(
@@ -1672,31 +1706,29 @@ class _FilterWidgetState extends State<FilterWidget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 10.0, 0.0),
-                                                    child: FFButtonWidget(
+                                                    child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'Rock') ==
                                                             false) {
-                                                          FFAppState()
+                                                          AppState()
                                                               .addToStyleMusic(
                                                                   'Rock');
                                                           safeSetState(() {});
                                                         } else {
-                                                          FFAppState()
+                                                          AppState()
                                                               .removeFromStyleMusic(
                                                                   'Rock');
                                                           safeSetState(() {});
                                                         }
                                                       },
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '22jap4o5' /* Rock */,
-                                                      ),
-                                                      options: FFButtonOptions(
+                                                      text: AppLocalizations.of(
+                                                              context)!
+                                                          .k_22jap4o5,
+                                                      options: MundayButtonOptions(
                                                         height: 25.0,
                                                         padding:
                                                             EdgeInsets.all(0.0),
@@ -1708,30 +1740,32 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                     0.0,
                                                                     0.0),
                                                         color: functions.checklist(
-                                                                FFAppState()
+                                                                AppState()
                                                                     .StyleMusic
                                                                     .toList(),
                                                                 'Rock')!
                                                             ? Color(0xFFDE0000)
                                                             : Colors.white,
                                                         textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .titleSmall!
                                                                 .override(
                                                                   font: GoogleFonts
                                                                       .openSans(
-                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                    fontWeight: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                    fontStyle: Theme.of(
                                                                             context)
-                                                                        .titleSmall
+                                                                        .textTheme
+                                                                        .titleSmall!
                                                                         .fontStyle,
                                                                   ),
                                                                   color: functions.checklist(
-                                                                          FFAppState()
+                                                                          AppState()
                                                                               .StyleMusic
                                                                               .toList(),
                                                                           'Rock')!
@@ -1743,13 +1777,15 @@ class _FilterWidgetState extends State<FilterWidget>
                                                                       14.0,
                                                                   letterSpacing:
                                                                       0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  fontWeight: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                  fontStyle: Theme.of(
                                                                           context)
-                                                                      .titleSmall
+                                                                      .textTheme
+                                                                      .titleSmall!
                                                                       .fontStyle,
                                                                 ),
                                                         borderSide: BorderSide(
@@ -1795,20 +1831,19 @@ class _FilterWidgetState extends State<FilterWidget>
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    FFAppState().Filterdistance = 15.0;
-                    FFAppState().StyleVenuse = [];
-                    FFAppState().StyleMusic = [];
+                    context.appState.Filterdistance = 15.0;
+                    context.appState.StyleVenuse = [];
+                    context.appState.StyleMusic = [];
                     safeSetState(() {});
                   },
                   child: Text(
-                    FFLocalizations.of(context).getText(
-                      'ms1qtkw9' /* Clear filter */,
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    AppLocalizations.of(context)!.k_ms1qtkw9,
+                    style: Theme.of(context).textTheme.bodyMedium!.override(
                           font: GoogleFonts.openSans(
                             fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            fontStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .fontStyle,
                           ),
                           color: Color(0x98FFFFFF),
@@ -1816,7 +1851,7 @@ class _FilterWidgetState extends State<FilterWidget>
                           letterSpacing: 1.0,
                           fontWeight: FontWeight.w500,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
                         ),
                   ),
                 ),
@@ -1891,28 +1926,26 @@ class _FilterWidgetState extends State<FilterWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'zqtx4gzg' /* Confirm */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_zqtx4gzg,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   fontSize: 18.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ],

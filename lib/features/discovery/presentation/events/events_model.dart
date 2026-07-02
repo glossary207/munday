@@ -1,11 +1,13 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/layout/nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'events_widget.dart' show EventsWidget;
+import 'events_page.dart' show EventsWidget;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '/shared/widgets/layout/nav_bar_model.dart';
 
-class EventsModel extends FlutterFlowModel<EventsWidget> {
+class EventsModel extends BaseModel {
   ///  Local state fields for this page.
 
   List<String> stylemusic = [];
@@ -23,7 +25,7 @@ class EventsModel extends FlutterFlowModel<EventsWidget> {
 
   int? page = 1;
 
-  bool selectdate = true;
+  bool selectdate = false;
 
   double? wide;
 
@@ -52,7 +54,7 @@ class EventsModel extends FlutterFlowModel<EventsWidget> {
   void initState(BuildContext context) {
     columnController = ScrollController();
     rowController = ScrollController();
-    navBarModel = createModel(context, () => NavBarModel());
+    navBarModel = NavBarModel()..internalInit(context);
   }
 
   @override

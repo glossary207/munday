@@ -1,9 +1,10 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'support_widget.dart' show SupportWidget;
+import 'support_page.dart' show SupportWidget;
 import 'package:flutter/material.dart';
 
-class SupportModel extends FlutterFlowModel<SupportWidget> {
+class SupportModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

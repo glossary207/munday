@@ -1,26 +1,22 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import '/shared/widgets/index.dart';
 import '/core/utils/index.dart';
-import '/flutter_flow/custom_functions.dart';
+import '/core/utils/custom_functions.dart';
+import 'package:munday/core/theme/theme.dart';
 
 /// AppBarWidget (BG + scrollable area + optional dimming/gradient)
 /// ---------------------------------------------------------------
@@ -31,7 +27,7 @@ import '/flutter_flow/custom_functions.dart';
 /// * background colour of SliverAppBar is user‑controlled
 /// ---------------------------------------------------------------
 
-class AppBarWidget extends StatefulWidget {
+class AppBarWidget extends ConsumerStatefulWidget {
   const AppBarWidget({
     super.key,
     this.width,
@@ -66,10 +62,10 @@ class AppBarWidget extends StatefulWidget {
   final bool dimthelight;
 
   @override
-  State<AppBarWidget> createState() => _AppBarWidgetState();
+  ConsumerState<AppBarWidget> createState() => _AppBarWidgetState();
 }
 
-class _AppBarWidgetState extends State<AppBarWidget> {
+class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
   late final ScrollController _scrollController;
   bool _wasShrink = false;
 
@@ -84,7 +80,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     final shrink = _isShrink;
     if (shrink != _wasShrink) {
       _wasShrink = shrink;
-      FFAppState().update(() => FFAppState().logtap = !shrink);
+      context.appState.update(() => context.appState.logtap = !shrink);
     }
   }
 
@@ -92,7 +88,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_scrollListener);
-    FFAppState().update(() => FFAppState().logtap = true);
+    context.appState.update(() => context.appState.logtap = true);
   }
 
   @override

@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'showpromotion_widget.dart' show ShowpromotionWidget;
 import 'package:flutter/material.dart';
 
-class ShowpromotionModel extends FlutterFlowModel<ShowpromotionWidget> {
+class ShowpromotionModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for PageView widget.

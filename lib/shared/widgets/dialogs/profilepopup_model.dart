@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'profilepopup_widget.dart' show ProfilepopupWidget;
 import 'package:flutter/material.dart';
 
-class ProfilepopupModel extends FlutterFlowModel<ProfilepopupWidget> {
+class ProfilepopupModel extends BaseModel {
   ///  Local state fields for this component.
 
   bool datachange = false;

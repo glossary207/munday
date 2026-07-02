@@ -1,17 +1,19 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/backend/schema/structs/index.dart';
 import '/shared/widgets/misc/showpromotion_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/app_util.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'rowpromotion_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'rowpromotion_model.dart';
 
-class RowpromotionWidget extends StatefulWidget {
+class RowpromotionWidget extends ConsumerStatefulWidget {
   const RowpromotionWidget({
     super.key,
     required this.dataPro,
@@ -22,10 +24,10 @@ class RowpromotionWidget extends StatefulWidget {
   final bool? todaycheck;
 
   @override
-  State<RowpromotionWidget> createState() => _RowpromotionWidgetState();
+  ConsumerState<RowpromotionWidget> createState() => _RowpromotionWidgetState();
 }
 
-class _RowpromotionWidgetState extends State<RowpromotionWidget> {
+class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
   late RowpromotionModel _model;
 
   @override
@@ -37,7 +39,7 @@ class _RowpromotionWidgetState extends State<RowpromotionWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RowpromotionModel());
+    _model = RowpromotionModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -51,14 +53,13 @@ class _RowpromotionWidgetState extends State<RowpromotionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return Builder(
       builder: (context) {
         final dd = functions
                 .sourcedatadatepromotion(widget.dataPro?.toList(),
-                    FFAppState().dateclick, !widget.todaycheck!)
+                    context.appState.dateclick, !widget.todaycheck!)
                 ?.toList() ??
             [];
 
@@ -88,7 +89,7 @@ class _RowpromotionWidgetState extends State<RowpromotionWidget> {
                                 functions
                                     .sourcedatadatepromotion(
                                         widget.dataPro?.toList(),
-                                        FFAppState().dateclick,
+                                        context.appState.dateclick,
                                         !widget.todaycheck!)
                                     ?.map((e) => e.photo)
                                     .toList()
@@ -119,7 +120,7 @@ class _RowpromotionWidgetState extends State<RowpromotionWidget> {
                               ddItem.fri,
                               ddItem.sat,
                               ddItem.sun,
-                              FFAppState().dateclick) ??
+                              context.appState.dateclick) ??
                           true)
                         Align(
                           alignment: AlignmentDirectional(-1.0, -1.0),
@@ -158,27 +159,27 @@ class _RowpromotionWidgetState extends State<RowpromotionWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 2.0, 0.0, 2.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'kzrbch3h' /* Today */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        AppLocalizations.of(context)!
+                                            .k_kzrbch3h,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .override(
                                               font: GoogleFonts.openSans(
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
                                               color: Colors.white,
                                               fontSize: 12.0,
                                               letterSpacing: 0.3,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),

@@ -1,12 +1,16 @@
+import "package:munday/shared/widgets/cards/showpeople_model.dart";
+
+import 'package:munday/core/state/base_model.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/misc/rowpromotion_widget.dart';
+import '/shared/widgets/misc/rowpromotion_model.dart';
 import '/shared/widgets/cards/showpeople_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'in_venuse_widget.dart' show InVenuseWidget;
+import 'in_venuse_page.dart' show InVenuseWidget;
 import 'package:flutter/material.dart';
 
-class InVenuseModel extends FlutterFlowModel<InVenuseWidget> {
+class InVenuseModel extends BaseModel {
   ///  Local state fields for this page.
 
   bool? zoom;
@@ -39,8 +43,8 @@ class InVenuseModel extends FlutterFlowModel<InVenuseWidget> {
 
   @override
   void initState(BuildContext context) {
-    rowpromotionModel = createModel(context, () => RowpromotionModel());
-    showpeopleModel = createModel(context, () => ShowpeopleModel());
+    rowpromotionModel = RowpromotionModel()..internalInit(context);
+    showpeopleModel = ShowpeopleModel()..internalInit(context);
   }
 
   @override

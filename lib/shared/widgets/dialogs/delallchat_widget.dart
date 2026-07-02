@@ -1,15 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import '/index.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'delallchat_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'delallchat_model.dart';
 
-class DelallchatWidget extends StatefulWidget {
+class DelallchatWidget extends ConsumerStatefulWidget {
   const DelallchatWidget({
     super.key,
     required this.idroom,
@@ -20,10 +24,10 @@ class DelallchatWidget extends StatefulWidget {
   final SupabaseDocRef? userref;
 
   @override
-  State<DelallchatWidget> createState() => _DelallchatWidgetState();
+  ConsumerState<DelallchatWidget> createState() => _DelallchatWidgetState();
 }
 
-class _DelallchatWidgetState extends State<DelallchatWidget> {
+class _DelallchatWidgetState extends ConsumerState<DelallchatWidget> {
   late DelallchatModel _model;
 
   @override
@@ -35,7 +39,7 @@ class _DelallchatWidgetState extends State<DelallchatWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DelallchatModel());
+    _model = DelallchatModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -78,18 +82,17 @@ class _DelallchatWidgetState extends State<DelallchatWidget> {
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   await widget.idroom!.delete();
                   Navigator.pop(context);
 
-                  context.pushNamed(MainChatWidget.routeName);
+                  context.pushNamed(MainChatPage.routeName);
 
                   await currentUserReference!.update({
                     ...mapToSupabase(
                       {
-                        'usermassage':
-                            FieldValue.arrayRemove([widget.userref]),
+                        'usermassage': FieldValue.arrayRemove([widget.userref]),
                       },
                     ),
                   });
@@ -103,29 +106,29 @@ class _DelallchatWidgetState extends State<DelallchatWidget> {
                     ),
                   });
                 },
-                text: FFLocalizations.of(context).getText(
-                  'u58jdqpe' /* ลบห้องแชท */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_u58jdqpe,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFFB50000),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -137,32 +140,32 @@ class _DelallchatWidgetState extends State<DelallchatWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  'crot8jmc' /* ยกเลิก */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_crot8jmc,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFF232323),
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  textStyle: Theme.of(context).textTheme.titleSmall!.override(
                         font: GoogleFonts.lexendDeca(
                           fontWeight: FontWeight.normal,
                           fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                              Theme.of(context).textTheme.titleSmall!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         fontSize: 16.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                         fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                            Theme.of(context).textTheme.titleSmall!.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

@@ -26,7 +26,8 @@ class EventRepository extends BaseRepository {
   /// Create a new event.
   Future<String> createEvent(Map<String, dynamic> eventData) async {
     return safeCall(() async {
-      final response = await client.from(_table).insert(eventData).select().single();
+      final response =
+          await client.from(_table).insert(eventData).select().single();
       return response['id'] as String;
     });
   }

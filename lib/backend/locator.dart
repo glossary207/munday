@@ -27,6 +27,7 @@ class Locator {
   static final UserInVenueRepository userInVenueRepo = UserInVenueRepository();
   static final PromotionRepository promotionRepo = PromotionRepository();
   static final VenueLayoutRepository venueLayoutRepo = VenueLayoutRepository();
-  static final RoomLiveChatRepository roomLiveChatRepo = RoomLiveChatRepository();
+  static final RoomLiveChatRepository roomLiveChatRepo =
+      RoomLiveChatRepository();
   static final GroupInviteRepository groupInviteRepo = GroupInviteRepository();
 }

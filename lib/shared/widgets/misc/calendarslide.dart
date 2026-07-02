@@ -1,24 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:munday/core/theme/theme.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-class Calendarslide extends StatefulWidget {
+class Calendarslide extends ConsumerStatefulWidget {
   const Calendarslide({
     Key? key,
     this.width,
@@ -41,10 +37,10 @@ class Calendarslide extends StatefulWidget {
   final DateTime? dateclickwidget;
 
   @override
-  _CalendarslideState createState() => _CalendarslideState();
+  ConsumerState<Calendarslide> createState() => _CalendarslideState();
 }
 
-class _CalendarslideState extends State<Calendarslide> {
+class _CalendarslideState extends ConsumerState<Calendarslide> {
   DateTime? selectedDate;
 
   @override
@@ -85,7 +81,7 @@ class _CalendarslideState extends State<Calendarslide> {
             dayNameColor =
                 isSelected || isDateClickWidget ? Colors.white : Colors.red;
           } else {
-            dayNameColor = FlutterFlowTheme.of(context).bodyMedium.color!;
+            dayNameColor = Theme.of(context).textTheme.bodyMedium!.color!;
           }
 
           return GestureDetector(
@@ -93,7 +89,7 @@ class _CalendarslideState extends State<Calendarslide> {
               setState(() {
                 selectedDate = currentDate;
                 // เมื่อกดเลือก ให้บวกเวลาอีก 8 ชั่วโมง
-                FFAppState().dateclick = selectedDate!.add(Duration(hours: 8));
+                context.appState.dateclick = selectedDate!.add(Duration(hours: 8));
                 widget.onselect(); // เรียกใช้ action เมื่อเลือกวันที่
               });
             },
@@ -103,7 +99,8 @@ class _CalendarslideState extends State<Calendarslide> {
               height: widget.height ?? 171,
               decoration: BoxDecoration(
                 color: isDateClickWidget
-                    ? widget.colorPicker ?? FlutterFlowTheme.of(context).primary
+                    ? widget.colorPicker ??
+                        Theme.of(context).colorScheme.primary
                     : const Color.fromARGB(255, 13, 13, 13),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -116,7 +113,7 @@ class _CalendarslideState extends State<Calendarslide> {
                     // ตัวอักษรบอกวัน (Mon, Tue, ...)
                     Text(
                       _getDayName(currentDate),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      style: Theme.of(context).textTheme.bodyMedium!.override(
                             fontFamily: 'Poppins',
                             fontSize: 11,
                             fontWeight: FontWeight.normal,
@@ -127,7 +124,7 @@ class _CalendarslideState extends State<Calendarslide> {
                       padding: EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         currentDate.day.toString(),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               fontFamily: 'Poppins',
                               fontSize: 18,
                               fontWeight: FontWeight.normal,

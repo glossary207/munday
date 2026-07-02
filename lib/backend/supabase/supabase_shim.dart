@@ -15,8 +15,7 @@ class SupabaseFirestore {
 
   SupabaseDocRef doc(String path) {
     // Strip leading slash — _deserializeSupabaseDocRef produces "/collection/id"
-    final normalizedPath =
-        path.startsWith('/') ? path.substring(1) : path;
+    final normalizedPath = path.startsWith('/') ? path.substring(1) : path;
     final parts = normalizedPath.split('/');
     if (parts.length >= 2) {
       return SupabaseCollectionRef(parts[0]).doc(parts[1]);
@@ -325,7 +324,8 @@ class SupabaseQuery {
       q._constraints
           .add(QueryConstraint(fieldName, 'gte', isGreaterThanOrEqualTo));
     if (arrayContains != null) {
-      q._constraints.add(QueryConstraint(fieldName, 'arrayContains', arrayContains));
+      q._constraints
+          .add(QueryConstraint(fieldName, 'arrayContains', arrayContains));
     }
     if (whereIn != null)
       q._constraints.add(QueryConstraint(fieldName, 'in', whereIn));
@@ -368,63 +368,9 @@ class SupabaseQuery {
   }
 
   Stream<SupabaseQuerySnapshot> snapshots() {
-    // .stream() in Supabase fluter is powerful but has limits (filters).
-    // For simple EQ filters it works. Complex filters might need realtime channel subscription manually.
-    // We'll try using the stream() method query builder.
-
-    // Warning: .stream() expects simple EQ filters.
-    // If _constraints has > eq, we might fallback or error.
-
-    // Changed to dynamic to avoid type errors between SupabaseStreamBuilder and SupabaseStreamFilterBuilder
-    dynamic streamBuilder = Supabase.instance.client
-        .from(_collectionPath!)
-        .stream(primaryKey: ['id']);
-    // Apply order
-    if (_orderByField != null) {
-      streamBuilder =
-          streamBuilder.order(_orderByField!, ascending: !_descending);
-    }
-    if (_limit != null) {
-      streamBuilder = streamBuilder.limit(_limit!);
-    }
-    // Apply EQ filters only for stream
-    for (var c in _constraints) {
-      if (c.op == 'eq') {
-        streamBuilder = streamBuilder.eq(c.field, c.value);
-      } else if (c.op == 'arrayContains') {
-        // Warning: Supabase stream API might not fully support array contains server-side effectively.
-        // We attempt to map it as a postgrest filter if supported, but typically streaming filters are limited.
-      }
-    }
-
-    // Cast the result of the stream to the expected type
-    return (streamBuilder as Stream<List<Map<String, dynamic>>>)
-        .map((List<Map<String, dynamic>> data) {
-      
-      var filteredData = data;
-      for (var c in _constraints) {
-        if (c.op == 'arrayContains') {
-          String valId = c.value is SupabaseDocRef ? (c.value as SupabaseDocRef).id : c.value.toString();
-          filteredData = filteredData.where((d) {
-            var arr = d[c.field];
-            if (arr == null) return false;
-            // arr might be a List<dynamic>
-            if (arr is List) {
-              return arr.map((e) => e.toString()).contains(valId);
-            }
-            return false;
-          }).toList();
-        }
-      }
-
-      return SupabaseQuerySnapshot(filteredData
-          .map((e) => SupabaseQueryDocSnapshot(
-              e['id'].toString(),
-              _processReadData(e),
-              true,
-              SupabaseDocRef(_collectionPath!, e['id'].toString())))
-          .toList());
-    });
+    // TEMPORARY DEBUG: Use get().asStream() instead of stream()
+    // This bypasses Realtime, PrimaryKey, and View limitations in Supabase stream()
+    return Stream.fromFuture(get());
   }
 
   // Future<int> count() ... (Firestore aggregate query)
@@ -457,9 +403,9 @@ class SupabaseQuery {
           break;
         case 'arrayContains':
           if (c.value is SupabaseDocRef) {
-             query = query.contains(c.field, [(c.value as SupabaseDocRef).id]);
+            query = query.contains(c.field, [(c.value as SupabaseDocRef).id]);
           } else {
-             query = query.contains(c.field, [c.value]);
+            query = query.contains(c.field, [c.value]);
           }
           break;
         case 'filter':

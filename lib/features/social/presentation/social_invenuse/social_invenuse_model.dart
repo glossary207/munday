@@ -1,11 +1,13 @@
+import 'package:munday/core/state/base_model.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'social_invenuse_widget.dart' show SocialInVenuseWidget;
+import 'social_invenuse_page.dart' show SocialInVenuseWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/cards/card33_user_grid_model.dart';
 
-class SocialInVenuseModel extends FlutterFlowModel<SocialInVenuseWidget> {
+class SocialInVenuseModel extends BaseModel {
   ///  Local state fields for this page.
 
   int? textnonread;
@@ -40,8 +42,7 @@ class SocialInVenuseModel extends FlutterFlowModel<SocialInVenuseWidget> {
   void removeAtIndexFromCheersshow(int index) => cheersshow.removeAt(index);
   void insertAtIndexInCheersshow(int index, SupabaseDocRef item) =>
       cheersshow.insert(index, item);
-  void updateCheersshowAtIndex(
-          int index, Function(SupabaseDocRef) updateFn) =>
+  void updateCheersshowAtIndex(int index, Function(SupabaseDocRef) updateFn) =>
       cheersshow[index] = updateFn(cheersshow[index]);
 
   int? numshow;
@@ -93,7 +94,7 @@ class SocialInVenuseModel extends FlutterFlowModel<SocialInVenuseWidget> {
 
   @override
   void initState(BuildContext context) {
-    card33UserGridModel = createModel(context, () => Card33UserGridModel());
+    card33UserGridModel = Card33UserGridModel()..internalInit(context);
   }
 
   @override

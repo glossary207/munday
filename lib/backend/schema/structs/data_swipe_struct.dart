@@ -1,11 +1,14 @@
 // ignore_for_file: unnecessary_getters_setters
 
+import 'package:flutter/material.dart';
+import 'package:munday/core/routing/serialization_util.dart';
+
+import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase_shim.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class DataSwipeStruct extends FFSupabaseStruct {
   DataSwipeStruct({
@@ -270,8 +273,7 @@ void addDataSwipeStructData(
   final nestedData = dataSwipeData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = dataSwipe.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getDataSwipeFirestoreData(
@@ -292,8 +294,7 @@ Map<String, dynamic> getDataSwipeFirestoreData(
   );
 
   // Add any Firestore field values
-  dataSwipe.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  dataSwipe.supabaseUtilData.fieldValues.forEach((k, v) => supabaseData[k] = v);
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

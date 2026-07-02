@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase_shim.dart';
 import 'dart:async';
 
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class StoreRecord extends SupabaseRecord {
   StoreRecord._(
@@ -103,7 +104,8 @@ class StoreRecord extends SupabaseRecord {
   static Future<StoreRecord> getDocumentOnce(SupabaseDocRef ref) =>
       ref.get().then((s) => StoreRecord.fromSnapshot(s));
 
-  static StoreRecord fromSnapshot(SupabaseDocSnapshot snapshot) => StoreRecord._(
+  static StoreRecord fromSnapshot(SupabaseDocSnapshot snapshot) =>
+      StoreRecord._(
         snapshot.reference,
         mapFromSupabase(snapshot.data() as Map<String, dynamic>),
       );

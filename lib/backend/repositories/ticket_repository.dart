@@ -14,10 +14,10 @@ class TicketRepository extends BaseRepository {
       return await client.from(_table).select().eq('id', id).maybeSingle();
     });
   }
-  
+
   Future<void> createTicket(Map<String, dynamic> data) async {
     return safeCall(() async {
-        await client.from(_table).insert(data);
+      await client.from(_table).insert(data);
     });
   }
 }

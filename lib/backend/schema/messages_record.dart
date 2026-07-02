@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import '/backend/schema/util/supabase_util.dart';
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class MessagesRecord extends SupabaseRecord {
   MessagesRecord._(

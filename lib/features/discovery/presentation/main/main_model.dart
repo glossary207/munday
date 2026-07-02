@@ -1,10 +1,12 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/layout/nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'main_widget.dart' show MainWidget;
+import 'main_page.dart' show MainWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/layout/nav_bar_model.dart';
 
-class MainModel extends FlutterFlowModel<MainWidget> {
+class MainModel extends BaseModel {
   ///  Local state fields for this page.
 
   List<String> stylemusic = [];
@@ -51,7 +53,7 @@ class MainModel extends FlutterFlowModel<MainWidget> {
 
   @override
   void initState(BuildContext context) {
-    navBarModel = createModel(context, () => NavBarModel());
+    navBarModel = NavBarModel()..internalInit(context);
   }
 
   @override

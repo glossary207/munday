@@ -1,7 +1,13 @@
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_commons/flutter_flow/enums.dart';
-export 'package:ff_commons/flutter_flow/enums.dart';
+import 'package:collection/collection.dart';
+
+extension FFEnumExtensions<T extends Enum> on Iterable<T> {
+  T? deserialize(String? value) =>
+      firstWhereOrNull((e) => e.name == value);
+}
+
+extension FFEnumSerializationExt on Enum {
+  String serialize() => name;
+}
 
 enum StoryItemEnum {
   text,
@@ -16,15 +22,12 @@ enum PositionTableLayout {
 }
 
 T? deserializeEnum<T>(String? value) {
-  switch (T) {
-    case (StoryItemEnum):
-      return StoryItemEnum.values.deserialize(value) as T?;
-    case (PositionTableLayout):
-      return PositionTableLayout.values.deserialize(value) as T?;
-    case (f_f_story_view_live_zhm3f3_enums.StoryItemEnum):
-      return f_f_story_view_live_zhm3f3_enums.StoryItemEnum.values
-          .deserialize(value) as T?;
-    default:
-      return null;
+  if (T == StoryItemEnum) {
+    return StoryItemEnum.values.deserialize(value) as T?;
+  } else if (T == PositionTableLayout) {
+    return PositionTableLayout.values.deserialize(value) as T?;
+
+  } else {
+    return null;
   }
 }

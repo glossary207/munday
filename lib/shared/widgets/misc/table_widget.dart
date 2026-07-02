@@ -1,11 +1,12 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'table_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'table_model.dart';
 
-class TableWidget extends StatefulWidget {
+class TableWidget extends ConsumerStatefulWidget {
   const TableWidget({
     super.key,
     required this.offon,
@@ -18,10 +19,10 @@ class TableWidget extends StatefulWidget {
   final Color? tagcolor;
 
   @override
-  State<TableWidget> createState() => _TableWidgetState();
+  ConsumerState<TableWidget> createState() => _TableWidgetState();
 }
 
-class _TableWidgetState extends State<TableWidget> {
+class _TableWidgetState extends ConsumerState<TableWidget> {
   late TableModel _model;
 
   @override
@@ -33,7 +34,7 @@ class _TableWidgetState extends State<TableWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TableModel());
+    _model = TableModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -94,17 +95,19 @@ class _TableWidgetState extends State<TableWidget> {
                             '-',
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
+                              Theme.of(context).textTheme.bodyMedium!.override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
                                           .fontStyle,
                                     ),
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                         ),

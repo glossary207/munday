@@ -1,25 +1,29 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
+import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'item_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'item_model.dart';
 
-class ItemWidget extends StatefulWidget {
+class ItemWidget extends ConsumerStatefulWidget {
   const ItemWidget({super.key});
 
   @override
-  State<ItemWidget> createState() => _ItemWidgetState();
+  ConsumerState<ItemWidget> createState() => _ItemWidgetState();
 }
 
-class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
+class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStateMixin {
   late ItemModel _model;
 
   final animationsMap = <String, AnimationInfo>{};
@@ -33,7 +37,7 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ItemModel());
+    _model = ItemModel()..internalInit(context);
 
     animationsMap.addAll({
       'stackOnPageLoadAnimation': AnimationInfo(
@@ -69,8 +73,7 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-    context.watch<f_f_story_view_live_zhm3f3_app_state.FFAppState>();
+    context.watch<AppState>();
 
     return InkWell(
       splashColor: Colors.transparent,
@@ -78,9 +81,9 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        FFAppState().ActiveProfileUserPopup = false;
+        context.appState.ActiveProfileUserPopup = false;
         _model.updatePage(() {});
-        if (!FFAppState().lockfuctionadd) {
+        if (!context.appState.lockfuctionadd) {
           Navigator.pop(context);
         }
       },
@@ -167,22 +170,20 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'uzvcm3j4' /* Spacial Gift */,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
+                                                AppLocalizations.of(context)!
+                                                    .k_uzvcm3j4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
                                                                 .fontStyle,
                                                       ),
                                                       fontSize: 30.0,
@@ -190,9 +191,9 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -203,38 +204,35 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 3.0, 0.0, 0.0),
                                             child: Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'g913ncyq' /* ของขวัญใช้แทนเงินสดในร้านได้ */,
-                                              ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              AppLocalizations.of(context)!
+                                                  .k_g913ncyq,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     color: Color(0xFFA8A8A8),
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ),
@@ -312,35 +310,36 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                     7.0,
                                                                     2.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            '2mx0g8d7' /* 999 */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_2mx0g8d7,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ],
@@ -365,10 +364,10 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                       ),
                                                       child: Icon(
                                                         Icons.add,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
+                                                        color: Theme.of(context)
+                                                            .extension<
+                                                                CustomColors>()!
+                                                            .primaryText,
                                                         size: 12.5,
                                                       ),
                                                     ),
@@ -505,17 +504,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 0.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'yn990my0' /* THB */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_yn990my0,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -527,17 +524,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 2.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'hqi0oom7' /* 10 */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_hqi0oom7,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -604,17 +599,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 0.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'ti4uoq5m' /* THB */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_ti4uoq5m,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -626,17 +619,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 2.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'gbv4rvjr' /* 20 */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_gbv4rvjr,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -703,17 +694,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 0.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                '8bgisnej' /* THB */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_8bgisnej,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -725,17 +714,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 2.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                '0zg3bhe0' /* 40 */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_0zg3bhe0,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -802,17 +789,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 0.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'lriu4nm4' /* THB */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_lriu4nm4,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -824,17 +809,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 2.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                '1hfhux4n' /* 80 */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_1hfhux4n,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -904,34 +887,30 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
                                                                               child: Text(
-                                                                                FFLocalizations.of(context).getText(
-                                                                                  'h9cxh1eb' /* THB */,
-                                                                                ),
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                AppLocalizations.of(context)!.k_h9cxh1eb,
+                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(5.0, 2.0, 7.0, 2.0),
                                                                               child: Text(
-                                                                                FFLocalizations.of(context).getText(
-                                                                                  'e5jla5tg' /* 150 */,
-                                                                                ),
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                AppLocalizations.of(context)!.k_e5jla5tg,
+                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
@@ -999,17 +978,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 0.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'm418myc2' /* THB */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_m418myc2,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1021,17 +998,15 @@ class _ItemWidgetState extends State<ItemWidget> with TickerProviderStateMixin {
                                                                                 2.0),
                                                                             child:
                                                                                 Text(
-                                                                              FFLocalizations.of(context).getText(
-                                                                                'iwc8qe38' /* 200 */,
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              AppLocalizations.of(context)!.k_iwc8qe38,
+                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),

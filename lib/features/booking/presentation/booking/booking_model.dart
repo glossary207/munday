@@ -1,9 +1,10 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'booking_widget.dart' show BookingWidget;
+import 'booking_page.dart' show BookingWidget;
 import 'package:flutter/material.dart';
 
-class BookingModel extends FlutterFlowModel<BookingWidget> {
+class BookingModel extends BaseModel {
   ///  Local state fields for this page.
 
   dynamic tableselected;

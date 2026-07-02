@@ -105,8 +105,6 @@ class SupabaseAuthManager extends AuthManager
     );
   }
 
-
-
   @override
   Future<BaseAuthUser?> signInAnonymously(
     BuildContext context,
@@ -118,8 +116,6 @@ class SupabaseAuthManager extends AuthManager
     }
     return null;
   }
-
-
 
   @override
   Future<BaseAuthUser?> signInWithGithub(BuildContext context) async {

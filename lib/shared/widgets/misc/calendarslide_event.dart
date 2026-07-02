@@ -1,24 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:munday/core/theme/theme.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-class CalendarslideEvent extends StatefulWidget {
+class CalendarslideEvent extends ConsumerStatefulWidget {
   const CalendarslideEvent({
     super.key,
     this.width,
@@ -37,22 +33,22 @@ class CalendarslideEvent extends StatefulWidget {
   final DateTime? dateclickwidget;
 
   @override
-  State<CalendarslideEvent> createState() => _CalendarslideEventState();
+  ConsumerState<CalendarslideEvent> createState() => _CalendarslideEventState();
 }
 
-class _CalendarslideEventState extends State<CalendarslideEvent> {
+class _CalendarslideEventState extends ConsumerState<CalendarslideEvent> {
   DateTime? selectedDate;
 
   @override
   void initState() {
     super.initState();
-    // ถ้ามีการเซ็ต FFAppState().dateclick ไว้แล้ว ให้ใช้วันนั้นเป็น selectedDate
+    // ถ้ามีการเซ็ต context.appState.dateclick ไว้แล้ว ให้ใช้วันนั้นเป็น selectedDate
     // ไม่งั้นให้ใช้ค่าจาก _getStartDate()
-    if (FFAppState().dateclick != null) {
+    if (context.appState.dateclick != null) {
       selectedDate = DateTime(
-        FFAppState().dateclick!.year,
-        FFAppState().dateclick!.month,
-        FFAppState().dateclick!.day,
+        context.appState.dateclick!.year,
+        context.appState.dateclick!.month,
+        context.appState.dateclick!.day,
       );
     } else {
       selectedDate = _getStartDate();
@@ -92,7 +88,7 @@ class _CalendarslideEventState extends State<CalendarslideEvent> {
                   currentDate.month,
                   currentDate.day,
                 );
-                FFAppState().dateclick = selectedDate;
+                context.appState.dateclick = selectedDate;
                 widget.onselect();
               });
             },
@@ -103,7 +99,7 @@ class _CalendarslideEventState extends State<CalendarslideEvent> {
               decoration: BoxDecoration(
                 color: isDateClickWidget
                     ? (widget.colorPicker ??
-                        FlutterFlowTheme.of(context).primary)
+                        Theme.of(context).colorScheme.primary)
                     : const Color.fromARGB(255, 13, 13, 13),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -115,20 +111,20 @@ class _CalendarslideEventState extends State<CalendarslideEvent> {
                   children: [
                     Text(
                       _getDayName(currentDate),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      style: Theme.of(context).textTheme.bodyMedium!.override(
                             fontFamily: 'Poppins',
                             fontSize: 11,
                             fontWeight: FontWeight.normal,
                             color: isWeekend
                                 ? (isSelected ? Colors.white : Colors.red)
-                                : FlutterFlowTheme.of(context).bodyMedium.color,
+                                : Theme.of(context).textTheme.bodyMedium!.color,
                           ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         currentDate.day.toString(),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               fontFamily: 'Poppins',
                               fontSize: 18,
                               fontWeight: FontWeight.normal,

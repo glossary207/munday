@@ -1,21 +1,29 @@
+import 'package:provider/provider.dart' as provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/shared/widgets/layout/header_appbar_menu_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:provider/provider.dart';
+import '/backend/supabase/supabase_shim.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'appbarmenu_copy_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'appbarmenu_copy_model.dart';
 
-class AppbarmenuCopyWidget extends StatefulWidget {
+class AppbarmenuCopyWidget extends ConsumerStatefulWidget {
   const AppbarmenuCopyWidget({super.key});
 
   @override
-  State<AppbarmenuCopyWidget> createState() => _AppbarmenuCopyWidgetState();
+  ConsumerState<AppbarmenuCopyWidget> createState() => _AppbarmenuCopyWidgetState();
 }
 
-class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
+class _AppbarmenuCopyWidgetState extends ConsumerState<AppbarmenuCopyWidget> {
   late AppbarmenuCopyModel _model;
 
   @override
@@ -27,7 +35,7 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AppbarmenuCopyModel());
+    _model = AppbarmenuCopyModel()..internalInit(context);
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -46,9 +54,9 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        wrapWithModel(
-          model: _model.headerAppbarMenuModel,
-          updateCallback: () => safeSetState(() {}),
+        ChangeNotifierProvider.value(
+          value: _model.headerAppbarMenuModel
+              .setOnUpdate(onUpdate: () => safeSetState(() {})),
           child: HeaderAppbarMenuWidget(),
         ),
         Align(
@@ -89,21 +97,21 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 5.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          '4w7okaiq' /* เบียร์ ช้าง */,
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        AppLocalizations.of(context)!.k_4w7okaiq,
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               font: GoogleFonts.openSans(
                                 fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                fontStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .fontStyle,
                               ),
                               fontSize: 25.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontStyle,
                             ),
                       ),
@@ -122,25 +130,25 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 5.0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'ccy14dp5' /* นำกระทะตั้งไฟปานกลาง ใส่น้ำมัน... */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  AppLocalizations.of(context)!.k_ccy14dp5,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
                                           fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                         color: Color(0xFFB3B3B3),
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                 ),
@@ -162,31 +170,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 1.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          '5t3fx476' /* รายการหลัก */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        AppLocalizations.of(context)!
+                                            .k_5t3fx476,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .override(
                                               font: GoogleFonts.openSans(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontStyle,
+                                                fontWeight: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .fontWeight,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .fontStyle,
                                               ),
                                               letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .fontStyle,
+                                              fontWeight: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .fontWeight,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),
@@ -198,37 +206,34 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 5.0, 0.0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'w26z0txk' /* ( เลือก 1 รายการ ) */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_w26z0txk,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   color: Color(0xFF888888),
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -287,38 +292,39 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'li0i93h8' /* กระป๋อง */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_li0i93h8,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyLarge
+                                                                    .textTheme
+                                                                    .bodyLarge!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontStyle,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -330,40 +336,42 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                                     0.0,
                                                                     0.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            '2i4emeiv' /* 490 ml */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelSmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_2i4emeiv,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .override(
+                                                                    font: GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: Color(
-                                                                    0xFFB3B3B3),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                        0xFFB3B3B3),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ),
@@ -372,39 +380,36 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               ),
                                             ),
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'nowa5wqq' /* ฿80.00 */,
-                                              ),
+                                              AppLocalizations.of(context)!
+                                                  .k_nowa5wqq,
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ],
@@ -456,38 +461,39 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'lzlwyz5p' /* ขวด */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_lzlwyz5p,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyLarge
+                                                                    .textTheme
+                                                                    .bodyLarge!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontStyle,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -499,40 +505,42 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                                     0.0,
                                                                     0.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            'syd2fvo2' /* 960 ml */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelSmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_syd2fvo2,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .override(
+                                                                    font: GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: Color(
-                                                                    0xFFB3B3B3),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                        0xFFB3B3B3),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ),
@@ -541,39 +549,36 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               ),
                                             ),
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'uneymy43' /* ฿125.00 */,
-                                              ),
+                                              AppLocalizations.of(context)!
+                                                  .k_uneymy43,
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ],
@@ -625,38 +630,39 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'roc84uh6' /* ขวด x6 */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_roc84uh6,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyLarge
+                                                                    .textTheme
+                                                                    .bodyLarge!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontStyle,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -668,40 +674,42 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                                     0.0,
                                                                     0.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            'almm9ins' /* Secondary text */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelSmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_almm9ins,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .override(
+                                                                    font: GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: Color(
-                                                                    0xFFB3B3B3),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                        0xFFB3B3B3),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ),
@@ -710,39 +718,36 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               ),
                                             ),
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'jbn0op93' /* ฿600.00 */,
-                                              ),
+                                              AppLocalizations.of(context)!
+                                                  .k_jbn0op93,
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ],
@@ -794,38 +799,39 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'ouyh24oe' /* โปร 24 ขวด */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_ouyh24oe,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyLarge
+                                                                    .textTheme
+                                                                    .bodyLarge!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontStyle,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -837,43 +843,42 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                                     0.0,
                                                                     0.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            'ijkpx5mr' /* ก่อน 3 ทุ่ม
- - เฟรนฟราย 1 จาน
-... */
-                                                            ,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelSmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_ijkpx5mr,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .override(
+                                                                    font: GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: Color(
-                                                                    0xFFB3B3B3),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                        0xFFB3B3B3),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ),
@@ -882,39 +887,36 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               ),
                                             ),
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                '6vbc4toe' /* ฿2200.00 */,
-                                              ),
+                                              AppLocalizations.of(context)!
+                                                  .k_6vbc4toe,
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ],
@@ -966,38 +968,39 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '2racoy76' /* tower */,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyLarge
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_2racoy76,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .openSans(
+                                                              fontWeight: Theme
+                                                                      .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontWeight,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
                                                                         context)
-                                                                    .bodyLarge
+                                                                    .textTheme
+                                                                    .bodyLarge!
                                                                     .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge
-                                                                    .fontStyle,
-                                                              ),
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontStyle,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -1009,40 +1012,42 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                                     0.0,
                                                                     0.0),
                                                         child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            '8xk87fm0' /* 2800 ml */,
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelSmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .k_8xk87fm0,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .override(
+                                                                    font: GoogleFonts
                                                                         .roboto(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelSmall
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: Color(
-                                                                    0xFFB3B3B3),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .fontStyle,
-                                                              ),
+                                                                      fontWeight: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .labelSmall!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                        0xFFB3B3B3),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .labelSmall!
+                                                                        .fontStyle,
+                                                                  ),
                                                         ),
                                                       ),
                                                     ),
@@ -1051,39 +1056,36 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               ),
                                             ),
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'i0gt64q8' /* ฿1,200.00 */,
-                                              ),
+                                              AppLocalizations.of(context)!
+                                                  .k_i0gt64q8,
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
                                                   .override(
                                                     font: GoogleFonts.openSans(
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
                                                               .fontStyle,
                                                     ),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                             ),
                                           ],
@@ -1110,31 +1112,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 1.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'y4adjn7e' /* รายการเสริม 1# */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        AppLocalizations.of(context)!
+                                            .k_y4adjn7e,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .override(
                                               font: GoogleFonts.openSans(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontStyle,
+                                                fontWeight: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .fontWeight,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .fontStyle,
                                               ),
                                               letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .fontStyle,
+                                              fontWeight: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .fontWeight,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),
@@ -1146,37 +1148,34 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 5.0, 0.0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'gdgvi36s' /* ( เลือก 2  รายการ ) */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_gdgvi36s,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   color: Color(0xFF888888),
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -1216,25 +1215,23 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '2xcu1n0d' /* ข้าวไข่เจียว */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_2xcu1n0d,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1242,33 +1239,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'bpu0xdyl' /* + ฿100 */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodySmall
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_bpu0xdyl,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1276,11 +1271,11 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                   ],
@@ -1349,25 +1344,23 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'nrwvz2da' /* ข้าวไข่ขาหมู */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_nrwvz2da,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1375,33 +1368,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'cs747arq' /* + ฿100 */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodySmall
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_cs747arq,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1409,11 +1400,11 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                   ],
@@ -1482,25 +1473,23 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '90dh6gtj' /* ข้าวไข่ข้น */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_90dh6gtj,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1508,33 +1497,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                     Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '7dbah7v6' /* + ฿100 */,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodySmall
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .k_7dbah7v6,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall!
                                                           .override(
                                                             font: GoogleFonts
                                                                 .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
+                                                              fontStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .fontStyle,
                                                             ),
                                                             color: Colors.white,
                                                             fontSize: 14.0,
@@ -1542,11 +1529,11 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .fontStyle,
+                                                            fontStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall!
+                                                                .fontStyle,
                                                           ),
                                                     ),
                                                   ],
@@ -1606,57 +1593,57 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .override(
                                           font: GoogleFonts.roboto(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .fontStyle,
                                           ),
                                           color: Color(0xFFB3B3B3),
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontStyle,
                                         ),
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'bpluj4b5' /* ระบุรายละเอียดเพิ่มเติม */,
-                                    ),
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    hintText: AppLocalizations.of(context)!
+                                        .k_bpluj4b5,
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .override(
                                           font: GoogleFonts.roboto(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .fontStyle,
                                           ),
                                           color: Color(0xFFB3B3B3),
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .fontStyle,
                                         ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -1675,7 +1662,7 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).error,
+                                            Theme.of(context).colorScheme.error,
                                         width: 2.0,
                                       ),
                                       borderRadius: BorderRadius.circular(8.0),
@@ -1683,7 +1670,7 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).error,
+                                            Theme.of(context).colorScheme.error,
                                         width: 2.0,
                                       ),
                                       borderRadius: BorderRadius.circular(8.0),
@@ -1691,30 +1678,34 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                     filled: true,
                                     fillColor: Color(0xFF050505),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                   maxLines: 3,
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  cursorColor: Theme.of(context)
+                                      .extension<CustomColors>()!
+                                      .primaryText,
                                   validator: _model.textControllerValidator
                                       .asValidator(context),
                                 ),
@@ -1783,29 +1774,27 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'i41sqnrr' /* ฿ 1,500.00 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleMedium
+                                            AppLocalizations.of(context)!
+                                                .k_i41sqnrr,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 25.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ],
@@ -1836,22 +1825,20 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                 alignment: AlignmentDirectional(
                                                     0.0, 0.0),
                                                 child: Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'x9dyn1hg' /* 1 */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
+                                                  AppLocalizations.of(context)!
+                                                      .k_x9dyn1hg,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
                                                       .override(
                                                         font: GoogleFonts
                                                             .openSans(
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
                                                                   .fontStyle,
                                                         ),
                                                         color: Colors.white,
@@ -1860,9 +1847,9 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
                                                                 .fontStyle,
                                                       ),
                                                 ),
@@ -1933,18 +1920,17 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: FFButtonWidget(
+                                child: MundayButton(
                                   onPressed: () {
                                     print('Button pressed ...');
                                   },
-                                  text: FFLocalizations.of(context).getText(
-                                    'cobkynbg' /* Add Order */,
-                                  ),
+                                  text:
+                                      AppLocalizations.of(context)!.k_cobkynbg,
                                   icon: Icon(
                                     Icons.add,
                                     size: 15.0,
                                   ),
-                                  options: FFButtonOptions(
+                                  options: MundayButtonOptions(
                                     width: double.infinity,
                                     height: 50.0,
                                     padding: EdgeInsets.all(0.0),
@@ -1952,30 +1938,31 @@ class _AppbarmenuCopyWidgetState extends State<AppbarmenuCopyWidget> {
                                         0.0, 0.0, 0.0, 0.0),
                                     iconColor: Colors.white,
                                     color: Color(0xFFFF0000),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .fontStyle,
                                         ),
                                     elevation: 0.0,
                                     borderSide: BorderSide(

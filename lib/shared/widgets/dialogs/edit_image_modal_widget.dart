@@ -1,13 +1,16 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/auth/supabase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
 import '/core/utils/index.dart' as actions;
 import '/shared/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'edit_image_modal_model.dart';
 export 'edit_image_modal_model.dart';
 
-class EditImageModalWidget extends StatefulWidget {
+class EditImageModalWidget extends ConsumerStatefulWidget {
   const EditImageModalWidget({
     super.key,
     this.croppShape,
@@ -22,10 +25,10 @@ class EditImageModalWidget extends StatefulWidget {
   final int? direct;
 
   @override
-  State<EditImageModalWidget> createState() => _EditImageModalWidgetState();
+  ConsumerState<EditImageModalWidget> createState() => _EditImageModalWidgetState();
 }
 
-class _EditImageModalWidgetState extends State<EditImageModalWidget> {
+class _EditImageModalWidgetState extends ConsumerState<EditImageModalWidget> {
   late EditImageModalModel _model;
 
   @override
@@ -37,7 +40,7 @@ class _EditImageModalWidgetState extends State<EditImageModalWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EditImageModalModel());
+    _model = EditImageModalModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -96,7 +99,7 @@ class _EditImageModalWidgetState extends State<EditImageModalWidget> {
           alignment: AlignmentDirectional(1.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 30.0, 0.0),
-            child: FlutterFlowIconButton(
+            child: MundayIconButton(
               borderColor: Colors.transparent,
               borderRadius: 30.0,
               borderWidth: 1.0,

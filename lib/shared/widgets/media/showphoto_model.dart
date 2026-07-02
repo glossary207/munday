@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'showphoto_widget.dart' show ShowphotoWidget;
 import 'package:flutter/material.dart';
 
-class ShowphotoModel extends FlutterFlowModel<ShowphotoWidget> {
+class ShowphotoModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for PageView widget.

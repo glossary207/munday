@@ -1,18 +1,20 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'account_page_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'account_page_model.dart';
 
-class AccountPageWidget extends StatefulWidget {
+class AccountPageWidget extends ConsumerStatefulWidget {
   const AccountPageWidget({super.key});
 
   @override
-  State<AccountPageWidget> createState() => _AccountPageWidgetState();
+  ConsumerState<AccountPageWidget> createState() => _AccountPageWidgetState();
 }
 
-class _AccountPageWidgetState extends State<AccountPageWidget> {
+class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
   late AccountPageModel _model;
 
   @override
@@ -24,7 +26,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AccountPageModel());
+    _model = AccountPageModel()..internalInit(context);
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -98,21 +100,21 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          '1tuf3zdu' /* เบียร์ ช้าง */,
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        AppLocalizations.of(context)!.k_1tuf3zdu,
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               font: GoogleFonts.openSans(
                                 fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                fontStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .fontStyle,
                               ),
                               fontSize: 25.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontStyle,
                             ),
                       ),
@@ -121,22 +123,22 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'thg66gfp' /* นำกระทะตั้งไฟปานกลาง ใส่น้ำมัน... */,
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        AppLocalizations.of(context)!.k_thg66gfp,
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               font: GoogleFonts.openSans(
                                 fontWeight: FontWeight.normal,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                fontStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .fontStyle,
                               ),
                               color: Color(0xFFB3B3B3),
                               fontSize: 16.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontStyle,
                             ),
                       ),
@@ -157,26 +159,29 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 1.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'd2x52u28' /* รายการหลัก */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyLarge
+                              AppLocalizations.of(context)!.k_d2x52u28,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontStyle,
                                     ),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontStyle,
                                   ),
                             ),
@@ -188,30 +193,31 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 5.0, 0.0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'ky5kczto' /* ( เลือก 1 รายการ ) */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
+                                  AppLocalizations.of(context)!.k_ky5kczto,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyLarge
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyLarge
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .fontStyle,
                                         ),
                                         color: Color(0xFF888888),
                                         fontSize: 14.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .fontStyle,
                                       ),
                                 ),
@@ -267,35 +273,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'v0s1yakg' /* กระป๋อง */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_v0s1yakg,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Expanded(
@@ -303,37 +306,35 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'plpi8ac3' /* 490 ml */,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelSmall
+                                                AppLocalizations.of(context)!
+                                                    .k_plpi8ac3,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall!
                                                     .override(
                                                       font: GoogleFonts.roboto(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontWeight,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontStyle,
                                                       ),
                                                       color: Color(0xFFB3B3B3),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -344,33 +345,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     ),
                                   ),
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'iz8upluc' /* ฿80.00 */,
-                                    ),
+                                    AppLocalizations.of(context)!.k_iz8upluc,
                                     textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                   ),
                                 ],
@@ -418,35 +418,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              '1taykv9o' /* ขวด */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_1taykv9o,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Expanded(
@@ -454,37 +451,35 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  '61koln9m' /* 960 ml */,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelSmall
+                                                AppLocalizations.of(context)!
+                                                    .k_61koln9m,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall!
                                                     .override(
                                                       font: GoogleFonts.roboto(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontWeight,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontStyle,
                                                       ),
                                                       color: Color(0xFFB3B3B3),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -495,33 +490,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     ),
                                   ),
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'gxtxed0h' /* ฿125.00 */,
-                                    ),
+                                    AppLocalizations.of(context)!.k_gxtxed0h,
                                     textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                   ),
                                 ],
@@ -569,35 +563,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'fopxh6ut' /* ขวด x6 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_fopxh6ut,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Expanded(
@@ -605,37 +596,35 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'o45tq0eo' /* Secondary text */,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelSmall
+                                                AppLocalizations.of(context)!
+                                                    .k_o45tq0eo,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall!
                                                     .override(
                                                       font: GoogleFonts.roboto(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontWeight,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontStyle,
                                                       ),
                                                       color: Color(0xFFB3B3B3),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -646,33 +635,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     ),
                                   ),
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      '6xd7h8om' /* ฿600.00 */,
-                                    ),
+                                    AppLocalizations.of(context)!.k_6xd7h8om,
                                     textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                   ),
                                 ],
@@ -720,35 +708,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'ktst41ad' /* โปร 24 ขวด */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_ktst41ad,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Expanded(
@@ -756,40 +741,35 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'jr24icaw' /* ก่อน 3 ทุ่ม
- - เฟรนฟราย 1 จาน
-... */
-                                                  ,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelSmall
+                                                AppLocalizations.of(context)!
+                                                    .k_jr24icaw,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall!
                                                     .override(
                                                       font: GoogleFonts.roboto(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontWeight,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontStyle,
                                                       ),
                                                       color: Color(0xFFB3B3B3),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -800,33 +780,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     ),
                                   ),
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'ivx746hh' /* ฿2200.00 */,
-                                    ),
+                                    AppLocalizations.of(context)!.k_ivx746hh,
                                     textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                   ),
                                 ],
@@ -874,35 +853,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              '6qsq9emi' /* tower */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                            AppLocalizations.of(context)!
+                                                .k_6qsq9emi,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
                                                             .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Expanded(
@@ -910,37 +886,35 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'tte3l895' /* 2800 ml */,
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelSmall
+                                                AppLocalizations.of(context)!
+                                                    .k_tte3l895,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall!
                                                     .override(
                                                       font: GoogleFonts.roboto(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontWeight,
                                                         fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelSmall
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .labelSmall!
                                                                 .fontStyle,
                                                       ),
                                                       color: Color(0xFFB3B3B3),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontWeight,
                                                       fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelSmall
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelSmall!
                                                               .fontStyle,
                                                     ),
                                               ),
@@ -951,33 +925,32 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     ),
                                   ),
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'sw0y7mzx' /* ฿1,200.00 */,
-                                    ),
+                                    AppLocalizations.of(context)!.k_sw0y7mzx,
                                     textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontWeight,
+                                            fontStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
                                   ),
                                 ],
@@ -1003,26 +976,29 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 1.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                '6ld7endt' /* รายการเสริม 1# */,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyLarge
+                              AppLocalizations.of(context)!.k_6ld7endt,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
                                           .fontStyle,
                                     ),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
                                         .fontStyle,
                                   ),
                             ),
@@ -1034,30 +1010,31 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 5.0, 0.0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'uhdtdr8l' /* ( เลือก 2  รายการ ) */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
+                                  AppLocalizations.of(context)!.k_uhdtdr8l,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyLarge
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyLarge
-                                                  .fontStyle,
+                                          fontWeight: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .fontWeight,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .fontStyle,
                                         ),
                                         color: Color(0xFF888888),
                                         fontSize: 14.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyLarge
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
                                             .fontStyle,
                                       ),
                                 ),
@@ -1095,57 +1072,53 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'y7p97833' /* ข้าวไข่เจียว */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_y7p97833,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'p4wxhn1k' /* + ฿100 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall
+                                            AppLocalizations.of(context)!
+                                                .k_p4wxhn1k,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodySmall
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmall
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ],
@@ -1204,57 +1177,53 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              '8jyip9q8' /* ข้าวไข่ขาหมู */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_8jyip9q8,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'm8saqwv0' /* + ฿100 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall
+                                            AppLocalizations.of(context)!
+                                                .k_m8saqwv0,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodySmall
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmall
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ],
@@ -1313,57 +1282,53 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'e74jcwol' /* ข้าวไข่ข้น */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                            AppLocalizations.of(context)!
+                                                .k_e74jcwol,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              'h2eowim4' /* + ฿100 */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall
+                                            AppLocalizations.of(context)!
+                                                .k_h2eowim4,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
                                                 .override(
                                                   font: GoogleFonts.inter(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodySmall
-                                                            .fontStyle,
+                                                    fontStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .fontStyle,
                                                   ),
                                                   color: Colors.white,
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmall
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .fontStyle,
                                                 ),
                                           ),
                                         ],
@@ -1417,44 +1382,50 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                         decoration: InputDecoration(
                           isDense: true,
                           labelStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
+                              Theme.of(context).textTheme.labelMedium!.override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
                                     color: Color(0xFFB3B3B3),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
-                          hintText: FFLocalizations.of(context).getText(
-                            '2c0ttz1g' /* ระบุรายละเอียดเพิ่มเติม */,
-                          ),
+                          hintText: AppLocalizations.of(context)!.k_2c0ttz1g,
                           hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
+                              Theme.of(context).textTheme.labelMedium!.override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
                                           .fontStyle,
                                     ),
                                     color: Color(0xFFB3B3B3),
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .fontStyle,
                                   ),
                           enabledBorder: OutlineInputBorder(
@@ -1473,14 +1444,14 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           ),
                           errorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
+                              color: Theme.of(context).colorScheme.error,
                               width: 2.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).error,
+                              color: Theme.of(context).colorScheme.error,
                               width: 2.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -1488,25 +1459,31 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           filled: true,
                           fillColor: Color(0xFF050505),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
                               font: GoogleFonts.openSans(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                fontWeight: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                fontStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
                                     .fontStyle,
                               ),
                               letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontStyle,
                             ),
                         maxLines: 3,
-                        cursorColor: FlutterFlowTheme.of(context).primaryText,
+                        cursorColor: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         validator:
                             _model.textControllerValidator.asValidator(context),
                       ),

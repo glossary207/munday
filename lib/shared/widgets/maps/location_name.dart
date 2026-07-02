@@ -1,27 +1,22 @@
 // Automatic FlutterFlow imports
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:munday/core/theme/theme.dart';
 
-class LocationName extends StatefulWidget {
+class LocationName extends ConsumerStatefulWidget {
   const LocationName({
     super.key,
     this.width,
@@ -34,10 +29,10 @@ class LocationName extends StatefulWidget {
   final LatLng? locationNow;
 
   @override
-  State<LocationName> createState() => _LocationNameState();
+  ConsumerState<LocationName> createState() => _LocationNameState();
 }
 
-class _LocationNameState extends State<LocationName> {
+class _LocationNameState extends ConsumerState<LocationName> {
   static const TextStyle _style = TextStyle(
     color: Color(0xFFBCBCBC),
     fontSize: 14.0,

@@ -1,15 +1,18 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'showphoto_model.dart';
 export 'showphoto_model.dart';
 
-class ShowphotoWidget extends StatefulWidget {
+class ShowphotoWidget extends ConsumerStatefulWidget {
   const ShowphotoWidget({
     super.key,
     required this.photo,
@@ -18,10 +21,10 @@ class ShowphotoWidget extends StatefulWidget {
   final List<String>? photo;
 
   @override
-  State<ShowphotoWidget> createState() => _ShowphotoWidgetState();
+  ConsumerState<ShowphotoWidget> createState() => _ShowphotoWidgetState();
 }
 
-class _ShowphotoWidgetState extends State<ShowphotoWidget>
+class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
     with TickerProviderStateMixin {
   late ShowphotoModel _model;
 
@@ -36,7 +39,7 @@ class _ShowphotoWidgetState extends State<ShowphotoWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ShowphotoModel());
+    _model = ShowphotoModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(

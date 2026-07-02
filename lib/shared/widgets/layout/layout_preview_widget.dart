@@ -1,19 +1,13 @@
 // Automatic FlutterFlow imports
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
@@ -21,9 +15,10 @@ import 'package:flutter/material.dart';
 import '/backend/backend.dart'; // (kept if other generated parts rely on side-effects)
 import 'package:flutter/foundation.dart'; // for listEquals in WallPainter
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '/backend/supabase/supabase_shim.dart'; // Use shim for SupabaseDocRef types if needed
+import '/backend/supabase/supabase_shim.dart';
+import 'package:munday/core/theme/theme.dart'; // Use shim for SupabaseDocRef types if needed
 
-class LayoutPreviewWidget extends StatefulWidget {
+class LayoutPreviewWidget extends ConsumerStatefulWidget {
   final double width;
   final double height;
   final String currentuid;
@@ -41,10 +36,10 @@ class LayoutPreviewWidget extends StatefulWidget {
   });
 
   @override
-  _LayoutPreviewWidgetState createState() => _LayoutPreviewWidgetState();
+  ConsumerState<LayoutPreviewWidget> createState() => _LayoutPreviewWidgetState();
 }
 
-class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
+class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
   late TransformationController _transformationController;
   Rect? _boundingBox; // cached current bounding box
   bool _initialTransformApplied = false; // apply only once per date
@@ -1264,7 +1259,7 @@ class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
 // ==============================
 // TableWidget (ใช้ TweenAnimationBuilder สำหรับ Animation)
 // ==============================
-class TableWidget extends StatefulWidget {
+class TableWidget extends ConsumerStatefulWidget {
   final String id;
   final double width;
   final double height;
@@ -1290,10 +1285,10 @@ class TableWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TableWidgetState createState() => _TableWidgetState();
+  ConsumerState<TableWidget> createState() => _TableWidgetState();
 }
 
-class _TableWidgetState extends State<TableWidget> {
+class _TableWidgetState extends ConsumerState<TableWidget> {
   @override
   void didUpdateWidget(covariant TableWidget oldWidget) {
     super.didUpdateWidget(oldWidget);

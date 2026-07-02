@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
 import 'rowpromotion_widget.dart' show RowpromotionWidget;
 import 'package:flutter/material.dart';
 
-class RowpromotionModel extends FlutterFlowModel<RowpromotionWidget> {
+class RowpromotionModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

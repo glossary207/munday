@@ -3,7 +3,7 @@ import '../auth/supabase_auth/auth_util.dart';
 import 'supabase/supabase_shim.dart';
 export 'supabase/supabase_shim.dart';
 
-import '../flutter_flow/flutter_flow_util.dart';
+import '../core/utils/app_util.dart';
 import 'schema/util/supabase_util.dart';
 
 import 'schema/users_record.dart';
@@ -621,13 +621,11 @@ Future maybeCreateUser(User user) async {
     if (currentUserDocument != null) {
       final backfillData = createUsersRecordData(
         email: currentUserDocument!.hasEmail() ? null : user.email,
-        displayName:
-            currentUserDocument!.hasDisplayName() ? null : displayName,
+        displayName: currentUserDocument!.hasDisplayName() ? null : displayName,
         photoUrl: currentUserDocument!.hasPhotoUrl() ? null : photoUrl,
         phoneNumber: currentUserDocument!.hasPhoneNumber() ? null : user.phone,
-        createdTime: currentUserDocument!.hasCreatedTime()
-            ? null
-            : getCurrentTimestamp,
+        createdTime:
+            currentUserDocument!.hasCreatedTime() ? null : getCurrentTimestamp,
       );
       if (backfillData.isNotEmpty) {
         await userRecord.update(backfillData);

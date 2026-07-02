@@ -3,13 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 
-
-
-import 'package:ff_commons/flutter_flow/place.dart';
-import 'package:ff_commons/flutter_flow/uploaded_file.dart';
+import 'package:munday/core/types/place.dart';
+import 'package:munday/core/types/uploaded_file.dart';
 
 /// SERIALIZATION HELPERS
 

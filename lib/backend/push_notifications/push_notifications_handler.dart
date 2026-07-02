@@ -1,26 +1,27 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 
 import 'serialization_util.dart';
 import '/backend/backend.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 final _handledMessageIds = <String?>{};
 
-class PushNotificationsHandler extends StatefulWidget {
+class PushNotificationsHandler extends ConsumerStatefulWidget {
   const PushNotificationsHandler({Key? key, required this.child})
       : super(key: key);
 
   final Widget child;
 
   @override
-  _PushNotificationsHandlerState createState() =>
+  ConsumerState<PushNotificationsHandler> createState() =>
       _PushNotificationsHandlerState();
 }
 
-class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
+class _PushNotificationsHandlerState extends ConsumerState<PushNotificationsHandler> {
   bool _loading = false;
 
   Future handleOpenedPushNotification() async {

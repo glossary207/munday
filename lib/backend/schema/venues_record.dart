@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 import '/backend/schema/util/supabase_util.dart';
 
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class VenuesRecord extends SupabaseRecord {
   VenuesRecord._(
@@ -170,9 +170,26 @@ class VenuesRecord extends SupabaseRecord {
     );
     _video = getDataList(snapshotData['video'] ?? snapshotData['Video']);
     _listpromotion = getStructList(
-      snapshotData['listpromotion'],
+      snapshotData['listpromotion'] ?? snapshotData['ListPromotion'] ?? snapshotData['listPromotion'],
       PromotionDataSubStruct.fromMap,
     );
+    
+    // Fallback: If listpromotion is empty but promotion has images, auto-generate structs
+    if ((_listpromotion == null || _listpromotion!.isEmpty) && _promotion != null && _promotion!.isNotEmpty) {
+      _listpromotion = _promotion!.map((photoUrl) => PromotionDataSubStruct(
+        photo: photoUrl,
+        mon: true,
+        tue: true,
+        wed: true,
+        thu: true,
+        fri: true,
+        sat: true,
+        sun: true,
+        dateStart: DateTime(2000),
+        dateEnd: DateTime(2100),
+      )).toList();
+    }
+    
     _tableId = getDataList(snapshotData['table_id']);
     _idLiveChat = getSupabaseDocRef(
       snapshotData['id_liveChat'],

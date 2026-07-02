@@ -1,33 +1,29 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import '/flutter_flow/flutter_flow_util.dart'; // นำเข้า isWeb
+import '/core/utils/app_util.dart'; // นำเข้า isWeb
 
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gmf;
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:flutter/animation.dart'; // นำเข้าแพ็กเกจสำหรับอนิเมชัน
+import 'package:flutter/animation.dart';
+import 'package:munday/core/theme/theme.dart'; // นำเข้าแพ็กเกจสำหรับอนิเมชัน
 
-class MapVenuse extends StatefulWidget {
+class MapVenuse extends ConsumerStatefulWidget {
   const MapVenuse({
     Key? key,
     this.width,
@@ -70,10 +66,10 @@ class MapVenuse extends StatefulWidget {
   final double? radian; // เพิ่มพารามิเตอร์ radian
 
   @override
-  State<MapVenuse> createState() => _MapVenuseState();
+  ConsumerState<MapVenuse> createState() => _MapVenuseState();
 }
 
-class _MapVenuseState extends State<MapVenuse>
+class _MapVenuseState extends ConsumerState<MapVenuse>
     with SingleTickerProviderStateMixin {
   // Map controller
   Completer<gmf.GoogleMapController> _controller = Completer();
@@ -349,7 +345,7 @@ class _MapVenuseState extends State<MapVenuse>
     await _loadCustomMarkerIcons();
     _setMarkers();
     _setCircles();
-    if (FFAppState().VenuseSelection != null) {
+    if (context.appState.VenuseSelection != null) {
       _moveToSelectedVenuse();
     } else if (widget.locationStart != null) {
       _moveToLocation(widget.locationStart!);
@@ -425,8 +421,8 @@ class _MapVenuseState extends State<MapVenuse>
             venuse.position!.longitude,
           );
 
-          final isSelected = FFAppState().VenuseSelection != null &&
-              FFAppState().VenuseSelection == venuse.reference;
+          final isSelected = context.appState.VenuseSelection != null &&
+              context.appState.VenuseSelection == venuse.reference;
 
           final markerIcon = isSelected
               ? (_customMarkerSelectedIcon ??
@@ -441,7 +437,7 @@ class _MapVenuseState extends State<MapVenuse>
                 ? 3.0
                 : 2.0, // ตั้งค่า zIndex ของไอคอนให้สูงกว่าวงกลม
             onTap: () async {
-              FFAppState().VenuseSelection = venuse.reference;
+              context.appState.VenuseSelection = venuse.reference;
               setState(() {
                 _setMarkers();
               });
@@ -533,9 +529,9 @@ class _MapVenuseState extends State<MapVenuse>
   }
 
   Future<void> _moveToSelectedVenuse() async {
-    if (FFAppState().VenuseSelection != null) {
+    if (context.appState.VenuseSelection != null) {
       final venuseRecord =
-          await VenuesRecord.getDocumentOnce(FFAppState().VenuseSelection!);
+          await VenuesRecord.getDocumentOnce(context.appState.VenuseSelection!);
       if (venuseRecord != null && venuseRecord.position != null) {
         final controller = await _controller.future;
         final position = gmf.LatLng(
@@ -606,11 +602,11 @@ class _MapVenuseState extends State<MapVenuse>
       _moveToSelectedVenuse();
     }
 
-    // ตรวจสอบ FFAppState().MoveMap และเรียกใช้ _moveToCurrentLocation
-    if (FFAppState().MoveMap == true) {
+    // ตรวจสอบ context.appState.MoveMap และเรียกใช้ _moveToCurrentLocation
+    if (context.appState.MoveMap == true) {
       _moveToCurrentLocation();
-      // รีเซ็ตค่า FFAppState().MoveMap เป็น false
-      FFAppState().MoveMap = false;
+      // รีเซ็ตค่า context.appState.MoveMap เป็น false
+      context.appState.MoveMap = false;
     }
 
     // ตรวจสอบการเปลี่ยนแปลงของ currentLocation และ radian เพื่ออัปเดตวงกลม
@@ -663,7 +659,7 @@ class _MapVenuseState extends State<MapVenuse>
               });
 
               // หลังจากแผนที่พร้อมแล้ว เคลื่อนที่ไปยังตำแหน่งที่ต้องการ
-              if (FFAppState().VenuseSelection != null) {
+              if (context.appState.VenuseSelection != null) {
                 await _moveToSelectedVenuse();
               } else if (widget.locationStart != null) {
                 await _moveToLocation(widget.locationStart!);
@@ -674,7 +670,7 @@ class _MapVenuseState extends State<MapVenuse>
             },
             zoomControlsEnabled: false,
             onCameraMove: (gmf.CameraPosition position) {
-              FFAppState().MapCenter = LatLng(
+              context.appState.MapCenter = LatLng(
                 position.target.latitude,
                 position.target.longitude,
               );

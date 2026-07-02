@@ -1,27 +1,23 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 // ใช้ CardSwiper เวอร์ชันที่ FlutterFlow ติดตั้ง (ซึ่งมักไม่มี param direction ใน swipe())
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:munday/core/theme/theme.dart';
 
-class Swipecard extends StatefulWidget {
+class Swipecard extends ConsumerStatefulWidget {
   const Swipecard({
     super.key,
     this.width,
@@ -39,10 +35,10 @@ class Swipecard extends StatefulWidget {
   final List<SupabaseDocRef>? dataid;
 
   @override
-  State<Swipecard> createState() => _SwipecardState();
+  ConsumerState<Swipecard> createState() => _SwipecardState();
 }
 
-class _SwipecardState extends State<Swipecard> {
+class _SwipecardState extends ConsumerState<Swipecard> {
   /// Controller ของ CardSwiper
   final CardSwiperController _controller = CardSwiperController();
 
@@ -106,26 +102,26 @@ class _SwipecardState extends State<Swipecard> {
     }
   }
 
-  /// ตรวจจับค่าใน FFAppState() (Next, Match, Back)
+  /// ตรวจจับค่าใน AppState() (Next, Match, Back)
   /// แล้วสั่ง swipe() / undo()
   @override
   void didUpdateWidget(covariant Swipecard oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     // ถ้า Next == true => ปัดออก (ไม่กำหนดทิศได้)
-    if (FFAppState().Next == true) {
-      FFAppState().PreNext = true;
-      _controller.swipe();
+    if (context.appState.Next == true) {
+      context.appState.PreNext = true;
+      _controller.swipe(CardSwiperDirection.left);
     }
 
     // ถ้า Match == true => ปัดออก
-    if (FFAppState().Match == true) {
-      FFAppState().PreMatch = true;
-      _controller.swipe();
+    if (context.appState.Match == true) {
+      context.appState.PreMatch = true;
+      _controller.swipe(CardSwiperDirection.right);
     }
 
     // ถ้า Back == true => Undo
-    if (FFAppState().Back == true) {
+    if (context.appState.Back == true) {
       _controller.undo();
     }
   }
@@ -137,22 +133,22 @@ class _SwipecardState extends State<Swipecard> {
 
     // ถ้าทิศ == ซ้าย => ถือว่า Next
     if (direction == CardSwiperDirection.left) {
-      FFAppState().Next = false;
-      FFAppState().PreNext = false;
+      context.appState.Next = false;
+      context.appState.PreNext = false;
       if (currentIndex != null &&
           currentIndex >= 0 &&
           currentIndex < (widget.dataid?.length ?? 0)) {
-        FFAppState().Idcurrent = widget.dataid![currentIndex];
+        context.appState.Idcurrent = widget.dataid![currentIndex];
       }
     }
     // ถ้าทิศ == ขวา => ถือว่า Match
     else if (direction == CardSwiperDirection.right) {
-      FFAppState().Match = false;
-      FFAppState().PreMatch = false;
+      context.appState.Match = false;
+      context.appState.PreMatch = false;
       if (currentIndex != null &&
           currentIndex >= 0 &&
           currentIndex < (widget.dataid?.length ?? 0)) {
-        FFAppState().Idcurrent = widget.dataid![currentIndex];
+        context.appState.Idcurrent = widget.dataid![currentIndex];
       }
     }
 
@@ -163,11 +159,11 @@ class _SwipecardState extends State<Swipecard> {
   bool _onUndo(
       int? previousIndex, int currentIndex, CardSwiperDirection direction) {
     print('Undo from $currentIndex to $previousIndex');
-    FFAppState().Back = false;
+    context.appState.Back = false;
     if (previousIndex != null &&
         previousIndex >= 0 &&
         previousIndex < (widget.dataid?.length ?? 0)) {
-      FFAppState().Idcurrent = widget.dataid![previousIndex];
+      context.appState.Idcurrent = widget.dataid![previousIndex];
     }
     return true;
   }

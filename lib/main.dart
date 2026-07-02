@@ -1,59 +1,50 @@
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
+import 'package:munday/integrations/supabase_service.dart';
+import 'core/routing/app_router.dart';
+
+import '/core/utils/app_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth/supabase_auth/supabase_user_provider.dart';
 import 'auth/supabase_auth/auth_util.dart';
-
 import 'backend/backend.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/supabase/supabase_config.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/internationalization.dart';
-
-import 'package:f_f_story_view_live_zhm3f3/app_state.dart'
-    as f_f_story_view_live_zhm3f3_app_state;
+import 'core/utils/locale_util.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'core/state/app_state.dart';
+import 'core/theme/app_theme.dart';
 
-void main() async {
+import 'package:provider/provider.dart';
+
+late SharedPreferences sharedPrefs;
+
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = true;
-
-  GoRouter.optionURLReflectsImperativeAPIs = true;
-  usePathUrlStrategy();
-
-  await SupabaseConfig.initialize();
-
-  await FlutterFlowTheme.initialize();
-
-  final appState = FFAppState(); // Initialize FFAppState
-  await appState.initializePersistedState();
-
-  final f_f_story_view_live_zhm3f3AppState =
-      f_f_story_view_live_zhm3f3_app_state.FFAppState();
-  await f_f_story_view_live_zhm3f3AppState.initializePersistedState();
-
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => appState,
+  sharedPrefs = await SharedPreferences.getInstance();
+  await SupabaseService().initialize();
+  runApp(
+    ProviderScope(
+      child: ChangeNotifierProvider(
+        create: (context) => AppState(),
+        child: MyApp(),
       ),
-      ChangeNotifierProvider(
-        create: (context) => f_f_story_view_live_zhm3f3AppState,
-      ),
-    ],
-    child: MyApp(),
-  ));
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   // This widget is the root of your application.
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
@@ -67,35 +58,40 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   Locale? _locale;
 
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = AppTheme.themeMode;
 
   late AppStateNotifier _appStateNotifier;
-  late GoRouter _router;
-  String getRoute([RouteMatch? routeMatch]) {
-    final RouteMatch lastMatch =
-        routeMatch ?? _router.routerDelegate.currentConfiguration.last;
-    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
-        ? lastMatch.matches
-        : _router.routerDelegate.currentConfiguration;
-    return matchList.uri.toString();
-  }
 
-  List<String> getRouteStack() =>
-      _router.routerDelegate.currentConfiguration.matches
-          .map((e) => getRoute(e))
-          .toList();
+  
+
   late Stream<BaseAuthUser> userStream;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
+
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
+
+  String getRoute([RouteMatchBase? routeMatch]) {
+    final configuration = appRouter.routerDelegate.currentConfiguration;
+    if (configuration == null) return '';
+    final RouteMatchBase lastMatch = routeMatch ?? configuration.last;
+    final RouteMatchList matchList =
+        lastMatch is ImperativeRouteMatch ? lastMatch.matches : configuration;
+    return matchList.uri.toString();
+  }
+
+  List<String> getRouteStack() {
+    final configuration = appRouter.routerDelegate.currentConfiguration;
+    if (configuration == null) return [];
+    return configuration.matches.map((e) => getRoute(e)).toList();
+  }
 
   Future<void> _bootstrapPersistedSession(User? persistedUser) async {
     if (persistedUser != null) {
       try {
-        await maybeCreateUser(persistedUser);
+        await maybeCreateUser(persistedUser).timeout(const Duration(seconds: 5));
       } catch (_) {}
     }
     if (!mounted) {
@@ -107,19 +103,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
     _appStateNotifier = AppStateNotifier.instance;
-
-    // Initialize AppStateNotifier immediately with the persisted Supabase session
-    // so that route guards see loggedIn = true before the stream emits.
-    // Without this, navigating to requireAuth routes right after startup
-    // sees user == null and redirects to phone-login (race condition).
     final persistedUser = Supabase.instance.client.auth.currentUser;
-    if (persistedUser != null) {
-      _appStateNotifier.update(MundaySupabaseUser(persistedUser));
-    }
-
-    _router = createRouter(_appStateNotifier);
+    _appStateNotifier.update(MundaySupabaseUser(persistedUser));
+    
+    
     _bootstrapPersistedSession(persistedUser);
     userStream = mundaySupabaseUserStream()
       ..listen((user) {
@@ -139,69 +127,32 @@ class _MyAppState extends State<MyApp> {
     safeSetState(() => _locale = createLocale(language));
   }
 
-  void setThemeMode(ThemeMode mode) => safeSetState(() {
-        _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
-      });
+  void setThemeMode(ThemeMode mode) {
+    return safeSetState(() {
+      _themeMode = mode;
+      AppTheme.saveThemeMode(mode);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final router = appRouter;
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Munday',
       scrollBehavior: MyAppScrollBehavior(),
-      localizationsDelegates: [
-        FFLocalizationsDelegate(),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        FallbackMaterialLocalizationDelegate(),
-        FallbackCupertinoLocalizationDelegate(),
       ],
       locale: _locale,
-      supportedLocales: const [
-        Locale('th'),
-        Locale('en'),
-        Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
-      ],
-      theme: ThemeData(
-        brightness: Brightness.light,
-        scrollbarTheme: ScrollbarThemeData(
-          thumbVisibility: WidgetStateProperty.all(false),
-          thickness: WidgetStateProperty.all(2.0),
-          radius: Radius.circular(10.0),
-          thumbColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.dragged)) {
-              return Color(4294901760);
-            }
-            if (states.contains(WidgetState.hovered)) {
-              return Color(4294901760);
-            }
-            return Color(4294901760);
-          }),
-        ),
-        useMaterial3: false,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scrollbarTheme: ScrollbarThemeData(
-          thumbVisibility: WidgetStateProperty.all(false),
-          thickness: WidgetStateProperty.all(2.0),
-          radius: Radius.circular(10.0),
-          thumbColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.dragged)) {
-              return Color(4294901760);
-            }
-            if (states.contains(WidgetState.hovered)) {
-              return Color(4294901760);
-            }
-            return Color(4294901760);
-          }),
-        ),
-        useMaterial3: false,
-      ),
+      supportedLocales: const [Locale('en'), Locale('th')],
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       themeMode: _themeMode,
-      routerConfig: _router,
+      routerConfig: router,
     );
   }
 }

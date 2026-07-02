@@ -1,13 +1,17 @@
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/shared/widgets/core/munday_expanded_image_view.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'poster_present_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'poster_present_model.dart';
 
-class PosterPresentWidget extends StatefulWidget {
+class PosterPresentWidget extends ConsumerStatefulWidget {
   const PosterPresentWidget({
     super.key,
     this.detail,
@@ -18,10 +22,10 @@ class PosterPresentWidget extends StatefulWidget {
   final String? poster;
 
   @override
-  State<PosterPresentWidget> createState() => _PosterPresentWidgetState();
+  ConsumerState<PosterPresentWidget> createState() => _PosterPresentWidgetState();
 }
 
-class _PosterPresentWidgetState extends State<PosterPresentWidget> {
+class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
   late PosterPresentModel _model;
 
   @override
@@ -33,7 +37,7 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PosterPresentModel());
+    _model = PosterPresentModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -101,7 +105,7 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.fade,
-                                    child: FlutterFlowExpandedImageView(
+                                    child: MundayExpandedImageView(
                                       image: Image.network(
                                         posterUrl,
                                         fit: BoxFit.contain,
@@ -131,8 +135,7 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                     tag: posterUrl,
                                     transitionOnUserGestures: true,
                                     child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(10.0),
                                       child: Image.network(
                                         posterUrl,
                                         width: double.infinity,
@@ -166,35 +169,35 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                           0.0, 0.0, 0.0, 10.0),
                                       child: SelectionArea(
                                           child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'sjar8369' /* About Event */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        AppLocalizations.of(context)!
+                                            .k_sjar8369,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .override(
                                               font: GoogleFonts.openSans(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontWeight: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontWeight,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                              color: Theme.of(context)
+                                                  .extension<CustomColors>()!
+                                                  .primaryText,
                                               fontSize: 20.0,
                                               letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontWeight: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontWeight,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                       )),
                                     ),
@@ -206,22 +209,25 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                     widget.detail,
                                     '-',
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
                                           fontWeight: FontWeight.w300,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
                                             .secondaryText,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w300,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        fontStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .fontStyle,
                                       ),
                                 )),
@@ -262,7 +268,8 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                             AlignmentDirectional(0.0, 0.0),
                                         child: Icon(
                                           Icons.arrow_back_ios_outlined,
-                                          color: FlutterFlowTheme.of(context)
+                                          color: Theme.of(context)
+                                              .extension<CustomColors>()!
                                               .primaryText,
                                           size: 28.0,
                                         ),
@@ -293,28 +300,27 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            '13ru3pxc' /* Booking Table */,
-                                          ),
+                                          AppLocalizations.of(context)!
+                                              .k_13ru3pxc,
                                           maxLines: 1,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
                                               .override(
                                                 font: GoogleFonts.openSans(
                                                   fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
                                                 ),
                                                 fontSize: 16.0,
                                                 letterSpacing: 1.0,
                                                 fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
                                         ),
                                       ],
@@ -338,7 +344,7 @@ class _PosterPresentWidgetState extends State<PosterPresentWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                FlutterFlowIconButton(
+                MundayIconButton(
                   borderColor: Colors.transparent,
                   borderRadius: 30.0,
                   borderWidth: 1.0,

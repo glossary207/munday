@@ -1,24 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/actions/actions.dart' as action_blocks;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/structs/index.dart"
-    as f_f_story_view_live_zhm3f3_data_schema;
-import "package:f_f_story_view_live_zhm3f3/backend/schema/enums/enums.dart"
-    as f_f_story_view_live_zhm3f3_enums;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart'; // Imports other custom widgets
 import '/core/utils/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/utils/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:munday/core/theme/theme.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-class RatingBar extends StatefulWidget {
+class RatingBar extends ConsumerStatefulWidget {
   const RatingBar({
     super.key,
     this.width,
@@ -35,18 +31,18 @@ class RatingBar extends StatefulWidget {
   final double sizeicon;
 
   @override
-  State<RatingBar> createState() => _RatingBarState();
+  ConsumerState<RatingBar> createState() => _RatingBarState();
 }
 
-class _RatingBarState extends State<RatingBar> {
+class _RatingBarState extends ConsumerState<RatingBar> {
   int _currentRating = 0;
 
   @override
   void initState() {
     super.initState();
     if (!widget.showOrInput) {
-      // ถ้าเป็นโหมด input ให้ใช้ค่าปัจจุบันจาก FFAppState().ratingreview
-      _currentRating = FFAppState().ratingreview;
+      // ถ้าเป็นโหมด input ให้ใช้ค่าปัจจุบันจาก context.appState.ratingreview
+      _currentRating = context.appState.ratingreview;
     }
   }
 
@@ -79,8 +75,8 @@ class _RatingBarState extends State<RatingBar> {
         onTap: () {
           setState(() {
             _currentRating = index + 1;
-            FFAppState().ratingreview =
-                _currentRating; // อัปเดต FFAppState().ratingreview
+            context.appState.ratingreview =
+                _currentRating; // อัปเดต context.appState.ratingreview
           });
         },
         child: Icon(

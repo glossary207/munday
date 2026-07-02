@@ -1,16 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
 import '/backend/backend.dart';
 import '/shared/widgets/misc/reviewcoponent_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
 import '/shared/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import '/core/utils/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'review_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'review_model.dart';
 
-class ReviewWidget extends StatefulWidget {
+class ReviewWidget extends ConsumerStatefulWidget {
   const ReviewWidget({
     super.key,
     this.idVenues,
@@ -19,10 +23,10 @@ class ReviewWidget extends StatefulWidget {
   final SupabaseDocRef? idVenues;
 
   @override
-  State<ReviewWidget> createState() => _ReviewWidgetState();
+  ConsumerState<ReviewWidget> createState() => _ReviewWidgetState();
 }
 
-class _ReviewWidgetState extends State<ReviewWidget> {
+class _ReviewWidgetState extends ConsumerState<ReviewWidget> {
   late ReviewModel _model;
 
   @override
@@ -34,7 +38,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ReviewModel());
+    _model = ReviewModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -91,12 +95,14 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 0.0, 0.0),
-                        child: FlutterFlowIconButton(
+                        child: MundayIconButton(
                           borderRadius: 90.0,
                           buttonSize: 50.0,
                           icon: Icon(
                             Icons.arrow_back_ios,
-                            color: FlutterFlowTheme.of(context).info,
+                            color: Theme.of(context)
+                                .extension<CustomColors>()!
+                                .info,
                             size: 30.0,
                           ),
                           onPressed: () async {
@@ -107,21 +113,20 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                     ],
                   ),
                   Text(
-                    FFLocalizations.of(context).getText(
-                      '25bukxun' /* Overall Rate */,
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    AppLocalizations.of(context)!.k_25bukxun,
+                    style: Theme.of(context).textTheme.bodyMedium!.override(
                           font: GoogleFonts.openSans(
                             fontWeight: FontWeight.w600,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            fontStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .fontStyle,
                           ),
                           fontSize: 20.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
                         ),
                   ),
                   Padding(
@@ -137,18 +142,20 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                       ).maybeHandleOverflow(
                         maxChars: 3,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      style: Theme.of(context).textTheme.bodyMedium!.override(
                             font: GoogleFonts.openSans(
                               fontWeight: FontWeight.bold,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              fontStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
                                   .fontStyle,
                             ),
                             fontSize: 50.0,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            fontStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .fontStyle,
                           ),
                     ),
@@ -196,23 +203,28 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                               0.0, 0.0, 2.0, 0.0),
                           child: Text(
                             containerVenuesRecord.userReview.length.toString(),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .override(
                                   font: GoogleFonts.openSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontStyle,
                                 ),
                           ),
@@ -221,26 +233,29 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'wnzwymdq' /* Reviews */,
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            AppLocalizations.of(context)!.k_wnzwymdq,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .override(
                                   font: GoogleFonts.openSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontStyle,
                                 ),
                           ),
@@ -259,26 +274,29 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'fg7k7qoa' /* Reviews */,
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            AppLocalizations.of(context)!.k_fg7k7qoa,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
                                 .override(
                                   font: GoogleFonts.openSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .fontStyle,
                                   ),
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
                                       .fontStyle,
                                 ),
                           ),

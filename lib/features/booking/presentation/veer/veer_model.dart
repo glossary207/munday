@@ -1,8 +1,9 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import 'veer_widget.dart' show VeerWidget;
+import 'package:munday/core/state/base_model.dart';
+import '/core/utils/app_util.dart';
+import 'veer_page.dart' show VeerWidget;
 import 'package:flutter/material.dart';
 
-class VeerModel extends FlutterFlowModel<VeerWidget> {
+class VeerModel extends BaseModel {
   @override
   void initState(BuildContext context) {}
 

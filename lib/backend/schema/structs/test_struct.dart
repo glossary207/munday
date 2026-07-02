@@ -1,11 +1,14 @@
 // ignore_for_file: unnecessary_getters_setters
 
+import 'package:flutter/material.dart';
+import 'package:munday/core/routing/serialization_util.dart';
+
+import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase_shim.dart';
 
 import '/backend/schema/util/supabase_util.dart';
 
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class TestStruct extends FFSupabaseStruct {
   TestStruct({
@@ -143,8 +146,7 @@ void addTestStructData(
   final nestedData = testData.map((k, v) => MapEntry('$fieldName.$k', v));
 
   final mergeFields = test.supabaseUtilData.create || clearFields;
-  supabaseData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+  supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getTestFirestoreData(

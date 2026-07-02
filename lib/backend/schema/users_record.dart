@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
 import 'dart:async';
 
 import 'package:collection/collection.dart';
@@ -5,8 +7,7 @@ import 'package:collection/collection.dart';
 import '/backend/supabase/supabase_shim.dart';
 import '/backend/schema/util/supabase_util.dart';
 
-import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 
 class UsersRecord extends SupabaseRecord {
   UsersRecord._(
@@ -251,12 +252,18 @@ class UsersRecord extends SupabaseRecord {
   SupabaseDocRef? get groupInviteID => _groupInviteID;
   bool hasGroupInviteID() => _groupInviteID != null;
 
+  DateTime? _parseDateTime(dynamic val) {
+    if (val is DateTime) return val;
+    if (val is String) return DateTime.tryParse(val);
+    return null;
+  }
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
     _uid = snapshotData['uid'] as String?;
-    _createdTime = snapshotData['created_at'] as DateTime?;
+    _createdTime = _parseDateTime(snapshotData['created_at']);
     _phoneNumber = snapshotData['phone_number'] as String?;
     _caption = snapshotData['caption'] as String?;
     _photoshow = snapshotData['photoshow'] is UserphotoshowStruct
@@ -295,12 +302,14 @@ class UsersRecord extends SupabaseRecord {
     _loveVenuse = getSupabaseDocRefList(snapshotData['loveVenuse'], 'venues');
     _tickets = getDataList(snapshotData['tickets']);
     _iDROOMVenues = getDataList(snapshotData['IDROOMVenues']);
-    _loginVenuesRoom = getSupabaseDocRef(snapshotData['loginVenuesRoom'], 'room');
+    _loginVenuesRoom =
+        getSupabaseDocRef(snapshotData['loginVenuesRoom'], 'room');
     _nameLoginVenues = snapshotData['nameLoginVenues'] as String?;
     _cheersLimit = castToType<int>(snapshotData['cheers_limit']);
     _setCheers = snapshotData['set_cheers'] as bool?;
     _logoRoom = snapshotData['logo_room'] as String?;
-    _groupInviteID = getSupabaseDocRef(snapshotData['Group_invite_ID'], 'Group_invite');
+    _groupInviteID =
+        getSupabaseDocRef(snapshotData['Group_invite_ID'], 'Group_invite');
   }
 
   static SupabaseCollectionRef get collection =>
@@ -388,12 +397,10 @@ Map<String, dynamic> createUsersRecordData({
       supabaseData['photoshow'] = FieldValue.delete();
     } else {
       final photoshowData = getUserphotoshowFirestoreData(photoshow);
-      final replacePhotoshow =
-          photoshow.supabaseUtilData.create ||
-              photoshow.supabaseUtilData.clearUnsetFields;
-      supabaseData['photoshow'] = replacePhotoshow
-          ? photoshowData
-          : FieldValue.mapMerge(photoshowData);
+      final replacePhotoshow = photoshow.supabaseUtilData.create ||
+          photoshow.supabaseUtilData.clearUnsetFields;
+      supabaseData['photoshow'] =
+          replacePhotoshow ? photoshowData : FieldValue.mapMerge(photoshowData);
     }
   }
 

@@ -1,12 +1,16 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/core/utils/app_util.dart';
+import '/shared/widgets/core/munday_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'delchat_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'delchat_model.dart';
 
-class DelchatWidget extends StatefulWidget {
+class DelchatWidget extends ConsumerStatefulWidget {
   const DelchatWidget({
     super.key,
     required this.chatID,
@@ -25,10 +29,10 @@ class DelchatWidget extends StatefulWidget {
   final DateTime? time;
 
   @override
-  State<DelchatWidget> createState() => _DelchatWidgetState();
+  ConsumerState<DelchatWidget> createState() => _DelchatWidgetState();
 }
 
-class _DelchatWidgetState extends State<DelchatWidget> {
+class _DelchatWidgetState extends ConsumerState<DelchatWidget> {
   late DelchatModel _model;
 
   @override
@@ -40,7 +44,7 @@ class _DelchatWidgetState extends State<DelchatWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DelchatModel());
+    _model = DelchatModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -83,33 +87,33 @@ class _DelchatWidgetState extends State<DelchatWidget> {
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  'quxzlxti' /* ลบแชท */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_quxzlxti,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFFB50000),
-                  textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.override(
                         font: GoogleFonts.openSans(
                           fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
                           fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         letterSpacing: 0.0,
                         fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
                         fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
                       ),
                   elevation: 2.0,
                   borderSide: BorderSide(
@@ -121,32 +125,32 @@ class _DelchatWidgetState extends State<DelchatWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: FFButtonWidget(
+              child: MundayButton(
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  'biyxjvln' /* ยกเลิก */,
-                ),
-                options: FFButtonOptions(
+                text: AppLocalizations.of(context)!.k_biyxjvln,
+                options: MundayButtonOptions(
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Color(0xFF232323),
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  textStyle: Theme.of(context).textTheme.titleSmall!.override(
                         font: GoogleFonts.lexendDeca(
                           fontWeight: FontWeight.normal,
                           fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                              Theme.of(context).textTheme.titleSmall!.fontStyle,
                         ),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         fontSize: 16.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                         fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                            Theme.of(context).textTheme.titleSmall!.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

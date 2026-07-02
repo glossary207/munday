@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase_shim.dart';
 
 import '/backend/schema/util/schema_util.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 typedef RecordBuilder<T> = T Function(SupabaseDocSnapshot snapshot);
 
@@ -122,11 +122,11 @@ Map<String, dynamic> mapToSupabase(Map<String, dynamic> data) =>
         value = value.map((v) => (v as Color).toCssString()).toList();
       } // Handle Enums.
       if (value is Enum) {
-        value = value.serialize();
+        value = value.name;
       }
       // Handle list of Enums.
       if (value is Iterable && value.isNotEmpty && value.first is Enum) {
-        value = value.map((v) => (v as Enum).serialize()).toList();
+        value = value.map((v) => (v as Enum).name).toList();
       }
       // Handle nested data.
       if (value is Map) {

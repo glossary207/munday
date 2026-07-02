@@ -1,12 +1,15 @@
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/shared/widgets/core/munday_expanded_image_view.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'allphoto_model.dart';
 export 'allphoto_model.dart';
 
-class AllphotoWidget extends StatefulWidget {
+class AllphotoWidget extends ConsumerStatefulWidget {
   const AllphotoWidget({
     super.key,
     required this.dataphoto,
@@ -15,10 +18,10 @@ class AllphotoWidget extends StatefulWidget {
   final List<String>? dataphoto;
 
   @override
-  State<AllphotoWidget> createState() => _AllphotoWidgetState();
+  ConsumerState<AllphotoWidget> createState() => _AllphotoWidgetState();
 }
 
-class _AllphotoWidgetState extends State<AllphotoWidget> {
+class _AllphotoWidgetState extends ConsumerState<AllphotoWidget> {
   late AllphotoModel _model;
 
   @override
@@ -30,7 +33,7 @@ class _AllphotoWidgetState extends State<AllphotoWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AllphotoModel());
+    _model = AllphotoModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -129,7 +132,7 @@ class _AllphotoWidgetState extends State<AllphotoWidget> {
                                           context,
                                           PageTransition(
                                             type: PageTransitionType.fade,
-                                            child: FlutterFlowExpandedImageView(
+                                            child: MundayExpandedImageView(
                                               image: Image.network(
                                                 dataItem,
                                                 fit: BoxFit.contain,

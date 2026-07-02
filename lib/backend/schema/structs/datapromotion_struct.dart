@@ -1,10 +1,16 @@
 // ignore_for_file: unnecessary_getters_setters
 
 import '/backend/supabase/supabase_shim.dart';
+import 'package:munday/core/routing/serialization_util.dart';
+
 
 import '/backend/schema/util/supabase_util.dart';
+import 'package:munday/core/routing/serialization_util.dart';
 
-import '/flutter_flow/flutter_flow_util.dart';
+
+import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
+import 'package:munday/core/routing/serialization_util.dart';
+
 
 class DatapromotionStruct extends FFSupabaseStruct {
   DatapromotionStruct({

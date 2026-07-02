@@ -1,16 +1,17 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'tapbarsilver_model.dart';
 export 'tapbarsilver_model.dart';
 
-class TapbarsilverWidget extends StatefulWidget {
+class TapbarsilverWidget extends ConsumerStatefulWidget {
   const TapbarsilverWidget({super.key});
 
   @override
-  State<TapbarsilverWidget> createState() => _TapbarsilverWidgetState();
+  ConsumerState<TapbarsilverWidget> createState() => _TapbarsilverWidgetState();
 }
 
-class _TapbarsilverWidgetState extends State<TapbarsilverWidget> {
+class _TapbarsilverWidgetState extends ConsumerState<TapbarsilverWidget> {
   late TapbarsilverModel _model;
 
   @override
@@ -22,7 +23,7 @@ class _TapbarsilverWidgetState extends State<TapbarsilverWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TapbarsilverModel());
+    _model = TapbarsilverModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }

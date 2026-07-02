@@ -1,10 +1,12 @@
+import 'package:munday/core/state/base_model.dart';
 import '/shared/widgets/cards/card33_user_grid_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/app_util.dart';
 import '/index.dart';
-import 'profile_widget.dart' show ProfileWidget;
+import 'profile_page.dart' show ProfileWidget;
 import 'package:flutter/material.dart';
+import '/shared/widgets/cards/card33_user_grid_model.dart';
 
-class ProfileModel extends FlutterFlowModel<ProfileWidget> {
+class ProfileModel extends BaseModel {
   ///  Local state fields for this page.
 
   bool editcaption = false;
@@ -76,7 +78,7 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
 
   @override
   void initState(BuildContext context) {
-    card33UserGridModel = createModel(context, () => Card33UserGridModel());
+    card33UserGridModel = Card33UserGridModel()..internalInit(context);
   }
 
   @override

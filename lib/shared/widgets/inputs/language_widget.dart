@@ -1,20 +1,25 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:munday/core/state/app_state.dart';
+import 'package:munday/l10n/app_localizations.dart';
+import '/shared/widgets/core/munday_icon_button.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
-import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'language_model.dart';
+import 'package:munday/core/theme/theme.dart';
 export 'language_model.dart';
 
-class LanguageWidget extends StatefulWidget {
+class LanguageWidget extends ConsumerStatefulWidget {
   const LanguageWidget({super.key});
 
   @override
-  State<LanguageWidget> createState() => _LanguageWidgetState();
+  ConsumerState<LanguageWidget> createState() => _LanguageWidgetState();
 }
 
-class _LanguageWidgetState extends State<LanguageWidget> {
+class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
   late LanguageModel _model;
 
   @override
@@ -26,7 +31,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LanguageModel());
+    _model = LanguageModel()..internalInit(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -73,13 +78,15 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 35.0, 0.0),
-                    child: FlutterFlowIconButton(
+                    child: MundayIconButton(
                       borderRadius: 20.0,
                       borderWidth: 1.0,
                       buttonSize: 40.0,
                       icon: Icon(
                         Icons.close,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: Theme.of(context)
+                            .extension<CustomColors>()!
+                            .primaryText,
                         size: 24.0,
                       ),
                       onPressed: () async {
@@ -115,27 +122,28 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             12.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            'fvrj4p08' /* language */,
-                          ),
+                          AppLocalizations.of(context)!.k_fvrj4p08,
                           textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .override(
-                                font: GoogleFonts.plusJakartaSans(
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 20.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.override(
+                                    font: GoogleFonts.plusJakartaSans(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .fontStyle,
+                                    ),
+                                    color: Theme.of(context)
+                                        .extension<CustomColors>()!
+                                        .primaryText,
+                                    fontSize: 20.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .fontStyle,
+                                  ),
                         ),
                       ),
                       Padding(
@@ -148,7 +156,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             setAppLanguage(context, 'th');
-                            FFAppState().languages = 'Thai';
+                            context.appState.languages = 'Thai';
                             safeSetState(() {});
                             Navigator.pop(context);
                           },
@@ -158,8 +166,9 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                color: Theme.of(context)
+                                    .extension<CustomColors>()!
+                                    .secondaryText,
                               ),
                             ),
                             child: Padding(
@@ -190,27 +199,27 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'bd2xz340' /* Thai */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        AppLocalizations.of(context)!
+                                            .k_bd2xz340,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .override(
                                               font: GoogleFonts.plusJakartaSans(
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
                                               color: Color(0xFF14181B),
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),
@@ -231,7 +240,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             setAppLanguage(context, 'en');
-                            FFAppState().languages = 'English';
+                            context.appState.languages = 'English';
                             safeSetState(() {});
                             Navigator.pop(context);
                           },
@@ -241,8 +250,9 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                color: Theme.of(context)
+                                    .extension<CustomColors>()!
+                                    .secondaryText,
                               ),
                             ),
                             child: Padding(
@@ -273,27 +283,27 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          '6w69b1uq' /* English */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        AppLocalizations.of(context)!
+                                            .k_6w69b1uq,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .override(
                                               font: GoogleFonts.plusJakartaSans(
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
                                               color: Color(0xFF14181B),
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),
@@ -314,7 +324,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             setAppLanguage(context, 'zh_Hans');
-                            FFAppState().languages = 'Chinese';
+                            context.appState.languages = 'Chinese';
                             safeSetState(() {});
                             Navigator.pop(context);
                           },
@@ -324,8 +334,9 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                color: Theme.of(context)
+                                    .extension<CustomColors>()!
+                                    .secondaryText,
                               ),
                             ),
                             child: Padding(
@@ -356,27 +367,27 @@ class _LanguageWidgetState extends State<LanguageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          '74gcpyy4' /* Chinese */,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
+                                        AppLocalizations.of(context)!
+                                            .k_74gcpyy4,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
                                             .override(
                                               font: GoogleFonts.plusJakartaSans(
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .fontStyle,
                                               ),
                                               color: Color(0xFF14181B),
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontStyle,
                                             ),
                                       ),
                                     ),

@@ -1,14 +1,17 @@
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/shared/widgets/core/munday_animations.dart';
+import '/core/utils/app_util.dart';
 import 'dart:ui';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'showpromotion_model.dart';
 export 'showpromotion_model.dart';
 
-class ShowpromotionWidget extends StatefulWidget {
+class ShowpromotionWidget extends ConsumerStatefulWidget {
   const ShowpromotionWidget({
     super.key,
     required this.photo,
@@ -17,10 +20,10 @@ class ShowpromotionWidget extends StatefulWidget {
   final List<String>? photo;
 
   @override
-  State<ShowpromotionWidget> createState() => _ShowpromotionWidgetState();
+  ConsumerState<ShowpromotionWidget> createState() => _ShowpromotionWidgetState();
 }
 
-class _ShowpromotionWidgetState extends State<ShowpromotionWidget>
+class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
     with TickerProviderStateMixin {
   late ShowpromotionModel _model;
 
@@ -35,7 +38,7 @@ class _ShowpromotionWidgetState extends State<ShowpromotionWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ShowpromotionModel());
+    _model = ShowpromotionModel()..internalInit(context);
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
