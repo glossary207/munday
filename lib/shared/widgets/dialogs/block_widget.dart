@@ -82,7 +82,7 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                     ...mapToSupabase({
                       'Blockuser': FieldValue.arrayUnion([widget.iduser]),
                       'usermassage': FieldValue.arrayRemove([widget.iduser]),
-                      'usermassageRead': FieldValue.arrayRemove([
+                      'usermassage_read': FieldValue.arrayRemove([
                         widget.iduser,
                       ]),
                     }),
@@ -96,7 +96,7 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                       'usermassage': FieldValue.arrayRemove([
                         currentUserReference,
                       ]),
-                      'usermassageRead': FieldValue.arrayRemove([
+                      'usermassage_read': FieldValue.arrayRemove([
                         currentUserReference,
                       ]),
                       'Report': FieldValue.increment(1),
@@ -167,7 +167,7 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                     ...mapToSupabase({
                       'Blockuser': FieldValue.arrayUnion([widget.iduser]),
                       'usermassage': FieldValue.arrayRemove([widget.iduser]),
-                      'usermassageRead': FieldValue.arrayRemove([
+                      'usermassage_read': FieldValue.arrayRemove([
                         widget.iduser,
                       ]),
                     }),
@@ -181,7 +181,7 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                       'usermassage': FieldValue.arrayRemove([
                         currentUserReference,
                       ]),
-                      'usermassageRead': FieldValue.arrayRemove([
+                      'usermassage_read': FieldValue.arrayRemove([
                         currentUserReference,
                       ]),
                     }),

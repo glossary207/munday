@@ -64,11 +64,13 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await _model.columnController?.animateTo(
-        _model.columnController!.position.maxScrollExtent,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      );
+      if (_model.columnController?.hasClients == true) {
+        await _model.columnController?.animateTo(
+          _model.columnController!.position.maxScrollExtent,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        );
+      }
       _model.timecheckread = true;
       _model.lockchatt = false;
       safeSetState(() {});
@@ -455,11 +457,13 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                           stackChatRoomsRecord,
                           _model.stackPreviousSnapshot,
                         )) {
-                      await _model.columnController?.animateTo(
-                        _model.columnController!.position.maxScrollExtent,
-                        duration: Duration(milliseconds: 100),
-                        curve: Curves.ease,
-                      );
+                      if (_model.columnController?.hasClients == true) {
+                        await _model.columnController?.animateTo(
+                          _model.columnController!.position.maxScrollExtent,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.ease,
+                        );
+                      }
 
                       safeSetState(() {});
                     }
@@ -1662,7 +1666,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
                                                                   await currentUserReference!.update({
                                                                     ...mapToSupabase({
-                                                                      'usermassageRead':
+                                                                      'usermassage_read':
                                                                           FieldValue.arrayUnion([
                                                                             otherUserRef,
                                                                           ]),
@@ -2129,7 +2133,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
                                                                 await currentUserReference!.update({
                                                                   ...mapToSupabase({
-                                                                    'usermassageRead':
+                                                                    'usermassage_read':
                                                                         FieldValue.arrayUnion([
                                                                           otherUserRef,
                                                                         ]),
@@ -2352,7 +2356,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   await currentUserReference!
                                                       .update({
                                                         ...mapToSupabase({
-                                                          'usermassageRead':
+                                                          'usermassage_read':
                                                               FieldValue.arrayUnion(
                                                                 [otherUserRef],
                                                               ),
@@ -2502,7 +2506,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
                                                 await otherRef.update({
                                                   ...mapToSupabase({
-                                                    'usermassageRead':
+                                                    'usermassage_read':
                                                         FieldValue.arrayRemove([
                                                           currentUserReference,
                                                         ]),

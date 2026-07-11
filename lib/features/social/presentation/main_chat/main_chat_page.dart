@@ -1389,6 +1389,41 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
 
                             return GestureDetector(
                               onTap: () async {
+                                SupabaseDocRef? roomRef = parsed.roomRef;
+                                if (roomRef == null && uid != null) {
+                                  try {
+                                    final res = await Supabase.instance.client
+                                        .from('chat_rooms')
+                                        .insert({
+                                          'user_ids': [
+                                            currentUserReference!.id,
+                                            uid,
+                                          ],
+                                          'created_time': DateTime.now()
+                                              .toIso8601String(),
+                                          'last_message_time': DateTime.now()
+                                              .toIso8601String(),
+                                          'group_chat': false,
+                                        })
+                                        .select()
+                                        .single();
+                                    roomRef = SupabaseDocRef(
+                                      'chat_rooms',
+                                      res['id'].toString(),
+                                    );
+                                  } catch (e) {
+                                    debugPrint('Error creating chat room: $e');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Failed to open chat. Please try again.',
+                                        ),
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                }
+
                                 context.pushNamed(
                                   ChatsPage.routeName,
                                   queryParameters: {
@@ -1397,7 +1432,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       ParamType.String,
                                     ),
                                     'roomref': serializeParam(
-                                      parsed.roomRef,
+                                      roomRef,
                                       ParamType.SupabaseDocRef,
                                     ),
                                     'name': serializeParam(
@@ -1414,8 +1449,8 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                     ),
                                   }.withoutNulls,
                                 );
-                                if (parsed.roomRef != null) {
-                                  await parsed.roomRef!.update(
+                                if (roomRef != null) {
+                                  await roomRef.update(
                                     createChatRoomsRecordData(
                                       lastMessageTime: getCurrentTimestamp,
                                     ),
@@ -1424,7 +1459,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                 if (parsed.userRef != null) {
                                   await currentUserReference!.update({
                                     ...mapToSupabase({
-                                      'usermassageRead': FieldValue.arrayUnion([
+                                      'usermassage_read': FieldValue.arrayUnion([
                                         parsed.userRef,
                                       ]),
                                     }),
