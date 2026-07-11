@@ -30,7 +30,6 @@ part "components/main_categories_widget.dart";
 part "components/main_events_widget.dart";
 part "components/main_venues_spotlight_widget.dart";
 
-
 const _kMainFallbackPosterUrl =
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
 
@@ -61,7 +60,8 @@ class MainPage extends ConsumerStatefulWidget {
   ConsumerState<MainPage> createState() => _MainWidgetState();
 }
 
-class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateMixin {
+class _MainWidgetState extends ConsumerState<MainPage>
+    with TickerProviderStateMixin {
   late MainModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -233,6 +233,7 @@ class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateM
         backgroundColor: Colors.black,
         body: SafeArea(
           top: true,
+          bottom: false,
           child: SizedBox(
             width: double.infinity,
             height: double.infinity,
@@ -353,11 +354,11 @@ class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateM
                                                   Colors.transparent,
                                               onTap: () async {
                                                 context.pushNamed(
-                                                  SocialInVenusePage
-                                                      .routeName,
+                                                  SocialInVenusePage.routeName,
                                                 );
 
-                                                context.appState.StyleVenuse = [];
+                                                context.appState.StyleVenuse =
+                                                    [];
                                                 safeSetState(() {});
                                               },
                                               child: Container(
@@ -451,7 +452,9 @@ class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateM
                                                                             (
                                                                               e,
                                                                             ) => functions.checkdate(
-                                                                              (e as dynamic)?.date,
+                                                                              (e
+                                                                                      as dynamic)
+                                                                                  ?.date,
                                                                               getCurrentTimestamp,
                                                                             )!,
                                                                           )
@@ -506,7 +509,9 @@ class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateM
                                                                                             (
                                                                                               e,
                                                                                             ) => functions.checkdate(
-                                                                                              (e as dynamic)?.date,
+                                                                                              (e
+                                                                                                      as dynamic)
+                                                                                                  ?.date,
                                                                                               getCurrentTimestamp,
                                                                                             )!,
                                                                                           )
@@ -654,17 +659,6 @@ class _MainWidgetState extends ConsumerState<MainPage> with TickerProviderStateM
                                     ),
                                   ),
                                 ),
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 1.0),
-                                child: ChangeNotifierProvider.value(
-                                  value: _model.navBarModel.setOnUpdate(
-                                    onUpdate: () => safeSetState(() {}),
-                                  ),
-                                  child: NavBarWidget(
-                                    items: context.appState.menuItems,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),

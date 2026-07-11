@@ -40,9 +40,7 @@ class _TapbarsilverWidgetState extends ConsumerState<TapbarsilverWidget> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-      ),
+      decoration: BoxDecoration(color: Colors.transparent),
     );
   }
 }

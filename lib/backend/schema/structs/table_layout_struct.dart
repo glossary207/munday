@@ -15,9 +15,9 @@ class TableLayoutStruct extends FFSupabaseStruct {
     DateTime? date,
     List<TableDataStruct>? tableData,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _date = date,
-        _tableData = tableData,
-        super(supabaseUtilData);
+  }) : _date = date,
+       _tableData = tableData,
+       super(supabaseUtilData);
 
   // "date" field.
   DateTime? _date;
@@ -40,10 +40,7 @@ class TableLayoutStruct extends FFSupabaseStruct {
   static TableLayoutStruct fromMap(Map<String, dynamic> data) =>
       TableLayoutStruct(
         date: data['date'] as DateTime?,
-        tableData: getStructList(
-          data['table_data'],
-          TableDataStruct.fromMap,
-        ),
+        tableData: getStructList(data['table_data'], TableDataStruct.fromMap),
       );
 
   static TableLayoutStruct? maybeFromMap(dynamic data) => data is Map
@@ -51,30 +48,23 @@ class TableLayoutStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'date': _date,
-        'table_data': _tableData?.map((e) => e.toMap()).toList(),
-      }.withoutNulls;
+    'date': _date,
+    'table_data': _tableData?.map((e) => e.toMap()).toList(),
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'date': serializeParam(
-          _date,
-          ParamType.DateTime,
-        ),
-        'table_data': serializeParam(
-          _tableData,
-          ParamType.DataStruct,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'date': serializeParam(_date, ParamType.DateTime),
+    'table_data': serializeParam(
+      _tableData,
+      ParamType.DataStruct,
+      isList: true,
+    ),
+  }.withoutNulls;
 
   static TableLayoutStruct fromSerializableMap(Map<String, dynamic> data) =>
       TableLayoutStruct(
-        date: deserializeParam(
-          data['date'],
-          ParamType.DateTime,
-          false,
-        ),
+        date: deserializeParam(data['date'], ParamType.DateTime, false),
         tableData: deserializeStructParam<TableDataStruct>(
           data['table_data'],
           ParamType.DataStruct,
@@ -104,27 +94,25 @@ TableLayoutStruct createTableLayoutStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    TableLayoutStruct(
-      date: date,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => TableLayoutStruct(
+  date: date,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 TableLayoutStruct? updateTableLayoutStruct(
   TableLayoutStruct? tableLayout, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    tableLayout
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => tableLayout
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addTableLayoutStructData(
   Map<String, dynamic> supabaseData,
@@ -145,10 +133,13 @@ void addTableLayoutStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final tableLayoutData =
-      getTableLayoutFirestoreData(tableLayout, forFieldValue);
-  final nestedData =
-      tableLayoutData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final tableLayoutData = getTableLayoutFirestoreData(
+    tableLayout,
+    forFieldValue,
+  );
+  final nestedData = tableLayoutData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = tableLayout.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -164,8 +155,9 @@ Map<String, dynamic> getTableLayoutFirestoreData(
   final supabaseData = mapToSupabase(tableLayout.toMap());
 
   // Add any Firestore field values
-  tableLayout.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  tableLayout.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

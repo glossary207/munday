@@ -3,20 +3,17 @@
 import '/backend/supabase/supabase_shim.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import '/backend/schema/util/supabase_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import '/backend/schema/util/schema_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import 'index.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 class DataEventsStruct extends FFSupabaseStruct {
   DataEventsStruct({
@@ -34,20 +31,20 @@ class DataEventsStruct extends FFSupabaseStruct {
     bool? free,
     String? priceDetail,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _nameArtise = nameArtise,
-        _nameStore = nameStore,
-        _poster = poster,
-        _capacity = capacity,
-        _distance = distance,
-        _maxCapacity = maxCapacity,
-        _musicstyle = musicstyle,
-        _date = date,
-        _docRef = docRef,
-        _position = position,
-        _iDVenuse = iDVenuse,
-        _free = free,
-        _priceDetail = priceDetail,
-        super(supabaseUtilData);
+  }) : _nameArtise = nameArtise,
+       _nameStore = nameStore,
+       _poster = poster,
+       _capacity = capacity,
+       _distance = distance,
+       _maxCapacity = maxCapacity,
+       _musicstyle = musicstyle,
+       _date = date,
+       _docRef = docRef,
+       _position = position,
+       _iDVenuse = iDVenuse,
+       _free = free,
+       _priceDetail = priceDetail,
+       super(supabaseUtilData);
 
   // "Name_artise" field.
   List<String>? _nameArtise;
@@ -173,148 +170,69 @@ class DataEventsStruct extends FFSupabaseStruct {
   }
 
   Map<String, dynamic> toMap() => {
-        'Name_artise': _nameArtise,
-        'Name_store': _nameStore,
-        'Poster': _poster,
-        'capacity': _capacity,
-        'distance': _distance,
-        'max_capacity': _maxCapacity,
-        'musicstyle': _musicstyle,
-        'Date': _date,
-        'doc_ref': _docRef,
-        'position': _position,
-        'iDVenuse': _iDVenuse,
-        'FREE': _free,
-        'PriceDetail': _priceDetail,
-      }.withoutNulls;
+    'Name_artise': _nameArtise,
+    'Name_store': _nameStore,
+    'Poster': _poster,
+    'capacity': _capacity,
+    'distance': _distance,
+    'max_capacity': _maxCapacity,
+    'musicstyle': _musicstyle,
+    'Date': _date,
+    'doc_ref': _docRef,
+    'position': _position,
+    'iDVenuse': _iDVenuse,
+    'FREE': _free,
+    'PriceDetail': _priceDetail,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'Name_artise': serializeParam(
-          _nameArtise,
-          ParamType.String,
-          isList: true,
-        ),
-        'Name_store': serializeParam(
-          _nameStore,
-          ParamType.String,
-        ),
-        'Poster': serializeParam(
-          _poster,
-          ParamType.String,
-        ),
-        'capacity': serializeParam(
-          _capacity,
-          ParamType.int,
-        ),
-        'distance': serializeParam(
-          _distance,
-          ParamType.double,
-        ),
-        'max_capacity': serializeParam(
-          _maxCapacity,
-          ParamType.int,
-        ),
-        'musicstyle': serializeParam(
-          _musicstyle,
-          ParamType.String,
-        ),
-        'Date': serializeParam(
-          _date,
-          ParamType.DateTime,
-        ),
-        'doc_ref': serializeParam(
-          _docRef,
-          ParamType.SupabaseDocRef,
-        ),
-        'position': serializeParam(
-          _position,
-          ParamType.LatLng,
-        ),
-        'iDVenuse': serializeParam(
-          _iDVenuse,
-          ParamType.SupabaseDocRef,
-        ),
-        'FREE': serializeParam(
-          _free,
-          ParamType.bool,
-        ),
-        'PriceDetail': serializeParam(
-          _priceDetail,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'Name_artise': serializeParam(_nameArtise, ParamType.String, isList: true),
+    'Name_store': serializeParam(_nameStore, ParamType.String),
+    'Poster': serializeParam(_poster, ParamType.String),
+    'capacity': serializeParam(_capacity, ParamType.int),
+    'distance': serializeParam(_distance, ParamType.double),
+    'max_capacity': serializeParam(_maxCapacity, ParamType.int),
+    'musicstyle': serializeParam(_musicstyle, ParamType.String),
+    'Date': serializeParam(_date, ParamType.DateTime),
+    'doc_ref': serializeParam(_docRef, ParamType.SupabaseDocRef),
+    'position': serializeParam(_position, ParamType.LatLng),
+    'iDVenuse': serializeParam(_iDVenuse, ParamType.SupabaseDocRef),
+    'FREE': serializeParam(_free, ParamType.bool),
+    'PriceDetail': serializeParam(_priceDetail, ParamType.String),
+  }.withoutNulls;
 
-  static DataEventsStruct fromSerializableMap(Map<String, dynamic> data) =>
-      DataEventsStruct(
-        nameArtise: deserializeParam<String>(
-          data['Name_artise'],
-          ParamType.String,
-          true,
-        ),
-        nameStore: deserializeParam(
-          data['Name_store'],
-          ParamType.String,
-          false,
-        ),
-        poster: deserializeParam(
-          data['Poster'],
-          ParamType.String,
-          false,
-        ),
-        capacity: deserializeParam(
-          data['capacity'],
-          ParamType.int,
-          false,
-        ),
-        distance: deserializeParam(
-          data['distance'],
-          ParamType.double,
-          false,
-        ),
-        maxCapacity: deserializeParam(
-          data['max_capacity'],
-          ParamType.int,
-          false,
-        ),
-        musicstyle: deserializeParam(
-          data['musicstyle'],
-          ParamType.String,
-          false,
-        ),
-        date: deserializeParam(
-          data['Date'],
-          ParamType.DateTime,
-          false,
-        ),
-        docRef: deserializeParam(
-          data['doc_ref'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['events'],
-        ),
-        position: deserializeParam(
-          data['position'],
-          ParamType.LatLng,
-          false,
-        ),
-        iDVenuse: deserializeParam(
-          data['iDVenuse'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['venues'],
-        ),
-        free: deserializeParam(
-          data['FREE'],
-          ParamType.bool,
-          false,
-        ),
-        priceDetail: deserializeParam(
-          data['PriceDetail'],
-          ParamType.String,
-          false,
-        ),
-      );
+  static DataEventsStruct fromSerializableMap(
+    Map<String, dynamic> data,
+  ) => DataEventsStruct(
+    nameArtise: deserializeParam<String>(
+      data['Name_artise'],
+      ParamType.String,
+      true,
+    ),
+    nameStore: deserializeParam(data['Name_store'], ParamType.String, false),
+    poster: deserializeParam(data['Poster'], ParamType.String, false),
+    capacity: deserializeParam(data['capacity'], ParamType.int, false),
+    distance: deserializeParam(data['distance'], ParamType.double, false),
+    maxCapacity: deserializeParam(data['max_capacity'], ParamType.int, false),
+    musicstyle: deserializeParam(data['musicstyle'], ParamType.String, false),
+    date: deserializeParam(data['Date'], ParamType.DateTime, false),
+    docRef: deserializeParam(
+      data['doc_ref'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['events'],
+    ),
+    position: deserializeParam(data['position'], ParamType.LatLng, false),
+    iDVenuse: deserializeParam(
+      data['iDVenuse'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['venues'],
+    ),
+    free: deserializeParam(data['FREE'], ParamType.bool, false),
+    priceDetail: deserializeParam(data['PriceDetail'], ParamType.String, false),
+  );
 
   @override
   String toString() => 'DataEventsStruct(${toMap()})';
@@ -340,20 +258,20 @@ class DataEventsStruct extends FFSupabaseStruct {
 
   @override
   int get hashCode => ListEquality().hash([
-        nameArtise,
-        nameStore,
-        poster,
-        capacity,
-        distance,
-        maxCapacity,
-        musicstyle,
-        date,
-        docRef,
-        position,
-        iDVenuse,
-        free,
-        priceDetail
-      ]);
+    nameArtise,
+    nameStore,
+    poster,
+    capacity,
+    distance,
+    maxCapacity,
+    musicstyle,
+    date,
+    docRef,
+    position,
+    iDVenuse,
+    free,
+    priceDetail,
+  ]);
 }
 
 DataEventsStruct createDataEventsStruct({
@@ -373,38 +291,36 @@ DataEventsStruct createDataEventsStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DataEventsStruct(
-      nameStore: nameStore,
-      poster: poster,
-      capacity: capacity,
-      distance: distance,
-      maxCapacity: maxCapacity,
-      musicstyle: musicstyle,
-      date: date,
-      docRef: docRef,
-      position: position,
-      iDVenuse: iDVenuse,
-      free: free,
-      priceDetail: priceDetail,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DataEventsStruct(
+  nameStore: nameStore,
+  poster: poster,
+  capacity: capacity,
+  distance: distance,
+  maxCapacity: maxCapacity,
+  musicstyle: musicstyle,
+  date: date,
+  docRef: docRef,
+  position: position,
+  iDVenuse: iDVenuse,
+  free: free,
+  priceDetail: priceDetail,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DataEventsStruct? updateDataEventsStruct(
   DataEventsStruct? dataEvents, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    dataEvents
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => dataEvents
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDataEventsStructData(
   Map<String, dynamic> supabaseData,
@@ -442,8 +358,9 @@ Map<String, dynamic> getDataEventsFirestoreData(
   final supabaseData = mapToSupabase(dataEvents.toMap());
 
   // Add any Firestore field values
-  dataEvents.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  dataEvents.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

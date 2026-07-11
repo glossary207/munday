@@ -3,17 +3,14 @@
 import '/backend/supabase/supabase_shim.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import '/backend/schema/util/supabase_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 import 'index.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 class DataVenuesStruct extends FFSupabaseStruct {
   DataVenuesStruct({
@@ -33,22 +30,22 @@ class DataVenuesStruct extends FFSupabaseStruct {
     List<String>? promotion,
     List<PromotionDataSubStruct>? listpromotion,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _nameVenuse = nameVenuse,
-        _bg = bg,
-        _capacity = capacity,
-        _maxCapacity = maxCapacity,
-        _position = position,
-        _openCloseTime = openCloseTime,
-        _styleVenuse = styleVenuse,
-        _styleMusic = styleMusic,
-        _distance = distance,
-        _logo = logo,
-        _iDVenuse = iDVenuse,
-        _eventID = eventID,
-        _rating = rating,
-        _promotion = promotion,
-        _listpromotion = listpromotion,
-        super(supabaseUtilData);
+  }) : _nameVenuse = nameVenuse,
+       _bg = bg,
+       _capacity = capacity,
+       _maxCapacity = maxCapacity,
+       _position = position,
+       _openCloseTime = openCloseTime,
+       _styleVenuse = styleVenuse,
+       _styleMusic = styleMusic,
+       _distance = distance,
+       _logo = logo,
+       _iDVenuse = iDVenuse,
+       _eventID = eventID,
+       _rating = rating,
+       _promotion = promotion,
+       _listpromotion = listpromotion,
+       super(supabaseUtilData);
 
   // "Name_Venuse" field.
   String? _nameVenuse;
@@ -211,173 +208,96 @@ class DataVenuesStruct extends FFSupabaseStruct {
   }
 
   Map<String, dynamic> toMap() => {
-        'Name_Venuse': _nameVenuse,
-        'BG': _bg,
-        'capacity': _capacity,
-        'max_capacity': _maxCapacity,
-        'Position': _position,
-        'Open_Close_time': _openCloseTime,
-        'styleVenuse': _styleVenuse,
-        'styleMusic': _styleMusic,
-        'distance': _distance,
-        'Logo': _logo,
-        'iDVenuse': _iDVenuse,
-        'EventID': _eventID,
-        'rating': _rating,
-        'promotion': _promotion,
-        'listpromotion': _listpromotion?.map((e) => e.toMap()).toList(),
-      }.withoutNulls;
+    'Name_Venuse': _nameVenuse,
+    'BG': _bg,
+    'capacity': _capacity,
+    'max_capacity': _maxCapacity,
+    'Position': _position,
+    'Open_Close_time': _openCloseTime,
+    'styleVenuse': _styleVenuse,
+    'styleMusic': _styleMusic,
+    'distance': _distance,
+    'Logo': _logo,
+    'iDVenuse': _iDVenuse,
+    'EventID': _eventID,
+    'rating': _rating,
+    'promotion': _promotion,
+    'listpromotion': _listpromotion?.map((e) => e.toMap()).toList(),
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'Name_Venuse': serializeParam(
-          _nameVenuse,
-          ParamType.String,
-        ),
-        'BG': serializeParam(
-          _bg,
-          ParamType.String,
-        ),
-        'capacity': serializeParam(
-          _capacity,
-          ParamType.int,
-        ),
-        'max_capacity': serializeParam(
-          _maxCapacity,
-          ParamType.int,
-        ),
-        'Position': serializeParam(
-          _position,
-          ParamType.LatLng,
-        ),
-        'Open_Close_time': serializeParam(
-          _openCloseTime,
-          ParamType.String,
-        ),
-        'styleVenuse': serializeParam(
-          _styleVenuse,
-          ParamType.String,
-          isList: true,
-        ),
-        'styleMusic': serializeParam(
-          _styleMusic,
-          ParamType.String,
-          isList: true,
-        ),
-        'distance': serializeParam(
-          _distance,
-          ParamType.double,
-        ),
-        'Logo': serializeParam(
-          _logo,
-          ParamType.String,
-        ),
-        'iDVenuse': serializeParam(
-          _iDVenuse,
-          ParamType.SupabaseDocRef,
-        ),
-        'EventID': serializeParam(
-          _eventID,
-          ParamType.SupabaseDocRef,
-          isList: true,
-        ),
-        'rating': serializeParam(
-          _rating,
-          ParamType.double,
-        ),
-        'promotion': serializeParam(
-          _promotion,
-          ParamType.String,
-          isList: true,
-        ),
-        'listpromotion': serializeParam(
-          _listpromotion,
-          ParamType.DataStruct,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'Name_Venuse': serializeParam(_nameVenuse, ParamType.String),
+    'BG': serializeParam(_bg, ParamType.String),
+    'capacity': serializeParam(_capacity, ParamType.int),
+    'max_capacity': serializeParam(_maxCapacity, ParamType.int),
+    'Position': serializeParam(_position, ParamType.LatLng),
+    'Open_Close_time': serializeParam(_openCloseTime, ParamType.String),
+    'styleVenuse': serializeParam(_styleVenuse, ParamType.String, isList: true),
+    'styleMusic': serializeParam(_styleMusic, ParamType.String, isList: true),
+    'distance': serializeParam(_distance, ParamType.double),
+    'Logo': serializeParam(_logo, ParamType.String),
+    'iDVenuse': serializeParam(_iDVenuse, ParamType.SupabaseDocRef),
+    'EventID': serializeParam(_eventID, ParamType.SupabaseDocRef, isList: true),
+    'rating': serializeParam(_rating, ParamType.double),
+    'promotion': serializeParam(_promotion, ParamType.String, isList: true),
+    'listpromotion': serializeParam(
+      _listpromotion,
+      ParamType.DataStruct,
+      isList: true,
+    ),
+  }.withoutNulls;
 
-  static DataVenuesStruct fromSerializableMap(Map<String, dynamic> data) =>
-      DataVenuesStruct(
-        nameVenuse: deserializeParam(
-          data['Name_Venuse'],
-          ParamType.String,
-          false,
-        ),
-        bg: deserializeParam(
-          data['BG'],
-          ParamType.String,
-          false,
-        ),
-        capacity: deserializeParam(
-          data['capacity'],
-          ParamType.int,
-          false,
-        ),
-        maxCapacity: deserializeParam(
-          data['max_capacity'],
-          ParamType.int,
-          false,
-        ),
-        position: deserializeParam(
-          data['Position'],
-          ParamType.LatLng,
-          false,
-        ),
-        openCloseTime: deserializeParam(
-          data['Open_Close_time'],
-          ParamType.String,
-          false,
-        ),
-        styleVenuse: deserializeParam<String>(
-          data['styleVenuse'],
-          ParamType.String,
-          true,
-        ),
-        styleMusic: deserializeParam<String>(
-          data['styleMusic'],
-          ParamType.String,
-          true,
-        ),
-        distance: deserializeParam(
-          data['distance'],
-          ParamType.double,
-          false,
-        ),
-        logo: deserializeParam(
-          data['Logo'],
-          ParamType.String,
-          false,
-        ),
-        iDVenuse: deserializeParam(
-          data['iDVenuse'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['venues'],
-        ),
-        eventID: deserializeParam<SupabaseDocRef>(
-          data['EventID'],
-          ParamType.SupabaseDocRef,
-          true,
-          collectionNamePath: ['events'],
-        ),
-        rating: deserializeParam(
-          data['rating'],
-          ParamType.double,
-          false,
-        ),
-        promotion: deserializeParam<String>(
-          data['promotion'],
-          ParamType.String,
-          true,
-        ),
-        listpromotion: deserializeStructParam<PromotionDataSubStruct>(
-          data['listpromotion'],
-          ParamType.DataStruct,
-          true,
-          structBuilder: PromotionDataSubStruct.fromSerializableMap,
-        ),
-      );
+  static DataVenuesStruct fromSerializableMap(
+    Map<String, dynamic> data,
+  ) => DataVenuesStruct(
+    nameVenuse: deserializeParam(data['Name_Venuse'], ParamType.String, false),
+    bg: deserializeParam(data['BG'], ParamType.String, false),
+    capacity: deserializeParam(data['capacity'], ParamType.int, false),
+    maxCapacity: deserializeParam(data['max_capacity'], ParamType.int, false),
+    position: deserializeParam(data['Position'], ParamType.LatLng, false),
+    openCloseTime: deserializeParam(
+      data['Open_Close_time'],
+      ParamType.String,
+      false,
+    ),
+    styleVenuse: deserializeParam<String>(
+      data['styleVenuse'],
+      ParamType.String,
+      true,
+    ),
+    styleMusic: deserializeParam<String>(
+      data['styleMusic'],
+      ParamType.String,
+      true,
+    ),
+    distance: deserializeParam(data['distance'], ParamType.double, false),
+    logo: deserializeParam(data['Logo'], ParamType.String, false),
+    iDVenuse: deserializeParam(
+      data['iDVenuse'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['venues'],
+    ),
+    eventID: deserializeParam<SupabaseDocRef>(
+      data['EventID'],
+      ParamType.SupabaseDocRef,
+      true,
+      collectionNamePath: ['events'],
+    ),
+    rating: deserializeParam(data['rating'], ParamType.double, false),
+    promotion: deserializeParam<String>(
+      data['promotion'],
+      ParamType.String,
+      true,
+    ),
+    listpromotion: deserializeStructParam<PromotionDataSubStruct>(
+      data['listpromotion'],
+      ParamType.DataStruct,
+      true,
+      structBuilder: PromotionDataSubStruct.fromSerializableMap,
+    ),
+  );
 
   @override
   String toString() => 'DataVenuesStruct(${toMap()})';
@@ -405,22 +325,22 @@ class DataVenuesStruct extends FFSupabaseStruct {
 
   @override
   int get hashCode => ListEquality().hash([
-        nameVenuse,
-        bg,
-        capacity,
-        maxCapacity,
-        position,
-        openCloseTime,
-        styleVenuse,
-        styleMusic,
-        distance,
-        logo,
-        iDVenuse,
-        eventID,
-        rating,
-        promotion,
-        listpromotion
-      ]);
+    nameVenuse,
+    bg,
+    capacity,
+    maxCapacity,
+    position,
+    openCloseTime,
+    styleVenuse,
+    styleMusic,
+    distance,
+    logo,
+    iDVenuse,
+    eventID,
+    rating,
+    promotion,
+    listpromotion,
+  ]);
 }
 
 DataVenuesStruct createDataVenuesStruct({
@@ -438,36 +358,34 @@ DataVenuesStruct createDataVenuesStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DataVenuesStruct(
-      nameVenuse: nameVenuse,
-      bg: bg,
-      capacity: capacity,
-      maxCapacity: maxCapacity,
-      position: position,
-      openCloseTime: openCloseTime,
-      distance: distance,
-      logo: logo,
-      iDVenuse: iDVenuse,
-      rating: rating,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DataVenuesStruct(
+  nameVenuse: nameVenuse,
+  bg: bg,
+  capacity: capacity,
+  maxCapacity: maxCapacity,
+  position: position,
+  openCloseTime: openCloseTime,
+  distance: distance,
+  logo: logo,
+  iDVenuse: iDVenuse,
+  rating: rating,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DataVenuesStruct? updateDataVenuesStruct(
   DataVenuesStruct? dataVenues, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    dataVenues
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => dataVenues
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDataVenuesStructData(
   Map<String, dynamic> supabaseData,
@@ -505,8 +423,9 @@ Map<String, dynamic> getDataVenuesFirestoreData(
   final supabaseData = mapToSupabase(dataVenues.toMap());
 
   // Add any Firestore field values
-  dataVenues.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  dataVenues.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

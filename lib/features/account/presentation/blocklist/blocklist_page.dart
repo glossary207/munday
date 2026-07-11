@@ -54,12 +54,13 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
-        appBar: responsiveVisibility(
-          context: context,
-          tablet: false,
-          tabletLandscape: false,
-          desktop: false,
-        )
+        appBar:
+            responsiveVisibility(
+              context: context,
+              tablet: false,
+              tabletLandscape: false,
+              desktop: false,
+            )
             ? AppBar(
                 backgroundColor: Colors.black,
                 automaticallyImplyLeading: false,
@@ -70,9 +71,9 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                   buttonSize: 60.0,
                   icon: Icon(
                     Icons.arrow_back_rounded,
-                    color: Theme.of(context)
-                        .extension<CustomColors>()!
-                        .primaryText,
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
                     size: 30.0,
                   ),
                   onPressed: () async {
@@ -82,18 +83,20 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                 title: Text(
                   AppLocalizations.of(context)!.k_gywtp2u9,
                   style: Theme.of(context).textTheme.bodyLarge!.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight:
-                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                      ),
+                    font: GoogleFonts.openSans(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontStyle,
+                    ),
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.fontWeight,
+                    fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
+                  ),
                 ),
                 actions: [],
                 centerTitle: false,
@@ -108,10 +111,11 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
               builder: (context) => StreamBuilder<List<UsersRecord>>(
                 stream: queryUsersRecord(
                   queryBuilder: (usersRecord) => usersRecord.whereIn(
-                      'uid',
-                      (currentUserDocument?.blockuser.toList() ?? [])
-                          .map((e) => e.id)
-                          .toList()),
+                    'uid',
+                    (currentUserDocument?.blockuser.toList() ?? [])
+                        .map((e) => e.id)
+                        .toList(),
+                  ),
                 ),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
@@ -132,13 +136,18 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
 
                   return Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: List.generate(columnUsersRecordList.length,
-                        (columnIndex) {
+                    children: List.generate(columnUsersRecordList.length, (
+                      columnIndex,
+                    ) {
                       final columnUsersRecord =
                           columnUsersRecordList[columnIndex];
                       return Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 10.0, 20.0, 0.0),
+                          20.0,
+                          10.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -173,17 +182,17 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: Image.network(
-                                            '',
-                                          ).image,
+                                          image: Image.network('').image,
                                         ),
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Stack(
                                         children: [
                                           Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                            alignment: AlignmentDirectional(
+                                              0.0,
+                                              0.0,
+                                            ),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(90.0),
@@ -239,7 +248,11 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 7.0, 0.0, 0.0),
+                                                0.0,
+                                                7.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: Text(
                                             columnUsersRecord.caption,
                                             style: Theme.of(context)
@@ -276,7 +289,11 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 10.0, 0.0),
+                                    0.0,
+                                    0.0,
+                                    10.0,
+                                    0.0,
+                                  ),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -284,22 +301,19 @@ class _BlocklistWidgetState extends ConsumerState<BlocklistPage> {
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
                                       await currentUserReference!.update({
-                                        ...mapToSupabase(
-                                          {
-                                            'Blockuser': FieldValue.arrayRemove(
-                                                [columnUsersRecord.reference]),
-                                          },
-                                        ),
+                                        ...mapToSupabase({
+                                          'Blockuser': FieldValue.arrayRemove([
+                                            columnUsersRecord.reference,
+                                          ]),
+                                        }),
                                       });
 
                                       await columnUsersRecord.reference.update({
-                                        ...mapToSupabase(
-                                          {
-                                            'BlockEDuser':
-                                                FieldValue.arrayRemove(
-                                                    [currentUserReference]),
-                                          },
-                                        ),
+                                        ...mapToSupabase({
+                                          'BlockEDuser': FieldValue.arrayRemove(
+                                            [currentUserReference],
+                                          ),
+                                        }),
                                       });
 
                                       safeSetState(() {});

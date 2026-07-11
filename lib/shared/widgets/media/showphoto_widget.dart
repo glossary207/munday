@@ -13,10 +13,7 @@ import 'showphoto_model.dart';
 export 'showphoto_model.dart';
 
 class ShowphotoWidget extends ConsumerStatefulWidget {
-  const ShowphotoWidget({
-    super.key,
-    required this.photo,
-  });
+  const ShowphotoWidget({super.key, required this.photo});
 
   final List<String>? photo;
 
@@ -89,10 +86,7 @@ class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(0.0),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 2.0,
-              sigmaY: 2.0,
-            ),
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +98,9 @@ class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
                       height: functions.addpending(
-                          MediaQuery.sizeOf(context).width, 20.0),
+                        MediaQuery.sizeOf(context).width,
+                        20.0,
+                      ),
                       child: Builder(
                         builder: (context) {
                           final dataphoto = widget.photo!.toList();
@@ -112,17 +108,26 @@ class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
                           return Container(
                             width: MediaQuery.sizeOf(context).width,
                             height: functions.addpending(
-                                MediaQuery.sizeOf(context).width, 20.0),
+                              MediaQuery.sizeOf(context).width,
+                              20.0,
+                            ),
                             child: Stack(
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 20.0),
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    20.0,
+                                  ),
                                   child: PageView.builder(
                                     controller: _model.pageViewController ??=
                                         PageController(
-                                            initialPage: max(0,
-                                                min(0, dataphoto.length - 1))),
+                                          initialPage: max(
+                                            0,
+                                            min(0, dataphoto.length - 1),
+                                          ),
+                                        ),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: dataphoto.length,
                                     itemBuilder: (context, dataphotoIndex) {
@@ -134,27 +139,33 @@ class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                             child: Image.network(
                                               dataphotoItem,
-                                              width: MediaQuery.sizeOf(context)
-                                                  .width,
-                                              height: MediaQuery.sizeOf(context)
-                                                  .width,
+                                              width: MediaQuery.sizeOf(
+                                                context,
+                                              ).width,
+                                              height: MediaQuery.sizeOf(
+                                                context,
+                                              ).width,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/error_image.png',
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                        .width,
-                                                height:
-                                                    MediaQuery.sizeOf(context)
-                                                        .width,
-                                                fit: BoxFit.cover,
-                                              ),
+                                              errorBuilder:
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Image.asset(
+                                                    'assets/images/error_image.png',
+                                                    width: MediaQuery.sizeOf(
+                                                      context,
+                                                    ).width,
+                                                    height: MediaQuery.sizeOf(
+                                                      context,
+                                                    ).width,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                             ),
                                           ),
                                         ],
@@ -164,34 +175,38 @@ class _ShowphotoWidgetState extends ConsumerState<ShowphotoWidget>
                                 ),
                                 Align(
                                   alignment: AlignmentDirectional(0.0, 1.0),
-                                  child:
-                                      smooth_page_indicator.SmoothPageIndicator(
+                                  child: smooth_page_indicator.SmoothPageIndicator(
                                     controller: _model.pageViewController ??=
                                         PageController(
-                                            initialPage: max(0,
-                                                min(0, dataphoto.length - 1))),
+                                          initialPage: max(
+                                            0,
+                                            min(0, dataphoto.length - 1),
+                                          ),
+                                        ),
                                     count: dataphoto.length,
                                     axisDirection: Axis.horizontal,
                                     onDotClicked: (i) async {
                                       await _model.pageViewController!
                                           .animateToPage(
-                                        i,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.ease,
-                                      );
+                                            i,
+                                            duration: Duration(
+                                              milliseconds: 500,
+                                            ),
+                                            curve: Curves.ease,
+                                          );
                                       safeSetState(() {});
                                     },
-                                    effect: smooth_page_indicator
-                                        .ExpandingDotsEffect(
-                                      expansionFactor: 3.0,
-                                      spacing: 10.0,
-                                      radius: 8.0,
-                                      dotWidth: 11.0,
-                                      dotHeight: 11.0,
-                                      dotColor: Color(0xCDFFFFFF),
-                                      activeDotColor: Color(0xFFFF0000),
-                                      paintStyle: PaintingStyle.fill,
-                                    ),
+                                    effect:
+                                        smooth_page_indicator.ExpandingDotsEffect(
+                                          expansionFactor: 3.0,
+                                          spacing: 10.0,
+                                          radius: 8.0,
+                                          dotWidth: 11.0,
+                                          dotHeight: 11.0,
+                                          dotColor: Color(0xCDFFFFFF),
+                                          activeDotColor: Color(0xFFFF0000),
+                                          paintStyle: PaintingStyle.fill,
+                                        ),
                                   ),
                                 ),
                               ],

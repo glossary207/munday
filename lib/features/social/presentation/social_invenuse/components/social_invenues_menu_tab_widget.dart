@@ -38,8 +38,12 @@ class _SocialInvenuesMenuTabWidgetState
           if (false)
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                ),
                 child: GridView(
                   padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -53,15 +57,17 @@ class _SocialInvenuesMenuTabWidgetState
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          10.0, 10.0, 5.0, 0.0),
+                        10.0,
+                        10.0,
+                        5.0,
+                        0.0,
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: const AlignmentDirectional(0.0, -1.0),
-                            image: Image.network(
-                              stackVenuesRecord.bg,
-                            ).image,
+                            image: Image.network(stackVenuesRecord.bg).image,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -90,8 +96,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             ?.unfocus();
                                       },
                                       child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
                                         child: ShowpromotionWidget(
                                           photo: stackVenuesRecord.promotion,
                                         ),
@@ -130,18 +137,16 @@ class _SocialInvenuesMenuTabWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 20.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ],
@@ -154,15 +159,17 @@ class _SocialInvenuesMenuTabWidgetState
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          5.0, 10.0, 10.0, 0.0),
+                        5.0,
+                        10.0,
+                        10.0,
+                        0.0,
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: const AlignmentDirectional(0.0, 0.0),
-                            image: Image.network(
-                              stackVenuesRecord.bg,
-                            ).image,
+                            image: Image.network(stackVenuesRecord.bg).image,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -191,8 +198,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             ?.unfocus();
                                       },
                                       child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
                                         child: ShowpromotionWidget(
                                           photo: stackVenuesRecord.promotion,
                                         ),
@@ -218,10 +226,15 @@ class _SocialInvenuesMenuTabWidgetState
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 5.0, 0.0, 0.0),
+                                            0.0,
+                                            5.0,
+                                            0.0,
+                                            0.0,
+                                          ),
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(0.0),
+                                        borderRadius: BorderRadius.circular(
+                                          0.0,
+                                        ),
                                         child: Image.asset(
                                           'assets/images/nswz3_9.png',
                                           width: 100.0,
@@ -238,18 +251,16 @@ class _SocialInvenuesMenuTabWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 20.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ],
@@ -262,15 +273,17 @@ class _SocialInvenuesMenuTabWidgetState
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          10.0, 10.0, 5.0, 0.0),
+                        10.0,
+                        10.0,
+                        5.0,
+                        0.0,
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: const AlignmentDirectional(-1.0, 1.0),
-                            image: Image.network(
-                              stackVenuesRecord.bg,
-                            ).image,
+                            image: Image.network(stackVenuesRecord.bg).image,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -299,8 +312,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             ?.unfocus();
                                       },
                                       child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
                                         child: ShowpromotionWidget(
                                           photo: stackVenuesRecord.promotion,
                                         ),
@@ -339,18 +353,16 @@ class _SocialInvenuesMenuTabWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 20.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ],
@@ -406,7 +418,11 @@ class _SocialInvenuesMenuTabWidgetState
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 0.0, 5.0),
+                              10.0,
+                              10.0,
+                              0.0,
+                              5.0,
+                            ),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -416,7 +432,11 @@ class _SocialInvenuesMenuTabWidgetState
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 0.0, 0.0),
+                                          10.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -431,16 +451,19 @@ class _SocialInvenuesMenuTabWidgetState
                                           builder: (context) {
                                             return GestureDetector(
                                               onTap: () {
-                                                FocusScope.of(context)
-                                                    .unfocus();
+                                                FocusScope.of(
+                                                  context,
+                                                ).unfocus();
                                                 FocusManager
-                                                    .instance.primaryFocus
+                                                    .instance
+                                                    .primaryFocus
                                                     ?.unfocus();
                                               },
                                               child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
-                                                        context),
+                                                      context,
+                                                    ),
                                                 child: const FilterWidget(),
                                               ),
                                             );
@@ -458,15 +481,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             BoxShadow(
                                               blurRadius: 5.0,
                                               color: Color(0x33000000),
-                                              offset: Offset(
-                                                2.0,
-                                                2.0,
-                                              ),
+                                              offset: Offset(2.0, 2.0),
                                               spreadRadius: 4.0,
-                                            )
+                                            ),
                                           ],
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          borderRadius: BorderRadius.circular(
+                                            10.0,
+                                          ),
                                           border: Border.all(
                                             color: const Color(0x98FF0000),
                                             width: 2.0,
@@ -477,7 +498,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      0.0, 0.0),
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: FaIcon(
                                                 FontAwesomeIcons.search,
                                                 color: Theme.of(context)
@@ -495,14 +518,20 @@ class _SocialInvenuesMenuTabWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              10.0,
+                                              0.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: Container(
                                           height: 40.0,
                                           decoration: BoxDecoration(
                                             color: const Color(0x98FF0000),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                             border: Border.all(
                                               color: const Color(0x98FF0000),
                                               width: 2.0,
@@ -511,15 +540,21 @@ class _SocialInvenuesMenuTabWidgetState
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    0.0,
+                                                    10.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_c3ihn4ll,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_c3ihn4ll,
                                                 textAlign: TextAlign.center,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -527,17 +562,21 @@ class _SocialInvenuesMenuTabWidgetState
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: Colors.white,
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.0,
@@ -563,46 +602,63 @@ class _SocialInvenuesMenuTabWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              10.0,
+                                              0.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: Container(
                                           height: 40.0,
                                           decoration: BoxDecoration(
                                             color: const Color(0xFF111111),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                           ),
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    0.0,
+                                                    10.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_2ijyibzr,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_2ijyibzr,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: const Color(
-                                                          0xFFA2A2A2),
+                                                        0xFFA2A2A2,
+                                                      ),
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -627,46 +683,63 @@ class _SocialInvenuesMenuTabWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              10.0,
+                                              0.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: Container(
                                           height: 40.0,
                                           decoration: BoxDecoration(
                                             color: const Color(0xFF111111),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                           ),
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    0.0,
+                                                    10.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_wkacxyok,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_wkacxyok,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: const Color(
-                                                          0xFFA2A2A2),
+                                                        0xFFA2A2A2,
+                                                      ),
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -691,46 +764,63 @@ class _SocialInvenuesMenuTabWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10.0, 0.0, 10.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              10.0,
+                                              0.0,
+                                              10.0,
+                                              0.0,
+                                            ),
                                         child: Container(
                                           height: 40.0,
                                           decoration: BoxDecoration(
                                             color: const Color(0xFF111111),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                           ),
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    0.0,
+                                                    10.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_jd24thiw,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_jd24thiw,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: const Color(
-                                                          0xFFA2A2A2),
+                                                        0xFFA2A2A2,
+                                                      ),
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -793,9 +883,7 @@ class _SocialInvenuesMenuTabWidgetState
               ),
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0x58000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x58000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -807,7 +895,11 @@ class _SocialInvenuesMenuTabWidgetState
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 0.0, 0.0),
+                            10.0,
+                            10.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0x7F000000),
@@ -825,7 +917,11 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 2.0, 10.0, 2.0),
+                                    10.0,
+                                    2.0,
+                                    10.0,
+                                    2.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_hydaiewz,
                                     style: Theme.of(context)
@@ -834,19 +930,17 @@ class _SocialInvenuesMenuTabWidgetState
                                         .override(
                                           font: GoogleFonts.openSans(
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 17.0,
                                           letterSpacing: 0.4,
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ),
@@ -856,7 +950,11 @@ class _SocialInvenuesMenuTabWidgetState
                         ),
                         const Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 10.0, 0.0),
+                            0.0,
+                            10.0,
+                            10.0,
+                            0.0,
+                          ),
                           child: Icon(
                             Icons.chevron_right_rounded,
                             color: Colors.white,
@@ -873,7 +971,11 @@ class _SocialInvenuesMenuTabWidgetState
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -892,8 +994,9 @@ class _SocialInvenuesMenuTabWidgetState
                                               ?.unfocus();
                                         },
                                         child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
+                                          padding: MediaQuery.viewInsetsOf(
+                                            context,
+                                          ),
                                           child: const AppbarsilverWidget(
                                             image:
                                                 'https://longdan.co.uk/cdn/shop/files/1701009_800x.png?v=1728881576',
@@ -917,12 +1020,9 @@ class _SocialInvenuesMenuTabWidgetState
                                       BoxShadow(
                                         blurRadius: 10.0,
                                         color: Color(0x65000000),
-                                        offset: Offset(
-                                          4.0,
-                                          4.0,
-                                        ),
+                                        offset: Offset(4.0, 4.0),
                                         spreadRadius: 4.0,
-                                      )
+                                      ),
                                     ],
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -943,19 +1043,25 @@ class _SocialInvenuesMenuTabWidgetState
                                               gradient: LinearGradient(
                                                 colors: [
                                                   Color(0xFFFF0000),
-                                                  Color(0xFFC10000)
+                                                  Color(0xFFC10000),
                                                 ],
                                                 stops: [0.0, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(0.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  0.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(10.0),
                                               ),
@@ -966,12 +1072,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Icon(
                                                       Icons.add_circle,
                                                       color: Colors.white,
@@ -986,7 +1097,9 @@ class _SocialInvenuesMenuTabWidgetState
                                       ),
                                       Align(
                                         alignment: const AlignmentDirectional(
-                                            0.0, 1.0),
+                                          0.0,
+                                          1.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           height: 80.0,
@@ -995,24 +1108,32 @@ class _SocialInvenuesMenuTabWidgetState
                                               colors: [
                                                 Colors.transparent,
                                                 Color(0xCC000000),
-                                                Color(0xED000000)
+                                                Color(0xED000000),
                                               ],
                                               stops: [0.0, 0.8, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(10.0),
-                                              bottomRight:
-                                                  Radius.circular(10.0),
+                                              bottomRight: Radius.circular(
+                                                10.0,
+                                              ),
                                               topLeft: Radius.circular(0.0),
                                               topRight: Radius.circular(0.0),
                                             ),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  5.0,
+                                                  0.0,
+                                                  5.0,
+                                                  0.0,
+                                                ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -1021,12 +1142,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 5.0, 5.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          5.0,
+                                                          0.0,
+                                                          5.0,
+                                                          5.0,
+                                                        ),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -1046,51 +1172,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                               Align(
                                                                 alignment:
                                                                     const AlignmentDirectional(
-                                                                        -1.0,
-                                                                        0.0),
+                                                                      -1.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_h7aigha6,
+                                                                    context,
+                                                                  )!.k_h7aigha6,
                                                                   maxLines: 18,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Theme.of(context)
-                                                                            .extension<CustomColors>()!
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            17.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Theme.of(context)
+                                                                        .extension<
+                                                                          CustomColors
+                                                                        >()!
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        17.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        3.0),
+                                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      3.0,
+                                                                    ),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1101,31 +1227,31 @@ class _SocialInvenuesMenuTabWidgetState
                                                                   children: [
                                                                     Text(
                                                                       AppLocalizations.of(
-                                                                              context)!
-                                                                          .k_20jz9941,
+                                                                        context,
+                                                                      )!.k_20jz9941,
                                                                       maxLines:
                                                                           18,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                const Color(0xFFD1D1D1),
-                                                                            fontSize:
-                                                                                12.5,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        color: const Color(
+                                                                          0xFFD1D1D1,
+                                                                        ),
+                                                                        fontSize:
+                                                                            12.5,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -1142,95 +1268,95 @@ class _SocialInvenuesMenuTabWidgetState
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_hka3eg74,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_hka3eg74,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        14.5,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 14.5,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  3.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                3.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_7mzxbnk8,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_7mzxbnk8,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -1249,7 +1375,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -1264,12 +1394,9 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -1292,22 +1419,29 @@ class _SocialInvenuesMenuTabWidgetState
                                                 gradient: LinearGradient(
                                                   colors: [
                                                     Color(0xFF00E335),
-                                                    Color(0xFF00BA2C)
+                                                    Color(0xFF00BA2C),
                                                   ],
                                                   stops: [0.0, 1.0],
                                                   begin: AlignmentDirectional(
-                                                      0.0, -1.0),
+                                                    0.0,
+                                                    -1.0,
+                                                  ),
                                                   end: AlignmentDirectional(
-                                                      0, 1.0),
+                                                    0,
+                                                    1.0,
+                                                  ),
                                                 ),
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
+                                                  bottomLeft: Radius.circular(
+                                                    10.0,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    0.0,
+                                                  ),
                                                   topLeft: Radius.circular(0.0),
-                                                  topRight:
-                                                      Radius.circular(10.0),
+                                                  topRight: Radius.circular(
+                                                    10.0,
+                                                  ),
                                                 ),
                                                 shape: BoxShape.rectangle,
                                               ),
@@ -1316,15 +1450,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 0.0),
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  1.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            1.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Icon(
                                                         Icons.check,
                                                         color: Colors.white,
@@ -1339,7 +1475,9 @@ class _SocialInvenuesMenuTabWidgetState
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 1.0),
+                                            0.0,
+                                            1.0,
+                                          ),
                                           child: Container(
                                             width: double.infinity,
                                             height: 80.0,
@@ -1348,28 +1486,37 @@ class _SocialInvenuesMenuTabWidgetState
                                                 colors: [
                                                   Colors.transparent,
                                                   Color(0xCC000000),
-                                                  Color(0xED000000)
+                                                  Color(0xED000000),
                                                 ],
                                                 stops: [0.0, 0.8, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  10.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(0.0),
                                               ),
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      5.0, 0.0, 5.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    5.0,
+                                                    0.0,
+                                                    5.0,
+                                                    0.0,
+                                                  ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -1378,12 +1525,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         const AlignmentDirectional(
-                                                            1.0, 0.0),
+                                                          1.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(5.0,
-                                                              0.0, 5.0, 5.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            5.0,
+                                                            0.0,
+                                                            5.0,
+                                                            5.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1403,50 +1555,50 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 Align(
                                                                   alignment:
                                                                       const AlignmentDirectional(
-                                                                          -1.0,
-                                                                          0.0),
+                                                                        -1.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_0zspz9jz,
+                                                                      context,
+                                                                    )!.k_0zspz9jz,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          17.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
                                                                   padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          3.0),
+                                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -1456,23 +1608,30 @@ class _SocialInvenuesMenuTabWidgetState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_8gfoe3yr,
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_8gfoe3yr,
                                                                         maxLines:
                                                                             18,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.normal,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
-                                                                              color: const Color(0xFFD1D1D1),
+                                                                              color: const Color(
+                                                                                0xFFD1D1D1,
+                                                                              ),
                                                                               fontSize: 12.5,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ],
@@ -1490,94 +1649,89 @@ class _SocialInvenuesMenuTabWidgetState
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_8r09trlg,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                  context,
+                                                                )!.k_8r09trlg,
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                                  fontSize:
+                                                                      14.5,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    3.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  3.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_x9gjvmx0,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_x9gjvmx0,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -1592,8 +1746,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Container(
                                         width: 120.0,
                                         height: 50.0,
@@ -1603,15 +1759,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             BoxShadow(
                                               blurRadius: 4.0,
                                               color: Color(0x33000000),
-                                              offset: Offset(
-                                                0.0,
-                                                2.0,
-                                              ),
+                                              offset: Offset(0.0, 2.0),
                                               spreadRadius: 10.0,
-                                            )
+                                            ),
                                           ],
-                                          borderRadius:
-                                              BorderRadius.circular(90.0),
+                                          borderRadius: BorderRadius.circular(
+                                            90.0,
+                                          ),
                                         ),
                                         child: Stack(
                                           children: [
@@ -1623,24 +1777,27 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_kbmfk8fb,
+                                                      context,
+                                                    )!.k_kbmfk8fb,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                           color: Colors.white,
                                                           fontSize: 25.0,
@@ -1660,7 +1817,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                    -1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -1670,12 +1829,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.minus,
                                                       color: Colors.white,
@@ -1688,7 +1852,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      1.0, 0.0),
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -1698,12 +1864,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.plus,
                                                       color: Colors.white,
@@ -1723,7 +1894,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -1738,12 +1913,9 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -1763,11 +1935,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -1782,11 +1956,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -1800,8 +1980,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -1810,11 +1992,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -1825,8 +2009,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -1835,12 +2024,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -1857,55 +2051,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_h5zmj9ni,
+                                                                  context,
+                                                                )!.k_h5zmj9ni,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1916,35 +2106,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_t6ieq3ei,
+                                                                      context,
+                                                                    )!.k_t6ieq3ei,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -1961,92 +2149,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_y32xdul9,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_y32xdul9,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_cz6xp9fo,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_cz6xp9fo,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -2062,23 +2256,16 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                               ),
                             ),
-                          ]
-                              .addToStart(const SizedBox(width: 10.0))
-                              .addToEnd(const SizedBox(width: 25.0)),
+                          ].addToStart(const SizedBox(width: 10.0)).addToEnd(const SizedBox(width: 25.0)),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ).animateOnPageLoad(
-                  animationsMap['containerOnPageLoadAnimation2']!),
+              ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation2']!),
             ),
           ),
-          const Divider(
-            height: 20.0,
-            thickness: 2.0,
-            color: Color(0xB2252525),
-          ),
+          const Divider(height: 20.0, thickness: 2.0, color: Color(0xB2252525)),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
             child: Container(
@@ -2100,9 +2287,7 @@ class _SocialInvenuesMenuTabWidgetState
               ),
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0x58000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x58000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2113,7 +2298,11 @@ class _SocialInvenuesMenuTabWidgetState
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 0.0, 0.0),
+                            10.0,
+                            10.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0x7F000000),
@@ -2131,7 +2320,11 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 2.0, 10.0, 2.0),
+                                    10.0,
+                                    2.0,
+                                    10.0,
+                                    2.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_3ahooyxh,
                                     style: Theme.of(context)
@@ -2140,19 +2333,17 @@ class _SocialInvenuesMenuTabWidgetState
                                         .override(
                                           font: GoogleFonts.openSans(
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 17.0,
                                           letterSpacing: 0.4,
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ),
@@ -2162,7 +2353,11 @@ class _SocialInvenuesMenuTabWidgetState
                         ),
                         const Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 10.0, 0.0),
+                            0.0,
+                            10.0,
+                            10.0,
+                            0.0,
+                          ),
                           child: Icon(
                             Icons.chevron_right_rounded,
                             color: Colors.white,
@@ -2179,7 +2374,11 @@ class _SocialInvenuesMenuTabWidgetState
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -2195,12 +2394,9 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -2223,22 +2419,29 @@ class _SocialInvenuesMenuTabWidgetState
                                                 gradient: LinearGradient(
                                                   colors: [
                                                     Color(0xFF00E335),
-                                                    Color(0xFF00BA2C)
+                                                    Color(0xFF00BA2C),
                                                   ],
                                                   stops: [0.0, 1.0],
                                                   begin: AlignmentDirectional(
-                                                      0.0, -1.0),
+                                                    0.0,
+                                                    -1.0,
+                                                  ),
                                                   end: AlignmentDirectional(
-                                                      0, 1.0),
+                                                    0,
+                                                    1.0,
+                                                  ),
                                                 ),
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
+                                                  bottomLeft: Radius.circular(
+                                                    10.0,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    0.0,
+                                                  ),
                                                   topLeft: Radius.circular(0.0),
-                                                  topRight:
-                                                      Radius.circular(10.0),
+                                                  topRight: Radius.circular(
+                                                    10.0,
+                                                  ),
                                                 ),
                                                 shape: BoxShape.rectangle,
                                               ),
@@ -2247,15 +2450,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 0.0),
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  1.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            1.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Icon(
                                                         Icons.check,
                                                         color: Colors.white,
@@ -2270,7 +2475,9 @@ class _SocialInvenuesMenuTabWidgetState
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 1.0),
+                                            0.0,
+                                            1.0,
+                                          ),
                                           child: Container(
                                             width: double.infinity,
                                             height: 80.0,
@@ -2279,28 +2486,37 @@ class _SocialInvenuesMenuTabWidgetState
                                                 colors: [
                                                   Colors.transparent,
                                                   Color(0xCC000000),
-                                                  Color(0xED000000)
+                                                  Color(0xED000000),
                                                 ],
                                                 stops: [0.0, 0.8, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  10.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(0.0),
                                               ),
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      5.0, 0.0, 5.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    5.0,
+                                                    0.0,
+                                                    5.0,
+                                                    0.0,
+                                                  ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -2309,12 +2525,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         const AlignmentDirectional(
-                                                            1.0, 0.0),
+                                                          1.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(5.0,
-                                                              0.0, 5.0, 5.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            5.0,
+                                                            0.0,
+                                                            5.0,
+                                                            5.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -2334,50 +2555,50 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 Align(
                                                                   alignment:
                                                                       const AlignmentDirectional(
-                                                                          -1.0,
-                                                                          0.0),
+                                                                        -1.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_lrh68n8q,
+                                                                      context,
+                                                                    )!.k_lrh68n8q,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          17.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
                                                                   padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          3.0),
+                                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -2387,23 +2608,30 @@ class _SocialInvenuesMenuTabWidgetState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_br3pzi55,
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_br3pzi55,
                                                                         maxLines:
                                                                             18,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.normal,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
-                                                                              color: const Color(0xFFD1D1D1),
+                                                                              color: const Color(
+                                                                                0xFFD1D1D1,
+                                                                              ),
                                                                               fontSize: 12.5,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ],
@@ -2421,94 +2649,89 @@ class _SocialInvenuesMenuTabWidgetState
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_8bb0vlf1,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                  context,
+                                                                )!.k_8bb0vlf1,
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                                  fontSize:
+                                                                      14.5,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    3.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  3.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_he7h9ja5,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_he7h9ja5,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -2523,8 +2746,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Container(
                                         width: 120.0,
                                         height: 50.0,
@@ -2534,22 +2759,22 @@ class _SocialInvenuesMenuTabWidgetState
                                             BoxShadow(
                                               blurRadius: 4.0,
                                               color: Color(0x33000000),
-                                              offset: Offset(
-                                                0.0,
-                                                2.0,
-                                              ),
+                                              offset: Offset(0.0, 2.0),
                                               spreadRadius: 10.0,
-                                            )
+                                            ),
                                           ],
-                                          borderRadius:
-                                              BorderRadius.circular(90.0),
+                                          borderRadius: BorderRadius.circular(
+                                            90.0,
+                                          ),
                                         ),
                                         child: Stack(
                                           children: [
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                    -1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -2559,12 +2784,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.minus,
                                                       color: Colors.white,
@@ -2577,7 +2807,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      1.0, 0.0),
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -2587,12 +2819,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.plus,
                                                       color: Colors.white,
@@ -2614,28 +2851,31 @@ class _SocialInvenuesMenuTabWidgetState
                                               child: MundayCountController(
                                                 decrementIconBuilder:
                                                     (enabled) => Icon(
-                                                  Icons.remove_rounded,
-                                                  color: enabled
-                                                      ? Colors.white
-                                                      : const Color(0xCD000000),
-                                                  size: 24.0,
-                                                ),
+                                                      Icons.remove_rounded,
+                                                      color: enabled
+                                                          ? Colors.white
+                                                          : const Color(
+                                                              0xCD000000,
+                                                            ),
+                                                      size: 24.0,
+                                                    ),
                                                 incrementIconBuilder:
                                                     (enabled) => Icon(
-                                                  Icons.add_rounded,
-                                                  color: enabled
-                                                      ? Colors.white
-                                                      : const Color(0xCD000000),
-                                                  size: 24.0,
-                                                ),
+                                                      Icons.add_rounded,
+                                                      color: enabled
+                                                          ? Colors.white
+                                                          : const Color(
+                                                              0xCD000000,
+                                                            ),
+                                                      size: 24.0,
+                                                    ),
                                                 countBuilder: (count) => Text(
                                                   count.toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleLarge!
                                                       .override(
-                                                        font:
-                                                            GoogleFonts.roboto(
+                                                        font: GoogleFonts.roboto(
                                                           fontWeight:
                                                               Theme.of(context)
                                                                   .textTheme
@@ -2660,17 +2900,23 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 .fontStyle,
                                                       ),
                                                 ),
-                                                count: _model
-                                                    .countControllerValue ??= 2,
+                                                count:
+                                                    _model.countControllerValue ??=
+                                                        2,
                                                 updateCount: (count) =>
-                                                    safeSetState(() => _model
-                                                            .countControllerValue =
-                                                        count),
+                                                    safeSetState(
+                                                      () =>
+                                                          _model.countControllerValue =
+                                                              count,
+                                                    ),
                                                 stepSize: 1,
                                                 contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      12.0,
+                                                      0.0,
+                                                      12.0,
+                                                      0.0,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -2683,7 +2929,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -2698,12 +2948,9 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -2723,11 +2970,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -2742,11 +2991,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -2760,8 +3015,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -2770,11 +3027,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -2785,8 +3044,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -2795,12 +3059,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -2817,55 +3086,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_axhfriq1,
+                                                                  context,
+                                                                )!.k_axhfriq1,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -2876,35 +3141,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_ina1urn0,
+                                                                      context,
+                                                                    )!.k_ina1urn0,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -2921,92 +3184,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_v0aqh8ec,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_v0aqh8ec,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_a43vuqtp,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_a43vuqtp,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -3024,7 +3293,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -3039,12 +3312,9 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -3064,11 +3334,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -3083,11 +3355,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -3101,8 +3379,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -3111,11 +3391,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -3126,8 +3408,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -3136,12 +3423,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -3158,55 +3450,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_2cd1vune,
+                                                                  context,
+                                                                )!.k_2cd1vune,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -3217,35 +3505,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_r71bjun7,
+                                                                      context,
+                                                                    )!.k_r71bjun7,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -3262,92 +3548,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_xp6v8pyx,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_xp6v8pyx,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_u07ufrnd,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_u07ufrnd,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -3363,23 +3655,16 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                               ),
                             ),
-                          ]
-                              .addToStart(const SizedBox(width: 10.0))
-                              .addToEnd(const SizedBox(width: 25.0)),
+                          ].addToStart(const SizedBox(width: 10.0)).addToEnd(const SizedBox(width: 25.0)),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ).animateOnPageLoad(
-                  animationsMap['containerOnPageLoadAnimation3']!),
+              ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation3']!),
             ),
           ),
-          const Divider(
-            height: 20.0,
-            thickness: 2.0,
-            color: Color(0xB2252525),
-          ),
+          const Divider(height: 20.0, thickness: 2.0, color: Color(0xB2252525)),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
             child: Container(
@@ -3395,9 +3680,7 @@ class _SocialInvenuesMenuTabWidgetState
               ),
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0x4D000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x4D000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -3408,7 +3691,11 @@ class _SocialInvenuesMenuTabWidgetState
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 0.0, 0.0),
+                            10.0,
+                            10.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0x7F000000),
@@ -3426,7 +3713,11 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 2.0, 10.0, 2.0),
+                                    10.0,
+                                    2.0,
+                                    10.0,
+                                    2.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_0b8362q5,
                                     style: Theme.of(context)
@@ -3435,19 +3726,17 @@ class _SocialInvenuesMenuTabWidgetState
                                         .override(
                                           font: GoogleFonts.openSans(
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 17.0,
                                           letterSpacing: 0.4,
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ),
@@ -3457,7 +3746,11 @@ class _SocialInvenuesMenuTabWidgetState
                         ),
                         const Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 10.0, 0.0),
+                            0.0,
+                            10.0,
+                            10.0,
+                            0.0,
+                          ),
                           child: Icon(
                             Icons.chevron_right_rounded,
                             color: Colors.white,
@@ -3474,7 +3767,11 @@ class _SocialInvenuesMenuTabWidgetState
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -3489,17 +3786,14 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0x261C1C1C),
-                                      Colors.transparent
+                                      Colors.transparent,
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.5, -1.0),
@@ -3526,22 +3820,29 @@ class _SocialInvenuesMenuTabWidgetState
                                                 gradient: LinearGradient(
                                                   colors: [
                                                     Color(0xFF00E335),
-                                                    Color(0xFF00BA2C)
+                                                    Color(0xFF00BA2C),
                                                   ],
                                                   stops: [0.0, 1.0],
                                                   begin: AlignmentDirectional(
-                                                      0.0, -1.0),
+                                                    0.0,
+                                                    -1.0,
+                                                  ),
                                                   end: AlignmentDirectional(
-                                                      0, 1.0),
+                                                    0,
+                                                    1.0,
+                                                  ),
                                                 ),
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
+                                                  bottomLeft: Radius.circular(
+                                                    10.0,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    0.0,
+                                                  ),
                                                   topLeft: Radius.circular(0.0),
-                                                  topRight:
-                                                      Radius.circular(10.0),
+                                                  topRight: Radius.circular(
+                                                    10.0,
+                                                  ),
                                                 ),
                                                 shape: BoxShape.rectangle,
                                               ),
@@ -3550,15 +3851,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 0.0),
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  1.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            1.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Icon(
                                                         Icons.check,
                                                         color: Colors.white,
@@ -3573,7 +3876,9 @@ class _SocialInvenuesMenuTabWidgetState
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 1.0),
+                                            0.0,
+                                            1.0,
+                                          ),
                                           child: Container(
                                             width: double.infinity,
                                             height: 70.0,
@@ -3582,28 +3887,37 @@ class _SocialInvenuesMenuTabWidgetState
                                                 colors: [
                                                   Colors.transparent,
                                                   Color(0xCC000000),
-                                                  Color(0xED000000)
+                                                  Color(0xED000000),
                                                 ],
                                                 stops: [0.0, 0.8, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  10.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(0.0),
                                               ),
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      5.0, 0.0, 5.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    5.0,
+                                                    0.0,
+                                                    5.0,
+                                                    0.0,
+                                                  ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -3612,12 +3926,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                   Align(
                                                     alignment:
                                                         const AlignmentDirectional(
-                                                            1.0, 0.0),
+                                                          1.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(5.0,
-                                                              0.0, 5.0, 5.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            5.0,
+                                                            0.0,
+                                                            5.0,
+                                                            5.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -3637,50 +3956,50 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 Align(
                                                                   alignment:
                                                                       const AlignmentDirectional(
-                                                                          -1.0,
-                                                                          0.0),
+                                                                        -1.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_mjmzivy5,
+                                                                      context,
+                                                                    )!.k_mjmzivy5,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          17.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
                                                                   padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          3.0),
+                                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -3690,23 +4009,30 @@ class _SocialInvenuesMenuTabWidgetState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_8bfn0gcf,
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_8bfn0gcf,
                                                                         maxLines:
                                                                             18,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.normal,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
-                                                                              color: const Color(0xFFD1D1D1),
+                                                                              color: const Color(
+                                                                                0xFFD1D1D1,
+                                                                              ),
                                                                               fontSize: 12.5,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ],
@@ -3724,94 +4050,89 @@ class _SocialInvenuesMenuTabWidgetState
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_1av5niej,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                  context,
+                                                                )!.k_1av5niej,
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                                  fontSize:
+                                                                      14.5,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    3.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  3.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_6bxywujx,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_6bxywujx,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -3826,8 +4147,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Container(
                                         width: 120.0,
                                         height: 50.0,
@@ -3837,15 +4160,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             BoxShadow(
                                               blurRadius: 4.0,
                                               color: Color(0x33000000),
-                                              offset: Offset(
-                                                0.0,
-                                                2.0,
-                                              ),
+                                              offset: Offset(0.0, 2.0),
                                               spreadRadius: 10.0,
-                                            )
+                                            ),
                                           ],
-                                          borderRadius:
-                                              BorderRadius.circular(90.0),
+                                          borderRadius: BorderRadius.circular(
+                                            90.0,
+                                          ),
                                         ),
                                         child: Stack(
                                           children: [
@@ -3857,24 +4178,27 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_vv5dih4q,
+                                                      context,
+                                                    )!.k_vv5dih4q,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                           color: Colors.white,
                                                           fontSize: 25.0,
@@ -3894,7 +4218,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                    -1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -3904,12 +4230,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.minus,
                                                       color: Colors.white,
@@ -3922,7 +4253,9 @@ class _SocialInvenuesMenuTabWidgetState
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      1.0, 0.0),
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -3932,12 +4265,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 child: const Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: FaIcon(
                                                       FontAwesomeIcons.plus,
                                                       color: Colors.white,
@@ -3957,7 +4295,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -3976,8 +4318,9 @@ class _SocialInvenuesMenuTabWidgetState
                                               ?.unfocus();
                                         },
                                         child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
+                                          padding: MediaQuery.viewInsetsOf(
+                                            context,
+                                          ),
                                           child: const AppbarsilverWidget(
                                             image:
                                                 'https://longdan.co.uk/cdn/shop/files/1701009_800x.png?v=1728881576',
@@ -4001,12 +4344,9 @@ class _SocialInvenuesMenuTabWidgetState
                                       BoxShadow(
                                         blurRadius: 10.0,
                                         color: Color(0x7F000000),
-                                        offset: Offset(
-                                          4.0,
-                                          4.0,
-                                        ),
+                                        offset: Offset(4.0, 4.0),
                                         spreadRadius: 4.0,
-                                      )
+                                      ),
                                     ],
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -4027,19 +4367,25 @@ class _SocialInvenuesMenuTabWidgetState
                                               gradient: LinearGradient(
                                                 colors: [
                                                   Color(0xFFFF0000),
-                                                  Color(0xFFC10000)
+                                                  Color(0xFFC10000),
                                                 ],
                                                 stops: [0.0, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(0.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  0.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(10.0),
                                               ),
@@ -4050,12 +4396,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Icon(
                                                       Icons.add_circle,
                                                       color: Colors.white,
@@ -4070,7 +4421,9 @@ class _SocialInvenuesMenuTabWidgetState
                                       ),
                                       Align(
                                         alignment: const AlignmentDirectional(
-                                            0.0, 1.0),
+                                          0.0,
+                                          1.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           height: 80.0,
@@ -4079,24 +4432,32 @@ class _SocialInvenuesMenuTabWidgetState
                                               colors: [
                                                 Colors.transparent,
                                                 Color(0xCC000000),
-                                                Color(0xED000000)
+                                                Color(0xED000000),
                                               ],
                                               stops: [0.0, 0.8, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(10.0),
-                                              bottomRight:
-                                                  Radius.circular(10.0),
+                                              bottomRight: Radius.circular(
+                                                10.0,
+                                              ),
                                               topLeft: Radius.circular(0.0),
                                               topRight: Radius.circular(0.0),
                                             ),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  5.0,
+                                                  0.0,
+                                                  5.0,
+                                                  0.0,
+                                                ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -4105,12 +4466,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 5.0, 5.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          5.0,
+                                                          0.0,
+                                                          5.0,
+                                                          5.0,
+                                                        ),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -4130,51 +4496,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                               Align(
                                                                 alignment:
                                                                     const AlignmentDirectional(
-                                                                        -1.0,
-                                                                        0.0),
+                                                                      -1.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_a69x38g0,
+                                                                    context,
+                                                                  )!.k_a69x38g0,
                                                                   maxLines: 18,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Theme.of(context)
-                                                                            .extension<CustomColors>()!
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            17.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Theme.of(context)
+                                                                        .extension<
+                                                                          CustomColors
+                                                                        >()!
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        17.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        3.0),
+                                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      3.0,
+                                                                    ),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -4185,31 +4551,31 @@ class _SocialInvenuesMenuTabWidgetState
                                                                   children: [
                                                                     Text(
                                                                       AppLocalizations.of(
-                                                                              context)!
-                                                                          .k_lrltctfx,
+                                                                        context,
+                                                                      )!.k_lrltctfx,
                                                                       maxLines:
                                                                           18,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                const Color(0xFFD1D1D1),
-                                                                            fontSize:
-                                                                                12.5,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        color: const Color(
+                                                                          0xFFD1D1D1,
+                                                                        ),
+                                                                        fontSize:
+                                                                            12.5,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -4226,95 +4592,95 @@ class _SocialInvenuesMenuTabWidgetState
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_1pj155l0,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_1pj155l0,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        14.5,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 14.5,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  3.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                3.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_3o58br8y,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_3o58br8y,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -4331,23 +4697,16 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                               ),
                             ),
-                          ]
-                              .addToStart(const SizedBox(width: 10.0))
-                              .addToEnd(const SizedBox(width: 25.0)),
+                          ].addToStart(const SizedBox(width: 10.0)).addToEnd(const SizedBox(width: 25.0)),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ).animateOnPageLoad(
-                  animationsMap['containerOnPageLoadAnimation4']!),
+              ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation4']!),
             ),
           ),
-          const Divider(
-            height: 20.0,
-            thickness: 2.0,
-            color: Color(0xB2252525),
-          ),
+          const Divider(height: 20.0, thickness: 2.0, color: Color(0xB2252525)),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
             child: Container(
@@ -4356,9 +4715,7 @@ class _SocialInvenuesMenuTabWidgetState
               decoration: const BoxDecoration(),
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0x4D000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x4D000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -4369,7 +4726,11 @@ class _SocialInvenuesMenuTabWidgetState
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 0.0, 0.0),
+                            10.0,
+                            10.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0x7F000000),
@@ -4387,7 +4748,11 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 2.0, 10.0, 2.0),
+                                    10.0,
+                                    2.0,
+                                    10.0,
+                                    2.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_6p4hnzd2,
                                     style: Theme.of(context)
@@ -4396,19 +4761,17 @@ class _SocialInvenuesMenuTabWidgetState
                                         .override(
                                           font: GoogleFonts.openSans(
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 17.0,
                                           letterSpacing: 0.4,
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ),
@@ -4418,7 +4781,11 @@ class _SocialInvenuesMenuTabWidgetState
                         ),
                         const Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 10.0, 0.0),
+                            0.0,
+                            10.0,
+                            10.0,
+                            0.0,
+                          ),
                           child: Icon(
                             Icons.chevron_right_rounded,
                             color: Colors.white,
@@ -4435,7 +4802,11 @@ class _SocialInvenuesMenuTabWidgetState
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -4450,17 +4821,14 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x65000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0x4D1C1C1C),
-                                      Colors.transparent
+                                      Colors.transparent,
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.5, -1.0),
@@ -4484,11 +4852,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -4503,11 +4873,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -4521,8 +4897,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 70.0,
@@ -4531,11 +4909,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -4546,8 +4926,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -4556,12 +4941,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -4578,55 +4968,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_wrs8y16r,
+                                                                  context,
+                                                                )!.k_wrs8y16r,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -4637,35 +5023,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_lu0f1jur,
+                                                                      context,
+                                                                    )!.k_lu0f1jur,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -4682,92 +5066,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_yy47n67q,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_yy47n67q,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_f6b4yj4k,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_f6b4yj4k,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -4785,7 +5175,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -4804,8 +5198,9 @@ class _SocialInvenuesMenuTabWidgetState
                                               ?.unfocus();
                                         },
                                         child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
+                                          padding: MediaQuery.viewInsetsOf(
+                                            context,
+                                          ),
                                           child: const AppbarmenuCopyWidget(),
                                         ),
                                       );
@@ -4826,17 +5221,14 @@ class _SocialInvenuesMenuTabWidgetState
                                       BoxShadow(
                                         blurRadius: 10.0,
                                         color: Color(0x65000000),
-                                        offset: Offset(
-                                          4.0,
-                                          4.0,
-                                        ),
+                                        offset: Offset(4.0, 4.0),
                                         spreadRadius: 4.0,
-                                      )
+                                      ),
                                     ],
                                     gradient: const LinearGradient(
                                       colors: [
                                         Color(0x1A1C1C1C),
-                                        Colors.transparent
+                                        Colors.transparent,
                                       ],
                                       stops: [0.0, 1.0],
                                       begin: AlignmentDirectional(0.5, -1.0),
@@ -4861,19 +5253,25 @@ class _SocialInvenuesMenuTabWidgetState
                                               gradient: LinearGradient(
                                                 colors: [
                                                   Color(0xFFFF0000),
-                                                  Color(0xFFC10000)
+                                                  Color(0xFFC10000),
                                                 ],
                                                 stops: [0.0, 1.0],
                                                 begin: AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                                 end: AlignmentDirectional(
-                                                    0, 1.0),
+                                                  0,
+                                                  1.0,
+                                                ),
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(10.0),
-                                                bottomRight:
-                                                    Radius.circular(0.0),
+                                                bottomLeft: Radius.circular(
+                                                  10.0,
+                                                ),
+                                                bottomRight: Radius.circular(
+                                                  0.0,
+                                                ),
                                                 topLeft: Radius.circular(0.0),
                                                 topRight: Radius.circular(10.0),
                                               ),
@@ -4884,12 +5282,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          1.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Icon(
                                                       Icons.add_circle,
                                                       color: Colors.white,
@@ -4904,7 +5307,9 @@ class _SocialInvenuesMenuTabWidgetState
                                       ),
                                       Align(
                                         alignment: const AlignmentDirectional(
-                                            0.0, 1.0),
+                                          0.0,
+                                          1.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           height: 80.0,
@@ -4913,24 +5318,32 @@ class _SocialInvenuesMenuTabWidgetState
                                               colors: [
                                                 Colors.transparent,
                                                 Color(0xCC000000),
-                                                Color(0xED000000)
+                                                Color(0xED000000),
                                               ],
                                               stops: [0.0, 0.8, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(10.0),
-                                              bottomRight:
-                                                  Radius.circular(10.0),
+                                              bottomRight: Radius.circular(
+                                                10.0,
+                                              ),
                                               topLeft: Radius.circular(0.0),
                                               topRight: Radius.circular(0.0),
                                             ),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  5.0,
+                                                  0.0,
+                                                  5.0,
+                                                  0.0,
+                                                ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -4939,12 +5352,17 @@ class _SocialInvenuesMenuTabWidgetState
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 5.0, 5.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          5.0,
+                                                          0.0,
+                                                          5.0,
+                                                          5.0,
+                                                        ),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -4964,51 +5382,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                               Align(
                                                                 alignment:
                                                                     const AlignmentDirectional(
-                                                                        -1.0,
-                                                                        0.0),
+                                                                      -1.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_s5qrh9ui,
+                                                                    context,
+                                                                  )!.k_s5qrh9ui,
                                                                   maxLines: 18,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Theme.of(context)
-                                                                            .extension<CustomColors>()!
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            17.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Theme.of(context)
+                                                                        .extension<
+                                                                          CustomColors
+                                                                        >()!
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        17.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        3.0),
+                                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      3.0,
+                                                                    ),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -5019,31 +5437,31 @@ class _SocialInvenuesMenuTabWidgetState
                                                                   children: [
                                                                     Text(
                                                                       AppLocalizations.of(
-                                                                              context)!
-                                                                          .k_esyddpqt,
+                                                                        context,
+                                                                      )!.k_esyddpqt,
                                                                       maxLines:
                                                                           18,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                const Color(0xFFD1D1D1),
-                                                                            fontSize:
-                                                                                12.5,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        color: const Color(
+                                                                          0xFFD1D1D1,
+                                                                        ),
+                                                                        fontSize:
+                                                                            12.5,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -5060,95 +5478,95 @@ class _SocialInvenuesMenuTabWidgetState
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_z9tti8vi,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                context,
+                                                              )!.k_z9tti8vi,
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        14.5,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 14.5,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  3.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                3.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_flhphdak,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_flhphdak,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -5167,7 +5585,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -5182,17 +5604,14 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x7F000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0x1A1C1C1C),
-                                      Colors.transparent
+                                      Colors.transparent,
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.5, -1.0),
@@ -5216,11 +5635,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -5235,11 +5656,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -5253,8 +5680,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -5263,11 +5692,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -5278,8 +5709,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -5288,12 +5724,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -5310,55 +5751,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_lugtyj44,
+                                                                  context,
+                                                                )!.k_lugtyj44,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -5369,35 +5806,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_bmp2ct9r,
+                                                                      context,
+                                                                    )!.k_bmp2ct9r,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -5414,92 +5849,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_whutjxis,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_whutjxis,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_9lui9235,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_9lui9235,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -5517,7 +5958,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -5532,17 +5977,14 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x7F000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0x1A1C1C1C),
-                                      Colors.transparent
+                                      Colors.transparent,
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.5, -1.0),
@@ -5566,11 +6008,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -5585,11 +6029,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -5603,8 +6053,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -5613,11 +6065,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -5628,8 +6082,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -5638,12 +6097,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -5660,55 +6124,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_50kpigt7,
+                                                                  context,
+                                                                )!.k_50kpigt7,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -5719,35 +6179,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_9x2oese4,
+                                                                      context,
+                                                                    )!.k_9x2oese4,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -5764,92 +6222,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_7ym9zp16,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_7ym9zp16,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_vn7gl7fc,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_vn7gl7fc,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -5867,7 +6331,11 @@ class _SocialInvenuesMenuTabWidgetState
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
+                                0.0,
+                                0.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 180.0,
                                 height: 180.0,
@@ -5882,17 +6350,14 @@ class _SocialInvenuesMenuTabWidgetState
                                     BoxShadow(
                                       blurRadius: 10.0,
                                       color: Color(0x7F000000),
-                                      offset: Offset(
-                                        4.0,
-                                        4.0,
-                                      ),
+                                      offset: Offset(4.0, 4.0),
                                       spreadRadius: 4.0,
-                                    )
+                                    ),
                                   ],
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0x1A1C1C1C),
-                                      Colors.transparent
+                                      Colors.transparent,
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.5, -1.0),
@@ -5916,11 +6381,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 Color(0xFFFF0000),
-                                                Color(0xFFC10000)
+                                                Color(0xFFC10000),
                                               ],
                                               stops: [0.0, 1.0],
                                               begin: AlignmentDirectional(
-                                                  0.0, -1.0),
+                                                0.0,
+                                                -1.0,
+                                              ),
                                               end: AlignmentDirectional(0, 1.0),
                                             ),
                                             borderRadius: BorderRadius.only(
@@ -5935,11 +6402,17 @@ class _SocialInvenuesMenuTabWidgetState
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 1.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.add_circle,
                                                     color: Colors.white,
@@ -5953,8 +6426,10 @@ class _SocialInvenuesMenuTabWidgetState
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 80.0,
@@ -5963,11 +6438,13 @@ class _SocialInvenuesMenuTabWidgetState
                                             colors: [
                                               Colors.transparent,
                                               Color(0xCC000000),
-                                              Color(0xED000000)
+                                              Color(0xED000000),
                                             ],
                                             stops: [0.0, 0.8, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: AlignmentDirectional(
+                                              0.0,
+                                              -1.0,
+                                            ),
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius: BorderRadius.only(
@@ -5978,8 +6455,13 @@ class _SocialInvenuesMenuTabWidgetState
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -5988,12 +6470,17 @@ class _SocialInvenuesMenuTabWidgetState
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, 0.0),
+                                                      1.0,
+                                                      0.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 5.0, 5.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        5.0,
+                                                        5.0,
+                                                      ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -6010,55 +6497,51 @@ class _SocialInvenuesMenuTabWidgetState
                                                             Align(
                                                               alignment:
                                                                   const AlignmentDirectional(
-                                                                      -1.0,
-                                                                      0.0),
+                                                                    -1.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_akpgxm0s,
+                                                                  context,
+                                                                )!.k_akpgxm0s,
                                                                 maxLines: 18,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      3.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    3.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -6069,35 +6552,33 @@ class _SocialInvenuesMenuTabWidgetState
                                                                 children: [
                                                                   Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_9hodobhf,
+                                                                      context,
+                                                                    )!.k_9hodobhf,
                                                                     maxLines:
                                                                         18,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              const Color(0xFFD1D1D1),
-                                                                          fontSize:
-                                                                              12.5,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: const Color(
+                                                                        0xFFD1D1D1,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12.5,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -6114,92 +6595,98 @@ class _SocialInvenuesMenuTabWidgetState
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_7k7z8fu7,
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: const Color(
-                                                                          0xFFE8E8E8),
-                                                                      fontSize:
-                                                                          14.5,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
+                                                              context,
+                                                            )!.k_7k7z8fu7,
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
+                                                              fontSize: 14.5,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(3.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              3.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_scwzxz88,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                            context,
+                                                          )!.k_scwzxz88,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -6215,23 +6702,16 @@ class _SocialInvenuesMenuTabWidgetState
                                 ),
                               ),
                             ),
-                          ]
-                              .addToStart(const SizedBox(width: 10.0))
-                              .addToEnd(const SizedBox(width: 25.0)),
+                          ].addToStart(const SizedBox(width: 10.0)).addToEnd(const SizedBox(width: 25.0)),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ).animateOnPageLoad(
-                  animationsMap['containerOnPageLoadAnimation5']!),
+              ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation5']!),
             ),
           ),
-          const Divider(
-            height: 20.0,
-            thickness: 2.0,
-            color: Color(0xB2252525),
-          ),
+          const Divider(height: 20.0, thickness: 2.0, color: Color(0xB2252525)),
         ],
       ),
     );

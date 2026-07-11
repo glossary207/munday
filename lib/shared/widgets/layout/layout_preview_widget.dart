@@ -36,7 +36,8 @@ class LayoutPreviewWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<LayoutPreviewWidget> createState() => _LayoutPreviewWidgetState();
+  ConsumerState<LayoutPreviewWidget> createState() =>
+      _LayoutPreviewWidgetState();
 }
 
 class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
@@ -111,7 +112,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     }
   }
 
-// บังคับให้ canvas อยู่กึ่งกลางหน้าจอ
+  // บังคับให้ canvas อยู่กึ่งกลางหน้าจอ
   void _centerCanvas() {
     // ✅ ตรวจสอบก่อนว่า canvas size ถูกต้อง
     if (_canvasWidth == 0 || _canvasHeight == 0) {
@@ -146,7 +147,11 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
 
   // Debug helper สำหรับ Active_Reservations
   void _debugActiveReservationData(
-      String uid, String venueId, String dateString, String tableId) {
+    String uid,
+    String venueId,
+    String dateString,
+    String tableId,
+  ) {
     print('🔍 ===== ACTIVE_RESERVATION DEBUG =====');
     final docId = '${uid}_${venueId}_$dateString';
     print('📋 Document ID: $docId');
@@ -155,8 +160,9 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     print('   dateString: $dateString');
 
     final now = Timestamp.now();
-    final expiresAt =
-        Timestamp.fromDate(DateTime.now().add(Duration(minutes: 5)));
+    final expiresAt = Timestamp.fromDate(
+      DateTime.now().add(Duration(minutes: 5)),
+    );
 
     print('\n📦 Data Structure:');
     print('   customer_id: $uid (String)');
@@ -170,13 +176,14 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
 
     final diffMinutes =
         (expiresAt.millisecondsSinceEpoch - now.millisecondsSinceEpoch) /
-            1000 /
-            60;
+        1000 /
+        60;
     print('\n⏰ Expiry Validation:');
     print('   Expires in: ${diffMinutes.toStringAsFixed(2)} minutes');
     print('   Valid range: 1-10 minutes');
     print(
-        '   Result: ${diffMinutes >= 1 && diffMinutes <= 10 ? "✅ PASS" : "❌ FAIL"}');
+      '   Result: ${diffMinutes >= 1 && diffMinutes <= 10 ? "✅ PASS" : "❌ FAIL"}',
+    );
 
     print('=====================================\n');
   }
@@ -298,16 +305,15 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
       _apiSentTime = DateTime.now();
       print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       print(
-          '🚀 [1] FIRESTORE WRITE STARTED at ${_apiSentTime!.millisecondsSinceEpoch}');
+        '🚀 [1] FIRESTORE WRITE STARTED at ${_apiSentTime!.millisecondsSinceEpoch}',
+      );
       print('   tableId: $tableId');
 
       // ✅ เช็คว่า user มีการจอง active อยู่แล้วหรือไม่ (ต่อวัน)
       // ⚠️ เช็คก่อน transaction เพื่อประหยัด resource
-      final dateTimestamp = Timestamp.fromDate(DateTime(
-        widget.date.year,
-        widget.date.month,
-        widget.date.day,
-      ));
+      final dateTimestamp = Timestamp.fromDate(
+        DateTime(widget.date.year, widget.date.month, widget.date.day),
+      );
 
       final existingReservationsQuery = await SupabaseFirestore.instance
           .collection('Venue_Layouts')
@@ -373,8 +379,9 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
           final fdata = Map<String, dynamic>.from(floors[fid] ?? {});
           tableLayout = Map<String, dynamic>.from(fdata['table_layout'] ?? {});
         } else {
-          tableLayout =
-              Map<String, dynamic>.from(layoutData['table_layout'] ?? {});
+          tableLayout = Map<String, dynamic>.from(
+            layoutData['table_layout'] ?? {},
+          );
         }
 
         if (!tableLayout.containsKey(tableId)) {
@@ -387,13 +394,15 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
         final currentStatus = status['status_code'] ?? 'available';
         final currentUid = status['customer_uid'] ?? '';
         final price = (table['price'] as num?)?.toDouble() ?? 0.0;
-        final minRaw = table['min_seat'] ??
+        final minRaw =
+            table['min_seat'] ??
             table['min'] ??
             table['min_capacity'] ??
             table['min_pax'] ??
             (table['capacity']?['min']) ??
             0;
-        final maxRaw = table['max_seat'] ??
+        final maxRaw =
+            table['max_seat'] ??
             table['max'] ??
             table['max_capacity'] ??
             table['max_pax'] ??
@@ -486,8 +495,9 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
         // 7. อัปเดต user pending_reservations
         if (shouldUpdateUserReservation) {
           final userData = userSnapshot.exists ? userSnapshot.data()! : {};
-          final pendingReservations =
-              Map<String, dynamic>.from(userData['pending_reservations'] ?? {});
+          final pendingReservations = Map<String, dynamic>.from(
+            userData['pending_reservations'] ?? {},
+          );
 
           final reservationKey = '${venueId}_$dateString';
 
@@ -497,7 +507,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
             Map<String, dynamic> reservation;
             if (pendingReservations.containsKey(reservationKey)) {
               reservation = Map<String, dynamic>.from(
-                  pendingReservations[reservationKey]);
+                pendingReservations[reservationKey],
+              );
               final tableIds = List<String>.from(reservation['tableIds'] ?? []);
               final rawPairs = reservation['table_capacity_pairs'];
               final List<Map<String, int>> capacityMaps = [];
@@ -506,7 +517,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                   if (it is Map && it['min'] is num && it['max'] is num) {
                     capacityMaps.add({
                       'min': (it['min'] as num).toInt(),
-                      'max': (it['max'] as num).toInt()
+                      'max': (it['max'] as num).toInt(),
                     });
                   } else if (it is List &&
                       it.length >= 2 &&
@@ -515,7 +526,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                     // รองรับข้อมูลเก่าแบบ [[min,max]] (อ่านได้ แต่ตอนเขียนจะเขียนเป็น map)
                     capacityMaps.add({
                       'min': (it[0] as num).toInt(),
-                      'max': (it[1] as num).toInt()
+                      'max': (it[1] as num).toInt(),
                     });
                   }
                 }
@@ -524,7 +535,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                 tableIds.add(tableId);
                 capacityMaps.add({
                   'min': capacityPair[0],
-                  'max': capacityPair[1]
+                  'max': capacityPair[1],
                 }); // ← เขียนเป็น map
                 reservation['tableIds'] = tableIds;
                 reservation['table_capacity_pairs'] =
@@ -540,7 +551,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                 'date': dateString,
                 'tableIds': [tableId],
                 'table_capacity_pairs': [
-                  {'min': capacityPair[0], 'max': capacityPair[1]}
+                  {'min': capacityPair[0], 'max': capacityPair[1]},
                 ], // ← เขียนเป็น map
                 'totalPrice': price,
                 'createdAt': FieldValue.serverTimestamp(),
@@ -552,7 +563,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
             // ลบ table
             if (pendingReservations.containsKey(reservationKey)) {
               final reservation = Map<String, dynamic>.from(
-                  pendingReservations[reservationKey]);
+                pendingReservations[reservationKey],
+              );
               final tableIds = List<String>.from(reservation['tableIds'] ?? []);
               final rawPairs = reservation['table_capacity_pairs'];
               final List<Map<String, int>> capacityMaps = [];
@@ -562,14 +574,14 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                     final a = it['min'], b = it['max'];
                     capacityMaps.add({
                       'min': (a is num ? a.toInt() : 0),
-                      'max': (b is num ? b.toInt() : 0)
+                      'max': (b is num ? b.toInt() : 0),
                     });
                   } else if (it is List && it.length >= 2) {
                     // รองรับข้อมูลเก่า (อ่าน)
                     final a = it[0], b = it[1];
                     capacityMaps.add({
                       'min': (a is num ? a.toInt() : 0),
-                      'max': (b is num ? b.toInt() : 0)
+                      'max': (b is num ? b.toInt() : 0),
                     });
                   }
                 }
@@ -616,8 +628,9 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                 'customer_id': uid,
                 'venue_id': venueId,
                 'date': dateString,
-                'table_ids':
-                    FieldValue.arrayUnion([tableId]), // ← เพิ่มเข้า array
+                'table_ids': FieldValue.arrayUnion([
+                  tableId,
+                ]), // ← เพิ่มเข้า array
                 'status': 'pending',
                 'created_at': FieldValue.serverTimestamp(),
                 'expires_at': Timestamp.fromDate(expiresAt),
@@ -625,7 +638,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
                     null, // ⭐ ใช้ reservation_bill_id แทน bill_id
               },
               SetOptions(
-                  merge: true), // ← merge ถ้ามีอยู่แล้ว, create ถ้ายังไม่มี
+                merge: true,
+              ), // ← merge ถ้ามีอยู่แล้ว, create ถ้ายังไม่มี
             );
 
             print('   ✅ Active reservation added table: $tableId');
@@ -633,15 +647,12 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
             // ลบโต๊ะ → ใช้ FieldValue.arrayRemove
             print('   📝 Removing from active reservation: $tableId');
 
-            transaction.set(
-              activeReservationRef,
-              {
-                'table_ids':
-                    FieldValue.arrayRemove([tableId]), // ← ลบออกจาก array
-                'updated_at': FieldValue.serverTimestamp(),
-              },
-              SetOptions(merge: true),
-            );
+            transaction.set(activeReservationRef, {
+              'table_ids': FieldValue.arrayRemove([
+                tableId,
+              ]), // ← ลบออกจาก array
+              'updated_at': FieldValue.serverTimestamp(),
+            }, SetOptions(merge: true));
 
             print('   ✅ Active reservation removed table: $tableId');
           }
@@ -652,7 +663,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
       _apiReceivedTime = DateTime.now();
       final writeDuration = _apiReceivedTime!.difference(_apiSentTime!);
       print(
-          '📥 [2] FIRESTORE WRITE COMPLETED at ${_apiReceivedTime!.millisecondsSinceEpoch}');
+        '📥 [2] FIRESTORE WRITE COMPLETED at ${_apiReceivedTime!.millisecondsSinceEpoch}',
+      );
       print('   ⏱️  Write Time: ${writeDuration.inMilliseconds}ms');
       print('   ✅ Toggle successful');
     } catch (e, stackTrace) {
@@ -673,7 +685,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
           print('   1. RLS Policies (Supabase Dashboard)');
           print('   2. Policies deployed?');
           print(
-              '   3. User authenticated? ${Supabase.instance.client.auth.currentUser != null}');
+            '   3. User authenticated? ${Supabase.instance.client.auth.currentUser != null}',
+          );
           print('   4. Field names correct?');
         }
       }
@@ -685,7 +698,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                '❌ เกิดข้อผิดพลาด: ${e is PostgrestException ? e.code : e}'),
+              '❌ เกิดข้อผิดพลาด: ${e is PostgrestException ? e.code : e}',
+            ),
             backgroundColor: Colors.red,
             duration: Duration(seconds: 3),
           ),
@@ -722,7 +736,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     return Size(0.0, 0.0);
   }
 
-// Helper function: แปลง DateTime เป็น YYYY-MM-DD
+  // Helper function: แปลง DateTime เป็น YYYY-MM-DD
   String _yyyyMMdd(DateTime date) {
     final y = date.year.toString().padLeft(4, '0');
     final m = date.month.toString().padLeft(2, '0');
@@ -783,7 +797,7 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     final canvasWidth = bboxWidth + paddingX; // ✅ เปลี่ยนตรงนี้!
     final canvasHeight = bboxHeight + paddingY; // ✅ เปลี่ยนตรงนี้!
 
-// ✅ ตั้งค่า state
+    // ✅ ตั้งค่า state
     _canvasWidth = canvasWidth;
     _canvasHeight = canvasHeight;
 
@@ -798,7 +812,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     double translateY = (widget.height - canvasHeight * scale) / 2.0;
 
     print(
-        'canvas: ${canvasWidth}x${canvasHeight}, scale: $scale, translate: ($translateX, $translateY)');
+      'canvas: ${canvasWidth}x${canvasHeight}, scale: $scale, translate: ($translateX, $translateY)',
+    );
 
     print('🔧 Setting scale to: $scale');
     print('   Called from: ${StackTrace.current.toString().split('\n')[1]}');
@@ -808,7 +823,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
       ..scale(scale);
 
     print(
-        '✅ Scale is now: ${_transformationController.value.getMaxScaleOnAxis()}');
+      '✅ Scale is now: ${_transformationController.value.getMaxScaleOnAxis()}',
+    );
   }
 
   // ใช้ snapshot ของ Venue_Layouts เพื่อเตรียม Transformation ครั้งแรก
@@ -828,14 +844,14 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
     final dateString = _yyyyMMdd(widget.date);
 
     // ✅ Comment หรือลบออกทั้งหมด
-// WidgetsBinding.instance.addPostFrameCallback((_) {
-//   if (_boundingBox != null) {
-//     final currentScale = _transformationController.value.getMaxScaleOnAxis();
-//     if ((currentScale - _calculatedMinScale).abs() < 0.01) {
-//       _initialTransformApplied = false;
-//     }
-//   }
-// });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (_boundingBox != null) {
+    //     final currentScale = _transformationController.value.getMaxScaleOnAxis();
+    //     if ((currentScale - _calculatedMinScale).abs() < 0.01) {
+    //       _initialTransformApplied = false;
+    //     }
+    //   }
+    // });
 
     return StreamBuilder<SupabaseDocSnapshot>(
       // ← เปลี่ยนเป็น SupabaseDocSnapshot แทน SupabaseQuerySnapshot
@@ -852,7 +868,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
           final totalDuration = now.difference(_apiSentTime!);
 
           print(
-              '🔄 [3] FIREBASE LISTENER UPDATED at ${now.millisecondsSinceEpoch}');
+            '🔄 [3] FIREBASE LISTENER UPDATED at ${now.millisecondsSinceEpoch}',
+          );
           print('   ⏱️  Firebase Sync Time: ${syncDuration.inMilliseconds}ms');
           print('   ⏱️  Total Time (1→3): ${totalDuration.inMilliseconds}ms');
           print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
@@ -865,7 +882,8 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
         if (!snapshot.hasData || !snapshot.data!.exists) {
           return Center(
             child: Text(
-                'ยังไม่มี layout สำหรับวันที่ ${widget.date.toIso8601String().substring(0, 10)}'),
+              'ยังไม่มี layout สำหรับวันที่ ${widget.date.toIso8601String().substring(0, 10)}',
+            ),
           );
         }
 
@@ -889,13 +907,15 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
             }
           }
           final fdata = Map<String, dynamic>.from(floors[fid] ?? {});
-          tableLayoutMap =
-              Map<String, dynamic>.from(fdata['table_layout'] ?? {});
+          tableLayoutMap = Map<String, dynamic>.from(
+            fdata['table_layout'] ?? {},
+          );
           wallsMapRaw = Map<String, dynamic>.from(fdata['walls'] ?? {});
         } else {
           // legacy
-          tableLayoutMap =
-              Map<String, dynamic>.from(data['table_layout'] ?? {});
+          tableLayoutMap = Map<String, dynamic>.from(
+            data['table_layout'] ?? {},
+          );
           wallsMapRaw = Map<String, dynamic>.from(data['walls'] ?? {});
         }
 
@@ -908,11 +928,9 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
           }
         });
 
-// ✅ ตรวจสอบว่า positions ไม่ว่างเปล่า
+        // ✅ ตรวจสอบว่า positions ไม่ว่างเปล่า
         if (positions.isEmpty) {
-          return const Center(
-            child: Text('ยังไม่มีโต๊ะในวันนี้'),
-          );
+          return const Center(child: Text('ยังไม่มีโต๊ะในวันนี้'));
         }
 
         // คำนวณ bounding box
@@ -928,8 +946,12 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
               final pts = <Offset>[];
               for (final p in (v['points'] as List)) {
                 if (p is Map && p['x'] != null && p['y'] != null) {
-                  pts.add(Offset(
-                      (p['x'] as num).toDouble(), (p['y'] as num).toDouble()));
+                  pts.add(
+                    Offset(
+                      (p['x'] as num).toDouble(),
+                      (p['y'] as num).toDouble(),
+                    ),
+                  );
                 }
               }
               if (pts.length >= 2) wallPointLists.add(pts);
@@ -959,38 +981,45 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
         final bboxWidth = bbox.width.isFinite ? bbox.width : 0;
         final bboxHeight = bbox.height.isFinite ? bbox.height : 0;
 
-// เพิ่ม padding (เลือกแบบใดแบบหนึ่ง)
+        // เพิ่ม padding (เลือกแบบใดแบบหนึ่ง)
         final paddingX = bboxWidth * 0.1; // แบบสัดส่วน (30%)
         final paddingY = bboxHeight * 0.1;
-// หรือ
-// final paddingX = 100.0;  // แบบคงที่
-// final paddingY = 100.0;
+        // หรือ
+        // final paddingX = 100.0;  // แบบคงที่
+        // final paddingY = 100.0;
 
         final canvasWidth = bboxWidth + paddingX;
         final canvasHeight = bboxHeight + paddingY;
 
-        final boundarySize =
-            canvasWidth > canvasHeight ? canvasWidth : canvasHeight;
+        final boundarySize = canvasWidth > canvasHeight
+            ? canvasWidth
+            : canvasHeight;
         final margin = boundarySize * 0.05;
 
         final horizontalMargin = max(0.0, (widget.width - canvasWidth) / 2);
         final verticalMargin = max(0.0, (widget.height - canvasHeight) / 2);
 
-// ✅ ตั้ง state
+        // ✅ ตั้ง state
 
         print('✅ Canvas size updated: ${canvasWidth}x${canvasHeight}');
         print('   Padding: ${paddingX}x${paddingY}');
 
-// ✅ เพิ่มบรรทัดนี้!
+        // ✅ เพิ่มบรรทัดนี้!
 
         print('✅ Canvas size updated: ${canvasWidth}x${canvasHeight}');
 
         // Transform walls
         final transformedWalls = wallPointLists
-            .map((wall) => wall
-                .map((p) => Offset(p.dx - bbox.left + (paddingX / 2),
-                    p.dy - bbox.top + (paddingY / 2)))
-                .toList())
+            .map(
+              (wall) => wall
+                  .map(
+                    (p) => Offset(
+                      p.dx - bbox.left + (paddingX / 2),
+                      p.dy - bbox.top + (paddingY / 2),
+                    ),
+                  )
+                  .toList(),
+            )
             .toList();
 
         return Container(
@@ -998,258 +1027,270 @@ class _LayoutPreviewWidgetState extends ConsumerState<LayoutPreviewWidget> {
           height: widget.height,
           color: Colors.black,
           child: InteractiveViewer(
-              transformationController: _transformationController,
-              minScale: _calculatedMinScale, // ✅ ใช้ calculated scale
-              maxScale: 10.0,
-              constrained: false,
-              boundaryMargin: EdgeInsets.symmetric(
-                  horizontal: horizontalMargin, vertical: verticalMargin),
-              panEnabled: false,
-              scaleEnabled: true,
-              child: GestureDetector(
-                behavior: HitTestBehavior.deferToChild,
-                onTapDown: (details) {
-                  print('widget.width: ${widget.width}');
-                  print('widget.height: ${widget.height}');
-                  print('canvasWidth: $canvasWidth');
-                  print('canvasHeight: $canvasHeight');
-                  print(
-                      'scale: ${_transformationController.value.getMaxScaleOnAxis()}');
-                  print('minScale: ${_calculatedMinScale}');
-                  print(
-                      'scaleEnabled: ${_transformationController.value.getMaxScaleOnAxis()}');
-                },
-                onPanStart: (details) {
-                  if (_shouldLockPanZoom()) {
-                    _isPanningCanvas = false;
-                    _panStartGlobalPosition = null;
-                    return;
-                  }
-
-                  _isPanningCanvas = true;
-                  _panStartGlobalPosition = details.globalPosition;
-
-                  final translation =
-                      _transformationController.value.getTranslation();
-                  _panStartTranslation = Offset(translation.x, translation.y);
-                  _panStartScale =
-                      _transformationController.value.getMaxScaleOnAxis();
-                },
-                onPanUpdate: (details) {
-                  if (!_isPanningCanvas || _panStartGlobalPosition == null) {
-                    return;
-                  }
-
-                  final dx =
-                      details.globalPosition.dx - _panStartGlobalPosition!.dx;
-                  final dy =
-                      details.globalPosition.dy - _panStartGlobalPosition!.dy;
-
-                  final proposed = _panStartTranslation.translate(dx, dy);
-                  _applyPan(proposed, _panStartScale);
-                },
-                onPanEnd: (details) {
+            transformationController: _transformationController,
+            minScale: _calculatedMinScale, // ✅ ใช้ calculated scale
+            maxScale: 10.0,
+            constrained: false,
+            boundaryMargin: EdgeInsets.symmetric(
+              horizontal: horizontalMargin,
+              vertical: verticalMargin,
+            ),
+            panEnabled: false,
+            scaleEnabled: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTapDown: (details) {
+                print('widget.width: ${widget.width}');
+                print('widget.height: ${widget.height}');
+                print('canvasWidth: $canvasWidth');
+                print('canvasHeight: $canvasHeight');
+                print(
+                  'scale: ${_transformationController.value.getMaxScaleOnAxis()}',
+                );
+                print('minScale: ${_calculatedMinScale}');
+                print(
+                  'scaleEnabled: ${_transformationController.value.getMaxScaleOnAxis()}',
+                );
+              },
+              onPanStart: (details) {
+                if (_shouldLockPanZoom()) {
                   _isPanningCanvas = false;
                   _panStartGlobalPosition = null;
-                },
-                onPanCancel: () {
-                  _isPanningCanvas = false;
-                  _panStartGlobalPosition = null;
-                },
-                child: Stack(
-                  children: [
-                    // Floor selector (only when floors exist)
-                    if (false && floorKeys.isNotEmpty)
-                      Positioned(
-                        right: 8,
-                        top: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: PopupMenuButton<String>(
-                            tooltip: 'เลือก Floor',
-                            onSelected: (v) {
-                              if (v != _activeFloorId) {
-                                setState(() {
-                                  _activeFloorId = v;
-                                  _initialTransformApplied = false;
-                                  _boundingBox = null;
-                                });
-                              }
-                            },
-                            itemBuilder: (ctx) => floorKeys
-                                .map((k) => PopupMenuItem<String>(
-                                      value: k,
-                                      child: Text('Floor $k'),
-                                    ))
-                                .toList(),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.layers, color: Colors.black),
-                                SizedBox(width: 6),
-                                Text('Floor',
-                                    style: TextStyle(color: Colors.black)),
-                              ],
-                            ),
+                  return;
+                }
+
+                _isPanningCanvas = true;
+                _panStartGlobalPosition = details.globalPosition;
+
+                final translation = _transformationController.value
+                    .getTranslation();
+                _panStartTranslation = Offset(translation.x, translation.y);
+                _panStartScale = _transformationController.value
+                    .getMaxScaleOnAxis();
+              },
+              onPanUpdate: (details) {
+                if (!_isPanningCanvas || _panStartGlobalPosition == null) {
+                  return;
+                }
+
+                final dx =
+                    details.globalPosition.dx - _panStartGlobalPosition!.dx;
+                final dy =
+                    details.globalPosition.dy - _panStartGlobalPosition!.dy;
+
+                final proposed = _panStartTranslation.translate(dx, dy);
+                _applyPan(proposed, _panStartScale);
+              },
+              onPanEnd: (details) {
+                _isPanningCanvas = false;
+                _panStartGlobalPosition = null;
+              },
+              onPanCancel: () {
+                _isPanningCanvas = false;
+                _panStartGlobalPosition = null;
+              },
+              child: Stack(
+                children: [
+                  // Floor selector (only when floors exist)
+                  if (false && floorKeys.isNotEmpty)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: PopupMenuButton<String>(
+                          tooltip: 'เลือก Floor',
+                          onSelected: (v) {
+                            if (v != _activeFloorId) {
+                              setState(() {
+                                _activeFloorId = v;
+                                _initialTransformApplied = false;
+                                _boundingBox = null;
+                              });
+                            }
+                          },
+                          itemBuilder: (ctx) => floorKeys
+                              .map(
+                                (k) => PopupMenuItem<String>(
+                                  value: k,
+                                  child: Text('Floor $k'),
+                                ),
+                              )
+                              .toList(),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.layers, color: Colors.black),
+                              SizedBox(width: 6),
+                              Text(
+                                'Floor',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    // Grid (non-interactive)
+                    ),
+                  // Grid (non-interactive)
+                  IgnorePointer(
+                    ignoring: true,
+                    child: CustomPaint(
+                      size: Size(canvasWidth, canvasHeight),
+                      painter: GridPainter(),
+                    ),
+                  ),
+
+                  // Walls
+                  if (transformedWalls.isNotEmpty)
                     IgnorePointer(
                       ignoring: true,
                       child: CustomPaint(
                         size: Size(canvasWidth, canvasHeight),
-                        painter: GridPainter(),
+                        painter: WallPainter(transformedWalls),
                       ),
                     ),
 
-                    // Walls
-                    if (transformedWalls.isNotEmpty)
-                      IgnorePointer(
-                        ignoring: true,
-                        child: CustomPaint(
-                          size: Size(canvasWidth, canvasHeight),
-                          painter: WallPainter(transformedWalls),
+                  // Tables/Chairs
+                  ...positions.entries.map((entry) {
+                    final id = entry.key;
+                    final map = entry.value;
+                    final xi = map['xi'] ?? [0, 0];
+                    final yi = map['yi'] ?? [0, 0];
+                    final type = map['type'];
+                    final rawStatus = map['status'];
+                    final price = (map['price'] as num?)?.toDouble() ?? 0.0;
+
+                    // Normalize status
+                    Map<String, dynamic> statusMap;
+                    if (rawStatus is Map) {
+                      statusMap = Map<String, dynamic>.from(rawStatus);
+                    } else {
+                      statusMap = {
+                        'status_code': 'available',
+                        'customer_uid': '',
+                        'status_action_timestamp': 0,
+                      };
+                    }
+
+                    final name = map['table_name'] ?? id;
+                    final colorField = map['color'] ?? 'grey';
+                    final size = _calculateSize(map);
+                    final leftPosition =
+                        (xi[0] as num).toDouble() - bbox.left + (paddingX / 2);
+                    final topPosition =
+                        (yi[0] as num).toDouble() - bbox.top + (paddingY / 2);
+
+                    Widget widgetToDisplay;
+
+                    switch (type) {
+                      case 'table':
+                        widgetToDisplay = TableWidget(
+                          key: ValueKey(id),
+                          id: name,
+                          width: size.width,
+                          height: size.height,
+                          status: statusMap,
+                          currentuid: widget.currentuid,
+                          price: price,
+                          onSelect: () {
+                            _handleTableTap(id);
+                          },
+                          colorName: colorField,
+                          isProcessing: _processingTables[id] ?? false,
+                        );
+                        break;
+
+                      case 'chair':
+                        widgetToDisplay = ChairWidget(
+                          id: name,
+                          width: size.width,
+                          height: size.height,
+                          status: statusMap,
+                          currentuid: widget.currentuid,
+                          price: price,
+                          onSelect: () {
+                            _handleTableTap(id);
+                          },
+                          isProcessing: _processingTables[id] ?? false,
+                        );
+                        break;
+
+                      case 'stage':
+                        widgetToDisplay = StageWidget(
+                          id: name,
+                          width: size.width,
+                          height: size.height,
+                        );
+                        break;
+
+                      case 'bar':
+                        widgetToDisplay = BarWidget(
+                          id: name,
+                          width: size.width,
+                          height: size.height,
+                        );
+                        break;
+
+                      default:
+                        widgetToDisplay = Container();
+                    }
+
+                    return Positioned(
+                      left: leftPosition,
+                      top: topPosition,
+                      child: widgetToDisplay,
+                    );
+                  }).toList(),
+                  // Floor selector (top-most)
+                  if (floorKeys.isNotEmpty)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                      ),
-
-                    // Tables/Chairs
-                    ...positions.entries.map((entry) {
-                      final id = entry.key;
-                      final map = entry.value;
-                      final xi = map['xi'] ?? [0, 0];
-                      final yi = map['yi'] ?? [0, 0];
-                      final type = map['type'];
-                      final rawStatus = map['status'];
-                      final price = (map['price'] as num?)?.toDouble() ?? 0.0;
-
-                      // Normalize status
-                      Map<String, dynamic> statusMap;
-                      if (rawStatus is Map) {
-                        statusMap = Map<String, dynamic>.from(rawStatus);
-                      } else {
-                        statusMap = {
-                          'status_code': 'available',
-                          'customer_uid': '',
-                          'status_action_timestamp': 0,
-                        };
-                      }
-
-                      final name = map['table_name'] ?? id;
-                      final colorField = map['color'] ?? 'grey';
-                      final size = _calculateSize(map);
-                      final leftPosition = (xi[0] as num).toDouble() -
-                          bbox.left +
-                          (paddingX / 2);
-                      final topPosition =
-                          (yi[0] as num).toDouble() - bbox.top + (paddingY / 2);
-
-                      Widget widgetToDisplay;
-
-                      switch (type) {
-                        case 'table':
-                          widgetToDisplay = TableWidget(
-                            key: ValueKey(id),
-                            id: name,
-                            width: size.width,
-                            height: size.height,
-                            status: statusMap,
-                            currentuid: widget.currentuid,
-                            price: price,
-                            onSelect: () {
-                              _handleTableTap(id);
-                            },
-                            colorName: colorField,
-                            isProcessing: _processingTables[id] ?? false,
-                          );
-                          break;
-
-                        case 'chair':
-                          widgetToDisplay = ChairWidget(
-                            id: name,
-                            width: size.width,
-                            height: size.height,
-                            status: statusMap,
-                            currentuid: widget.currentuid,
-                            price: price,
-                            onSelect: () {
-                              _handleTableTap(id);
-                            },
-                            isProcessing: _processingTables[id] ?? false,
-                          );
-                          break;
-
-                        case 'stage':
-                          widgetToDisplay = StageWidget(
-                            id: name,
-                            width: size.width,
-                            height: size.height,
-                          );
-                          break;
-
-                        case 'bar':
-                          widgetToDisplay = BarWidget(
-                            id: name,
-                            width: size.width,
-                            height: size.height,
-                          );
-                          break;
-
-                        default:
-                          widgetToDisplay = Container();
-                      }
-
-                      return Positioned(
-                        left: leftPosition,
-                        top: topPosition,
-                        child: widgetToDisplay,
-                      );
-                    }).toList(),
-                    // Floor selector (top-most)
-                    if (floorKeys.isNotEmpty)
-                      Positioned(
-                        right: 8,
-                        top: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: PopupMenuButton<String>(
-                            tooltip: 'เลือก Floor',
-                            onSelected: (v) {
-                              if (v != _activeFloorId) {
-                                setState(() {
-                                  _activeFloorId = v;
-                                  _initialTransformApplied = false;
-                                  _boundingBox = null;
-                                });
-                              }
-                            },
-                            itemBuilder: (ctx) => floorKeys
-                                .map((k) => PopupMenuItem<String>(
-                                      value: k,
-                                      child: Text('Floor $k'),
-                                    ))
-                                .toList(),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.layers, color: Colors.black),
-                                SizedBox(width: 6),
-                                Text('Floor',
-                                    style: TextStyle(color: Colors.black)),
-                              ],
-                            ),
+                        child: PopupMenuButton<String>(
+                          tooltip: 'เลือก Floor',
+                          onSelected: (v) {
+                            if (v != _activeFloorId) {
+                              setState(() {
+                                _activeFloorId = v;
+                                _initialTransformApplied = false;
+                                _boundingBox = null;
+                              });
+                            }
+                          },
+                          itemBuilder: (ctx) => floorKeys
+                              .map(
+                                (k) => PopupMenuItem<String>(
+                                  value: k,
+                                  child: Text('Floor $k'),
+                                ),
+                              )
+                              .toList(),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.layers, color: Colors.black),
+                              SizedBox(width: 6),
+                              Text(
+                                'Floor',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                  ],
-                ),
-              )),
+                    ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
@@ -1264,7 +1305,7 @@ class TableWidget extends ConsumerStatefulWidget {
   final double width;
   final double height;
   final Map<String, dynamic>
-      status; // map with status_code, status_reserve_id, status_action_timestamp
+  status; // map with status_code, status_reserve_id, status_action_timestamp
   final String currentuid;
   final VoidCallback onSelect;
   final String colorName;
@@ -1293,8 +1334,8 @@ class _TableWidgetState extends ConsumerState<TableWidget> {
   void didUpdateWidget(covariant TableWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    String oldStatus =
-        (oldWidget.status['status_code'] ?? 'available').toString();
+    String oldStatus = (oldWidget.status['status_code'] ?? 'available')
+        .toString();
     String newStatus = (widget.status['status_code'] ?? 'available').toString();
 
     if (oldStatus != newStatus) {
@@ -1373,9 +1414,9 @@ class _TableWidgetState extends ConsumerState<TableWidget> {
       // กดได้เฉพาะ available หรือ pending/occupied ที่เป็นของเรา
       onTap:
           (isAvailable || (isPending && isOwned) || (isOccupied && isOwned)) &&
-                  !widget.isProcessing
-              ? widget.onSelect
-              : null,
+              !widget.isProcessing
+          ? widget.onSelect
+          : null,
       child: SizedBox(
         width: boxWidth,
         height: boxHeight,
@@ -1593,9 +1634,9 @@ class ChairWidget extends StatelessWidget {
       // กดได้เฉพาะ available หรือ pending/occupied ที่เป็นของเรา
       onTap:
           (isAvailable || (isPending && isOwned) || (isOccupied && isOwned)) &&
-                  !isProcessing
-              ? onSelect
-              : null,
+              !isProcessing
+          ? onSelect
+          : null,
       child: SizedBox(
         width: boxWidth,
         height: boxHeight,
@@ -1614,8 +1655,9 @@ class ChairWidget extends StatelessWidget {
                 child: Text(
                   displayName,
                   style: TextStyle(
-                    color:
-                        isAvailable || isOwned ? Colors.white : Colors.black54,
+                    color: isAvailable || isOwned
+                        ? Colors.white
+                        : Colors.black54,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -1678,10 +1720,7 @@ class StageWidget extends StatelessWidget {
       child: Center(
         child: Text(
           id,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -1710,10 +1749,7 @@ class BarWidget extends StatelessWidget {
       child: Center(
         child: Text(
           id,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );

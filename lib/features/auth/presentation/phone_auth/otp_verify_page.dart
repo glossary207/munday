@@ -37,7 +37,8 @@ class OtpVerifyPage extends ConsumerStatefulWidget {
   ConsumerState<OtpVerifyPage> createState() => _OtpVerifyWidgetState();
 }
 
-class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFill {
+class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage>
+    with CodeAutoFill {
   final _otpController = TextEditingController();
   final _otpFocusNode = FocusNode();
 
@@ -174,7 +175,8 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
 
       final session = Supabase.instance.client.auth.currentSession;
       final finalAccessToken = session?.accessToken ?? accessToken;
-      final finalExpiresAt = expiresAt ??
+      final finalExpiresAt =
+          expiresAt ??
           (DateTime.now().millisecondsSinceEpoch ~/ 1000) + (expiresIn ?? 3600);
 
       await AuthManager.saveTokens(
@@ -226,7 +228,8 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
       );
     } else {
       setState(
-          () => _errorMessage = result.error ?? 'ไม่สามารถส่ง OTP ใหม่ได้');
+        () => _errorMessage = result.error ?? 'ไม่สามารถส่ง OTP ใหม่ได้',
+      );
     }
   }
 
@@ -301,7 +304,9 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                     if (!kIsWeb)
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 3),
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
                         decoration: BoxDecoration(
                           color: _otpBadgeBg,
                           borderRadius: BorderRadius.circular(6),
@@ -310,15 +315,15 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.sms_outlined,
-                                color: _otpAccent, size: 12),
+                            Icon(
+                              Icons.sms_outlined,
+                              color: _otpAccent,
+                              size: 12,
+                            ),
                             SizedBox(width: 4),
                             Text(
                               'รับอัตโนมัติจาก SMS',
-                              style: TextStyle(
-                                color: _otpAccent,
-                                fontSize: 11,
-                              ),
+                              style: TextStyle(color: _otpAccent, fontSize: 11),
                             ),
                           ],
                         ),
@@ -331,8 +336,9 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                     color: _otpPanel,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color:
-                          _errorMessage != null ? Colors.redAccent : _otpBorder,
+                      color: _errorMessage != null
+                          ? Colors.redAccent
+                          : _otpBorder,
                     ),
                   ),
                   child: TextField(
@@ -359,8 +365,10 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                         letterSpacing: 12,
                       ),
                       border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 18,
+                      ),
                     ),
                     onChanged: (val) {
                       if (_errorMessage != null) {
@@ -375,8 +383,11 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      const Icon(Icons.error_outline,
-                          color: Colors.redAccent, size: 16),
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.redAccent,
+                        size: 16,
+                      ),
                       const SizedBox(width: 6),
                       Expanded(
                         child: Text(
@@ -474,8 +485,11 @@ class _OtpVerifyWidgetState extends ConsumerState<OtpVerifyPage> with CodeAutoFi
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.info_outline,
-                            color: Color(0xFFFF9A95), size: 16),
+                        Icon(
+                          Icons.info_outline,
+                          color: Color(0xFFFF9A95),
+                          size: 16,
+                        ),
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(

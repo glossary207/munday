@@ -14,8 +14,8 @@ class MessageStruct extends FFSupabaseStruct {
   MessageStruct({
     List<DatamassageStruct>? message,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _message = message,
-        super(supabaseUtilData);
+  }) : _message = message,
+       super(supabaseUtilData);
 
   // "message" field.
   List<DatamassageStruct>? _message;
@@ -29,27 +29,19 @@ class MessageStruct extends FFSupabaseStruct {
   bool hasMessage() => _message != null;
 
   static MessageStruct fromMap(Map<String, dynamic> data) => MessageStruct(
-        message: getStructList(
-          data['message'],
-          DatamassageStruct.fromMap,
-        ),
-      );
+    message: getStructList(data['message'], DatamassageStruct.fromMap),
+  );
 
   static MessageStruct? maybeFromMap(dynamic data) =>
       data is Map ? MessageStruct.fromMap(data.cast<String, dynamic>()) : null;
 
-  Map<String, dynamic> toMap() => {
-        'message': _message?.map((e) => e.toMap()).toList(),
-      }.withoutNulls;
+  Map<String, dynamic> toMap() =>
+      {'message': _message?.map((e) => e.toMap()).toList()}.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'message': serializeParam(
-          _message,
-          ParamType.DataStruct,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'message': serializeParam(_message, ParamType.DataStruct, isList: true),
+  }.withoutNulls;
 
   static MessageStruct fromSerializableMap(Map<String, dynamic> data) =>
       MessageStruct(
@@ -80,26 +72,24 @@ MessageStruct createMessageStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    MessageStruct(
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => MessageStruct(
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 MessageStruct? updateMessageStruct(
   MessageStruct? messageStruct, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    messageStruct
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => messageStruct
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addMessageStructData(
   Map<String, dynamic> supabaseData,
@@ -120,10 +110,13 @@ void addMessageStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final messageStructData =
-      getMessageFirestoreData(messageStruct, forFieldValue);
-  final nestedData =
-      messageStructData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final messageStructData = getMessageFirestoreData(
+    messageStruct,
+    forFieldValue,
+  );
+  final nestedData = messageStructData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = messageStruct.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -139,8 +132,9 @@ Map<String, dynamic> getMessageFirestoreData(
   final supabaseData = mapToSupabase(messageStruct.toMap());
 
   // Add any Firestore field values
-  messageStruct.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  messageStruct.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

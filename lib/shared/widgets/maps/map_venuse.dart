@@ -324,10 +324,7 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
     );
 
     _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
     _animationController.addListener(() {
@@ -355,17 +352,20 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
   Future<void> _loadCustomMarkerIcons() async {
     try {
       if (widget.markerIcon != null && widget.markerIcon!.isNotEmpty) {
-        _customMarkerIcon =
-            await _getBitmapDescriptorFromUrl(widget.markerIcon!);
+        _customMarkerIcon = await _getBitmapDescriptorFromUrl(
+          widget.markerIcon!,
+        );
       }
       if (widget.markerMeIcon != null && widget.markerMeIcon!.isNotEmpty) {
-        _customMarkerMeIcon =
-            await _getBitmapDescriptorFromUrl(widget.markerMeIcon!);
+        _customMarkerMeIcon = await _getBitmapDescriptorFromUrl(
+          widget.markerMeIcon!,
+        );
       }
       if (widget.makerSelectedIcon != null &&
           widget.makerSelectedIcon!.isNotEmpty) {
-        _customMarkerSelectedIcon =
-            await _getBitmapDescriptorFromUrl(widget.makerSelectedIcon!);
+        _customMarkerSelectedIcon = await _getBitmapDescriptorFromUrl(
+          widget.makerSelectedIcon!,
+        );
       }
       setState(() {
         _isMarkerLoaded = true;
@@ -387,11 +387,14 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
         final http.Response response = await http.get(Uri.parse(url));
         if (response.statusCode == 200) {
           final Uint8List bytes = response.bodyBytes;
-          final ui.Codec codec =
-              await ui.instantiateImageCodec(bytes, targetWidth: 130);
+          final ui.Codec codec = await ui.instantiateImageCodec(
+            bytes,
+            targetWidth: 130,
+          );
           final ui.FrameInfo fi = await codec.getNextFrame();
-          final ByteData? byteData =
-              await fi.image.toByteData(format: ui.ImageByteFormat.png);
+          final ByteData? byteData = await fi.image.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
           if (byteData != null) {
             final Uint8List resizedBytes = byteData.buffer.asUint8List();
             return gmf.BitmapDescriptor.fromBytes(resizedBytes);
@@ -421,12 +424,13 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
             venuse.position!.longitude,
           );
 
-          final isSelected = context.appState.VenuseSelection != null &&
+          final isSelected =
+              context.appState.VenuseSelection != null &&
               context.appState.VenuseSelection == venuse.reference;
 
           final markerIcon = isSelected
               ? (_customMarkerSelectedIcon ??
-                  gmf.BitmapDescriptor.defaultMarker)
+                    gmf.BitmapDescriptor.defaultMarker)
               : (_customMarkerIcon ?? gmf.BitmapDescriptor.defaultMarker);
 
           final marker = gmf.Marker(
@@ -461,7 +465,8 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
       final marker = gmf.Marker(
         markerId: const gmf.MarkerId('current_location'),
         position: position,
-        icon: _customMarkerMeIcon ??
+        icon:
+            _customMarkerMeIcon ??
             gmf.BitmapDescriptor.defaultMarkerWithHue(
               gmf.BitmapDescriptor.hueBlue,
             ),
@@ -505,7 +510,8 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
         widget.radian != null) {
       final scale = _scaleAnimation.value;
 
-      final radius = widget.radian! *
+      final radius =
+          widget.radian! *
           1000 *
           scale; // แปลงรัศมีจากกิโลเมตรเป็นเมตรและคูณด้วย scale
 
@@ -530,8 +536,9 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
 
   Future<void> _moveToSelectedVenuse() async {
     if (context.appState.VenuseSelection != null) {
-      final venuseRecord =
-          await VenuesRecord.getDocumentOnce(context.appState.VenuseSelection!);
+      final venuseRecord = await VenuesRecord.getDocumentOnce(
+        context.appState.VenuseSelection!,
+      );
       if (venuseRecord != null && venuseRecord.position != null) {
         final controller = await _controller.future;
         final position = gmf.LatLng(
@@ -545,10 +552,7 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
 
   Future<void> _moveToLocation(LatLng location) async {
     final controller = await _controller.future;
-    final position = gmf.LatLng(
-      location.latitude,
-      location.longitude,
-    );
+    final position = gmf.LatLng(location.latitude, location.longitude);
     controller.animateCamera(gmf.CameraUpdate.newLatLng(position));
 
     // รันอนิเมชันเมื่อเคลื่อนที่ไปยังตำแหน่งใหม่
@@ -639,7 +643,9 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
             circles: _circles, // เพิ่ม circles เข้าไปใน GoogleMap
             compassEnabled: widget.compassEnabled ?? true,
             minMaxZoomPreference: gmf.MinMaxZoomPreference(
-                widget.zoomMin ?? 0, widget.zoomMax ?? 20),
+              widget.zoomMin ?? 0,
+              widget.zoomMax ?? 20,
+            ),
             onMapCreated: (gmf.GoogleMapController controller) async {
               if (!_controller.isCompleted) {
                 _controller.complete(controller);
@@ -681,9 +687,7 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
               child: Container(
                 color: Colors.black,
                 child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
+                  child: CircularProgressIndicator(color: Colors.red),
                 ),
               ),
             ),

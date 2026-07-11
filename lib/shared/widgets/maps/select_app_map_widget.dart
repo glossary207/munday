@@ -60,11 +60,8 @@ class _SelectAppMapWidgetState extends ConsumerState<SelectAppMapWidget> {
           BoxShadow(
             blurRadius: 5.0,
             color: Color(0x3B1D2429),
-            offset: Offset(
-              0.0,
-              -3.0,
-            ),
-          )
+            offset: Offset(0.0, -3.0),
+          ),
         ],
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
@@ -94,24 +91,19 @@ class _SelectAppMapWidgetState extends ConsumerState<SelectAppMapWidget> {
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: Color(0xFF131313),
                 textStyle: Theme.of(context).textTheme.bodyLarge!.override(
-                      font: GoogleFonts.openSans(
-                        fontWeight:
-                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                      ),
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                      fontStyle:
-                          Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                    ),
-                elevation: 2.0,
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                  width: 1.0,
+                  font: GoogleFonts.openSans(
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.fontWeight,
+                    fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
+                  ),
+                  fontSize: 18.0,
+                  letterSpacing: 0.0,
+                  fontWeight: Theme.of(context).textTheme.bodyLarge!.fontWeight,
+                  fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
                 ),
+                elevation: 2.0,
+                borderSide: BorderSide(color: Colors.transparent, width: 1.0),
               ),
             ),
             Padding(
@@ -129,28 +121,31 @@ class _SelectAppMapWidgetState extends ConsumerState<SelectAppMapWidget> {
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   color: Color(0xFF131313),
                   textStyle: Theme.of(context).textTheme.bodyLarge!.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight:
-                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                        ),
-                        fontSize: 18.0,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                      ),
-                  elevation: 2.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
+                    font: GoogleFonts.openSans(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontStyle,
+                    ),
+                    fontSize: 18.0,
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.fontWeight,
+                    fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
                   ),
+                  elevation: 2.0,
+                  borderSide: BorderSide(color: Colors.transparent, width: 1.0),
                 ),
               ),
             ),
@@ -165,27 +160,30 @@ class _SelectAppMapWidgetState extends ConsumerState<SelectAppMapWidget> {
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   color: Colors.transparent,
                   textStyle: Theme.of(context).textTheme.titleSmall!.override(
-                        font: GoogleFonts.lexendDeca(
-                          fontWeight: FontWeight.normal,
-                          fontStyle:
-                              Theme.of(context).textTheme.titleSmall!.fontStyle,
-                        ),
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.normal,
-                        fontStyle:
-                            Theme.of(context).textTheme.titleSmall!.fontStyle,
-                      ),
-                  elevation: 0.0,
-                  borderSide: BorderSide(
-                    color: Color(0xFF131313),
-                    width: 3.0,
+                    font: GoogleFonts.lexendDeca(
+                      fontWeight: FontWeight.normal,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.titleSmall!.fontStyle,
+                    ),
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.normal,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.titleSmall!.fontStyle,
                   ),
+                  elevation: 0.0,
+                  borderSide: BorderSide(color: Color(0xFF131313), width: 3.0),
                 ),
               ),
             ),

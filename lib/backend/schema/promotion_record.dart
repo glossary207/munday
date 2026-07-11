@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class PromotionRecord extends SupabaseRecord {
-  PromotionRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  PromotionRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -44,8 +42,7 @@ class PromotionRecord extends SupabaseRecord {
   static PromotionRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      PromotionRecord._(reference, mapFromSupabase(data));
+  ) => PromotionRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -60,13 +57,9 @@ class PromotionRecord extends SupabaseRecord {
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createPromotionRecordData({
-  LatLng? location,
-}) {
+Map<String, dynamic> createPromotionRecordData({LatLng? location}) {
   final supabaseData = mapToSupabase(
-    <String, dynamic>{
-      'location': location,
-    }.withoutNulls,
+    <String, dynamic>{'location': location}.withoutNulls,
   );
 
   return supabaseData;

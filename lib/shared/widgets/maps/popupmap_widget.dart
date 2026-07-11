@@ -50,8 +50,10 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
     super.initState();
     _model = PopupmapModel()..internalInit(context);
 
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => safeSetState(() => currentUserLocationValue = loc));
+    getCurrentUserLocation(
+      defaultLocation: LatLng(0.0, 0.0),
+      cached: true,
+    ).then((loc) => safeSetState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -73,9 +75,7 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
             width: 50.0,
             height: 50.0,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.transparent,
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.transparent),
             ),
           ),
         ),
@@ -85,10 +85,7 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(0.0),
       child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 4.5,
-          sigmaY: 4.5,
-        ),
+        filter: ImageFilter.blur(sigmaX: 4.5, sigmaY: 4.5),
         child: InkWell(
           splashColor: Colors.transparent,
           focusColor: Colors.transparent,
@@ -100,9 +97,7 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
-              color: Color(0x33000000),
-            ),
+            decoration: BoxDecoration(color: Color(0x33000000)),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
               child: Column(
@@ -115,8 +110,12 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          5.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -124,16 +123,18 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(1.0, -1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 15.0, 1.0, 10.0),
+                                  0.0,
+                                  15.0,
+                                  1.0,
+                                  10.0,
+                                ),
                                 child: Container(
                                   width: 35.0,
                                   height: 35.0,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: Image.network(
-                                        widget.logo!,
-                                      ).image,
+                                      image: Image.network(widget.logo!).image,
                                     ),
                                     shape: BoxShape.circle,
                                   ),
@@ -142,30 +143,27 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 5.0, 0.0, 0.0),
+                                8.0,
+                                5.0,
+                                0.0,
+                                0.0,
+                              ),
                               child: Text(
-                                valueOrDefault<String>(
-                                  widget.name,
-                                  '-',
-                                ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
+                                valueOrDefault<String>(widget.name, '-'),
+                                style: Theme.of(context).textTheme.bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                       fontSize: 20.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium!.fontStyle,
                                     ),
                               ),
                             ),
@@ -176,7 +174,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                         alignment: AlignmentDirectional(1.0, -1.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 15.0, 1.0, 10.0),
+                            0.0,
+                            15.0,
+                            1.0,
+                            10.0,
+                          ),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
@@ -194,9 +196,9 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               ),
                               child: Icon(
                                 Icons.close,
-                                color: Theme.of(context)
-                                    .extension<CustomColors>()!
-                                    .primaryText,
+                                color: Theme.of(
+                                  context,
+                                ).extension<CustomColors>()!.primaryText,
                                 size: 20.0,
                               ),
                             ),
@@ -220,15 +222,23 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                     child: Align(
                       alignment: AlignmentDirectional(0.0, 1.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0.0,
+                          1.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Stack(
                           children: [
                             Align(
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 4.0, 4.0, 0.0),
+                                  4.0,
+                                  4.0,
+                                  4.0,
+                                  0.0,
+                                ),
                                 child: Container(
                                   width: double.infinity,
                                   height: 40.0,
@@ -246,7 +256,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 12.5, 4.0, 13.0),
+                                4.0,
+                                12.5,
+                                4.0,
+                                13.0,
+                              ),
                               child: Container(
                                 width: double.infinity,
                                 height: double.infinity,
@@ -271,7 +285,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 12.4, 4.0, 0.0),
+                                  4.0,
+                                  12.4,
+                                  4.0,
+                                  0.0,
+                                ),
                                 child: Container(
                                   width: double.infinity,
                                   height: 40.0,
@@ -279,7 +297,7 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                     gradient: LinearGradient(
                                       colors: [
                                         Colors.black,
-                                        Colors.transparent
+                                        Colors.transparent,
                                       ],
                                       stops: [0.0, 1.0],
                                       begin: AlignmentDirectional(0.0, -1.0),
@@ -299,7 +317,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(0.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 0.0, 4.0, 4.0),
+                                  4.0,
+                                  0.0,
+                                  4.0,
+                                  4.0,
+                                ),
                                 child: Container(
                                   width: double.infinity,
                                   height: 100.0,
@@ -308,7 +330,7 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                       colors: [
                                         Colors.transparent,
                                         Colors.black,
-                                        Colors.black
+                                        Colors.black,
                                       ],
                                       stops: [0.0, 0.75, 1.0],
                                       begin: AlignmentDirectional(0.0, -1.0),
@@ -328,7 +350,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(1.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 14.0, 93.0),
+                                  0.0,
+                                  0.0,
+                                  14.0,
+                                  93.0,
+                                ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -336,7 +362,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 1.0),
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: MundayIconButton(
                                         borderColor: Colors.transparent,
                                         borderRadius: 90.0,
@@ -344,16 +374,19 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                         fillColor: Color(0xDD070707),
                                         icon: Icon(
                                           Icons.my_location,
-                                          color: Theme.of(context)
-                                              .extension<CustomColors>()!
-                                              .info,
+                                          color: Theme.of(
+                                            context,
+                                          ).extension<CustomColors>()!.info,
                                           size: 29.0,
                                         ),
                                         onPressed: () async {
                                           currentUserLocationValue =
                                               await getCurrentUserLocation(
-                                                  defaultLocation:
-                                                      LatLng(0.0, 0.0));
+                                                defaultLocation: LatLng(
+                                                  0.0,
+                                                  0.0,
+                                                ),
+                                              );
                                           context.appState.locationsearch =
                                               currentUserLocationValue;
                                           safeSetState(() {});
@@ -370,7 +403,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(1.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 14.0, 26.0),
+                                  20.0,
+                                  0.0,
+                                  14.0,
+                                  26.0,
+                                ),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -383,8 +420,9 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                       context: context,
                                       builder: (context) {
                                         return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
+                                          padding: MediaQuery.viewInsetsOf(
+                                            context,
+                                          ),
                                           child: SelectAppMapWidget(
                                             location: widget.location!,
                                             title: widget.name!,
@@ -420,7 +458,11 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                               alignment: AlignmentDirectional(-1.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 0.0, 20.0),
+                                  20.0,
+                                  0.0,
+                                  0.0,
+                                  20.0,
+                                ),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Color(0xFFFF0000),
@@ -428,21 +470,27 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.5, 0.0, 0.5),
+                                      0.0,
+                                      0.5,
+                                      0.0,
+                                      0.5,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 6.0, 0.0),
+                                                10.0,
+                                                0.0,
+                                                6.0,
+                                                0.0,
+                                              ),
                                           child: Text(
                                             valueOrDefault<String>(
                                               widget.distance,
                                               '-',
-                                            ).maybeHandleOverflow(
-                                              maxChars: 4,
-                                            ),
+                                            ).maybeHandleOverflow(maxChars: 4),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -468,10 +516,15 @@ class _PopupmapWidgetState extends ConsumerState<PopupmapWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 1.0, 10.0, 1.0),
+                                                0.0,
+                                                1.0,
+                                                10.0,
+                                                1.0,
+                                              ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .k_gyu7n4jr,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_gyu7n4jr,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!

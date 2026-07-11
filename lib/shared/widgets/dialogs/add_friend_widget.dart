@@ -25,6 +25,7 @@ class AddFriendWidget extends ConsumerStatefulWidget {
 
 class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
   late AddFriendModel _model;
+  bool _isSearching = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -60,14 +61,11 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
   void _searchAndAddFriend(BuildContext context) async {
     final phone = _model.textController?.text.trim();
     if (phone == null || phone.isEmpty) return;
+    if (_isSearching) return;
 
-    // Show loading
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-          child: CircularProgressIndicator(color: Color(0xFFE52020))),
-    );
+    setState(() {
+      _isSearching = true;
+    });
 
     try {
       var userQuery = await UsersRecord.collection
@@ -87,16 +85,20 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
               .get();
         }
       }
-      Navigator.pop(context); // Hide loading
 
       if (userQuery.docs.isNotEmpty) {
         final friendUser = userQuery.docs.first;
         final receiverId = friendUser.reference.id;
 
         if (receiverId == currentUserUid) {
+          if (mounted)
+            setState(() {
+              _isSearching = false;
+            });
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-                content: Text('You cannot add yourself as a friend.')),
+              content: Text('คุณไม่สามารถเพิ่มตัวเองเป็นเพื่อนได้'),
+            ),
           );
           return;
         }
@@ -116,10 +118,15 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
             .maybeSingle();
 
         if (isFriend != null) {
+          if (mounted)
+            setState(() {
+              _isSearching = false;
+            });
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text('You are already friends with this user.')),
+                content: Text('คุณเป็นเพื่อนกับผู้ใช้นี้อยู่แล้ว'),
+              ),
             );
           }
           return;
@@ -129,14 +136,21 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
             .from('friend_request')
             .select('id')
             .eq('status', 'pending')
-            .or('and(sender_id.eq.$currentUserUid,receiver_id.eq.$receiverId),and(sender_id.eq.$receiverId,receiver_id.eq.$currentUserUid)')
+            .or(
+              'and(sender_id.eq.$currentUserUid,receiver_id.eq.$receiverId),and(sender_id.eq.$receiverId,receiver_id.eq.$currentUserUid)',
+            )
             .maybeSingle();
 
         if (pendingRequest != null) {
+          if (mounted)
+            setState(() {
+              _isSearching = false;
+            });
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text('A friend request is already pending.')),
+                content: Text('คุณได้ส่งคำเชิญเป็นเพื่อนให้ผู้ใช้นี้ไปแล้ว'),
+              ),
             );
           }
           return;
@@ -149,23 +163,34 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
           'status': 'pending',
         });
 
+        if (mounted)
+          setState(() {
+            _isSearching = false;
+          });
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Friend request sent!')),
+            const SnackBar(content: Text('ส่งคำเชิญเพื่อนเรียบร้อยแล้ว')),
           );
+          Navigator.pop(context);
         }
         _model.textController?.clear();
       } else {
+        if (mounted)
+          setState(() {
+            _isSearching = false;
+          });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('No user found with this phone number.')),
+          const SnackBar(content: Text('ไม่พบผู้ใช้งานที่ใช้เบอร์โทรศัพท์นี้')),
         );
       }
     } catch (e) {
-      Navigator.pop(context); // Hide loading
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: \$e')),
-      );
+      if (mounted)
+        setState(() {
+          _isSearching = false;
+        });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('เกิดข้อผิดพลาด: $e')));
     }
   }
 
@@ -211,9 +236,7 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                           children: [
                             Text(
                               'Add or Invite Friends',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
+                              style: Theme.of(context).textTheme.bodyMedium!
                                   .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.bold,
@@ -257,8 +280,9 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                             decoration: BoxDecoration(
                               color: const Color(0xFF222222),
                               borderRadius: BorderRadius.circular(16.0),
-                              border:
-                                  Border.all(color: const Color(0xFF333333)),
+                              border: Border.all(
+                                color: const Color(0xFF333333),
+                              ),
                             ),
                             child: Row(
                               children: [
@@ -332,13 +356,14 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Text(
                           'Share profile via',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.override(
-                                    font: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.w600),
-                                    fontSize: 14.0,
-                                    color: Colors.white70,
-                                  ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                fontSize: 14.0,
+                                color: Colors.white70,
+                              ),
                         ),
                       ),
                       const SizedBox(height: 16.0),
@@ -354,12 +379,15 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                               color: const Color(0xFF424242),
                               onTap: () async {
                                 final myId = currentUserUid;
-                                await Clipboard.setData(ClipboardData(
-                                    text: 'munday://addfriend?id=\$myId'));
+                                await Clipboard.setData(
+                                  ClipboardData(
+                                    text: 'munday://addfriend?id=\$myId',
+                                  ),
+                                );
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content:
-                                          Text('Link copied to clipboard')),
+                                    content: Text('Link copied to clipboard'),
+                                  ),
                                 );
                               },
                             ),
@@ -381,7 +409,8 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                               icon: FontAwesomeIcons.instagram,
                               label: 'Instagram',
                               color: const Color(
-                                  0xFFE1306C), // Approximate Instagram pink/red
+                                0xFFE1306C,
+                              ), // Approximate Instagram pink/red
                               onTap: () =>
                                   _shareProfile(context, platform: 'instagram'),
                             ),
@@ -404,11 +433,14 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
 
                       const Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 24.0, vertical: 20.0),
+                          horizontal: 24.0,
+                          vertical: 20.0,
+                        ),
                         child: Divider(
-                            color: Color(0xFF333333),
-                            height: 1.0,
-                            thickness: 1.0),
+                          color: Color(0xFF333333),
+                          height: 1.0,
+                          thickness: 1.0,
+                        ),
                       ),
 
                       // --- ADD BY PHONE NUMBER ---
@@ -416,13 +448,14 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Text(
                           'Add by phone',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.override(
-                                    font: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.w600),
-                                    fontSize: 14.0,
-                                    color: Colors.white70,
-                                  ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                fontSize: 14.0,
+                                color: Colors.white70,
+                              ),
                         ),
                       ),
                       const SizedBox(height: 12.0),
@@ -438,10 +471,15 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                           child: Row(
                             children: [
                               const Padding(
-                                padding:
-                                    EdgeInsets.only(left: 18.0, right: 12.0),
-                                child: Icon(Icons.search_rounded,
-                                    color: Colors.white54, size: 22.0),
+                                padding: EdgeInsets.only(
+                                  left: 18.0,
+                                  right: 12.0,
+                                ),
+                                child: Icon(
+                                  Icons.search_rounded,
+                                  color: Colors.white54,
+                                  size: 22.0,
+                                ),
                               ),
                               Expanded(
                                 child: TextFormField(
@@ -449,11 +487,15 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                                   focusNode: _model.textFieldFocusNode,
                                   keyboardType: TextInputType.phone,
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 15.0),
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
                                   decoration: const InputDecoration(
                                     hintText: 'Enter phone number...',
                                     hintStyle: TextStyle(
-                                        color: Colors.white54, fontSize: 15.0),
+                                      color: Colors.white54,
+                                      fontSize: 15.0,
+                                    ),
                                     border: InputBorder.none,
                                     isDense: true,
                                   ),
@@ -470,11 +512,22 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
                                       color: Color(0xFFE52020),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(
-                                      Icons.person_add_rounded,
-                                      color: Colors.white,
-                                      size: 20.0,
-                                    ),
+                                    child: _isSearching
+                                        ? const Center(
+                                            child: SizedBox(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2.0,
+                                              ),
+                                            ),
+                                          )
+                                        : const Icon(
+                                            Icons.person_add_rounded,
+                                            color: Colors.white,
+                                            size: 20.0,
+                                          ),
                                   ),
                                 ),
                               ),
@@ -509,10 +562,7 @@ class _AddFriendWidgetState extends ConsumerState<AddFriendWidget> {
             Container(
               width: 56.0,
               height: 56.0,
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
               child: Center(
                 child: icon is FaIconData
                     ? FaIcon(icon, color: Colors.white, size: 26.0)

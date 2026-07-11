@@ -50,12 +50,13 @@ class _PrivacyPolicyWidgetState extends ConsumerState<PrivacyPolicyPage> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
-        appBar: responsiveVisibility(
-          context: context,
-          tablet: false,
-          tabletLandscape: false,
-          desktop: false,
-        )
+        appBar:
+            responsiveVisibility(
+              context: context,
+              tablet: false,
+              tabletLandscape: false,
+              desktop: false,
+            )
             ? AppBar(
                 backgroundColor: Colors.black,
                 automaticallyImplyLeading: false,
@@ -67,9 +68,9 @@ class _PrivacyPolicyWidgetState extends ConsumerState<PrivacyPolicyPage> {
                   fillColor: Colors.black,
                   icon: Icon(
                     Icons.arrow_back_rounded,
-                    color: Theme.of(context)
-                        .extension<CustomColors>()!
-                        .primaryText,
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
                     size: 30.0,
                   ),
                   onPressed: () async {
@@ -80,26 +81,22 @@ class _PrivacyPolicyWidgetState extends ConsumerState<PrivacyPolicyPage> {
                   AppLocalizations.of(context)!.k_ol9f5363,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium!.override(
-                        font: GoogleFonts.roboto(
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontWeight,
-                          fontStyle: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontWeight,
-                        fontStyle: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontStyle,
-                      ),
+                    font: GoogleFonts.roboto(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontStyle,
+                    ),
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontWeight,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontStyle,
+                  ),
                 ),
                 actions: [],
                 centerTitle: false,
@@ -112,12 +109,8 @@ class _PrivacyPolicyWidgetState extends ConsumerState<PrivacyPolicyPage> {
             alignment: AlignmentDirectional(0.0, -1.0),
             child: Container(
               width: double.infinity,
-              constraints: BoxConstraints(
-                maxWidth: 570.0,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
+              constraints: BoxConstraints(maxWidth: 570.0),
+              decoration: BoxDecoration(color: Colors.black),
               child: Align(
                 alignment: AlignmentDirectional(0.0, -1.0),
                 child: SingleChildScrollView(
@@ -126,32 +119,32 @@ class _PrivacyPolicyWidgetState extends ConsumerState<PrivacyPolicyPage> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 15.0, 20.0, 0.0),
+                          20.0,
+                          15.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: Text(
                           AppLocalizations.of(context)!.k_5tsyrm42,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 11.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontStyle,
-                                  ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.fontStyle,
+                                ),
+                                fontSize: 11.0,
+                                letterSpacing: 0.0,
+                                fontWeight: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium!.fontWeight,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium!.fontStyle,
+                              ),
                         ),
                       ),
                     ].addToEnd(SizedBox(height: 44.0)),

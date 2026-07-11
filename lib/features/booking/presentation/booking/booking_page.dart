@@ -86,9 +86,7 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.transparent,
-                  ),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.transparent),
                 ),
               ),
             ),
@@ -113,7 +111,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 35.0, 20.0, 0.0),
+                          20.0,
+                          35.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,53 +130,49 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                               },
                               child: Text(
                                 AppLocalizations.of(context)!.k_zl6cyp0w,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
+                                style: Theme.of(context).textTheme.bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
                                         fontWeight: FontWeight.w600,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                       fontSize: 20.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium!.fontStyle,
                                     ),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  25.0, 0.0, 0.0, 3.0),
+                                25.0,
+                                0.0,
+                                0.0,
+                                3.0,
+                              ),
                               child: Text(
                                 valueOrDefault<String>(
                                   functions.month(context.appState.dateclick),
                                   'ไม่ระบุ',
                                 ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
+                                style: Theme.of(context).textTheme.bodyMedium!
                                     .override(
                                       font: GoogleFonts.openSans(
                                         fontWeight: FontWeight.w600,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                       fontSize: 16.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium!.fontStyle,
                                     ),
                               ),
                             ),
@@ -183,7 +181,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 7.0, 15.0, 5.0),
+                          15.0,
+                          7.0,
+                          15.0,
+                          5.0,
+                        ),
                         child: Container(
                           width: double.infinity,
                           height: 80.0,
@@ -256,35 +258,48 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            25.0, 20.0, 25.0, 0.0),
+                                          25.0,
+                                          20.0,
+                                          25.0,
+                                          0.0,
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 1.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_dy9gu5p1,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_dy9gu5p1,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: Theme.of(context)
                                                           .extension<
-                                                              CustomColors>()!
+                                                            CustomColors
+                                                          >()!
                                                           .primaryBtnText,
                                                       fontSize: 18.0,
                                                       letterSpacing: 0.0,
@@ -302,13 +317,18 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        0.0,
+                                                        10.0,
+                                                        0.0,
+                                                      ),
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8.0),
+                                                          8.0,
+                                                        ),
                                                     child: Image.asset(
                                                       'assets/images/MEE2.png',
                                                       width: 20.0,
@@ -318,30 +338,35 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          2.0, 0.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        2.0,
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                       functions.addname(
-                                                          AppState()
-                                                              .SeatSelect
-                                                              .toList()),
+                                                        AppState().SeatSelect
+                                                            .toList(),
+                                                      ),
                                                       'เลือกโต๊ะของคุณ',
                                                     ),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -364,14 +389,22 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                       alignment: AlignmentDirectional(0.0, 1.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
+                                          0.0,
+                                          10.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
+                                                  15.0,
+                                                  0.0,
+                                                  15.0,
+                                                  0.0,
+                                                ),
                                             child: Container(
                                               width: double.infinity,
                                               decoration: BoxDecoration(
@@ -383,9 +416,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                 ),
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 15.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                      15.0,
+                                                    ),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -393,58 +430,56 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (false)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           bookingVenuesRecord
                                                                               .bg,
                                                                         ).image,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -454,52 +489,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           100.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
-                                                                        gradient:
-                                                                            LinearGradient(
+                                                                        gradient: LinearGradient(
                                                                           colors: [
-                                                                            Color(0xFFFF0000),
-                                                                            Colors.transparent
+                                                                            Color(
+                                                                              0xFFFF0000,
+                                                                            ),
+                                                                            Colors.transparent,
                                                                           ],
                                                                           stops: [
                                                                             0.0,
-                                                                            1.0
+                                                                            1.0,
                                                                           ],
                                                                           begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.64),
+                                                                            -1.0,
+                                                                            -0.64,
+                                                                          ),
                                                                           end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.64),
+                                                                            1.0,
+                                                                            0.64,
+                                                                          ),
                                                                         ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(15.0),
+                                                                            BorderRadius.circular(
+                                                                              15.0,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -508,54 +545,55 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Colors
                                                                               .transparent,
                                                                           Color(
-                                                                              0xCB000000)
+                                                                            0xCB000000,
+                                                                          ),
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            0,
-                                                                            1.0),
+                                                                          0,
+                                                                          1.0,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -575,26 +613,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     children: [
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Container(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               80.0,
                                                                           height:
                                                                               100.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFFD8181B),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(15.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(15.0),
-                                                                              topRight: Radius.circular(0.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFFD8181B,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -608,68 +653,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -698,26 +752,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -732,24 +796,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -760,12 +833,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -777,25 +851,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -804,67 +877,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_4des514z,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_4des514z,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFFD8181B),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFFD8181B,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_b4pc5eeq,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_b4pc5eeq,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -882,12 +1001,12 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Image.network(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Image.network(
                                                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                             width:
                                                                                 12.0,
@@ -899,97 +1018,139 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_xf0pjhr5,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_xf0pjhr5,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_39iwpxhc,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            1.0,
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_qsxwdzjs,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_39iwpxhc,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_75j6wza8,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_qsxwdzjs,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_75j6wza8,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.people_sharp,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
@@ -1002,47 +1163,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFD8181B),
+                                                                        0xFFD8181B,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_incqu7ni,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_incqu7ni,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -1051,24 +1219,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -1078,30 +1242,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -1121,58 +1285,56 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (true)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           bookingVenuesRecord
                                                                               .bg,
                                                                         ).image,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1182,52 +1344,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                          50.0,
+                                                                          1.0,
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            50.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           100.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
-                                                                        gradient:
-                                                                            LinearGradient(
+                                                                        gradient: LinearGradient(
                                                                           colors: [
-                                                                            Color(0xFFFA9207),
-                                                                            Colors.transparent
+                                                                            Color(
+                                                                              0xFFFA9207,
+                                                                            ),
+                                                                            Colors.transparent,
                                                                           ],
                                                                           stops: [
                                                                             0.0,
-                                                                            1.0
+                                                                            1.0,
                                                                           ],
                                                                           begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.64),
+                                                                            -1.0,
+                                                                            -0.64,
+                                                                          ),
                                                                           end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.64),
+                                                                            1.0,
+                                                                            0.64,
+                                                                          ),
                                                                         ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(15.0),
+                                                                            BorderRadius.circular(
+                                                                              15.0,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1236,54 +1400,55 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Colors
                                                                               .transparent,
                                                                           Color(
-                                                                              0xB7000000)
+                                                                            0xB7000000,
+                                                                          ),
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            0,
-                                                                            1.0),
+                                                                          0,
+                                                                          1.0,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1306,20 +1471,23 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                             80.0,
                                                                         height:
                                                                             100.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFFFA9207),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(15.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(0.0),
-                                                                            topLeft:
-                                                                                Radius.circular(15.0),
-                                                                            topRight:
-                                                                                Radius.circular(0.0),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFFFA9207,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.only(
+                                                                            bottomLeft: Radius.circular(
+                                                                              15.0,
+                                                                            ),
+                                                                            bottomRight: Radius.circular(
+                                                                              0.0,
+                                                                            ),
+                                                                            topLeft: Radius.circular(
+                                                                              15.0,
+                                                                            ),
+                                                                            topRight: Radius.circular(
+                                                                              0.0,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1332,68 +1500,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -1406,8 +1583,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1423,26 +1601,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -1457,24 +1645,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -1487,47 +1684,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFFA9207),
+                                                                        0xFFFA9207,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_6z1g905j,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_6z1g905j,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -1536,24 +1740,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -1561,12 +1761,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1578,25 +1779,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -1605,67 +1805,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_7pxafyej,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_7pxafyej,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFFFA9207),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFFFA9207,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_triic0tj,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_triic0tj,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -1683,12 +1929,12 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Image.network(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Image.network(
                                                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                             width:
                                                                                 12.0,
@@ -1700,97 +1946,139 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_f6rcpgao,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_f6rcpgao,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_6o9r564w,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            1.0,
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_onlyzhuu,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_6o9r564w,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_46ld0x0r,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_onlyzhuu,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_46ld0x0r,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.people_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
@@ -1803,30 +2091,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -1846,58 +2134,56 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (false)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           bookingVenuesRecord
                                                                               .bg,
                                                                         ).image,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1907,52 +2193,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                          50.0,
+                                                                          1.0,
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            50.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           100.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
-                                                                        gradient:
-                                                                            LinearGradient(
+                                                                        gradient: LinearGradient(
                                                                           colors: [
-                                                                            Color(0xFFE42F7D),
-                                                                            Colors.transparent
+                                                                            Color(
+                                                                              0xFFE42F7D,
+                                                                            ),
+                                                                            Colors.transparent,
                                                                           ],
                                                                           stops: [
                                                                             0.0,
-                                                                            1.0
+                                                                            1.0,
                                                                           ],
                                                                           begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.64),
+                                                                            -1.0,
+                                                                            -0.64,
+                                                                          ),
                                                                           end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.64),
+                                                                            1.0,
+                                                                            0.64,
+                                                                          ),
                                                                         ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(15.0),
+                                                                            BorderRadius.circular(
+                                                                              15.0,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1961,54 +2249,55 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Colors
                                                                               .transparent,
                                                                           Color(
-                                                                              0xB7000000)
+                                                                            0xB7000000,
+                                                                          ),
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            0,
-                                                                            1.0),
+                                                                          0,
+                                                                          1.0,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -2028,26 +2317,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     children: [
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Container(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               80.0,
                                                                           height:
                                                                               100.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFFE42F7D),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(15.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(15.0),
-                                                                              topRight: Radius.circular(0.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFFE42F7D,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -2061,68 +2357,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -2135,8 +2440,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -2152,26 +2458,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -2186,24 +2502,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -2216,47 +2541,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFE42F7D),
+                                                                        0xFFE42F7D,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_b5zdps8w,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_b5zdps8w,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -2265,24 +2597,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -2290,12 +2618,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -2307,25 +2636,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -2334,67 +2662,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_ckldbpe2,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_ckldbpe2,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFFE42F7D),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFFE42F7D,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_vdk5ujss,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_vdk5ujss,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -2411,30 +2785,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -2454,154 +2828,152 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (false)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      1.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: double
                                                                       .infinity,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .network(
+                                                                      image: Image.network(
                                                                         bookingVenuesRecord
                                                                             .bg,
                                                                       ).image,
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            15.0),
+                                                                          15.0,
+                                                                        ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Opacity(
                                                                 opacity: 0.5,
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          50.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        50.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Color(
-                                                                              0xFF0171BC),
+                                                                            0xFF0171BC,
+                                                                          ),
                                                                           Colors
-                                                                              .transparent
+                                                                              .transparent,
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            -1.0,
-                                                                            -0.64),
+                                                                          -1.0,
+                                                                          -0.64,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            1.0,
-                                                                            0.64),
+                                                                          1.0,
+                                                                          0.64,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: double
                                                                       .infinity,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .network(
-                                                                        '',
-                                                                      ).image,
+                                                                      image:
+                                                                          Image.network(
+                                                                            '',
+                                                                          ).image,
                                                                     ),
-                                                                    gradient:
-                                                                        LinearGradient(
+                                                                    gradient: LinearGradient(
                                                                       colors: [
                                                                         Colors
                                                                             .transparent,
                                                                         Color(
-                                                                            0xB7000000)
+                                                                          0xB7000000,
+                                                                        ),
                                                                       ],
                                                                       stops: [
                                                                         0.0,
-                                                                        1.0
+                                                                        1.0,
                                                                       ],
-                                                                      begin: AlignmentDirectional(
-                                                                          0.0,
-                                                                          -1.0),
-                                                                      end: AlignmentDirectional(
-                                                                          0,
-                                                                          1.0),
+                                                                      begin:
+                                                                          AlignmentDirectional(
+                                                                            0.0,
+                                                                            -1.0,
+                                                                          ),
+                                                                      end:
+                                                                          AlignmentDirectional(
+                                                                            0,
+                                                                            1.0,
+                                                                          ),
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            15.0),
+                                                                          15.0,
+                                                                        ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -2617,26 +2989,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     children: [
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Container(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               80.0,
                                                                           height:
                                                                               100.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFF0171BC),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(15.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(15.0),
-                                                                              topRight: Radius.circular(0.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFF0171BC,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -2650,68 +3029,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -2724,8 +3112,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -2741,26 +3130,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -2775,24 +3174,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -2805,47 +3213,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF0171BC),
+                                                                        0xFF0171BC,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_stf94dvd,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_stf94dvd,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -2854,24 +3269,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -2879,12 +3290,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -2896,25 +3308,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -2923,67 +3334,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_dol4vivl,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_dol4vivl,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF0171BC),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFF0171BC,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_f5zj3cbu,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_f5zj3cbu,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -3000,30 +3457,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -3043,154 +3500,152 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (true)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      1.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: double
                                                                       .infinity,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .network(
+                                                                      image: Image.network(
                                                                         bookingVenuesRecord
                                                                             .bg,
                                                                       ).image,
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            15.0),
+                                                                          15.0,
+                                                                        ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Opacity(
                                                                 opacity: 0.5,
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          50.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        50.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Color(
-                                                                              0xFF333333),
+                                                                            0xFF333333,
+                                                                          ),
                                                                           Colors
-                                                                              .transparent
+                                                                              .transparent,
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            -1.0,
-                                                                            -0.64),
+                                                                          -1.0,
+                                                                          -0.64,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            1.0,
-                                                                            0.64),
+                                                                          1.0,
+                                                                          0.64,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: double
                                                                       .infinity,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .network(
-                                                                        '',
-                                                                      ).image,
+                                                                      image:
+                                                                          Image.network(
+                                                                            '',
+                                                                          ).image,
                                                                     ),
-                                                                    gradient:
-                                                                        LinearGradient(
+                                                                    gradient: LinearGradient(
                                                                       colors: [
                                                                         Colors
                                                                             .transparent,
                                                                         Color(
-                                                                            0xB7000000)
+                                                                          0xB7000000,
+                                                                        ),
                                                                       ],
                                                                       stops: [
                                                                         0.0,
-                                                                        1.0
+                                                                        1.0,
                                                                       ],
-                                                                      begin: AlignmentDirectional(
-                                                                          0.0,
-                                                                          -1.0),
-                                                                      end: AlignmentDirectional(
-                                                                          0,
-                                                                          1.0),
+                                                                      begin:
+                                                                          AlignmentDirectional(
+                                                                            0.0,
+                                                                            -1.0,
+                                                                          ),
+                                                                      end:
+                                                                          AlignmentDirectional(
+                                                                            0,
+                                                                            1.0,
+                                                                          ),
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            15.0),
+                                                                          15.0,
+                                                                        ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -3206,26 +3661,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     children: [
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Container(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               80.0,
                                                                           height:
                                                                               100.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFF333333),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(15.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(15.0),
-                                                                              topRight: Radius.circular(0.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFF333333,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -3239,68 +3701,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -3313,8 +3784,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -3330,26 +3802,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -3364,24 +3846,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -3394,47 +3885,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF333333),
+                                                                        0xFF333333,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_uyk8szzk,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_uyk8szzk,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -3443,24 +3941,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -3468,12 +3962,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -3485,25 +3980,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -3512,67 +4006,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_yavq9jpy,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_yavq9jpy,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF333333),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFF333333,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_9t0uxohd,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_9t0uxohd,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -3590,12 +4130,12 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Image.network(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Image.network(
                                                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                             width:
                                                                                 12.0,
@@ -3607,97 +4147,139 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_th3wrju8,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_th3wrju8,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_aw8qx9xu,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            1.0,
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_oyyp5zzz,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_aw8qx9xu,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_dyqvszfp,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_oyyp5zzz,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_dyqvszfp,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.people_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
@@ -3710,30 +4292,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -3753,58 +4335,56 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                     if (true)
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           bookingVenuesRecord
                                                                               .bg,
                                                                         ).image,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -3814,52 +4394,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                          50.0,
+                                                                          1.0,
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            50.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           100.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
-                                                                        gradient:
-                                                                            LinearGradient(
+                                                                        gradient: LinearGradient(
                                                                           colors: [
-                                                                            Color(0xFF58BB2F),
-                                                                            Colors.transparent
+                                                                            Color(
+                                                                              0xFF58BB2F,
+                                                                            ),
+                                                                            Colors.transparent,
                                                                           ],
                                                                           stops: [
                                                                             0.0,
-                                                                            1.0
+                                                                            1.0,
                                                                           ],
                                                                           begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.64),
+                                                                            -1.0,
+                                                                            -0.64,
+                                                                          ),
                                                                           end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.64),
+                                                                            1.0,
+                                                                            0.64,
+                                                                          ),
                                                                         ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(15.0),
+                                                                            BorderRadius.circular(
+                                                                              15.0,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -3868,54 +4450,55 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Colors
                                                                               .transparent,
                                                                           Color(
-                                                                              0xB7000000)
+                                                                            0xB7000000,
+                                                                          ),
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            0,
-                                                                            1.0),
+                                                                          0,
+                                                                          1.0,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -3938,20 +4521,23 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                             80.0,
                                                                         height:
                                                                             100.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFF58BB2F),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(15.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(0.0),
-                                                                            topLeft:
-                                                                                Radius.circular(15.0),
-                                                                            topRight:
-                                                                                Radius.circular(0.0),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFF58BB2F,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.only(
+                                                                            bottomLeft: Radius.circular(
+                                                                              15.0,
+                                                                            ),
+                                                                            bottomRight: Radius.circular(
+                                                                              0.0,
+                                                                            ),
+                                                                            topLeft: Radius.circular(
+                                                                              15.0,
+                                                                            ),
+                                                                            topRight: Radius.circular(
+                                                                              0.0,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
@@ -3964,68 +4550,77 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 3.0,
-                                                                              height: 15.0,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
+                                                                              width: 3.0,
+                                                                              height: 15.0,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -4038,8 +4633,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -4055,26 +4651,36 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF131313),
+                                                                                color: Color(
+                                                                                  0xFF131313,
+                                                                                ),
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -4089,24 +4695,33 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: Color(0xFF131313),
+                                                                            decoration: BoxDecoration(
+                                                                              color: Color(
+                                                                                0xFF131313,
+                                                                              ),
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -4119,47 +4734,54 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF58BB2F),
+                                                                        0xFF58BB2F,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_zf2xwvnz,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_zf2xwvnz,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -4168,24 +4790,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -4193,12 +4811,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -4210,25 +4829,24 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     Text(
                                                                       bookingVenuesRecord
                                                                           .nameVenuse,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Row(
                                                                       mainAxisSize:
@@ -4237,67 +4855,113 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_64igi5he,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_64igi5he,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.22,
-                                                                              -0.49),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              8.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               decoration: BoxDecoration(
-                                                                                color: Color(0xFF58BB2F),
-                                                                                borderRadius: BorderRadius.circular(90.0),
+                                                                                color: Color(
+                                                                                  0xFF58BB2F,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      1.0,
+                                                                                    ),
                                                                                     child: Icon(
                                                                                       Icons.star_rounded,
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       size: 15.0,
                                                                                     ),
                                                                                   ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      2.5,
+                                                                                      1.0,
+                                                                                      7.0,
+                                                                                      1.5,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_9msn8ey3,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_9msn8ey3,
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             fontSize: 11.0,
                                                                                             letterSpacing: 1.0,
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -4315,12 +4979,12 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Image.network(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Image.network(
                                                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                             width:
                                                                                 12.0,
@@ -4332,97 +4996,139 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_nd22qcfs,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_nd22qcfs,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              4.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_b2c81k0m,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            1.0,
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_8ztwtbdl,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_b2c81k0m,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                  ),
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_ygi4rynl,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
-                                                                                  font: GoogleFonts.openSans(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            3.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_8ztwtbdl,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_ygi4rynl,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
+                                                                                  font: GoogleFonts.openSans(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.people_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
@@ -4435,30 +5141,30 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.06,
-                                                                        -1.25),
-                                                                child:
-                                                                    Container(
+                                                                      1.06,
+                                                                      -1.25,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 23.0,
                                                                   height: 23.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFFFF2D38),
+                                                                      0xFFFF2D38,
+                                                                    ),
                                                                     boxShadow: [
                                                                       BoxShadow(
                                                                         blurRadius:
                                                                             4.0,
                                                                         color: Color(
-                                                                            0x33000000),
-                                                                        offset:
-                                                                            Offset(
+                                                                          0x33000000,
+                                                                        ),
+                                                                        offset: Offset(
                                                                           0.0,
                                                                           2.0,
                                                                         ),
                                                                         spreadRadius:
                                                                             1.0,
-                                                                      )
+                                                                      ),
                                                                     ],
                                                                     shape: BoxShape
                                                                         .circle,
@@ -4487,35 +5193,48 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            25.0, 10.0, 0.0, 0.0),
+                                          25.0,
+                                          10.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 1.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_3pliwr7o,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_3pliwr7o,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: Theme.of(context)
                                                           .extension<
-                                                              CustomColors>()!
+                                                            CustomColors
+                                                          >()!
                                                           .primaryBtnText,
                                                       fontSize: 18.0,
                                                       letterSpacing: 0.0,
@@ -4537,7 +5256,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                       alignment: AlignmentDirectional(0.0, 1.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
+                                          0.0,
+                                          10.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(),
@@ -4545,15 +5268,20 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 0.0, 15.0, 150.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      15.0,
+                                                      0.0,
+                                                      15.0,
+                                                      150.0,
+                                                    ),
                                                 child: Container(
                                                   width: double.infinity,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            15.0),
+                                                          15.0,
+                                                        ),
                                                     border: Border.all(
                                                       color: Color(0xFF2A2A2A),
                                                       width: 2.0,
@@ -4576,84 +5304,125 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                     .start,
                                                             children: [
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      20.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_quog03jp,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            5.0,
+                                                                            2.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_quog03jp,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
                                                                     Align(
-                                                                      alignment: AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                      child:
-                                                                          Container(
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFFD8181B),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(90.0),
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                            0.22,
+                                                                            -0.49,
+                                                                          ),
+                                                                      child: Container(
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFFD8181B,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.circular(
+                                                                            90.0,
+                                                                          ),
                                                                         ),
-                                                                        child:
-                                                                            Row(
+                                                                        child: Row(
                                                                           mainAxisSize:
                                                                               MainAxisSize.max,
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                5.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0,
+                                                                              ),
                                                                               child: Icon(
                                                                                 Icons.star_rounded,
-                                                                                color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                color:
+                                                                                    Theme.of(
+                                                                                          context,
+                                                                                        )
+                                                                                        .extension<
+                                                                                          CustomColors
+                                                                                        >()!
+                                                                                        .primaryText,
                                                                                 size: 15.0,
                                                                               ),
                                                                             ),
                                                                             Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                2.5,
+                                                                                1.0,
+                                                                                7.0,
+                                                                                1.5,
+                                                                              ),
                                                                               child: Text(
-                                                                                AppLocalizations.of(context)!.k_13x9uqs0,
-                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                AppLocalizations.of(
+                                                                                  context,
+                                                                                )!.k_13x9uqs0,
+                                                                                style:
+                                                                                    Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                        fontStyle: Theme.of(
+                                                                                          context,
+                                                                                        ).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
-                                                                                      color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                      color:
+                                                                                          Theme.of(
+                                                                                                context,
+                                                                                              )
+                                                                                              .extension<
+                                                                                                CustomColors
+                                                                                              >()!
+                                                                                              .primaryText,
                                                                                       fontSize: 11.0,
                                                                                       letterSpacing: 1.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
@@ -4662,93 +5431,117 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_zzal3cp1,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_zzal3cp1,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_r2j8yc5b,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                            3.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_r2j8yc5b,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               fontSize: 16.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_vs7xdzmi,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_vs7xdzmi,
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w600,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Icon(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                      child: Icon(
                                                                         Icons
                                                                             .people_rounded,
-                                                                        color: Theme.of(context)
-                                                                            .extension<CustomColors>()!
-                                                                            .primaryText,
+                                                                        color:
+                                                                            Theme.of(
+                                                                                  context,
+                                                                                )
+                                                                                .extension<
+                                                                                  CustomColors
+                                                                                >()!
+                                                                                .primaryText,
                                                                         size:
                                                                             20.0,
                                                                       ),
@@ -4758,196 +5551,183 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            40.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      40.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_b346r7d7,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xFFF5F5F5),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                    context,
+                                                                  )!.k_b346r7d7,
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                      0xFFF5F5F5,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            40.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      40.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_t2g5fbkh,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xFFF5F5F5),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                    context,
+                                                                  )!.k_t2g5fbkh,
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                      0xFFF5F5F5,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            40.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      40.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_pkz408a3,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xFFF5F5F5),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                    context,
+                                                                  )!.k_pkz408a3,
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: Color(
+                                                                      0xFFF5F5F5,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  20.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        2.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_7nteuc8q,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_7nteuc8q,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                        0.22,
+                                                                        -0.49,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFFA9207),
+                                                                        0xFFFA9207,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              90.0),
+                                                                            90.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -4959,38 +5739,60 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.star_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              2.5,
-                                                                              1.0,
-                                                                              7.0,
-                                                                              1.5),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_0ndc7z7a,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            2.5,
+                                                                            1.0,
+                                                                            7.0,
+                                                                            1.5,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_0ndc7z7a,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
-                                                                                  color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                  color:
+                                                                                      Theme.of(
+                                                                                            context,
+                                                                                          )
+                                                                                          .extension<
+                                                                                            CustomColors
+                                                                                          >()!
+                                                                                          .primaryText,
                                                                                   fontSize: 11.0,
                                                                                   letterSpacing: 1.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -4999,125 +5801,120 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        10.0,
+                                                                        1.0,
+                                                                        10.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_zjqoai57,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_zjqoai57,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_6elfinwi,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_6elfinwi,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_zlj2bvxv,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_zlj2bvxv,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people_rounded,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 17.0,
                                                                   ),
@@ -5127,65 +5924,64 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  20.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        2.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_cc82j5o4,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_cc82j5o4,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                        0.22,
+                                                                        -0.49,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFE42F7D),
+                                                                        0xFFE42F7D,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              90.0),
+                                                                            90.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -5197,38 +5993,60 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.star_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              2.5,
-                                                                              1.0,
-                                                                              7.0,
-                                                                              1.5),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_4g50bw3t,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            2.5,
+                                                                            1.0,
+                                                                            7.0,
+                                                                            1.5,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_4g50bw3t,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
-                                                                                  color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                  color:
+                                                                                      Theme.of(
+                                                                                            context,
+                                                                                          )
+                                                                                          .extension<
+                                                                                            CustomColors
+                                                                                          >()!
+                                                                                          .primaryText,
                                                                                   fontSize: 11.0,
                                                                                   letterSpacing: 1.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -5237,125 +6055,120 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        10.0,
+                                                                        1.0,
+                                                                        10.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_rvzbnzim,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_rvzbnzim,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_sa7il9cu,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_sa7il9cu,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_t2nhsu2z,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_t2nhsu2z,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people_rounded,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 17.0,
                                                                   ),
@@ -5365,65 +6178,64 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  20.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        2.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_9z9bvdw7,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_9z9bvdw7,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                        0.22,
+                                                                        -0.49,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF0171BC),
+                                                                        0xFF0171BC,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              90.0),
+                                                                            90.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -5435,38 +6247,60 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.star_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              2.5,
-                                                                              1.0,
-                                                                              7.0,
-                                                                              1.5),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_u5splgyl,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            2.5,
+                                                                            1.0,
+                                                                            7.0,
+                                                                            1.5,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_u5splgyl,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
-                                                                                  color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                  color:
+                                                                                      Theme.of(
+                                                                                            context,
+                                                                                          )
+                                                                                          .extension<
+                                                                                            CustomColors
+                                                                                          >()!
+                                                                                          .primaryText,
                                                                                   fontSize: 11.0,
                                                                                   letterSpacing: 1.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -5475,125 +6309,120 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        10.0,
+                                                                        1.0,
+                                                                        10.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_1btagzga,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_1btagzga,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_061te4or,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_061te4or,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_i2yqt0vg,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_i2yqt0vg,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people_rounded,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 17.0,
                                                                   ),
@@ -5603,65 +6432,64 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  20.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        2.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_h6uupi1b,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_h6uupi1b,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                        0.22,
+                                                                        -0.49,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF666666),
+                                                                        0xFF666666,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              90.0),
+                                                                            90.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -5673,38 +6501,60 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.star_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              2.5,
-                                                                              1.0,
-                                                                              7.0,
-                                                                              1.5),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_8t91guy8,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            2.5,
+                                                                            1.0,
+                                                                            7.0,
+                                                                            1.5,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_8t91guy8,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
-                                                                                  color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                  color:
+                                                                                      Theme.of(
+                                                                                            context,
+                                                                                          )
+                                                                                          .extension<
+                                                                                            CustomColors
+                                                                                          >()!
+                                                                                          .primaryText,
                                                                                   fontSize: 11.0,
                                                                                   letterSpacing: 1.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -5713,125 +6563,120 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        10.0,
+                                                                        1.0,
+                                                                        10.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_27xmauca,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_27xmauca,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_tlm9qy3p,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_tlm9qy3p,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_vc6bzueu,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_vc6bzueu,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people_rounded,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 17.0,
                                                                   ),
@@ -5841,65 +6686,64 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  20.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          2.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        2.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_3j2l4cnb,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_3j2l4cnb,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.22,
-                                                                          -0.49),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                        0.22,
+                                                                        -0.49,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF58BB2F),
+                                                                        0xFF58BB2F,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              90.0),
+                                                                            90.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -5911,38 +6755,60 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Icon(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Icon(
                                                                             Icons.star_rounded,
                                                                             color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                Theme.of(
+                                                                                      context,
+                                                                                    )
+                                                                                    .extension<
+                                                                                      CustomColors
+                                                                                    >()!
+                                                                                    .primaryText,
                                                                             size:
                                                                                 15.0,
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              2.5,
-                                                                              1.0,
-                                                                              7.0,
-                                                                              1.5),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_v0p6ewim,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            2.5,
+                                                                            1.0,
+                                                                            7.0,
+                                                                            1.5,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_v0p6ewim,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
-                                                                                  color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                  color:
+                                                                                      Theme.of(
+                                                                                            context,
+                                                                                          )
+                                                                                          .extension<
+                                                                                            CustomColors
+                                                                                          >()!
+                                                                                          .primaryText,
                                                                                   fontSize: 11.0,
                                                                                   letterSpacing: 1.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -5951,125 +6817,120 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          1.0,
-                                                                          10.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        10.0,
+                                                                        1.0,
+                                                                        10.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_ebhvfrkk,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_ebhvfrkk,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          3.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        3.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_c6l6yvfu,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_c6l6yvfu,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          1.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        1.0,
+                                                                      ),
                                                                   child: Text(
                                                                     AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_77ws4uwr,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      context,
+                                                                    )!.k_77ws4uwr,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people_rounded,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 17.0,
                                                                   ),
@@ -6081,49 +6942,51 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    15.0,
-                                                                    10.0,
-                                                                    10.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              10.0,
+                                                              15.0,
+                                                              10.0,
+                                                              10.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_8uod5ty9,
+                                                            context,
+                                                          )!.k_8uod5ty9,
                                                           textAlign:
                                                               TextAlign.start,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontStyle,
-                                                                  ),
+                                                          style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -6144,7 +7007,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 7.0, 15.0, 0.0),
+                          15.0,
+                          7.0,
+                          15.0,
+                          0.0,
+                        ),
                         child: Container(
                           width: double.infinity,
                           height: 80.0,
@@ -6205,8 +7072,12 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                       ),
                     ),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(25.0, 0.0, 25.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        25.0,
+                        0.0,
+                        25.0,
+                        0.0,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -6214,7 +7085,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 15.0, 0.0),
+                              0.0,
+                              0.0,
+                              15.0,
+                              0.0,
+                            ),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -6238,9 +7113,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                   alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Icon(
                                     Icons.arrow_back_ios_outlined,
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
+                                    color: Theme.of(
+                                      context,
+                                    ).extension<CustomColors>()!.primaryText,
                                     size: 28.0,
                                   ),
                                 ),
@@ -6256,7 +7131,7 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                   gradient: LinearGradient(
                                     colors: [
                                       Color(0xFFFF0004),
-                                      Color(0xFFA60000)
+                                      Color(0xFFA60000),
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: AlignmentDirectional(0.0, -1.0),
@@ -6277,18 +7152,16 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 20.0,
                                             letterSpacing: 1.0,
                                             fontWeight: FontWeight.w600,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ],
@@ -6304,7 +7177,8 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   context.pushNamed(
-                                      PayreservenormdayPage.routeName);
+                                    PayreservenormdayPage.routeName,
+                                  );
                                 },
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width * 0.7,
@@ -6313,7 +7187,7 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                     gradient: LinearGradient(
                                       colors: [
                                         Color(0xFFFF0004),
-                                        Color(0xFFA60000)
+                                        Color(0xFFA60000),
                                       ],
                                       stops: [0.0, 1.0],
                                       begin: AlignmentDirectional(0.0, -1.0),
@@ -6326,8 +7200,9 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .k_i56am3ch,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_i56am3ch,
                                         maxLines: 1,
                                         style: Theme.of(context)
                                             .textTheme
@@ -6343,18 +7218,22 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                               fontSize: 20.0,
                                               letterSpacing: 1.0,
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            7.0, 0.0, 0.0, 0.0),
+                                          7.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Text(
-                                          AppLocalizations.of(context)!
-                                              .k_a5zorp3n,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_a5zorp3n,
                                           maxLines: 1,
                                           style: Theme.of(context)
                                               .textTheme
@@ -6379,10 +7258,13 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            2.0, 0.0, 0.0, 0.0),
+                                          2.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Text(
-                                          AppState()
-                                              .Totlepricebooking
+                                          AppState().Totlepricebooking
                                               .toString(),
                                           maxLines: 1,
                                           style: Theme.of(context)

@@ -61,11 +61,7 @@ class _RatingBarState extends ConsumerState<RatingBar> {
         icon = Icons.star_border;
         color = Colors.grey;
       }
-      return Icon(
-        icon,
-        color: color,
-        size: iconSize,
-      );
+      return Icon(icon, color: color, size: iconSize);
     } else {
       // โหมด input (ให้คะแนน)
       icon = index < _currentRating ? Icons.star : Icons.star_border;
@@ -79,11 +75,7 @@ class _RatingBarState extends ConsumerState<RatingBar> {
                 _currentRating; // อัปเดต context.appState.ratingreview
           });
         },
-        child: Icon(
-          icon,
-          color: color,
-          size: iconSize,
-        ),
+        child: Icon(icon, color: color, size: iconSize),
       );
     }
   }
@@ -94,7 +86,8 @@ class _RatingBarState extends ConsumerState<RatingBar> {
     double iconSize = widget.sizeicon;
 
     return Container(
-      width: widget.width ??
+      width:
+          widget.width ??
           (totalStars * iconSize) +
               ((totalStars - 1) * 7.0), // กำหนดความกว้างตามจำนวนดาวและขนาด
       height: widget.height ?? iconSize, // กำหนดความสูงตามขนาดดาว

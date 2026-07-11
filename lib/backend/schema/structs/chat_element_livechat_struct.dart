@@ -17,11 +17,11 @@ class ChatElementLivechatStruct extends FFSupabaseStruct {
     String? message,
     String? photo,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _id = id,
-        _name = name,
-        _message = message,
-        _photo = photo,
-        super(supabaseUtilData);
+  }) : _id = id,
+       _name = name,
+       _message = message,
+       _photo = photo,
+       super(supabaseUtilData);
 
   // "id" field.
   SupabaseDocRef? _id;
@@ -64,57 +64,33 @@ class ChatElementLivechatStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'id': _id,
-        'name': _name,
-        'message': _message,
-        'photo': _photo,
-      }.withoutNulls;
+    'id': _id,
+    'name': _name,
+    'message': _message,
+    'photo': _photo,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'id': serializeParam(
-          _id,
-          ParamType.SupabaseDocRef,
-        ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-        'message': serializeParam(
-          _message,
-          ParamType.String,
-        ),
-        'photo': serializeParam(
-          _photo,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'id': serializeParam(_id, ParamType.SupabaseDocRef),
+    'name': serializeParam(_name, ParamType.String),
+    'message': serializeParam(_message, ParamType.String),
+    'photo': serializeParam(_photo, ParamType.String),
+  }.withoutNulls;
 
   static ChatElementLivechatStruct fromSerializableMap(
-          Map<String, dynamic> data) =>
-      ChatElementLivechatStruct(
-        id: deserializeParam(
-          data['id'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['users'],
-        ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
-        message: deserializeParam(
-          data['message'],
-          ParamType.String,
-          false,
-        ),
-        photo: deserializeParam(
-          data['photo'],
-          ParamType.String,
-          false,
-        ),
-      );
+    Map<String, dynamic> data,
+  ) => ChatElementLivechatStruct(
+    id: deserializeParam(
+      data['id'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['users'],
+    ),
+    name: deserializeParam(data['name'], ParamType.String, false),
+    message: deserializeParam(data['message'], ParamType.String, false),
+    photo: deserializeParam(data['photo'], ParamType.String, false),
+  );
 
   @override
   String toString() => 'ChatElementLivechatStruct(${toMap()})';
@@ -141,30 +117,28 @@ ChatElementLivechatStruct createChatElementLivechatStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    ChatElementLivechatStruct(
-      id: id,
-      name: name,
-      message: message,
-      photo: photo,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => ChatElementLivechatStruct(
+  id: id,
+  name: name,
+  message: message,
+  photo: photo,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 ChatElementLivechatStruct? updateChatElementLivechatStruct(
   ChatElementLivechatStruct? chatElementLivechat, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    chatElementLivechat
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => chatElementLivechat
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addChatElementLivechatStructData(
   Map<String, dynamic> supabaseData,
@@ -185,10 +159,13 @@ void addChatElementLivechatStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final chatElementLivechatData =
-      getChatElementLivechatFirestoreData(chatElementLivechat, forFieldValue);
-  final nestedData =
-      chatElementLivechatData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final chatElementLivechatData = getChatElementLivechatFirestoreData(
+    chatElementLivechat,
+    forFieldValue,
+  );
+  final nestedData = chatElementLivechatData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields =
       chatElementLivechat.supabaseUtilData.create || clearFields;
@@ -205,8 +182,9 @@ Map<String, dynamic> getChatElementLivechatFirestoreData(
   final supabaseData = mapToSupabase(chatElementLivechat.toMap());
 
   // Add any Firestore field values
-  chatElementLivechat.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  chatElementLivechat.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

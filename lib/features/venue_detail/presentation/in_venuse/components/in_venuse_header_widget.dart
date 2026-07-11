@@ -30,12 +30,15 @@ class InVenuseHeaderWidget extends StatelessWidget {
 
   InVenuseModel get _model => model;
 
-  void _showSchemaUnavailableMessage(BuildContext context,
-      {required String feature}) {
+  void _showSchemaUnavailableMessage(
+    BuildContext context, {
+    required String feature,
+  }) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-          SnackBar(content: Text('$feature ยังไม่รองรับใน schema ปัจจุบัน')));
+        SnackBar(content: Text('$feature ยังไม่รองรับใน schema ปัจจุบัน')),
+      );
   }
 
   @override
@@ -57,24 +60,24 @@ class InVenuseHeaderWidget extends StatelessWidget {
                 ),
               ),
             ),
-          if (!videoCompleted)
+          if (_model.demoVenueCoverVideoPath.isNotEmpty || !videoCompleted)
             Opacity(
               opacity: fadeFactor,
               child: SizedBox(
                 width: MediaQuery.sizeOf(context).width * 1.0,
                 height: MediaQuery.sizeOf(context).height * 0.6,
                 child: MundayVideoPlayer(
-                  path: 'assets/videos/venue_cover.mp4',
+                  key: ValueKey(_model.demoVenueCoverVideoPath),
+                  path: _model.demoVenueCoverVideoPath,
                   videoType: VideoType.asset,
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: MediaQuery.sizeOf(context).height * 0.6,
                   autoPlay: true,
-                  looping: false,
+                  looping: true,
                   showControls: false,
                   allowFullScreen: false,
                   allowPlaybackSpeedMenu: false,
-                  volume: fadeFactor,
-                  onVideoCompleted: onVideoCompleted,
+                  volume: 0.0,
                 ),
               ),
             ),
@@ -88,7 +91,7 @@ class InVenuseHeaderWidget extends StatelessWidget {
                   colors: [
                     Colors.transparent,
                     Colors.transparent,
-                    Colors.black
+                    Colors.black,
                   ],
                   stops: [0.0, 0.6, 1.0],
                   begin: AlignmentDirectional(0.0, -1.0),
@@ -101,8 +104,12 @@ class InVenuseHeaderWidget extends StatelessWidget {
           Align(
             alignment: const AlignmentDirectional(0.0, 1.0),
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                20.0,
+                0.0,
+                0.0,
+                0.0,
+              ),
               child: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(),
@@ -154,8 +161,10 @@ class InVenuseHeaderWidget extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.0, 0.0),
+                                  alignment: const AlignmentDirectional(
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: Container(
                                     width: 100.0,
                                     height: 100.0,
@@ -172,8 +181,10 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                 ),
                                 if (inVenuseVenuesRecord.video.isNotEmpty)
                                   Align(
-                                    alignment:
-                                        const AlignmentDirectional(0.0, 0.0),
+                                    alignment: const AlignmentDirectional(
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: 115.0,
                                       height: 115.0,
@@ -190,12 +201,18 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                   ),
                                 if (inVenuseVenuesRecord.video.isNotEmpty)
                                   Align(
-                                    alignment:
-                                        const AlignmentDirectional(1.0, 1.0),
+                                    alignment: const AlignmentDirectional(
+                                      1.0,
+                                      1.0,
+                                    ),
                                     child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 5.0, 5.0),
+                                            0.0,
+                                            0.0,
+                                            5.0,
+                                            5.0,
+                                          ),
                                       child: Container(
                                         width: 25.0,
                                         height: 25.0,
@@ -205,11 +222,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             BoxShadow(
                                               blurRadius: 4.0,
                                               color: Color(0x7A000000),
-                                              offset: Offset(
-                                                2.0,
-                                                2.0,
-                                              ),
-                                            )
+                                              offset: Offset(2.0, 2.0),
+                                            ),
                                           ],
                                           shape: BoxShape.circle,
                                         ),
@@ -218,17 +232,22 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      0.0, 0.0),
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        2.0, 0.0, 0.0, 0.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      2.0,
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: FaIcon(
                                                   FontAwesomeIcons.play,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 14.0,
                                                 ),
                                               ),
@@ -244,14 +263,22 @@ class InVenuseHeaderWidget extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              17.0, 0.0, 0.0, 0.0),
+                            17.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 5.0),
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  5.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -259,8 +286,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 6.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                6.0,
+                                                0.0,
+                                              ),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -276,23 +308,27 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 builder: (context) {
                                                   return GestureDetector(
                                                     onTap: () {
-                                                      FocusScope.of(context)
-                                                          .unfocus();
+                                                      FocusScope.of(
+                                                        context,
+                                                      ).unfocus();
                                                       FocusManager
-                                                          .instance.primaryFocus
+                                                          .instance
+                                                          .primaryFocus
                                                           ?.unfocus();
                                                     },
                                                     child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
+                                                      padding:
+                                                          MediaQuery.viewInsetsOf(
+                                                            context,
+                                                          ),
                                                       child:
                                                           const StoryViewWidget(),
                                                     ),
                                                   );
                                                 },
                                               ).then(
-                                                  (value) => onStateChanged());
+                                                (value) => onStateChanged(),
+                                              );
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -302,23 +338,26 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                               ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        13.0, 1.0, 13.0, 1.5),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      13.0,
+                                                      1.0,
+                                                      13.0,
+                                                      1.5,
+                                                    ),
                                                 child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .k_znwljmuz,
-                                                  style: MundayTheme.of(
-                                                          context)
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  )!.k_znwljmuz,
+                                                  style: MundayTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
                                                               MundayTheme.of(
-                                                                      context)
+                                                                    context,
+                                                                  )
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
@@ -328,7 +367,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                             FontWeight.w600,
                                                         fontStyle:
                                                             MundayTheme.of(
-                                                                    context)
+                                                                  context,
+                                                                )
                                                                 .bodyMedium
                                                                 .fontStyle,
                                                       ),
@@ -343,8 +383,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 6.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                6.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Colors.white,
@@ -353,36 +398,38 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      13.0, 1.0, 13.0, 1.5),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    13.0,
+                                                    1.0,
+                                                    13.0,
+                                                    1.5,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_5yp7ypsm,
-                                                style: MundayTheme.of(
-                                                        context)
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_5yp7ypsm,
+                                                style: MundayTheme.of(context)
                                                     .bodyMedium
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            MundayTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontStyle:
+                                                                MundayTheme.of(
+                                                                      context,
+                                                                    )
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
                                                       color: Colors.black,
                                                       fontSize: 11.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      fontStyle:
-                                                          MundayTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
+                                                      fontStyle: MundayTheme.of(
+                                                        context,
+                                                      ).bodyMedium.fontStyle,
                                                     ),
                                               ),
                                             ),
@@ -395,7 +442,11 @@ class InVenuseHeaderWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  4.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -417,18 +468,16 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             .override(
                                               font: GoogleFonts.openSans(
                                                 fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    MundayTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: MundayTheme.of(
+                                                  context,
+                                                ).bodyMedium.fontStyle,
                                               ),
                                               fontSize: 23.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  MundayTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: MundayTheme.of(
+                                                context,
+                                              ).bodyMedium.fontStyle,
                                             ),
                                       ),
                                     ),
@@ -437,38 +486,46 @@ class InVenuseHeaderWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 5.0),
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  5.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
                                       inVenuseVenuesRecord.openCloseTime,
-                                      style: MundayTheme.of(context)
-                                          .bodyMedium
+                                      style: MundayTheme.of(context).bodyMedium
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  MundayTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontStyle: MundayTheme.of(
+                                                context,
+                                              ).bodyMedium.fontStyle,
                                             ),
                                             fontSize: 15.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                MundayTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontStyle: MundayTheme.of(
+                                              context,
+                                            ).bodyMedium.fontStyle,
                                           ),
                                     ),
                                     if (inVenuseVenuesRecord.rating > 3.0)
                                       Align(
                                         alignment: const AlignmentDirectional(
-                                            0.22, -0.49),
+                                          0.22,
+                                          -0.49,
+                                        ),
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                8.0,
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -484,16 +541,19 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 builder: (context) {
                                                   return GestureDetector(
                                                     onTap: () {
-                                                      FocusScope.of(context)
-                                                          .unfocus();
+                                                      FocusScope.of(
+                                                        context,
+                                                      ).unfocus();
                                                       FocusManager
-                                                          .instance.primaryFocus
+                                                          .instance
+                                                          .primaryFocus
                                                           ?.unfocus();
                                                     },
                                                     child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
+                                                      padding:
+                                                          MediaQuery.viewInsetsOf(
+                                                            context,
+                                                          ),
                                                       child: ReviewWidget(
                                                         idVenues:
                                                             inVenuseVenuesRecord
@@ -503,7 +563,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                   );
                                                 },
                                               ).then(
-                                                  (value) => onStateChanged());
+                                                (value) => onStateChanged(),
+                                              );
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -519,23 +580,28 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 0.0, 1.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          5.0,
+                                                          0.0,
+                                                          0.0,
+                                                          1.0,
+                                                        ),
                                                     child: Icon(
                                                       Icons.star_rounded,
-                                                      color:
-                                                          MundayTheme.of(
-                                                                  context)
-                                                              .primaryText,
+                                                      color: MundayTheme.of(
+                                                        context,
+                                                      ).primaryText,
                                                       size: 15.0,
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            2.5, 1.0, 7.0, 1.5),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          2.5,
+                                                          1.0,
+                                                          7.0,
+                                                          1.5,
+                                                        ),
                                                     child: Text(
                                                       formatNumber(
                                                         inVenuseVenuesRecord
@@ -549,33 +615,34 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                       ),
                                                       style:
                                                           MundayTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontStyle: MundayTheme.of(
-                                                                          context)
+                                                            context,
+                                                          ).bodyMedium.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  MundayTheme.of(
+                                                                        context,
+                                                                      )
                                                                       .bodyMedium
                                                                       .fontStyle,
-                                                                ),
-                                                                color: MundayTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 11.0,
-                                                                letterSpacing:
-                                                                    1.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontStyle: MundayTheme.of(
-                                                                        context)
+                                                            ),
+                                                            color:
+                                                                MundayTheme.of(
+                                                                  context,
+                                                                ).primaryText,
+                                                            fontSize: 11.0,
+                                                            letterSpacing: 1.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontStyle:
+                                                                MundayTheme.of(
+                                                                      context,
+                                                                    )
                                                                     .bodyMedium
                                                                     .fontStyle,
-                                                              ),
+                                                          ),
                                                     ),
                                                   ),
                                                 ],
@@ -604,8 +671,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 6.0, 4.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                6.0,
+                                                4.0,
+                                              ),
                                           child: Container(
                                             width: 23.0,
                                             height: 23.0,
@@ -620,62 +692,66 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 7.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                7.0,
+                                                0.0,
+                                              ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .k_8ueny3ds,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_8ueny3ds,
                                             style: MundayTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).bodyMedium.fontStyle,
                                                   ),
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryBtnText,
+                                                    context,
+                                                  ).primaryBtnText,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      MundayTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontStyle,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .k_203t8lnr,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_203t8lnr,
                                             style: MundayTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   font: GoogleFonts.openSans(
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).bodyMedium.fontStyle,
                                                   ),
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryBtnText,
+                                                    context,
+                                                  ).primaryBtnText,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      MundayTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -686,8 +762,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5.0, 0.0, 6.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              5.0,
+                                              0.0,
+                                              6.0,
+                                              0.0,
+                                            ),
                                         child: Container(
                                           width: 23.0,
                                           height: 23.0,
@@ -697,36 +778,41 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        0.0, 1.0),
+                                                      0.0,
+                                                      1.0,
+                                                    ),
                                                 child: Icon(
                                                   Icons.people_rounded,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 17.0,
                                                 ),
                                               ),
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, -1.0),
+                                                      1.0,
+                                                      -1.0,
+                                                    ),
                                                 child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .k_we9kgu84,
-                                                  style: MundayTheme.of(
-                                                          context)
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  )!.k_we9kgu84,
+                                                  style: MundayTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               MundayTheme.of(
-                                                                      context)
+                                                                    context,
+                                                                  )
                                                                   .bodyMedium
                                                                   .fontWeight,
                                                           fontStyle:
                                                               MundayTheme.of(
-                                                                      context)
+                                                                    context,
+                                                                  )
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
@@ -734,12 +820,14 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             MundayTheme.of(
-                                                                    context)
+                                                                  context,
+                                                                )
                                                                 .bodyMedium
                                                                 .fontWeight,
                                                         fontStyle:
                                                             MundayTheme.of(
-                                                                    context)
+                                                                  context,
+                                                                )
                                                                 .bodyMedium
                                                                 .fontStyle,
                                                       ),
@@ -750,62 +838,68 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 1.0, 2.5, 1.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              0.0,
+                                              1.0,
+                                              2.5,
+                                              1.0,
+                                            ),
                                         child: Text(
-                                          AppLocalizations.of(context)!
-                                              .k_kd32zbfm,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_kd32zbfm,
                                           style: MundayTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 font: GoogleFonts.openSans(
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      MundayTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontStyle,
                                                 ),
-                                                color:
-                                                    MundayTheme.of(context)
-                                                        .primaryBtnText,
+                                                color: MundayTheme.of(
+                                                  context,
+                                                ).primaryBtnText,
                                                 fontSize: 14.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    MundayTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: MundayTheme.of(
+                                                  context,
+                                                ).bodyMedium.fontStyle,
                                               ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 1.0, 0.0, 1.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              0.0,
+                                              1.0,
+                                              0.0,
+                                              1.0,
+                                            ),
                                         child: Text(
-                                          AppLocalizations.of(context)!
-                                              .k_bpvwlxqt,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_bpvwlxqt,
                                           style: MundayTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 font: GoogleFonts.openSans(
                                                   fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      MundayTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
+                                                  fontStyle: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontStyle,
                                                 ),
-                                                color:
-                                                    MundayTheme.of(context)
-                                                        .primaryBtnText,
+                                                color: MundayTheme.of(
+                                                  context,
+                                                ).primaryBtnText,
                                                 fontSize: 14.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    MundayTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
+                                                fontStyle: MundayTheme.of(
+                                                  context,
+                                                ).bodyMedium.fontStyle,
                                               ),
                                         ),
                                       ),
@@ -822,7 +916,11 @@ class InVenuseHeaderWidget extends StatelessWidget {
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 1.0, 0.0, 0.0),
+                          0.0,
+                          1.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
@@ -831,44 +929,49 @@ class InVenuseHeaderWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Align(
-                                alignment:
-                                    const AlignmentDirectional(1.0, -1.0),
+                                alignment: const AlignmentDirectional(
+                                  1.0,
+                                  -1.0,
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 23.0, 4.0),
+                                    0.0,
+                                    0.0,
+                                    23.0,
+                                    4.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_17ibcz68,
-                                    style: MundayTheme.of(context)
-                                        .bodyMedium
+                                    style: MundayTheme.of(context).bodyMedium
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight:
-                                                MundayTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                MundayTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                            fontWeight: MundayTheme.of(
+                                              context,
+                                            ).bodyMedium.fontWeight,
+                                            fontStyle: MundayTheme.of(
+                                              context,
+                                            ).bodyMedium.fontStyle,
                                           ),
                                           color: Colors.white,
                                           fontSize: 7.0,
                                           letterSpacing: 0.0,
-                                          fontWeight:
-                                              MundayTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              MundayTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                          fontWeight: MundayTheme.of(
+                                            context,
+                                          ).bodyMedium.fontWeight,
+                                          fontStyle: MundayTheme.of(
+                                            context,
+                                          ).bodyMedium.fontStyle,
                                         ),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 20.0, 10.0),
+                                  0.0,
+                                  0.0,
+                                  20.0,
+                                  10.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -896,16 +999,19 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                               builder: (context) {
                                                 return GestureDetector(
                                                   onTap: () {
-                                                    FocusScope.of(context)
-                                                        .unfocus();
+                                                    FocusScope.of(
+                                                      context,
+                                                    ).unfocus();
                                                     FocusManager
-                                                        .instance.primaryFocus
+                                                        .instance
+                                                        .primaryFocus
                                                         ?.unfocus();
                                                   },
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
-                                                            context),
+                                                          context,
+                                                        ),
                                                     child: PopupmapWidget(
                                                       location:
                                                           inVenuseVenuesRecord
@@ -933,21 +1039,28 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      0.0, 0.5, 0.0, 0.5),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.5,
+                                                    0.0,
+                                                    0.5,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            6.0, 3.0, 5.0, 3.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          6.0,
+                                                          3.0,
+                                                          5.0,
+                                                          3.0,
+                                                        ),
                                                     child: ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              0.0),
+                                                            0.0,
+                                                          ),
                                                       child: Image.asset(
                                                         'assets/images/7089161_google_maps_icon.png',
                                                         width: 17.0,
@@ -958,9 +1071,12 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0.0, 0.0, 6.0, 0.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          6.0,
+                                                          0.0,
+                                                        ),
                                                     child: Text(
                                                       valueOrDefault<String>(
                                                         distance,
@@ -968,18 +1084,18 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                       ).maybeHandleOverflow(
                                                         maxChars: 4,
                                                       ),
-                                                      style: MundayTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
+                                                      style:
+                                                          MundayTheme.of(
+                                                            context,
+                                                          ).bodyMedium.override(
+                                                            font: GoogleFonts.openSans(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
                                                               fontStyle:
                                                                   MundayTheme.of(
-                                                                          context)
+                                                                        context,
+                                                                      )
                                                                       .bodyMedium
                                                                       .fontStyle,
                                                             ),
@@ -990,7 +1106,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                                 FontWeight.w500,
                                                             fontStyle:
                                                                 MundayTheme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                           ),
@@ -998,25 +1115,28 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                            10.0, 0.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: Text(
                                                       AppLocalizations.of(
-                                                              context)!
-                                                          .k_d98iv601,
-                                                      style: MundayTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
+                                                        context,
+                                                      )!.k_d98iv601,
+                                                      style:
+                                                          MundayTheme.of(
+                                                            context,
+                                                          ).bodyMedium.override(
+                                                            font: GoogleFonts.openSans(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
                                                               fontStyle:
                                                                   MundayTheme.of(
-                                                                          context)
+                                                                        context,
+                                                                      )
                                                                       .bodyMedium
                                                                       .fontStyle,
                                                             ),
@@ -1027,7 +1147,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                                 FontWeight.w500,
                                                             fontStyle:
                                                                 MundayTheme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                           ),
@@ -1039,8 +1160,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                5.0,
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -1048,11 +1174,12 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
                                               await launchURL(
-                                                  functions.linkgrab(
-                                                      inVenuseVenuesRecord
-                                                          .nameVenuse,
-                                                      inVenuseVenuesRecord
-                                                          .position)!);
+                                                functions.linkgrab(
+                                                  inVenuseVenuesRecord
+                                                      .nameVenuse,
+                                                  inVenuseVenuesRecord.position,
+                                                )!,
+                                              );
                                             },
                                             child: Container(
                                               width: 23.0,
@@ -1060,24 +1187,24 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  width: 1.0,
-                                                ),
+                                                border: Border.all(width: 1.0),
                                               ),
                                               child: const Stack(
                                                 children: [
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 0.0),
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  2.6),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            2.6,
+                                                          ),
                                                       child: Icon(
                                                         Icons
                                                             .directions_car_rounded,
@@ -1095,20 +1222,25 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(
+                                          90.0,
+                                        ),
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           if (inVenuseVenuesRecord
-                                                  .linkContact.tiktok !=
+                                                  .linkContact
+                                                  .tiktok !=
                                               '')
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      17.0, 0.0, 0.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    17.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1117,29 +1249,35 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   await launchURL(
-                                                      functions.addsocial(
-                                                          'snssdk1233://user/',
-                                                          inVenuseVenuesRecord
-                                                              .linkContact
-                                                              .tiktok)!);
+                                                    functions.addsocial(
+                                                      'snssdk1233://user/',
+                                                      inVenuseVenuesRecord
+                                                          .linkContact
+                                                          .tiktok,
+                                                    )!,
+                                                  );
                                                 },
                                                 child: Icon(
                                                   Icons.tiktok_rounded,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 22.0,
                                                 ),
                                               ),
                                             ),
                                           if (inVenuseVenuesRecord
-                                                  .linkContact.facebook !=
+                                                  .linkContact
+                                                  .facebook !=
                                               '')
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      14.0, 0.0, 0.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    14.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1148,29 +1286,35 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   await launchURL(
-                                                      functions.addsocial(
-                                                          'fb://profile/',
-                                                          inVenuseVenuesRecord
-                                                              .linkContact
-                                                              .facebook)!);
+                                                    functions.addsocial(
+                                                      'fb://profile/',
+                                                      inVenuseVenuesRecord
+                                                          .linkContact
+                                                          .facebook,
+                                                    )!,
+                                                  );
                                                 },
                                                 child: Icon(
                                                   Icons.facebook,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 23.0,
                                                 ),
                                               ),
                                             ),
                                           if (inVenuseVenuesRecord
-                                                  .linkContact.ig !=
+                                                  .linkContact
+                                                  .ig !=
                                               '')
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      17.0, 0.0, 0.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    17.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1179,29 +1323,35 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   await launchURL(
-                                                      functions.addsocial(
-                                                          'instagram://user?username=',
-                                                          inVenuseVenuesRecord
-                                                              .linkContact
-                                                              .ig)!);
+                                                    functions.addsocial(
+                                                      'instagram://user?username=',
+                                                      inVenuseVenuesRecord
+                                                          .linkContact
+                                                          .ig,
+                                                    )!,
+                                                  );
                                                 },
                                                 child: FaIcon(
                                                   FontAwesomeIcons.instagram,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 22.0,
                                                 ),
                                               ),
                                             ),
                                           if (inVenuseVenuesRecord
-                                                  .linkContact.line !=
+                                                  .linkContact
+                                                  .line !=
                                               '')
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      17.0, 0.0, 0.0, 0.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    17.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1210,28 +1360,34 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   await launchURL(
-                                                      functions.linkLine(
-                                                          inVenuseVenuesRecord
-                                                              .linkContact
-                                                              .line)!);
+                                                    functions.linkLine(
+                                                      inVenuseVenuesRecord
+                                                          .linkContact
+                                                          .line,
+                                                    )!,
+                                                  );
                                                 },
                                                 child: FaIcon(
                                                   FontAwesomeIcons.line,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 20.0,
                                                 ),
                                               ),
                                             ),
                                           if (inVenuseVenuesRecord
-                                                  .linkContact.phone !=
+                                                  .linkContact
+                                                  .phone !=
                                               '')
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      17.0, 0.0, 0.0, 0.5),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    17.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.5,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1239,11 +1395,14 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  await launchUrl(Uri(
-                                                    scheme: 'tel',
-                                                    path: inVenuseVenuesRecord
-                                                        .linkContact.phone,
-                                                  ));
+                                                  await launchUrl(
+                                                    Uri(
+                                                      scheme: 'tel',
+                                                      path: inVenuseVenuesRecord
+                                                          .linkContact
+                                                          .phone,
+                                                    ),
+                                                  );
                                                 },
                                                 child: Container(
                                                   width: 23.5,
@@ -1255,37 +1414,42 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0.0,
-                                                                  2.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                2.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Container(
                                                             width: 18.0,
                                                             height: 18.0,
                                                             decoration:
                                                                 const BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                            ),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
                                                       const Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: FaIcon(
                                                           FontAwesomeIcons
                                                               .phoneSquare,
-                                                          color:
-                                                              Color(0xFFFF0000),
+                                                          color: Color(
+                                                            0xFFFF0000,
+                                                          ),
                                                           size: 23.0,
                                                         ),
                                                       ),
@@ -1313,8 +1477,12 @@ class InVenuseHeaderWidget extends StatelessWidget {
           Align(
             alignment: const AlignmentDirectional(1.0, -1.0),
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 65.0, 20.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                0.0,
+                65.0,
+                20.0,
+                0.0,
+              ),
               child: Container(
                 height: 60.0,
                 decoration: const BoxDecoration(),
@@ -1327,7 +1495,11 @@ class InVenuseHeaderWidget extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 0.0, 0.0),
+                            20.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
@@ -1341,9 +1513,7 @@ class InVenuseHeaderWidget extends StatelessWidget {
                               height: 45.0,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: Colors.transparent,
-                                ),
+                                border: Border.all(color: Colors.transparent),
                               ),
                               child: Align(
                                 alignment: const AlignmentDirectional(0.0, 0.0),
@@ -1362,12 +1532,16 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Stack(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        0.0,
+                                      ),
                                       children: [
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 0.0),
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Container(
                                             width: 25.0,
                                             height: 25.0,
@@ -1377,11 +1551,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 BoxShadow(
                                                   blurRadius: 4.0,
                                                   color: Color(0x7A000000),
-                                                  offset: Offset(
-                                                    2.0,
-                                                    2.0,
-                                                  ),
-                                                )
+                                                  offset: Offset(2.0, 2.0),
+                                                ),
                                               ],
                                               shape: BoxShape.circle,
                                             ),
@@ -1390,19 +1561,23 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0.0, 0.0, 2.0, 0.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          2.0,
+                                                          0.0,
+                                                        ),
                                                     child: Icon(
                                                       Icons
                                                           .arrow_back_ios_new_sharp,
-                                                      color:
-                                                          MundayTheme.of(
-                                                                  context)
-                                                              .primaryText,
+                                                      color: MundayTheme.of(
+                                                        context,
+                                                      ).primaryText,
                                                       size: 14.0,
                                                     ),
                                                   ),
@@ -1428,7 +1603,11 @@ class InVenuseHeaderWidget extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 10.0, 0.0),
+                                  0.0,
+                                  0.0,
+                                  10.0,
+                                  0.0,
+                                ),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -1446,24 +1625,22 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                 .toList() ??
                                             [])
                                         .contains(
-                                            inVenuseVenuesRecord.reference)) {
+                                          inVenuseVenuesRecord.reference,
+                                        )) {
                                       await currentUserReference!.update({
-                                        ...mapToSupabase(
-                                          {
-                                            'loveVenuse':
-                                                FieldValue.arrayRemove(
-                                                    [idVenues]),
-                                          },
-                                        ),
+                                        ...mapToSupabase({
+                                          'loveVenuse': FieldValue.arrayRemove([
+                                            idVenues,
+                                          ]),
+                                        }),
                                       });
                                     } else {
                                       await currentUserReference!.update({
-                                        ...mapToSupabase(
-                                          {
-                                            'loveVenuse': FieldValue.arrayUnion(
-                                                [idVenues]),
-                                          },
-                                        ),
+                                        ...mapToSupabase({
+                                          'loveVenuse': FieldValue.arrayUnion([
+                                            idVenues,
+                                          ]),
+                                        }),
                                       });
                                       context.appState.ratingreview = 0;
                                       onStateChanged();
@@ -1480,7 +1657,8 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                             },
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
-                                                  context),
+                                                context,
+                                              ),
                                               child: ReviewgiveWidget(
                                                 reviewto: inVenuseVenuesRecord
                                                     .reference,
@@ -1509,36 +1687,42 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                                     .toList() ??
                                                 [])
                                             .contains(
-                                                inVenuseVenuesRecord.reference))
+                                              inVenuseVenuesRecord.reference,
+                                            ))
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: AuthUserStreamWidget(
                                               builder: (context) =>
                                                   const FaIcon(
-                                                FontAwesomeIcons.heart,
-                                                color: Color(0xFFFDFDFD),
-                                                size: 25.0,
-                                              ),
+                                                    FontAwesomeIcons.heart,
+                                                    color: Color(0xFFFDFDFD),
+                                                    size: 25.0,
+                                                  ),
                                             ),
                                           ),
                                         if ((currentUserDocument?.loveVenuse
                                                     .toList() ??
                                                 [])
                                             .contains(
-                                                inVenuseVenuesRecord.reference))
+                                              inVenuseVenuesRecord.reference,
+                                            ))
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: AuthUserStreamWidget(
                                               builder: (context) =>
                                                   const FaIcon(
-                                                FontAwesomeIcons.solidHeart,
-                                                color: Color(0xFFFF0000),
-                                                size: 25.0,
-                                              ),
+                                                    FontAwesomeIcons.solidHeart,
+                                                    color: Color(0xFFFF0000),
+                                                    size: 25.0,
+                                                  ),
                                             ),
                                           ),
                                       ],
@@ -1549,7 +1733,11 @@ class InVenuseHeaderWidget extends StatelessWidget {
                               Builder(
                                 builder: (context) => Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 10.0, 0.0),
+                                    0.0,
+                                    0.0,
+                                    10.0,
+                                    0.0,
+                                  ),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -1558,8 +1746,9 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                     onTap: () async {
                                       await Share.share(
                                         functions.addsocial(
-                                            'https://black-rooms.com/sharepage?distance=4&index=2&idVenues=',
-                                            idVenues?.reference.id)!,
+                                          'https://black-rooms.com/sharepage?distance=4&index=2&idVenues=',
+                                          idVenues?.reference.id,
+                                        )!,
                                         sharePositionOrigin:
                                             getWidgetBoundingBox(context),
                                       );
@@ -1569,8 +1758,9 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                       height: 45.0,
                                       decoration: BoxDecoration(
                                         color: const Color(0x99000000),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
                                         border: Border.all(
                                           color: Colors.transparent,
                                         ),
@@ -1580,15 +1770,17 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, 0.0),
-                                            child: const Icon(
-                                              Icons.share,
-                                              color: Colors.white,
-                                              size: 31.0,
-                                            ).animateOnActionTrigger(
-                                              animationsMap[
-                                                  'iconOnActionTriggerAnimation']!,
-                                            ),
+                                                  0.0,
+                                                  0.0,
+                                                ),
+                                            child:
+                                                const Icon(
+                                                  Icons.share,
+                                                  color: Colors.white,
+                                                  size: 31.0,
+                                                ).animateOnActionTrigger(
+                                                  animationsMap['iconOnActionTriggerAnimation']!,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -1617,10 +1809,7 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                         getCurrentTimestamp,
                                         ParamType.DateTime,
                                       ),
-                                      'index': serializeParam(
-                                        2,
-                                        ParamType.int,
-                                      ),
+                                      'index': serializeParam(2, ParamType.int),
                                     }.withoutNulls,
                                   );
                                 },
@@ -1637,8 +1826,13 @@ class InVenuseHeaderWidget extends StatelessWidget {
                                   child: Stack(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(6.0, 5.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              6.0,
+                                              5.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: Image.network(
                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
                                           width: 31.0,

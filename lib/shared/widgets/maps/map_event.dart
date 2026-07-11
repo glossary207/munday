@@ -324,10 +324,7 @@ class _MapEventState extends ConsumerState<MapEvent>
     );
 
     _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
     _animationController.addListener(() {
@@ -355,17 +352,20 @@ class _MapEventState extends ConsumerState<MapEvent>
   Future<void> _loadCustomMarkerIcons() async {
     try {
       if (widget.markerIcon != null && widget.markerIcon!.isNotEmpty) {
-        _customMarkerIcon =
-            await _getBitmapDescriptorFromUrl(widget.markerIcon!);
+        _customMarkerIcon = await _getBitmapDescriptorFromUrl(
+          widget.markerIcon!,
+        );
       }
       if (widget.markerMeIcon != null && widget.markerMeIcon!.isNotEmpty) {
-        _customMarkerMeIcon =
-            await _getBitmapDescriptorFromUrl(widget.markerMeIcon!);
+        _customMarkerMeIcon = await _getBitmapDescriptorFromUrl(
+          widget.markerMeIcon!,
+        );
       }
       if (widget.makerSelectedIcon != null &&
           widget.makerSelectedIcon!.isNotEmpty) {
-        _customMarkerSelectedIcon =
-            await _getBitmapDescriptorFromUrl(widget.makerSelectedIcon!);
+        _customMarkerSelectedIcon = await _getBitmapDescriptorFromUrl(
+          widget.makerSelectedIcon!,
+        );
       }
       setState(() {
         _isMarkerLoaded = true;
@@ -387,11 +387,14 @@ class _MapEventState extends ConsumerState<MapEvent>
         final http.Response response = await http.get(Uri.parse(url));
         if (response.statusCode == 200) {
           final Uint8List bytes = response.bodyBytes;
-          final ui.Codec codec =
-              await ui.instantiateImageCodec(bytes, targetWidth: 130);
+          final ui.Codec codec = await ui.instantiateImageCodec(
+            bytes,
+            targetWidth: 130,
+          );
           final ui.FrameInfo fi = await codec.getNextFrame();
-          final ByteData? byteData =
-              await fi.image.toByteData(format: ui.ImageByteFormat.png);
+          final ByteData? byteData = await fi.image.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
           if (byteData != null) {
             final Uint8List resizedBytes = byteData.buffer.asUint8List();
             return gmf.BitmapDescriptor.fromBytes(resizedBytes);
@@ -421,12 +424,13 @@ class _MapEventState extends ConsumerState<MapEvent>
             event.location!.longitude,
           );
 
-          final isSelected = context.appState.EventSelection != null &&
+          final isSelected =
+              context.appState.EventSelection != null &&
               context.appState.EventSelection == event.reference;
 
           final markerIcon = isSelected
               ? (_customMarkerSelectedIcon ??
-                  gmf.BitmapDescriptor.defaultMarker)
+                    gmf.BitmapDescriptor.defaultMarker)
               : (_customMarkerIcon ?? gmf.BitmapDescriptor.defaultMarker);
 
           final marker = gmf.Marker(
@@ -461,7 +465,8 @@ class _MapEventState extends ConsumerState<MapEvent>
       final marker = gmf.Marker(
         markerId: const gmf.MarkerId('current_location'),
         position: position,
-        icon: _customMarkerMeIcon ??
+        icon:
+            _customMarkerMeIcon ??
             gmf.BitmapDescriptor.defaultMarkerWithHue(
               gmf.BitmapDescriptor.hueBlue,
             ),
@@ -505,7 +510,8 @@ class _MapEventState extends ConsumerState<MapEvent>
         widget.radian != null) {
       final scale = _scaleAnimation.value;
 
-      final radius = widget.radian! *
+      final radius =
+          widget.radian! *
           1000 *
           scale; // แปลงรัศมีจากกิโลเมตรเป็นเมตรและคูณด้วย scale
 
@@ -530,8 +536,9 @@ class _MapEventState extends ConsumerState<MapEvent>
 
   Future<void> _moveToSelectedEvent() async {
     if (context.appState.EventSelection != null) {
-      final eventRecord =
-          await EventsRecord.getDocumentOnce(context.appState.EventSelection!);
+      final eventRecord = await EventsRecord.getDocumentOnce(
+        context.appState.EventSelection!,
+      );
       if (eventRecord != null && eventRecord.location != null) {
         final controller = await _controller.future;
         final position = gmf.LatLng(
@@ -545,10 +552,7 @@ class _MapEventState extends ConsumerState<MapEvent>
 
   Future<void> _moveToLocation(LatLng location) async {
     final controller = await _controller.future;
-    final position = gmf.LatLng(
-      location.latitude,
-      location.longitude,
-    );
+    final position = gmf.LatLng(location.latitude, location.longitude);
     controller.animateCamera(gmf.CameraUpdate.newLatLng(position));
 
     // Run animation when moving to a new location
@@ -639,7 +643,9 @@ class _MapEventState extends ConsumerState<MapEvent>
             circles: _circles, // เพิ่ม circles เข้าไปใน GoogleMap
             compassEnabled: widget.compassEnabled ?? true,
             minMaxZoomPreference: gmf.MinMaxZoomPreference(
-                widget.zoomMin ?? 0, widget.zoomMax ?? 20),
+              widget.zoomMin ?? 0,
+              widget.zoomMax ?? 20,
+            ),
             onMapCreated: (gmf.GoogleMapController controller) async {
               if (!_controller.isCompleted) {
                 _controller.complete(controller);
@@ -681,9 +687,7 @@ class _MapEventState extends ConsumerState<MapEvent>
               child: Container(
                 color: Colors.black,
                 child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
+                  child: CircularProgressIndicator(color: Colors.red),
                 ),
               ),
             ),

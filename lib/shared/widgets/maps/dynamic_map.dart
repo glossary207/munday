@@ -73,9 +73,9 @@ class _DynamicMapState extends ConsumerState<DynamicMap> {
     return FlutterMap(
       options: MapOptions(
         initialCenter: ll.LatLng(
-            widget.startingPoint!.latitude,
-            widget
-                .startingPoint!.longitude), // Ensure startingPoint is not null
+          widget.startingPoint!.latitude,
+          widget.startingPoint!.longitude,
+        ), // Ensure startingPoint is not null
         initialZoom:
             widget.startingZoom ?? 14.0, // Provide default zoom if null
       ),

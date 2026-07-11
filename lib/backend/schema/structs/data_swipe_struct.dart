@@ -20,14 +20,14 @@ class DataSwipeStruct extends FFSupabaseStruct {
     String? iDFacebookSW,
     String? nameSW,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _iDuserSW = iDuserSW,
-        _photoprofileSW = photoprofileSW,
-        _userphotoshowSW = userphotoshowSW,
-        _captionSW = captionSW,
-        _idIgSw = idIgSw,
-        _iDFacebookSW = iDFacebookSW,
-        _nameSW = nameSW,
-        super(supabaseUtilData);
+  }) : _iDuserSW = iDuserSW,
+       _photoprofileSW = photoprofileSW,
+       _userphotoshowSW = userphotoshowSW,
+       _captionSW = captionSW,
+       _idIgSw = idIgSw,
+       _iDFacebookSW = iDFacebookSW,
+       _nameSW = nameSW,
+       super(supabaseUtilData);
 
   // "IDuser_SW" field.
   SupabaseDocRef? _iDuserSW;
@@ -84,62 +84,41 @@ class DataSwipeStruct extends FFSupabaseStruct {
   bool hasNameSW() => _nameSW != null;
 
   static DataSwipeStruct fromMap(Map<String, dynamic> data) => DataSwipeStruct(
-        iDuserSW: getSupabaseDocRef(data['IDuser_SW'], 'users'),
-        photoprofileSW: data['photoprofile_SW'] as String?,
-        userphotoshowSW: data['userphotoshow_SW'] is UserphotoshowStruct
-            ? data['userphotoshow_SW']
-            : UserphotoshowStruct.maybeFromMap(data['userphotoshow_SW']),
-        captionSW: data['Caption_SW'] as String?,
-        idIgSw: data['ID_IG_SW'] as String?,
-        iDFacebookSW: data['ID_Facebook_SW'] as String?,
-        nameSW: data['Name_SW'] as String?,
-      );
+    iDuserSW: getSupabaseDocRef(data['IDuser_SW'], 'users'),
+    photoprofileSW: data['photoprofile_SW'] as String?,
+    userphotoshowSW: data['userphotoshow_SW'] is UserphotoshowStruct
+        ? data['userphotoshow_SW']
+        : UserphotoshowStruct.maybeFromMap(data['userphotoshow_SW']),
+    captionSW: data['Caption_SW'] as String?,
+    idIgSw: data['ID_IG_SW'] as String?,
+    iDFacebookSW: data['ID_Facebook_SW'] as String?,
+    nameSW: data['Name_SW'] as String?,
+  );
 
   static DataSwipeStruct? maybeFromMap(dynamic data) => data is Map
       ? DataSwipeStruct.fromMap(data.cast<String, dynamic>())
       : null;
 
   Map<String, dynamic> toMap() => {
-        'IDuser_SW': _iDuserSW,
-        'photoprofile_SW': _photoprofileSW,
-        'userphotoshow_SW': _userphotoshowSW?.toMap(),
-        'Caption_SW': _captionSW,
-        'ID_IG_SW': _idIgSw,
-        'ID_Facebook_SW': _iDFacebookSW,
-        'Name_SW': _nameSW,
-      }.withoutNulls;
+    'IDuser_SW': _iDuserSW,
+    'photoprofile_SW': _photoprofileSW,
+    'userphotoshow_SW': _userphotoshowSW?.toMap(),
+    'Caption_SW': _captionSW,
+    'ID_IG_SW': _idIgSw,
+    'ID_Facebook_SW': _iDFacebookSW,
+    'Name_SW': _nameSW,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'IDuser_SW': serializeParam(
-          _iDuserSW,
-          ParamType.SupabaseDocRef,
-        ),
-        'photoprofile_SW': serializeParam(
-          _photoprofileSW,
-          ParamType.String,
-        ),
-        'userphotoshow_SW': serializeParam(
-          _userphotoshowSW,
-          ParamType.DataStruct,
-        ),
-        'Caption_SW': serializeParam(
-          _captionSW,
-          ParamType.String,
-        ),
-        'ID_IG_SW': serializeParam(
-          _idIgSw,
-          ParamType.String,
-        ),
-        'ID_Facebook_SW': serializeParam(
-          _iDFacebookSW,
-          ParamType.String,
-        ),
-        'Name_SW': serializeParam(
-          _nameSW,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'IDuser_SW': serializeParam(_iDuserSW, ParamType.SupabaseDocRef),
+    'photoprofile_SW': serializeParam(_photoprofileSW, ParamType.String),
+    'userphotoshow_SW': serializeParam(_userphotoshowSW, ParamType.DataStruct),
+    'Caption_SW': serializeParam(_captionSW, ParamType.String),
+    'ID_IG_SW': serializeParam(_idIgSw, ParamType.String),
+    'ID_Facebook_SW': serializeParam(_iDFacebookSW, ParamType.String),
+    'Name_SW': serializeParam(_nameSW, ParamType.String),
+  }.withoutNulls;
 
   static DataSwipeStruct fromSerializableMap(Map<String, dynamic> data) =>
       DataSwipeStruct(
@@ -165,21 +144,13 @@ class DataSwipeStruct extends FFSupabaseStruct {
           ParamType.String,
           false,
         ),
-        idIgSw: deserializeParam(
-          data['ID_IG_SW'],
-          ParamType.String,
-          false,
-        ),
+        idIgSw: deserializeParam(data['ID_IG_SW'], ParamType.String, false),
         iDFacebookSW: deserializeParam(
           data['ID_Facebook_SW'],
           ParamType.String,
           false,
         ),
-        nameSW: deserializeParam(
-          data['Name_SW'],
-          ParamType.String,
-          false,
-        ),
+        nameSW: deserializeParam(data['Name_SW'], ParamType.String, false),
       );
 
   @override
@@ -199,14 +170,14 @@ class DataSwipeStruct extends FFSupabaseStruct {
 
   @override
   int get hashCode => ListEquality().hash([
-        iDuserSW,
-        photoprofileSW,
-        userphotoshowSW,
-        captionSW,
-        idIgSw,
-        iDFacebookSW,
-        nameSW
-      ]);
+    iDuserSW,
+    photoprofileSW,
+    userphotoshowSW,
+    captionSW,
+    idIgSw,
+    iDFacebookSW,
+    nameSW,
+  ]);
 }
 
 DataSwipeStruct createDataSwipeStruct({
@@ -221,34 +192,32 @@ DataSwipeStruct createDataSwipeStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DataSwipeStruct(
-      iDuserSW: iDuserSW,
-      photoprofileSW: photoprofileSW,
-      userphotoshowSW:
-          userphotoshowSW ?? (clearUnsetFields ? UserphotoshowStruct() : null),
-      captionSW: captionSW,
-      idIgSw: idIgSw,
-      iDFacebookSW: iDFacebookSW,
-      nameSW: nameSW,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DataSwipeStruct(
+  iDuserSW: iDuserSW,
+  photoprofileSW: photoprofileSW,
+  userphotoshowSW:
+      userphotoshowSW ?? (clearUnsetFields ? UserphotoshowStruct() : null),
+  captionSW: captionSW,
+  idIgSw: idIgSw,
+  iDFacebookSW: iDFacebookSW,
+  nameSW: nameSW,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DataSwipeStruct? updateDataSwipeStruct(
   DataSwipeStruct? dataSwipe, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    dataSwipe
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => dataSwipe
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDataSwipeStructData(
   Map<String, dynamic> supabaseData,
@@ -301,5 +270,4 @@ Map<String, dynamic> getDataSwipeFirestoreData(
 
 List<Map<String, dynamic>> getDataSwipeListFirestoreData(
   List<DataSwipeStruct>? dataSwipes,
-) =>
-    dataSwipes?.map((e) => getDataSwipeFirestoreData(e, true)).toList() ?? [];
+) => dataSwipes?.map((e) => getDataSwipeFirestoreData(e, true)).toList() ?? [];

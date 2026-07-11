@@ -8,10 +8,8 @@ import 'index.dart';
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class EventsRecord extends SupabaseRecord {
-  EventsRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  EventsRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -101,8 +99,9 @@ class EventsRecord extends SupabaseRecord {
   void _initializeFields() {
     _nameStore =
         (snapshotData['name_store'] ?? snapshotData['Name_store']) as String?;
-    _nameArtise =
-        getDataList(snapshotData['name_artise'] ?? snapshotData['Name_artise']);
+    _nameArtise = getDataList(
+      snapshotData['name_artise'] ?? snapshotData['Name_artise'],
+    );
     _location = _parseLatLng(snapshotData['location']);
     _date = _parseDateTime(snapshotData['date'] ?? snapshotData['Date']);
     _poster = (snapshotData['poster'] ?? snapshotData['Poster']) as String?;
@@ -115,10 +114,12 @@ class EventsRecord extends SupabaseRecord {
     );
     _detail = snapshotData['detail'] as String?;
     _styleVenues = getDataList(
-        snapshotData['style_venues'] ?? snapshotData['styleVenues']);
+      snapshotData['style_venues'] ?? snapshotData['styleVenues'],
+    );
     _free = (snapshotData['free'] ?? snapshotData['FREE']) as bool?;
-    _priceDetail = (snapshotData['price_detail'] ?? snapshotData['PriceDetail'])
-        as String?;
+    _priceDetail =
+        (snapshotData['price_detail'] ?? snapshotData['PriceDetail'])
+            as String?;
   }
 
   static SupabaseCollectionRef get collection =>
@@ -139,8 +140,7 @@ class EventsRecord extends SupabaseRecord {
   static EventsRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      EventsRecord._(reference, mapFromSupabase(data));
+  ) => EventsRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -210,20 +210,20 @@ class EventsRecordDocumentEquality implements Equality<EventsRecord> {
 
   @override
   int hash(EventsRecord? e) => const ListEquality().hash([
-        e?.nameStore,
-        e?.nameArtise,
-        e?.location,
-        e?.date,
-        e?.poster,
-        e?.capacity,
-        e?.maxCapacity,
-        e?.musicstyle,
-        e?.iDVenues,
-        e?.detail,
-        e?.styleVenues,
-        e?.free,
-        e?.priceDetail
-      ]);
+    e?.nameStore,
+    e?.nameArtise,
+    e?.location,
+    e?.date,
+    e?.poster,
+    e?.capacity,
+    e?.maxCapacity,
+    e?.musicstyle,
+    e?.iDVenues,
+    e?.detail,
+    e?.styleVenues,
+    e?.free,
+    e?.priceDetail,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is EventsRecord;

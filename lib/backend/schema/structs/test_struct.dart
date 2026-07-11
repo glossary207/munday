@@ -15,9 +15,9 @@ class TestStruct extends FFSupabaseStruct {
     DateTime? time,
     List<ContactStruct>? data,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _time = time,
-        _data = data,
-        super(supabaseUtilData);
+  }) : _time = time,
+       _data = data,
+       super(supabaseUtilData);
 
   // "time" field.
   DateTime? _time;
@@ -38,41 +38,27 @@ class TestStruct extends FFSupabaseStruct {
   bool hasData() => _data != null;
 
   static TestStruct fromMap(Map<String, dynamic> data) => TestStruct(
-        time: data['time'] as DateTime?,
-        data: getStructList(
-          data['data'],
-          ContactStruct.fromMap,
-        ),
-      );
+    time: data['time'] as DateTime?,
+    data: getStructList(data['data'], ContactStruct.fromMap),
+  );
 
   static TestStruct? maybeFromMap(dynamic data) =>
       data is Map ? TestStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
-        'time': _time,
-        'data': _data?.map((e) => e.toMap()).toList(),
-      }.withoutNulls;
+    'time': _time,
+    'data': _data?.map((e) => e.toMap()).toList(),
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'time': serializeParam(
-          _time,
-          ParamType.DateTime,
-        ),
-        'data': serializeParam(
-          _data,
-          ParamType.DataStruct,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'time': serializeParam(_time, ParamType.DateTime),
+    'data': serializeParam(_data, ParamType.DataStruct, isList: true),
+  }.withoutNulls;
 
   static TestStruct fromSerializableMap(Map<String, dynamic> data) =>
       TestStruct(
-        time: deserializeParam(
-          data['time'],
-          ParamType.DateTime,
-          false,
-        ),
+        time: deserializeParam(data['time'], ParamType.DateTime, false),
         data: deserializeStructParam<ContactStruct>(
           data['data'],
           ParamType.DataStruct,
@@ -102,27 +88,25 @@ TestStruct createTestStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    TestStruct(
-      time: time,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => TestStruct(
+  time: time,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 TestStruct? updateTestStruct(
   TestStruct? test, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    test
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => test
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addTestStructData(
   Map<String, dynamic> supabaseData,
@@ -164,7 +148,5 @@ Map<String, dynamic> getTestFirestoreData(
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }
 
-List<Map<String, dynamic>> getTestListFirestoreData(
-  List<TestStruct>? tests,
-) =>
+List<Map<String, dynamic>> getTestListFirestoreData(List<TestStruct>? tests) =>
     tests?.map((e) => getTestFirestoreData(e, true)).toList() ?? [];

@@ -14,8 +14,8 @@ class UserdataStruct extends FFSupabaseStruct {
   UserdataStruct({
     SupabaseDocRef? iduser,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _iduser = iduser,
-        super(supabaseUtilData);
+  }) : _iduser = iduser,
+       super(supabaseUtilData);
 
   // "iduser" field.
   SupabaseDocRef? _iduser;
@@ -24,24 +24,18 @@ class UserdataStruct extends FFSupabaseStruct {
 
   bool hasIduser() => _iduser != null;
 
-  static UserdataStruct fromMap(Map<String, dynamic> data) => UserdataStruct(
-        iduser: getSupabaseDocRef(data['iduser'], 'users'),
-      );
+  static UserdataStruct fromMap(Map<String, dynamic> data) =>
+      UserdataStruct(iduser: getSupabaseDocRef(data['iduser'], 'users'));
 
   static UserdataStruct? maybeFromMap(dynamic data) =>
       data is Map ? UserdataStruct.fromMap(data.cast<String, dynamic>()) : null;
 
-  Map<String, dynamic> toMap() => {
-        'iduser': _iduser,
-      }.withoutNulls;
+  Map<String, dynamic> toMap() => {'iduser': _iduser}.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'iduser': serializeParam(
-          _iduser,
-          ParamType.SupabaseDocRef,
-        ),
-      }.withoutNulls;
+    'iduser': serializeParam(_iduser, ParamType.SupabaseDocRef),
+  }.withoutNulls;
 
   static UserdataStruct fromSerializableMap(Map<String, dynamic> data) =>
       UserdataStruct(
@@ -71,27 +65,25 @@ UserdataStruct createUserdataStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    UserdataStruct(
-      iduser: iduser,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => UserdataStruct(
+  iduser: iduser,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 UserdataStruct? updateUserdataStruct(
   UserdataStruct? userdata, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    userdata
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => userdata
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addUserdataStructData(
   Map<String, dynamic> supabaseData,
@@ -136,5 +128,4 @@ Map<String, dynamic> getUserdataFirestoreData(
 
 List<Map<String, dynamic>> getUserdataListFirestoreData(
   List<UserdataStruct>? userdatas,
-) =>
-    userdatas?.map((e) => getUserdataFirestoreData(e, true)).toList() ?? [];
+) => userdatas?.map((e) => getUserdataFirestoreData(e, true)).toList() ?? [];

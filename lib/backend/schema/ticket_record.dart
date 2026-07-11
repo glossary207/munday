@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class TicketRecord extends SupabaseRecord {
-  TicketRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  TicketRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -128,8 +126,7 @@ class TicketRecord extends SupabaseRecord {
   static TicketRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      TicketRecord._(reference, mapFromSupabase(data));
+  ) => TicketRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -208,22 +205,22 @@ class TicketRecordDocumentEquality implements Equality<TicketRecord> {
 
   @override
   int hash(TicketRecord? e) => const ListEquality().hash([
-        e?.nameEvent,
-        e?.eventOrNormal,
-        e?.price,
-        e?.zone,
-        e?.seatCode,
-        e?.bg,
-        e?.idVenues,
-        e?.scanAmont,
-        e?.timeEvent,
-        e?.scannedAmont,
-        e?.poster,
-        e?.iDticket,
-        e?.nameVenues,
-        e?.dateEvent,
-        e?.location
-      ]);
+    e?.nameEvent,
+    e?.eventOrNormal,
+    e?.price,
+    e?.zone,
+    e?.seatCode,
+    e?.bg,
+    e?.idVenues,
+    e?.scanAmont,
+    e?.timeEvent,
+    e?.scannedAmont,
+    e?.poster,
+    e?.iDticket,
+    e?.nameVenues,
+    e?.dateEvent,
+    e?.location,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is TicketRecord;

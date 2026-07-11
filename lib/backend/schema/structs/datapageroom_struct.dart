@@ -19,13 +19,13 @@ class DatapageroomStruct extends FFSupabaseStruct {
     String? name,
     String? caption,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _userinstore = userinstore,
-        _view = view,
-        _photoprofile = photoprofile,
-        _online = online,
-        _name = name,
-        _caption = caption,
-        super(supabaseUtilData);
+  }) : _userinstore = userinstore,
+       _view = view,
+       _photoprofile = photoprofile,
+       _online = online,
+       _name = name,
+       _caption = caption,
+       super(supabaseUtilData);
 
   // "userinstore" field.
   SupabaseDocRef? _userinstore;
@@ -86,41 +86,23 @@ class DatapageroomStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'userinstore': _userinstore,
-        'view': _view,
-        'photoprofile': _photoprofile,
-        'online': _online,
-        'name': _name,
-        'caption': _caption,
-      }.withoutNulls;
+    'userinstore': _userinstore,
+    'view': _view,
+    'photoprofile': _photoprofile,
+    'online': _online,
+    'name': _name,
+    'caption': _caption,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'userinstore': serializeParam(
-          _userinstore,
-          ParamType.SupabaseDocRef,
-        ),
-        'view': serializeParam(
-          _view,
-          ParamType.int,
-        ),
-        'photoprofile': serializeParam(
-          _photoprofile,
-          ParamType.String,
-        ),
-        'online': serializeParam(
-          _online,
-          ParamType.bool,
-        ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-        'caption': serializeParam(
-          _caption,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'userinstore': serializeParam(_userinstore, ParamType.SupabaseDocRef),
+    'view': serializeParam(_view, ParamType.int),
+    'photoprofile': serializeParam(_photoprofile, ParamType.String),
+    'online': serializeParam(_online, ParamType.bool),
+    'name': serializeParam(_name, ParamType.String),
+    'caption': serializeParam(_caption, ParamType.String),
+  }.withoutNulls;
 
   static DatapageroomStruct fromSerializableMap(Map<String, dynamic> data) =>
       DatapageroomStruct(
@@ -130,31 +112,15 @@ class DatapageroomStruct extends FFSupabaseStruct {
           false,
           collectionNamePath: ['users'],
         ),
-        view: deserializeParam(
-          data['view'],
-          ParamType.int,
-          false,
-        ),
+        view: deserializeParam(data['view'], ParamType.int, false),
         photoprofile: deserializeParam(
           data['photoprofile'],
           ParamType.String,
           false,
         ),
-        online: deserializeParam(
-          data['online'],
-          ParamType.bool,
-          false,
-        ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
-        caption: deserializeParam(
-          data['caption'],
-          ParamType.String,
-          false,
-        ),
+        online: deserializeParam(data['online'], ParamType.bool, false),
+        name: deserializeParam(data['name'], ParamType.String, false),
+        caption: deserializeParam(data['caption'], ParamType.String, false),
       );
 
   @override
@@ -172,8 +138,14 @@ class DatapageroomStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([userinstore, view, photoprofile, online, name, caption]);
+  int get hashCode => const ListEquality().hash([
+    userinstore,
+    view,
+    photoprofile,
+    online,
+    name,
+    caption,
+  ]);
 }
 
 DatapageroomStruct createDatapageroomStruct({
@@ -187,32 +159,30 @@ DatapageroomStruct createDatapageroomStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DatapageroomStruct(
-      userinstore: userinstore,
-      view: view,
-      photoprofile: photoprofile,
-      online: online,
-      name: name,
-      caption: caption,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DatapageroomStruct(
+  userinstore: userinstore,
+  view: view,
+  photoprofile: photoprofile,
+  online: online,
+  name: name,
+  caption: caption,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DatapageroomStruct? updateDatapageroomStruct(
   DatapageroomStruct? datapageroom, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    datapageroom
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => datapageroom
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDatapageroomStructData(
   Map<String, dynamic> supabaseData,
@@ -233,10 +203,13 @@ void addDatapageroomStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final datapageroomData =
-      getDatapageroomFirestoreData(datapageroom, forFieldValue);
-  final nestedData =
-      datapageroomData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final datapageroomData = getDatapageroomFirestoreData(
+    datapageroom,
+    forFieldValue,
+  );
+  final nestedData = datapageroomData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = datapageroom.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -252,8 +225,9 @@ Map<String, dynamic> getDatapageroomFirestoreData(
   final supabaseData = mapToSupabase(datapageroom.toMap());
 
   // Add any Firestore field values
-  datapageroom.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  datapageroom.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

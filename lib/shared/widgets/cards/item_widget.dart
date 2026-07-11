@@ -23,7 +23,8 @@ class ItemWidget extends ConsumerStatefulWidget {
   ConsumerState<ItemWidget> createState() => _ItemWidgetState();
 }
 
-class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStateMixin {
+class _ItemWidgetState extends ConsumerState<ItemWidget>
+    with TickerProviderStateMixin {
   late ItemModel _model;
 
   final animationsMap = <String, AnimationInfo>{};
@@ -99,8 +100,12 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      0.0,
+                      0.0,
+                      10.0,
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xFF131313),
@@ -108,12 +113,9 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                           BoxShadow(
                             blurRadius: 4.0,
                             color: Color(0x34000000),
-                            offset: Offset(
-                              0.0,
-                              2.0,
-                            ),
+                            offset: Offset(0.0, 2.0),
                             spreadRadius: 4.0,
-                          )
+                          ),
                         ],
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -127,9 +129,7 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                               color: Color(0xFF131313),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: Image.network(
-                                  '',
-                                ).image,
+                                image: Image.network('').image,
                               ),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(0.0),
@@ -144,21 +144,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                   alignment: AlignmentDirectional(0.0, -1.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 10.0, 0.0, 0.0),
+                                      0.0,
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: 35.0,
                                       height: 2.5,
                                       decoration: BoxDecoration(
                                         color: Color(0xFF505050),
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(
+                                          90.0,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 0.0),
+                                    0.0,
+                                    20.0,
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -170,22 +179,25 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_uzvcm3j4,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_uzvcm3j4,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       fontSize: 30.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -202,10 +214,15 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 3.0, 0.0, 0.0),
+                                                  0.0,
+                                                  3.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .k_g913ncyq,
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.k_g913ncyq,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
@@ -243,7 +260,11 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 15.0, 0.0),
+                                                  0.0,
+                                                  0.0,
+                                                  15.0,
+                                                  0.0,
+                                                ),
                                             child: Container(
                                               width: 65.0,
                                               height: 25.0,
@@ -251,13 +272,17 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                 gradient: LinearGradient(
                                                   colors: [
                                                     Color(0xFFFF0000),
-                                                    Color(0xFFC10000)
+                                                    Color(0xFFC10000),
                                                   ],
                                                   stops: [0.0, 1.0],
                                                   begin: AlignmentDirectional(
-                                                      0.0, -1.0),
+                                                    0.0,
+                                                    -1.0,
+                                                  ),
                                                   end: AlignmentDirectional(
-                                                      0, 1.0),
+                                                    0,
+                                                    1.0,
+                                                  ),
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(90.0),
@@ -274,26 +299,25 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1.0, 0.0),
+                                                              -1.0,
+                                                              0.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      3.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                3.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Container(
                                                             width: 20.0,
                                                             height: 20.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/ids7ix7au0w3/coin.png',
                                                                 ).image,
                                                               ),
@@ -303,43 +327,42 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    2.0,
-                                                                    7.0,
-                                                                    2.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              5.0,
+                                                              2.0,
+                                                              7.0,
+                                                              2.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_2mx0g8d7,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                            context,
+                                                          )!.k_2mx0g8d7,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -347,13 +370,16 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            1.15, -2.0),
+                                                          1.15,
+                                                          -2.0,
+                                                        ),
                                                     child: Container(
                                                       width: 14.0,
                                                       height: 14.0,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFF00B42C),
+                                                        color: Color(
+                                                          0xFF00B42C,
+                                                        ),
                                                         image: DecorationImage(
                                                           fit: BoxFit.cover,
                                                           image: Image.network(
@@ -366,7 +392,8 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                         Icons.add,
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         size: 12.5,
                                                       ),
@@ -391,11 +418,8 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                 BoxShadow(
                                   blurRadius: 4.0,
                                   color: Color(0x66000000),
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                )
+                                  offset: Offset(0.0, 2.0),
+                                ),
                               ],
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(15.0),
@@ -416,11 +440,17 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 30.0),
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                                30.0,
+                                              ),
                                           child: PageView(
-                                            controller: _model
-                                                    .pageViewController ??=
-                                                PageController(initialPage: 2),
+                                            controller:
+                                                _model.pageViewController ??=
+                                                    PageController(
+                                                      initialPage: 2,
+                                                    ),
                                             scrollDirection: Axis.horizontal,
                                             children: [
                                               Column(
@@ -429,35 +459,35 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                   Expanded(
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  10.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            10.0,
+                                                            10.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: GridView(
                                                         padding:
                                                             EdgeInsets.zero,
                                                         gridDelegate:
                                                             SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 3,
-                                                          crossAxisSpacing: 1.5,
-                                                          mainAxisSpacing: 1.5,
-                                                          childAspectRatio: 1.0,
-                                                        ),
+                                                              crossAxisCount: 3,
+                                                              crossAxisSpacing:
+                                                                  1.5,
+                                                              mainAxisSpacing:
+                                                                  1.5,
+                                                              childAspectRatio:
+                                                                  1.0,
+                                                            ),
                                                         primary: false,
                                                         scrollDirection:
                                                             Axis.vertical,
                                                         children: [
                                                           Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/h1otleazgtg1/61.png',
                                                                 ).image,
                                                               ),
@@ -467,30 +497,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          1.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                        1.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     decoration:
                                                                         BoxDecoration(),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0x981C1C1C),
+                                                                          0x981C1C1C,
+                                                                        ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(90.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              Color(0x98757575),
+                                                                            BorderRadius.circular(
+                                                                              90.0,
+                                                                            ),
+                                                                        border: Border.all(
+                                                                          color: Color(
+                                                                            0x98757575,
+                                                                          ),
                                                                           width:
                                                                               0.5,
                                                                         ),
                                                                       ),
-                                                                      child:
-                                                                          Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.min,
                                                                         mainAxisAlignment:
@@ -498,41 +528,59 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                7.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_yn990my0,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              7.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_yn990my0,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                2.0,
-                                                                                7.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_hqi0oom7,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              5.0,
+                                                                              2.0,
+                                                                              7.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_hqi0oom7,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -545,14 +593,11 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                             ),
                                                           ),
                                                           Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/2ln2e7ojyvae/62.png',
                                                                 ).image,
                                                               ),
@@ -562,30 +607,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          1.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                        1.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     decoration:
                                                                         BoxDecoration(),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0x981C1C1C),
+                                                                          0x981C1C1C,
+                                                                        ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(90.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              Color(0x98757575),
+                                                                            BorderRadius.circular(
+                                                                              90.0,
+                                                                            ),
+                                                                        border: Border.all(
+                                                                          color: Color(
+                                                                            0x98757575,
+                                                                          ),
                                                                           width:
                                                                               0.5,
                                                                         ),
                                                                       ),
-                                                                      child:
-                                                                          Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.min,
                                                                         mainAxisAlignment:
@@ -593,41 +638,59 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                7.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_ti4uoq5m,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              7.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_ti4uoq5m,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                2.0,
-                                                                                7.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_gbv4rvjr,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              5.0,
+                                                                              2.0,
+                                                                              7.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_gbv4rvjr,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -640,14 +703,11 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                             ),
                                                           ),
                                                           Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/tf8mbdxrr5vz/63.png',
                                                                 ).image,
                                                               ),
@@ -657,30 +717,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          1.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                        1.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     decoration:
                                                                         BoxDecoration(),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0x981C1C1C),
+                                                                          0x981C1C1C,
+                                                                        ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(90.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              Color(0x98757575),
+                                                                            BorderRadius.circular(
+                                                                              90.0,
+                                                                            ),
+                                                                        border: Border.all(
+                                                                          color: Color(
+                                                                            0x98757575,
+                                                                          ),
                                                                           width:
                                                                               0.5,
                                                                         ),
                                                                       ),
-                                                                      child:
-                                                                          Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.min,
                                                                         mainAxisAlignment:
@@ -688,41 +748,59 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                7.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_8bgisnej,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              7.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_8bgisnej,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                2.0,
-                                                                                7.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_0zg3bhe0,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              5.0,
+                                                                              2.0,
+                                                                              7.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_0zg3bhe0,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -735,14 +813,11 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                             ),
                                                           ),
                                                           Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/zdl86gacgpw7/64.png',
                                                                 ).image,
                                                               ),
@@ -752,30 +827,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          1.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                        1.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     decoration:
                                                                         BoxDecoration(),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0x981C1C1C),
+                                                                          0x981C1C1C,
+                                                                        ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(90.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              Color(0x98757575),
+                                                                            BorderRadius.circular(
+                                                                              90.0,
+                                                                            ),
+                                                                        border: Border.all(
+                                                                          color: Color(
+                                                                            0x98757575,
+                                                                          ),
                                                                           width:
                                                                               0.5,
                                                                         ),
                                                                       ),
-                                                                      child:
-                                                                          Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.min,
                                                                         mainAxisAlignment:
@@ -783,41 +858,59 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                7.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_lriu4nm4,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              7.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_lriu4nm4,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                2.0,
-                                                                                7.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_1hfhux4n,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              5.0,
+                                                                              2.0,
+                                                                              7.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_1hfhux4n,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -831,21 +924,18 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        1.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  0.0,
+                                                                  1.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                image:
-                                                                    DecorationImage(
+                                                              decoration: BoxDecoration(
+                                                                image: DecorationImage(
                                                                   fit: BoxFit
                                                                       .cover,
-                                                                  image: Image
-                                                                      .network(
+                                                                  image: Image.network(
                                                                     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/yrfnqkoeqf3a/65.png',
                                                                   ).image,
                                                                 ),
@@ -855,62 +945,89 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            1.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       decoration:
                                                                           BoxDecoration(),
-                                                                      child:
-                                                                          Container(
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0x981C1C1C),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(90.0),
-                                                                          border:
-                                                                              Border.all(
-                                                                            color:
-                                                                                Color(0x98757575),
+                                                                      child: Container(
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0x981C1C1C,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.circular(
+                                                                            90.0,
+                                                                          ),
+                                                                          border: Border.all(
+                                                                            color: Color(
+                                                                              0x98757575,
+                                                                            ),
                                                                             width:
                                                                                 0.5,
                                                                           ),
                                                                         ),
-                                                                        child:
-                                                                            Row(
+                                                                        child: Row(
                                                                           mainAxisSize:
                                                                               MainAxisSize.min,
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.center,
                                                                           children: [
                                                                             Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                7.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                              ),
                                                                               child: Text(
-                                                                                AppLocalizations.of(context)!.k_h9cxh1eb,
-                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                AppLocalizations.of(
+                                                                                  context,
+                                                                                )!.k_h9cxh1eb,
+                                                                                style:
+                                                                                    Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                        fontStyle: Theme.of(
+                                                                                          context,
+                                                                                        ).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
                                                                             Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(5.0, 2.0, 7.0, 2.0),
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                5.0,
+                                                                                2.0,
+                                                                                7.0,
+                                                                                2.0,
+                                                                              ),
                                                                               child: Text(
-                                                                                AppLocalizations.of(context)!.k_e5jla5tg,
-                                                                                style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                AppLocalizations.of(
+                                                                                  context,
+                                                                                )!.k_e5jla5tg,
+                                                                                style:
+                                                                                    Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                        fontStyle: Theme.of(
+                                                                                          context,
+                                                                                        ).textTheme.bodyMedium!.fontStyle,
                                                                                       ),
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
@@ -924,14 +1041,11 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                             ),
                                                           ),
                                                           Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              image:
-                                                                  DecorationImage(
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
                                                                 fit: BoxFit
                                                                     .cover,
-                                                                image: Image
-                                                                    .network(
+                                                                image: Image.network(
                                                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/6hm6fcysfs3f/60.png',
                                                                 ).image,
                                                               ),
@@ -941,30 +1055,30 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          1.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                        1.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     decoration:
                                                                         BoxDecoration(),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0x981C1C1C),
+                                                                          0x981C1C1C,
+                                                                        ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(90.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              Color(0x98757575),
+                                                                            BorderRadius.circular(
+                                                                              90.0,
+                                                                            ),
+                                                                        border: Border.all(
+                                                                          color: Color(
+                                                                            0x98757575,
+                                                                          ),
                                                                           width:
                                                                               0.5,
                                                                         ),
                                                                       ),
-                                                                      child:
-                                                                          Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.min,
                                                                         mainAxisAlignment:
@@ -972,41 +1086,59 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                7.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_m418myc2,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              7.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_m418myc2,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                2.0,
-                                                                                7.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_iwc8qe38,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              5.0,
+                                                                              2.0,
+                                                                              7.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_iwc8qe38,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1036,41 +1168,50 @@ class _ItemWidgetState extends ConsumerState<ItemWidget> with TickerProviderStat
                                           ),
                                         ),
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 1.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            1.0,
+                                          ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 16.0),
-                                            child: smooth_page_indicator
-                                                .SmoothPageIndicator(
+                                                  0.0,
+                                                  0.0,
+                                                  0.0,
+                                                  16.0,
+                                                ),
+                                            child: smooth_page_indicator.SmoothPageIndicator(
                                               controller:
                                                   _model.pageViewController ??=
                                                       PageController(
-                                                          initialPage: 2),
+                                                        initialPage: 2,
+                                                      ),
                                               count: 3,
                                               axisDirection: Axis.horizontal,
                                               onDotClicked: (i) async {
                                                 await _model.pageViewController!
                                                     .animateToPage(
-                                                  i,
-                                                  duration: Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease,
-                                                );
+                                                      i,
+                                                      duration: Duration(
+                                                        milliseconds: 500,
+                                                      ),
+                                                      curve: Curves.ease,
+                                                    );
                                                 safeSetState(() {});
                                               },
-                                              effect: smooth_page_indicator
-                                                  .SlideEffect(
-                                                spacing: 8.0,
-                                                radius: 8.0,
-                                                dotWidth: 8.0,
-                                                dotHeight: 8.0,
-                                                dotColor: Color(0x4D999999),
-                                                activeDotColor:
-                                                    Color(0xFFFF0000),
-                                                paintStyle: PaintingStyle.fill,
-                                              ),
+                                              effect:
+                                                  smooth_page_indicator.SlideEffect(
+                                                    spacing: 8.0,
+                                                    radius: 8.0,
+                                                    dotWidth: 8.0,
+                                                    dotHeight: 8.0,
+                                                    dotColor: Color(0x4D999999),
+                                                    activeDotColor: Color(
+                                                      0xFFFF0000,
+                                                    ),
+                                                    paintStyle:
+                                                        PaintingStyle.fill,
+                                                  ),
                                             ),
                                           ),
                                         ),

@@ -20,7 +20,8 @@ class ShowphotoCopyWidget extends ConsumerStatefulWidget {
   const ShowphotoCopyWidget({super.key});
 
   @override
-  ConsumerState<ShowphotoCopyWidget> createState() => _ShowphotoCopyWidgetState();
+  ConsumerState<ShowphotoCopyWidget> createState() =>
+      _ShowphotoCopyWidgetState();
 }
 
 class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
@@ -86,10 +87,7 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(0.0),
         child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 2.0,
-            sigmaY: 2.0,
-          ),
+          filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -103,8 +101,12 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                   child: Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        10.0,
+                        0.0,
+                        10.0,
+                        0.0,
+                      ),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width,
                         height: MediaQuery.sizeOf(context).width,
@@ -112,7 +114,11 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 20.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                20.0,
+                              ),
                               child: PageView(
                                 controller: _model.pageViewController ??=
                                     PageController(initialPage: 0),
@@ -172,9 +178,12 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                               alignment: AlignmentDirectional(0.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 1.0),
-                                child:
-                                    smooth_page_indicator.SmoothPageIndicator(
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  1.0,
+                                ),
+                                child: smooth_page_indicator.SmoothPageIndicator(
                                   controller: _model.pageViewController ??=
                                       PageController(initialPage: 0),
                                   count: 4,
@@ -182,23 +191,23 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                                   onDotClicked: (i) async {
                                     await _model.pageViewController!
                                         .animateToPage(
-                                      i,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.ease,
-                                    );
+                                          i,
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.ease,
+                                        );
                                     safeSetState(() {});
                                   },
                                   effect:
                                       smooth_page_indicator.ExpandingDotsEffect(
-                                    expansionFactor: 3.0,
-                                    spacing: 8.0,
-                                    radius: 16.0,
-                                    dotWidth: 14.0,
-                                    dotHeight: 8.0,
-                                    dotColor: Color(0xFFFDFDFD),
-                                    activeDotColor: Color(0xFFFF0000),
-                                    paintStyle: PaintingStyle.fill,
-                                  ),
+                                        expansionFactor: 3.0,
+                                        spacing: 8.0,
+                                        radius: 16.0,
+                                        dotWidth: 14.0,
+                                        dotHeight: 8.0,
+                                        dotColor: Color(0xFFFDFDFD),
+                                        activeDotColor: Color(0xFFFF0000),
+                                        paintStyle: PaintingStyle.fill,
+                                      ),
                                 ),
                               ),
                             ),
@@ -216,8 +225,12 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        20.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: MundayButton(
                         onPressed: () async {
                           await _model.pageViewController?.previousPage(
@@ -231,33 +244,37 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                         options: MundayButtonOptions(
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 2.0),
+                            24.0,
+                            0.0,
+                            24.0,
+                            2.0,
+                          ),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           color: Colors.transparent,
-                          textStyle:
-                              Theme.of(context).textTheme.titleSmall!.override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontStyle,
-                                    ),
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontStyle,
-                                  ),
+                          textStyle: Theme.of(context).textTheme.titleSmall!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.titleSmall!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.titleSmall!.fontStyle,
+                                ),
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: Theme.of(
+                                  context,
+                                ).textTheme.titleSmall!.fontWeight,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.titleSmall!.fontStyle,
+                              ),
                           borderSide: BorderSide(
                             color: Color(0xFF818181),
                             width: 2.0,
@@ -267,8 +284,12 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0.0,
+                        20.0,
+                        0.0,
+                      ),
                       child: MundayButton(
                         onPressed: () async {
                           if (_model.pageViewCurrentIndex == 3) {
@@ -282,40 +303,45 @@ class _ShowphotoCopyWidgetState extends ConsumerState<ShowphotoCopyWidget>
                             context.appState.update(() {});
                           }
                         },
-                        text:
-                            _model.pageViewCurrentIndex == 3 ? 'Close' : 'Next',
+                        text: _model.pageViewCurrentIndex == 3
+                            ? 'Close'
+                            : 'Next',
                         options: MundayButtonOptions(
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 2.0),
+                            24.0,
+                            0.0,
+                            24.0,
+                            2.0,
+                          ),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           color: _model.pageViewCurrentIndex == 3
                               ? Color(0xFFCC0303)
                               : Color(0x00000000),
-                          textStyle:
-                              Theme.of(context).textTheme.titleSmall!.override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontStyle,
-                                    ),
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontStyle,
-                                  ),
+                          textStyle: Theme.of(context).textTheme.titleSmall!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.titleSmall!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.titleSmall!.fontStyle,
+                                ),
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: Theme.of(
+                                  context,
+                                ).textTheme.titleSmall!.fontWeight,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.titleSmall!.fontStyle,
+                              ),
                           borderSide: BorderSide(
                             color: _model.pageViewCurrentIndex == 3
                                 ? Colors.transparent

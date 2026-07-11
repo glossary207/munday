@@ -52,12 +52,13 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
-        appBar: responsiveVisibility(
-          context: context,
-          tablet: false,
-          tabletLandscape: false,
-          desktop: false,
-        )
+        appBar:
+            responsiveVisibility(
+              context: context,
+              tablet: false,
+              tabletLandscape: false,
+              desktop: false,
+            )
             ? AppBar(
                 backgroundColor: Colors.black,
                 automaticallyImplyLeading: false,
@@ -78,28 +79,24 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                 title: Text(
                   AppLocalizations.of(context)!.k_w7c5dn9i,
                   style: Theme.of(context).textTheme.headlineMedium!.override(
-                        font: GoogleFonts.roboto(
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontWeight,
-                          fontStyle: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontStyle,
-                        ),
-                        color: Colors.white,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        fontWeight: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontWeight,
-                        fontStyle: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontStyle,
-                      ),
+                    font: GoogleFonts.roboto(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontStyle,
+                    ),
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontWeight,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontStyle,
+                  ),
                 ),
                 actions: [],
                 centerTitle: false,
@@ -120,14 +117,22 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 12.0, 0.0, 12.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      15.0,
+                      12.0,
+                      0.0,
+                      12.0,
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              5.0, 0.0, 0.0, 15.0),
+                            5.0,
+                            0.0,
+                            0.0,
+                            15.0,
+                          ),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +142,11 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 10.0),
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                      10.0,
+                                    ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_6q9pqn76,
                                       style: Theme.of(context)
@@ -146,18 +155,16 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.bold,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 25.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ),
@@ -168,7 +175,11 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 0.0),
+                                      0.0,
+                                      5.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_eti5mtll,
                                       style: Theme.of(context)
@@ -202,7 +213,11 @@ class _SupportWidgetState extends ConsumerState<SupportPage>
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 10.0, 0.0, 0.0),
+                                      0.0,
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_f42ba7ou,
                                       style: Theme.of(context)

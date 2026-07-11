@@ -3,20 +3,17 @@
 import '/backend/supabase/supabase_shim.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import '/backend/schema/util/supabase_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import '/backend/schema/util/schema_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import 'index.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 class PromotionDataSubStruct extends FFSupabaseStruct {
   PromotionDataSubStruct({
@@ -32,18 +29,18 @@ class PromotionDataSubStruct extends FFSupabaseStruct {
     bool? sat,
     bool? sun,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _photo = photo,
-        _dateStart = dateStart,
-        _dateEnd = dateEnd,
-        _day = day,
-        _mon = mon,
-        _tue = tue,
-        _wed = wed,
-        _thu = thu,
-        _fri = fri,
-        _sat = sat,
-        _sun = sun,
-        super(supabaseUtilData);
+  }) : _photo = photo,
+       _dateStart = dateStart,
+       _dateEnd = dateEnd,
+       _day = day,
+       _mon = mon,
+       _tue = tue,
+       _wed = wed,
+       _thu = thu,
+       _fri = fri,
+       _sat = sat,
+       _sun = sun,
+       super(supabaseUtilData);
 
   // "photo" field.
   String? _photo;
@@ -147,127 +144,49 @@ class PromotionDataSubStruct extends FFSupabaseStruct {
   }
 
   Map<String, dynamic> toMap() => {
-        'photo': _photo,
-        'DateStart': _dateStart,
-        'DateEnd': _dateEnd,
-        'Day': _day,
-        'Mon': _mon,
-        'Tue': _tue,
-        'Wed': _wed,
-        'Thu': _thu,
-        'Fri': _fri,
-        'Sat': _sat,
-        'Sun': _sun,
-      }.withoutNulls;
+    'photo': _photo,
+    'DateStart': _dateStart,
+    'DateEnd': _dateEnd,
+    'Day': _day,
+    'Mon': _mon,
+    'Tue': _tue,
+    'Wed': _wed,
+    'Thu': _thu,
+    'Fri': _fri,
+    'Sat': _sat,
+    'Sun': _sun,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'photo': serializeParam(
-          _photo,
-          ParamType.String,
-        ),
-        'DateStart': serializeParam(
-          _dateStart,
-          ParamType.DateTime,
-        ),
-        'DateEnd': serializeParam(
-          _dateEnd,
-          ParamType.DateTime,
-        ),
-        'Day': serializeParam(
-          _day,
-          ParamType.String,
-          isList: true,
-        ),
-        'Mon': serializeParam(
-          _mon,
-          ParamType.bool,
-        ),
-        'Tue': serializeParam(
-          _tue,
-          ParamType.bool,
-        ),
-        'Wed': serializeParam(
-          _wed,
-          ParamType.bool,
-        ),
-        'Thu': serializeParam(
-          _thu,
-          ParamType.bool,
-        ),
-        'Fri': serializeParam(
-          _fri,
-          ParamType.bool,
-        ),
-        'Sat': serializeParam(
-          _sat,
-          ParamType.bool,
-        ),
-        'Sun': serializeParam(
-          _sun,
-          ParamType.bool,
-        ),
-      }.withoutNulls;
+    'photo': serializeParam(_photo, ParamType.String),
+    'DateStart': serializeParam(_dateStart, ParamType.DateTime),
+    'DateEnd': serializeParam(_dateEnd, ParamType.DateTime),
+    'Day': serializeParam(_day, ParamType.String, isList: true),
+    'Mon': serializeParam(_mon, ParamType.bool),
+    'Tue': serializeParam(_tue, ParamType.bool),
+    'Wed': serializeParam(_wed, ParamType.bool),
+    'Thu': serializeParam(_thu, ParamType.bool),
+    'Fri': serializeParam(_fri, ParamType.bool),
+    'Sat': serializeParam(_sat, ParamType.bool),
+    'Sun': serializeParam(_sun, ParamType.bool),
+  }.withoutNulls;
 
   static PromotionDataSubStruct fromSerializableMap(
-          Map<String, dynamic> data) =>
-      PromotionDataSubStruct(
-        photo: deserializeParam(
-          data['photo'],
-          ParamType.String,
-          false,
-        ),
-        dateStart: deserializeParam(
-          data['DateStart'],
-          ParamType.DateTime,
-          false,
-        ),
-        dateEnd: deserializeParam(
-          data['DateEnd'],
-          ParamType.DateTime,
-          false,
-        ),
-        day: deserializeParam<String>(
-          data['Day'],
-          ParamType.String,
-          true,
-        ),
-        mon: deserializeParam(
-          data['Mon'],
-          ParamType.bool,
-          false,
-        ),
-        tue: deserializeParam(
-          data['Tue'],
-          ParamType.bool,
-          false,
-        ),
-        wed: deserializeParam(
-          data['Wed'],
-          ParamType.bool,
-          false,
-        ),
-        thu: deserializeParam(
-          data['Thu'],
-          ParamType.bool,
-          false,
-        ),
-        fri: deserializeParam(
-          data['Fri'],
-          ParamType.bool,
-          false,
-        ),
-        sat: deserializeParam(
-          data['Sat'],
-          ParamType.bool,
-          false,
-        ),
-        sun: deserializeParam(
-          data['Sun'],
-          ParamType.bool,
-          false,
-        ),
-      );
+    Map<String, dynamic> data,
+  ) => PromotionDataSubStruct(
+    photo: deserializeParam(data['photo'], ParamType.String, false),
+    dateStart: deserializeParam(data['DateStart'], ParamType.DateTime, false),
+    dateEnd: deserializeParam(data['DateEnd'], ParamType.DateTime, false),
+    day: deserializeParam<String>(data['Day'], ParamType.String, true),
+    mon: deserializeParam(data['Mon'], ParamType.bool, false),
+    tue: deserializeParam(data['Tue'], ParamType.bool, false),
+    wed: deserializeParam(data['Wed'], ParamType.bool, false),
+    thu: deserializeParam(data['Thu'], ParamType.bool, false),
+    fri: deserializeParam(data['Fri'], ParamType.bool, false),
+    sat: deserializeParam(data['Sat'], ParamType.bool, false),
+    sun: deserializeParam(data['Sun'], ParamType.bool, false),
+  );
 
   @override
   String toString() => 'PromotionDataSubStruct(${toMap()})';
@@ -290,8 +209,19 @@ class PromotionDataSubStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => ListEquality().hash(
-      [photo, dateStart, dateEnd, day, mon, tue, wed, thu, fri, sat, sun]);
+  int get hashCode => ListEquality().hash([
+    photo,
+    dateStart,
+    dateEnd,
+    day,
+    mon,
+    tue,
+    wed,
+    thu,
+    fri,
+    sat,
+    sun,
+  ]);
 }
 
 PromotionDataSubStruct createPromotionDataSubStruct({
@@ -309,36 +239,34 @@ PromotionDataSubStruct createPromotionDataSubStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    PromotionDataSubStruct(
-      photo: photo,
-      dateStart: dateStart,
-      dateEnd: dateEnd,
-      mon: mon,
-      tue: tue,
-      wed: wed,
-      thu: thu,
-      fri: fri,
-      sat: sat,
-      sun: sun,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => PromotionDataSubStruct(
+  photo: photo,
+  dateStart: dateStart,
+  dateEnd: dateEnd,
+  mon: mon,
+  tue: tue,
+  wed: wed,
+  thu: thu,
+  fri: fri,
+  sat: sat,
+  sun: sun,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 PromotionDataSubStruct? updatePromotionDataSubStruct(
   PromotionDataSubStruct? promotionDataSub, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    promotionDataSub
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => promotionDataSub
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addPromotionDataSubStructData(
   Map<String, dynamic> supabaseData,
@@ -359,10 +287,13 @@ void addPromotionDataSubStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final promotionDataSubData =
-      getPromotionDataSubFirestoreData(promotionDataSub, forFieldValue);
-  final nestedData =
-      promotionDataSubData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final promotionDataSubData = getPromotionDataSubFirestoreData(
+    promotionDataSub,
+    forFieldValue,
+  );
+  final nestedData = promotionDataSubData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = promotionDataSub.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -378,8 +309,9 @@ Map<String, dynamic> getPromotionDataSubFirestoreData(
   final supabaseData = mapToSupabase(promotionDataSub.toMap());
 
   // Add any Firestore field values
-  promotionDataSub.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  promotionDataSub.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

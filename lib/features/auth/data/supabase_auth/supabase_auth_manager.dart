@@ -42,7 +42,8 @@ class SupabaseAuthManager extends AuthManager {
   Future deleteUser(BuildContext context) async {
     // Client side delete is restricted.
     print(
-        'Delete user requested. Supabase typically requires backend function for this.');
+      'Delete user requested. Supabase typically requires backend function for this.',
+    );
   }
 
   @override
@@ -54,13 +55,14 @@ class SupabaseAuthManager extends AuthManager {
       if (!loggedIn) {
         return;
       }
-      await Supabase.instance.client.auth
-          .updateUser(UserAttributes(email: email));
+      await Supabase.instance.client.auth.updateUser(
+        UserAttributes(email: email),
+      );
       await updateUserDocument(email: email);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -73,12 +75,13 @@ class SupabaseAuthManager extends AuthManager {
       if (!loggedIn) {
         return;
       }
-      await Supabase.instance.client.auth
-          .updateUser(UserAttributes(password: newPassword));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+      await Supabase.instance.client.auth.updateUser(
+        UserAttributes(password: newPassword),
       );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -90,20 +93,18 @@ class SupabaseAuthManager extends AuthManager {
     try {
       await Supabase.instance.client.auth.resetPasswordForEmail(email);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
       return null;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password reset email sent')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Password reset email sent')));
   }
 
   @override
-  Future<BaseAuthUser?> signInAnonymously(
-    BuildContext context,
-  ) async {
+  Future<BaseAuthUser?> signInAnonymously(BuildContext context) async {
     final res = await Supabase.instance.client.auth.signInAnonymously();
     if (res.user != null) {
       await maybeCreateUser(res.user!);
@@ -163,15 +164,15 @@ class SupabaseAuthManager extends AuthManager {
     } on AuthException catch (e) {
       final errorMsg = 'Error: ${e.message}';
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMsg)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMsg)));
       return null;
     } catch (e) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
       return null;
     }
   }

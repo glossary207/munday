@@ -12,26 +12,28 @@ class MundaySupabaseUser extends BaseAuthUser {
 
   @override
   AuthUserInfo get authUserInfo => AuthUserInfo(
-        uid: user?.id,
-        email: user?.email,
-        displayName: user?.userMetadata?['full_name'],
-        photoUrl: user?.userMetadata?['avatar_url'],
-        phoneNumber: user?.phone,
-      );
+    uid: user?.id,
+    email: user?.email,
+    displayName: user?.userMetadata?['full_name'],
+    photoUrl: user?.userMetadata?['avatar_url'],
+    phoneNumber: user?.phone,
+  );
 
   @override
   Future? delete() => Supabase.instance.client.rpc('delete_user');
 
   @override
   Future? updateEmail(String email) async {
-    await Supabase.instance.client.auth
-        .updateUser(UserAttributes(email: email));
+    await Supabase.instance.client.auth.updateUser(
+      UserAttributes(email: email),
+    );
   }
 
   @override
   Future? updatePassword(String newPassword) async {
-    await Supabase.instance.client.auth
-        .updateUser(UserAttributes(password: newPassword));
+    await Supabase.instance.client.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
   }
 
   @override
@@ -53,14 +55,17 @@ class MundaySupabaseUser extends BaseAuthUser {
   static BaseAuthUser fromSupabaseUser(User? user) => MundaySupabaseUser(user);
 }
 
-Stream<BaseAuthUser> mundaySupabaseUserStream() =>
-    Supabase.instance.client.auth.onAuthStateChange
-        .debounce((event) => event.session == null && !loggedIn
-            ? TimerStream(true, const Duration(seconds: 1))
-            : Stream.value(event))
-        .map<BaseAuthUser>(
-      (event) {
-        currentUser = MundaySupabaseUser(event.session?.user);
-        return currentUser!;
-      },
-    );
+Stream<BaseAuthUser> mundaySupabaseUserStream() => Supabase
+    .instance
+    .client
+    .auth
+    .onAuthStateChange
+    .debounce(
+      (event) => event.session == null && !loggedIn
+          ? TimerStream(true, const Duration(seconds: 1))
+          : Stream.value(event),
+    )
+    .map<BaseAuthUser>((event) {
+      currentUser = MundaySupabaseUser(event.session?.user);
+      return currentUser!;
+    });

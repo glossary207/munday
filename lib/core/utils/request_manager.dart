@@ -84,9 +84,9 @@ class StreamRequestManager<T> {
   }
 
   void clear() => {
-        ..._streamSubjects.keys,
-        ..._requestSubscriptions.keys,
-      }.forEach(clearRequest);
+    ..._streamSubjects.keys,
+    ..._requestSubscriptions.keys,
+  }.forEach(clearRequest);
 }
 
 String _requestKey(String? key) =>

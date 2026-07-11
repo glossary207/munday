@@ -211,6 +211,89 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
     super.dispose();
   }
 
+  Future<_EventDetailData> _loadEventDetailData(
+    DataEventsStruct eventData,
+  ) async {
+    EventsRecord? eventRecord;
+    VenuesRecord? venueRecord;
+
+    final eventRef = eventData.docRef;
+    if (eventRef != null) {
+      try {
+        eventRecord = await EventsRecord.getDocumentOnce(eventRef);
+      } catch (error) {
+        debugPrint('Unable to load selected event: $error');
+      }
+    }
+
+    final venueRef = eventData.iDVenuse ?? eventRecord?.iDVenues;
+    if (venueRef != null) {
+      try {
+        venueRecord = await VenuesRecord.getDocumentOnce(venueRef);
+      } catch (error) {
+        debugPrint('Unable to load event venue: $error');
+      }
+    }
+
+    return _EventDetailData(
+      eventData: eventData,
+      eventRecord: eventRecord,
+      venueRecord: venueRecord,
+    );
+  }
+
+  Future<void> _showEventDetailSheet(DataEventsStruct? eventData) async {
+    if (eventData == null || eventData.nameStore == '007') {
+      return;
+    }
+
+    final detailFuture = _loadEventDetailData(eventData);
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: false,
+      isDismissible: true,
+      enableDrag: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: const Color(0xB3000000),
+      builder: (bottomSheetContext) {
+        return _EventDetailSheet(
+          detailFuture: detailFuture,
+          fallbackEventData: eventData,
+          onViewVenue: (detailData) {
+            Navigator.of(bottomSheetContext).pop();
+
+            final venueRef = detailData.venueRef;
+            if (venueRef == null) {
+              return;
+            }
+
+            context.pushNamed(
+              InVenusePage.routeName,
+              queryParameters: {
+                'idVenues': serializeParam(venueRef, ParamType.SupabaseDocRef),
+                'distance': serializeParam(
+                  detailData.distanceValue,
+                  ParamType.String,
+                ),
+                'dateclick': serializeParam(
+                  detailData.eventDate ?? context.appState.dateclick,
+                  ParamType.DateTime,
+                ),
+                'index': serializeParam(0, ParamType.int),
+              }.withoutNulls,
+            );
+          },
+        );
+      },
+    );
+
+    if (mounted) {
+      safeSetState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<AppState>();
@@ -227,6 +310,7 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
         backgroundColor: Colors.black,
         body: SafeArea(
           top: true,
+          bottom: false,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -254,7 +338,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                     }
                     List<EventsRecord> homeBodyEventsRecordList =
                         snapshot.data!;
-                    print("DEBUG: homeBodyEventsRecordList length = ${homeBodyEventsRecordList.length}");
+                    print(
+                      "DEBUG: homeBodyEventsRecordList length = ${homeBodyEventsRecordList.length}",
+                    );
 
                     return AnimatedContainer(
                       duration: Duration(milliseconds: 300),
@@ -313,7 +399,8 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                         _model.selectdate,
                                         context.appState.dateclick,
                                       ),
-                                      itemClick: context.appState.EventSelection,
+                                      itemClick:
+                                          context.appState.EventSelection,
                                       locationStart:
                                           currentUserLocationValue ??
                                           LatLng(0.0, 0.0),
@@ -321,7 +408,8 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                           context.appState.locationsearch,
                                       makerSelectedIcon:
                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/ugva4ht8jron/beer_(2).png',
-                                      moveMapCondition: context.appState.MoveMap,
+                                      moveMapCondition:
+                                          context.appState.MoveMap,
                                       radian: context.appState.Filterdistance,
                                       whenSelect: () async {
                                         _model.slide = false;
@@ -331,8 +419,12 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                               functions.searchIndexEvent(
                                                 functions
                                                     .dataEventDocRef(
-                                                      context.appState.Filterdistance,
-                                                      context.appState.locationsearch,
+                                                      context
+                                                          .appState
+                                                          .Filterdistance,
+                                                      context
+                                                          .appState
+                                                          .locationsearch,
                                                       (currentUserDocument
                                                                   ?.loveEvent ??
                                                               [])
@@ -355,7 +447,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                           )
                                                           .toList(),
                                                       _model.selectdate,
-                                                      context.appState.dateclick,
+                                                      context
+                                                          .appState
+                                                          .dateclick,
                                                     )
                                                     ?.toList(),
                                                 context.appState.EventSelection,
@@ -465,7 +559,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                           ),
                                         if (functions
                                                 .dataEvent(
-                                                  context.appState.Filterdistance,
+                                                  context
+                                                      .appState
+                                                      .Filterdistance,
                                                   homeBodyEventsRecordList
                                                       .where(
                                                         (e) => functions
@@ -480,7 +576,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                             )!,
                                                       )
                                                       .toList(),
-                                                  context.appState.locationsearch,
+                                                  context
+                                                      .appState
+                                                      .locationsearch,
                                                   _model.stylemusic.toList(),
                                                   (currentUserDocument
                                                               ?.loveEvent
@@ -963,7 +1061,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                           ),
                                         if (functions
                                                 .dataEvent(
-                                                  context.appState.Filterdistance,
+                                                  context
+                                                      .appState
+                                                      .Filterdistance,
                                                   homeBodyEventsRecordList
                                                       .where(
                                                         (e) => functions
@@ -978,7 +1078,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                             )!,
                                                       )
                                                       .toList(),
-                                                  context.appState.locationsearch,
+                                                  context
+                                                      .appState
+                                                      .locationsearch,
                                                   _model.stylemusic.toList(),
                                                   (currentUserDocument
                                                               ?.loveEvent
@@ -1124,36 +1226,11 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                           highlightColor:
                                                                               Colors.transparent,
                                                                           onTap: () async {
-                                                                            if (DataEventsStruct.maybeFromMap(
-                                                                                  dataEventsItem,
-                                                                                )?.nameStore !=
-                                                                                '007') {
-                                                                              context.pushNamed(
-                                                                                InVenusePage.routeName,
-                                                                                queryParameters: {
-                                                                                  'idVenues': serializeParam(
-                                                                                    DataEventsStruct.maybeFromMap(
-                                                                                      dataEventsItem,
-                                                                                    )?.iDVenuse,
-                                                                                    ParamType.SupabaseDocRef,
-                                                                                  ),
-                                                                                  'distance': serializeParam(
-                                                                                    DataEventsStruct.maybeFromMap(
-                                                                                      dataEventsItem,
-                                                                                    )?.distance.toString(),
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'index': serializeParam(
-                                                                                    0,
-                                                                                    ParamType.int,
-                                                                                  ),
-                                                                                  'dateclick': serializeParam(
-                                                                                    context.appState.dateclick,
-                                                                                    ParamType.DateTime,
-                                                                                  ),
-                                                                                }.withoutNulls,
-                                                                              );
-                                                                            }
+                                                                            await _showEventDetailSheet(
+                                                                              DataEventsStruct.maybeFromMap(
+                                                                                dataEventsItem,
+                                                                              ),
+                                                                            );
                                                                           },
                                                                           child: Container(
                                                                             width:
@@ -1222,7 +1299,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                         ),
                                                                                         child: Container(
                                                                                           width: 42.0,
-                                                                                          constraints: const BoxConstraints(minHeight: 42.0),
+                                                                                          constraints: const BoxConstraints(
+                                                                                            minHeight: 42.0,
+                                                                                          ),
                                                                                           decoration: BoxDecoration(
                                                                                             color: Color(
                                                                                               0xFFFF0000,
@@ -2237,36 +2316,11 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                         highlightColor:
                                                                             Colors.transparent,
                                                                         onTap: () async {
-                                                                          if (DataEventsStruct.maybeFromMap(
-                                                                                dataEventsItem,
-                                                                              )?.nameStore !=
-                                                                              '007') {
-                                                                            context.pushNamed(
-                                                                              InVenusePage.routeName,
-                                                                              queryParameters: {
-                                                                                'idVenues': serializeParam(
-                                                                                  DataEventsStruct.maybeFromMap(
-                                                                                    dataEventsItem,
-                                                                                  )?.iDVenuse,
-                                                                                  ParamType.SupabaseDocRef,
-                                                                                ),
-                                                                                'distance': serializeParam(
-                                                                                  DataEventsStruct.maybeFromMap(
-                                                                                    dataEventsItem,
-                                                                                  )?.distance.toString(),
-                                                                                  ParamType.String,
-                                                                                ),
-                                                                                'index': serializeParam(
-                                                                                  0,
-                                                                                  ParamType.int,
-                                                                                ),
-                                                                                'dateclick': serializeParam(
-                                                                                  context.appState.dateclick,
-                                                                                  ParamType.DateTime,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          }
+                                                                          await _showEventDetailSheet(
+                                                                            DataEventsStruct.maybeFromMap(
+                                                                              dataEventsItem,
+                                                                            ),
+                                                                          );
                                                                         },
                                                                         child: Container(
                                                                           width:
@@ -2336,7 +2390,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                       ),
                                                                                       child: Container(
                                                                                         width: 42.0,
-                                                                                        constraints: const BoxConstraints(minHeight: 42.0),
+                                                                                        constraints: const BoxConstraints(
+                                                                                          minHeight: 42.0,
+                                                                                        ),
                                                                                         decoration: BoxDecoration(
                                                                                           color: Color(
                                                                                             0xFFFF0000,
@@ -3220,7 +3276,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                         ),
                                         if (functions
                                                 .dataEvent(
-                                                  context.appState.Filterdistance,
+                                                  context
+                                                      .appState
+                                                      .Filterdistance,
                                                   homeBodyEventsRecordList
                                                       .where(
                                                         (e) => functions
@@ -3235,7 +3293,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                             )!,
                                                       )
                                                       .toList(),
-                                                  context.appState.locationsearch,
+                                                  context
+                                                      .appState
+                                                      .locationsearch,
                                                   _model.stylemusic.toList(),
                                                   (currentUserDocument
                                                               ?.loveEvent
@@ -3724,7 +3784,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                   .locationsearch =
                                                               currentUserLocationValue;
                                                           safeSetState(() {});
-                                                          context.appState.MoveMap =
+                                                          context
+                                                                  .appState
+                                                                  .MoveMap =
                                                               true;
                                                           safeSetState(() {});
                                                         },
@@ -3837,32 +3899,10 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                 hoverColor: Colors.transparent,
                                                                                 highlightColor: Colors.transparent,
                                                                                 onTap: () async {
-                                                                                  context.pushNamed(
-                                                                                    InVenusePage.routeName,
-                                                                                    queryParameters: {
-                                                                                      'idVenues': serializeParam(
-                                                                                        DataEventsStruct.maybeFromMap(
-                                                                                          dataEventItem,
-                                                                                        )?.iDVenuse,
-                                                                                        ParamType.SupabaseDocRef,
-                                                                                      ),
-                                                                                      'distance': serializeParam(
-                                                                                        DataEventsStruct.maybeFromMap(
-                                                                                          dataEventItem,
-                                                                                        )?.distance.toString(),
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                      'dateclick': serializeParam(
-                                                                                        DataEventsStruct.maybeFromMap(
-                                                                                          dataEventItem,
-                                                                                        )?.date,
-                                                                                        ParamType.DateTime,
-                                                                                      ),
-                                                                                      'index': serializeParam(
-                                                                                        0,
-                                                                                        ParamType.int,
-                                                                                      ),
-                                                                                    }.withoutNulls,
+                                                                                  await _showEventDetailSheet(
+                                                                                    DataEventsStruct.maybeFromMap(
+                                                                                      dataEventItem,
+                                                                                    ),
                                                                                   );
                                                                                 },
                                                                                 child: Container(
@@ -3926,7 +3966,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                               ),
                                                                                               child: Container(
                                                                                                 width: 42.0,
-                                                                                                constraints: const BoxConstraints(minHeight: 42.0),
+                                                                                                constraints: const BoxConstraints(
+                                                                                                  minHeight: 42.0,
+                                                                                                ),
                                                                                                 decoration: BoxDecoration(
                                                                                                   color: Color(
                                                                                                     0xFFFF0000,
@@ -7101,8 +7143,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                     ),
                                                     dateNow:
                                                         getCurrentTimestamp,
-                                                    dateclickwidget:
-                                                        context.appState.dateclick,
+                                                    dateclickwidget: context
+                                                        .appState
+                                                        .dateclick,
                                                     onselect: () async {
                                                       safeSetState(() {});
                                                     },
@@ -7193,7 +7236,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                             .routeName,
                                                       );
 
-                                                      context.appState.StyleVenuse =
+                                                      context
+                                                              .appState
+                                                              .StyleVenuse =
                                                           [];
                                                       safeSetState(() {});
                                                     },
@@ -7293,7 +7338,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                       (
                                                                                         e,
                                                                                       ) => functions.checkdate(
-                                                                                        (e as dynamic)?.date,
+                                                                                        (e
+                                                                                                as dynamic)
+                                                                                            ?.date,
                                                                                         getCurrentTimestamp,
                                                                                       )!,
                                                                                     )
@@ -7347,7 +7394,9 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                                                                   (
                                                                                                     e,
                                                                                                   ) => functions.checkdate(
-                                                                                                    (e as dynamic)?.date,
+                                                                                                    (e
+                                                                                                            as dynamic)
+                                                                                                        ?.date,
                                                                                                     getCurrentTimestamp,
                                                                                                   )!,
                                                                                                 )
@@ -7491,17 +7540,6 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                           ),
                                         ),
                                       ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
-                                      child: ChangeNotifierProvider.value(
-                                        value: _model.navBarModel.setOnUpdate(
-                                          onUpdate: () => safeSetState(() {}),
-                                        ),
-                                        child: NavBarWidget(
-                                          items: context.appState.menuItems,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -7556,6 +7594,1476 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EventDetailData {
+  const _EventDetailData({
+    required this.eventData,
+    this.eventRecord,
+    this.venueRecord,
+  });
+
+  final DataEventsStruct eventData;
+  final EventsRecord? eventRecord;
+  final VenuesRecord? venueRecord;
+
+  SupabaseDocRef? get venueRef => eventData.iDVenuse ?? eventRecord?.iDVenues;
+
+  String? get distanceValue =>
+      eventData.hasDistance() ? eventData.distance.toString() : null;
+
+  String get distanceLabel {
+    if (!eventData.hasDistance()) {
+      return 'ไม่ระบุ';
+    }
+    return '${eventData.distance.toStringAsFixed(1)} กม.';
+  }
+
+  DateTime? get eventDate => eventRecord?.date ?? eventData.date;
+
+  String get eventDateLabel {
+    final date = eventDate;
+    if (date == null) {
+      return 'ยังไม่ระบุวันเวลา';
+    }
+
+    final day = functions.dateEventday(date)?.toString() ?? '';
+    final month = functions.dateMonthTH(date) ?? '';
+    final time = dateTimeFormat('Hm', date);
+    return '$day $month • $time';
+  }
+
+  List<String> get artists {
+    final recordArtists = eventRecord?.nameArtise ?? const <String>[];
+    final source = recordArtists.isNotEmpty
+        ? recordArtists
+        : eventData.nameArtise;
+    return source.where((name) => name.trim().isNotEmpty).toList();
+  }
+
+  String get eventTitle {
+    if (artists.isNotEmpty) {
+      return artists.join(', ');
+    }
+    return venueName;
+  }
+
+  String get venueName {
+    final venueName = venueRecord?.nameVenuse.trim();
+    if (venueName != null && venueName.isNotEmpty) {
+      return venueName;
+    }
+
+    final eventStore = eventRecord?.nameStore.trim();
+    if (eventStore != null && eventStore.isNotEmpty) {
+      return eventStore;
+    }
+
+    final dataStore = eventData.nameStore.trim();
+    if (dataStore.isNotEmpty) {
+      return dataStore;
+    }
+
+    return 'ร้านของ event นี้';
+  }
+
+  String get venueImageUrl {
+    final logo = venueRecord?.logo.trim();
+    if (logo != null && logo.isNotEmpty) {
+      return _safeEventsImageUrl(logo, fallback: _kEventsFallbackProfileUrl);
+    }
+
+    final bg = venueRecord?.bg.trim();
+    if (bg != null && bg.isNotEmpty) {
+      return _safeEventsImageUrl(bg, fallback: _kEventsFallbackProfileUrl);
+    }
+
+    return _kEventsFallbackProfileUrl;
+  }
+
+  String get posterUrl {
+    final poster = eventRecord?.poster.trim();
+    if (poster != null && poster.isNotEmpty) {
+      return _safeEventsImageUrl(poster, fallback: _kEventsFallbackPosterUrl);
+    }
+
+    return _safeEventsImageUrl(
+      eventData.poster,
+      fallback: _kEventsFallbackPosterUrl,
+    );
+  }
+
+  bool get isFree =>
+      eventRecord?.free ?? (eventData.hasFree() ? eventData.free : false);
+
+  String get priceLabel {
+    if (isFree) {
+      return 'ฟรี';
+    }
+
+    final recordPrice = eventRecord?.priceDetail.trim();
+    if (recordPrice != null && recordPrice.isNotEmpty) {
+      return recordPrice;
+    }
+
+    final dataPrice = eventData.priceDetail.trim();
+    if (dataPrice.isNotEmpty) {
+      return dataPrice;
+    }
+
+    return 'ราคาไม่ระบุ';
+  }
+
+  String get priceSummaryLabel {
+    if (isFree) {
+      return 'ฟรี';
+    }
+
+    if (priceLabel == 'ราคาไม่ระบุ') {
+      return priceLabel;
+    }
+
+    final normalized = priceLabel.toLowerCase();
+    if (normalized.startsWith('from') || priceLabel.startsWith('เริ่ม')) {
+      return priceLabel;
+    }
+
+    return 'From $priceLabel';
+  }
+
+  String get bookingButtonLabel {
+    if (isFree) {
+      return 'จองฟรี';
+    }
+
+    if (priceLabel == 'ราคาไม่ระบุ') {
+      return 'ดูตัวเลือก';
+    }
+
+    return 'จองจาก $priceLabel';
+  }
+
+  String get availabilityLabel {
+    if (isFree) {
+      return 'Free entry available';
+    }
+
+    if (tableCount != null) {
+      return 'Best tables available';
+    }
+
+    return 'ตรวจสอบที่นั่งว่าง';
+  }
+
+  int? get currentCapacity {
+    if (eventRecord?.hasCapacity() ?? false) {
+      return eventRecord!.capacity;
+    }
+    return eventData.hasCapacity() ? eventData.capacity : null;
+  }
+
+  int? get maxCapacity {
+    if (eventRecord?.hasMaxCapacity() ?? false) {
+      return eventRecord!.maxCapacity;
+    }
+    return eventData.hasMaxCapacity() ? eventData.maxCapacity : null;
+  }
+
+  String get capacityLabel {
+    final current = currentCapacity;
+    final max = maxCapacity;
+    if (current != null && max != null && max > 0) {
+      return '$current/$max คน';
+    }
+    if (max != null && max > 0) {
+      return 'สูงสุด $max คน';
+    }
+    if (current != null) {
+      return '$current คน';
+    }
+    return 'ไม่ระบุ';
+  }
+
+  int? get tableCount {
+    final count = venueRecord?.tableId.length ?? 0;
+    return count > 0 ? count : null;
+  }
+
+  String get tableCountLabel {
+    final count = tableCount;
+    if (count == null) {
+      return 'ยังไม่ระบุ';
+    }
+    return '$count โต๊ะ';
+  }
+
+  String get musicStyle {
+    final recordStyle = eventRecord?.musicstyle.trim();
+    if (recordStyle != null && recordStyle.isNotEmpty) {
+      return recordStyle;
+    }
+
+    final dataStyle = eventData.musicstyle.trim();
+    if (dataStyle.isNotEmpty) {
+      return dataStyle;
+    }
+
+    final venueStyles = venueRecord?.styleMusic ?? const <String>[];
+    return venueStyles.isNotEmpty ? venueStyles.join(', ') : 'ไม่ระบุ';
+  }
+
+  String get detailText {
+    final detail = eventRecord?.detail.trim();
+    if (detail != null && detail.isNotEmpty) {
+      return detail;
+    }
+    return 'ยังไม่มีรายละเอียดเพิ่มเติมสำหรับ event นี้';
+  }
+
+  String get openCloseTime {
+    final value = venueRecord?.openCloseTime.trim();
+    return value != null && value.isNotEmpty ? value : 'ยังไม่ระบุเวลาเปิด';
+  }
+
+  String get ratingLabel {
+    final rating = venueRecord?.rating ?? 0.0;
+    return rating > 0 ? rating.toStringAsFixed(1) : 'ยังไม่มีคะแนน';
+  }
+
+  String get doorsOpenLabel {
+    if (openCloseTime != 'ยังไม่ระบุเวลาเปิด') {
+      return openCloseTime;
+    }
+
+    return 'Based on venue schedule';
+  }
+
+  String get showStartsLabel {
+    final date = eventDate;
+    if (date == null) {
+      return 'Based on selection';
+    }
+
+    return dateTimeFormat('Hm', date);
+  }
+
+  String get venueLocationLabel {
+    final location =
+        eventRecord?.location ?? venueRecord?.position ?? eventData.position;
+    if (location == null) {
+      return venueName;
+    }
+
+    return '$venueName • ${location.latitude.toStringAsFixed(4)}, ${location.longitude.toStringAsFixed(4)}';
+  }
+
+  List<String> get detailParagraphs {
+    final paragraphs = detailText
+        .split(RegExp(r'\n\s*\n|\n'))
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    return paragraphs.isNotEmpty ? paragraphs : [detailText];
+  }
+
+  List<String> get highlights {
+    final items = <String>[];
+
+    if (artists.isNotEmpty) {
+      items.add('การแสดงโดย ${artists.join(', ')}');
+    }
+    if (musicStyle != 'ไม่ระบุ') {
+      items.add('แนวเพลง $musicStyle');
+    }
+    if (tableCount != null) {
+      items.add('มีโต๊ะสำหรับ event นี้ $tableCountLabel');
+    }
+    final max = maxCapacity;
+    if (max != null && max > 0) {
+      items.add('รองรับผู้ร่วมงานสูงสุด $maxCapacityLabel');
+    }
+    if (venueName != 'ร้านของ event นี้') {
+      items.add('จัดที่ $venueName');
+    }
+
+    return items;
+  }
+
+  String get maxCapacityLabel {
+    final max = maxCapacity;
+    if (max == null || max <= 0) {
+      return 'ไม่ระบุ';
+    }
+    return '$max คน';
+  }
+
+  List<String> get includedItems {
+    final items = <String>[
+      isFree
+          ? 'สิทธิ์เข้างานฟรีตามเงื่อนไขของร้าน'
+          : 'สิทธิ์เข้างานหรือจองโต๊ะตามแพ็กเกจที่เลือก',
+      'ข้อมูล event และร้านที่จัดงาน',
+    ];
+
+    if (tableCount != null) {
+      items.add('ดูจำนวนโต๊ะและไปเลือกโต๊ะในหน้าร้านได้');
+    }
+
+    return items;
+  }
+
+  List<String> get importantItems {
+    return [
+      'จำนวนโต๊ะ ราคา และที่นั่งว่างอาจเปลี่ยนตามวันที่เลือก',
+      'เงื่อนไขการเข้า event และ dress code ขึ้นกับร้าน',
+      isFree
+          ? 'สิทธิ์ฟรีอาจมีจำนวนจำกัดหรือมีเงื่อนไขเพิ่มเติม'
+          : 'ราคาเริ่มต้นอาจยังไม่รวมเงื่อนไขอื่นของร้าน',
+    ];
+  }
+
+  List<String> get howToGetThereItems {
+    final items = <String>['Event นี้จัดที่ $venueName'];
+
+    if (eventData.hasDistance()) {
+      items.add('อยู่ห่างจากตำแหน่งที่เลือกประมาณ $distanceLabel');
+    }
+
+    items.add(
+      'กดปุ่มจองหรือดูร้านเพื่อเปิดหน้าร้านและดูข้อมูลเส้นทางเพิ่มเติม',
+    );
+    return items;
+  }
+
+  List<String> get tags {
+    final values = <String>[
+      musicStyle,
+      ...?eventRecord?.styleVenues,
+      ...?venueRecord?.styleVenuse,
+    ];
+
+    final normalized = <String>[];
+    for (final value in values) {
+      final trimmed = value.trim();
+      if (trimmed.isNotEmpty &&
+          trimmed != 'ไม่ระบุ' &&
+          !normalized.contains(trimmed)) {
+        normalized.add(trimmed);
+      }
+    }
+    return normalized.take(6).toList();
+  }
+}
+
+class _EventDetailSheet extends StatelessWidget {
+  const _EventDetailSheet({
+    required this.detailFuture,
+    required this.fallbackEventData,
+    required this.onViewVenue,
+  });
+
+  final Future<_EventDetailData> detailFuture;
+  final DataEventsStruct fallbackEventData;
+  final ValueChanged<_EventDetailData> onViewVenue;
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 1.0,
+      minChildSize: 0.18,
+      maxChildSize: 1.0,
+      shouldCloseOnMinExtent: true,
+      builder: (context, scrollController) {
+        return FutureBuilder<_EventDetailData>(
+          future: detailFuture,
+          initialData: _EventDetailData(eventData: fallbackEventData),
+          builder: (context, snapshot) {
+            final detailData =
+                snapshot.data ?? _EventDetailData(eventData: fallbackEventData);
+
+            return Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(color: Color(0xFF090A0F)),
+              child: Stack(
+                children: [
+                  CustomScrollView(
+                    controller: scrollController,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: _buildHero(context, detailData),
+                      ),
+                      SliverToBoxAdapter(
+                        child: _buildContent(context, detailData),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _EventBookingBar(
+                      detailData: detailData,
+                      onPressed: detailData.venueRef != null
+                          ? () => onViewVenue(detailData)
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildHero(BuildContext context, _EventDetailData detailData) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
+
+    return SizedBox(
+      height: screenHeight * 0.60,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isCompactHero = constraints.maxHeight < 390.0;
+          final posterTopInset =
+              MediaQuery.paddingOf(context).top + (isCompactHero ? 42.0 : 58.0);
+          final posterBottomInset = isCompactHero ? 10.0 : 14.0;
+
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              _buildPosterBackdrop(detailData.posterUrl),
+              Positioned.fill(
+                left: 18.0,
+                top: posterTopInset,
+                right: 18.0,
+                bottom: posterBottomInset,
+                child: _buildResponsivePosterImage(detailData.posterUrl),
+              ),
+              SafeArea(
+                bottom: false,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Container(
+                      width: 44.0,
+                      height: 4.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white54,
+                        borderRadius: BorderRadius.circular(99.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    16.0,
+                    0.0,
+                    16.0,
+                    6.0,
+                  ),
+                  child: _buildPosterVenueButton(detailData),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildPosterBackdrop(String posterUrl) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.network(
+          posterUrl,
+          fit: BoxFit.cover,
+          color: const Color(0xAA090A0F),
+          colorBlendMode: BlendMode.darken,
+          errorBuilder: (context, error, stackTrace) => Container(
+            color: const Color(0xFF161820),
+            child: const Center(
+              child: Icon(
+                Icons.event_rounded,
+                color: Colors.white70,
+                size: 54.0,
+              ),
+            ),
+          ),
+        ),
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xD9000000), Color(0x88090A0F), Color(0xF0090A0F)],
+              stops: [0.0, 0.58, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResponsivePosterImage(String posterUrl) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: constraints.maxWidth,
+              maxHeight: constraints.maxHeight,
+            ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24.0),
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 26.0,
+                    color: Color(0x99000000),
+                    offset: Offset(0.0, 14.0),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24.0),
+                child: Image.network(
+                  posterUrl,
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+
+                    return SizedBox(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) => SizedBox(
+                    width: constraints.maxWidth,
+                    height: constraints.maxHeight,
+                    child: Container(
+                      color: const Color(0xFF161820),
+                      child: const Center(
+                        child: Icon(
+                          Icons.event_rounded,
+                          color: Colors.white70,
+                          size: 54.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPosterVenueButton(_EventDetailData detailData) {
+    final canOpenVenue = detailData.venueRef != null;
+
+    return Container(
+      constraints: const BoxConstraints(minHeight: 74.0),
+      padding: const EdgeInsets.all(9.0),
+      decoration: BoxDecoration(
+        color: const Color(0xE61C1D24),
+        borderRadius: BorderRadius.circular(18.0),
+        border: Border.all(color: const Color(0x33FFFFFF)),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 18.0,
+            color: Color(0x66000000),
+            offset: Offset(0.0, 8.0),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(13.0),
+            child: Image.network(
+              detailData.venueImageUrl,
+              width: 54.0,
+              height: 54.0,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 54.0,
+                height: 54.0,
+                color: const Color(0xFF2A2C35),
+                child: const Icon(
+                  Icons.storefront_rounded,
+                  color: Colors.white70,
+                  size: 24.0,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 11.0),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ร้านของ event นี้',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.openSans(
+                    color: const Color(0xFFB7BAC7),
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+                const SizedBox(height: 3.0),
+                Text(
+                  detailData.venueName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 16.5,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+                const SizedBox(height: 3.0),
+                Text(
+                  detailData.tableCountLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.openSans(
+                    color: const Color(0xFFE7E8EE),
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8.0),
+          SizedBox(
+            width: 88.0,
+            height: 42.0,
+            child: ElevatedButton.icon(
+              onPressed: canOpenVenue ? () => onViewVenue(detailData) : null,
+              icon: const Icon(Icons.storefront_rounded, size: 16.0),
+              label: Text(
+                'ดูร้าน',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.0,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                disabledBackgroundColor: const Color(0xFF555762),
+                disabledForegroundColor: const Color(0xFFC7C8CE),
+                elevation: 0.0,
+                padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, _EventDetailData detailData) {
+    final tags = detailData.tags;
+
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(18.0, 18.0, 18.0, 122.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            detailData.eventTitle,
+            style: GoogleFonts.openSans(
+              color: Colors.white,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w800,
+              height: 1.08,
+              letterSpacing: 0.0,
+            ),
+          ),
+          const SizedBox(height: 14.0),
+          _EventInfoLine(
+            icon: Icons.calendar_today_rounded,
+            primary: detailData.eventDateLabel,
+            secondary: detailData.priceSummaryLabel,
+          ),
+          const SizedBox(height: 12.0),
+          _EventInfoLine(
+            icon: Icons.location_on_outlined,
+            primary: detailData.venueName,
+            secondary: detailData.distanceLabel,
+          ),
+          if (tags.isNotEmpty) ...[
+            const SizedBox(height: 16.0),
+            Wrap(
+              spacing: 8.0,
+              runSpacing: 8.0,
+              children: tags.map((tag) => _EventTag(label: tag)).toList(),
+            ),
+          ],
+          const SizedBox(height: 24.0),
+          _buildScheduleCard(detailData),
+          if (!detailData.isFree) ...[
+            const SizedBox(height: 18.0),
+            _buildPaymentBanner(),
+          ],
+          const SizedBox(height: 24.0),
+          Row(
+            children: [
+              Expanded(
+                child: _EventMetricTile(
+                  icon: Icons.groups_rounded,
+                  label: 'ผู้เข้าร่วม',
+                  value: detailData.capacityLabel,
+                ),
+              ),
+              const SizedBox(width: 10.0),
+              Expanded(
+                child: _EventMetricTile(
+                  icon: Icons.table_bar_rounded,
+                  label: 'โต๊ะของ event',
+                  value: detailData.tableCountLabel,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'Event info',
+            child: _buildParagraphs(detailData.detailParagraphs),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'Highlights',
+            child: _buildBulletList(detailData.highlights),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'What’s included',
+            child: _buildBulletList(detailData.includedItems),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'Important things to know',
+            child: _buildBulletList(detailData.importantItems),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'How to get there',
+            child: _buildBulletList(detailData.howToGetThereItems),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'Location',
+            child: _buildLocationPanel(detailData),
+          ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'Event venue',
+            child: _buildVenueContextCard(detailData),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScheduleCard(_EventDetailData detailData) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF20212B),
+        borderRadius: BorderRadius.circular(18.0),
+        border: Border.all(color: const Color(0x22FFFFFF)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.schedule_rounded,
+                color: Color(0xFFE7E8EE),
+                size: 21.0,
+              ),
+              const SizedBox(width: 10.0),
+              Expanded(
+                child: Text(
+                  'Timing and schedule',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.keyboard_arrow_up_rounded,
+                color: Colors.white,
+                size: 22.0,
+              ),
+            ],
+          ),
+          const SizedBox(height: 18.0),
+          _EventScheduleRow(
+            title: 'Doors open',
+            subtitle: detailData.doorsOpenLabel,
+          ),
+          const SizedBox(height: 16.0),
+          _EventScheduleRow(
+            title: 'Show starts',
+            subtitle: detailData.showStartsLabel,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaymentBanner() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsetsDirectional.fromSTEB(14.0, 12.0, 14.0, 12.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF4D007B),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.bolt_rounded, color: Color(0xFFE5B7FF), size: 26.0),
+          const SizedBox(width: 10.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'จองโต๊ะหรือบัตรล่วงหน้า',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+                Text(
+                  'เลือกแพ็กเกจและตรวจสอบราคาในหน้าร้าน',
+                  style: GoogleFonts.openSans(
+                    color: const Color(0xFFE9D6F6),
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildParagraphs(List<String> paragraphs) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(paragraphs.length, (index) {
+        return Padding(
+          padding: EdgeInsetsDirectional.only(
+            bottom: index == paragraphs.length - 1 ? 0.0 : 10.0,
+          ),
+          child: Text(
+            paragraphs[index],
+            style: GoogleFonts.openSans(
+              color: const Color(0xFFE4E5EA),
+              fontSize: 14.0,
+              fontWeight: FontWeight.w400,
+              height: 1.45,
+              letterSpacing: 0.0,
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildBulletList(List<String> items) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(items.length, (index) {
+        return Padding(
+          padding: EdgeInsetsDirectional.only(
+            bottom: index == items.length - 1 ? 0.0 : 8.0,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 8.0),
+                child: Container(
+                  width: 4.0,
+                  height: 4.0,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFE4E5EA),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Text(
+                  items[index],
+                  style: GoogleFonts.openSans(
+                    color: const Color(0xFFE4E5EA),
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                    height: 1.4,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildLocationPanel(_EventDetailData detailData) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(
+              Icons.location_on_rounded,
+              color: Color(0xFFFF4B4B),
+              size: 18.0,
+            ),
+            const SizedBox(width: 6.0),
+            Expanded(
+              child: Text(
+                detailData.venueName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8.0),
+        Text(
+          detailData.venueLocationLabel,
+          style: GoogleFonts.openSans(
+            color: const Color(0xFF78A8FF),
+            fontSize: 14.0,
+            fontWeight: FontWeight.w600,
+            height: 1.3,
+            letterSpacing: 0.0,
+          ),
+        ),
+        const SizedBox(height: 12.0),
+        Container(
+          width: double.infinity,
+          height: 128.0,
+          decoration: BoxDecoration(
+            color: const Color(0xFF151720),
+            borderRadius: BorderRadius.circular(12.0),
+            border: Border.all(color: const Color(0x22FFFFFF)),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CustomPaint(painter: _EventMapPreviewPainter()),
+              ),
+              const Align(
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.location_pin,
+                  color: Color(0xFFFF3030),
+                  size: 38.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVenueContextCard(_EventDetailData detailData) {
+    return Container(
+      padding: const EdgeInsets.all(14.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF151720),
+        borderRadius: BorderRadius.circular(18.0),
+        border: Border.all(color: const Color(0x22FFFFFF)),
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14.0),
+            child: Image.network(
+              detailData.venueImageUrl,
+              width: 64.0,
+              height: 64.0,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 64.0,
+                height: 64.0,
+                color: const Color(0xFF2A2C35),
+                child: const Icon(
+                  Icons.storefront_rounded,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  detailData.venueName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Text(
+                  '${detailData.tableCountLabel} • ${detailData.openCloseTime} • ${detailData.ratingLabel}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.openSans(
+                    color: const Color(0xFFB8BBC7),
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w500,
+                    height: 1.25,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EventInfoLine extends StatelessWidget {
+  const _EventInfoLine({
+    required this.icon,
+    required this.primary,
+    required this.secondary,
+  });
+
+  final IconData icon;
+  final String primary;
+  final String secondary;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: const Color(0xFFB8BBC7), size: 20.0),
+        const SizedBox(width: 12.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                primary,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w600,
+                  height: 1.25,
+                  letterSpacing: 0.0,
+                ),
+              ),
+              const SizedBox(height: 2.0),
+              Text(
+                secondary,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: const Color(0xFF78A8FF),
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EventScheduleRow extends StatelessWidget {
+  const _EventScheduleRow({required this.title, required this.subtitle});
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 4.0),
+          child: Container(
+            width: 10.0,
+            height: 10.0,
+            decoration: BoxDecoration(
+              color: const Color(0xFF9DFF5C),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6.0,
+                  color: const Color(0xFF9DFF5C).withValues(alpha: 0.45),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 12.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.0,
+                ),
+              ),
+              const SizedBox(height: 2.0),
+              Text(
+                subtitle,
+                style: GoogleFonts.openSans(
+                  color: const Color(0xFFAEB1BD),
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EventBookingBar extends StatelessWidget {
+  const _EventBookingBar({required this.detailData, required this.onPressed});
+
+  final _EventDetailData detailData;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Container(
+        padding: const EdgeInsetsDirectional.fromSTEB(18.0, 12.0, 18.0, 12.0),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0x00090A0F), Color(0xF2090A0F), Color(0xFF090A0F)],
+            stops: [0.0, 0.34, 1.0],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    detailData.priceSummaryLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.openSans(
+                      color: Colors.white,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    detailData.availabilityLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.openSans(
+                      color: const Color(0xFF9DFF5C),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 14.0),
+            SizedBox(
+              width: 150.0,
+              height: 52.0,
+              child: ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  disabledBackgroundColor: const Color(0xFF555762),
+                  disabledForegroundColor: const Color(0xFFC7C8CE),
+                  elevation: 0.0,
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ),
+                child: Text(
+                  detailData.bookingButtonLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.openSans(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EventMapPreviewPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final waterPaint = Paint()..color = const Color(0xFFBFE7F1);
+    final landPaint = Paint()..color = const Color(0xFFE9EEF0);
+    final roadPaint = Paint()
+      ..color = const Color(0xFFFFFFFF)
+      ..strokeWidth = 7.0
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+    final roadAccentPaint = Paint()
+      ..color = const Color(0xFFFFD86B)
+      ..strokeWidth = 3.0
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawRect(Offset.zero & size, landPaint);
+
+    final waterPath = Path()
+      ..moveTo(0, size.height * 0.18)
+      ..quadraticBezierTo(
+        size.width * 0.28,
+        size.height * 0.03,
+        size.width * 0.48,
+        size.height * 0.26,
+      )
+      ..quadraticBezierTo(
+        size.width * 0.74,
+        size.height * 0.58,
+        size.width,
+        size.height * 0.42,
+      )
+      ..lineTo(size.width, 0)
+      ..lineTo(0, 0)
+      ..close();
+    canvas.drawPath(waterPath, waterPaint);
+
+    final roadOne = Path()
+      ..moveTo(size.width * 0.04, size.height * 0.76)
+      ..cubicTo(
+        size.width * 0.26,
+        size.height * 0.52,
+        size.width * 0.48,
+        size.height * 0.88,
+        size.width * 0.96,
+        size.height * 0.62,
+      );
+    canvas.drawPath(roadOne, roadPaint);
+    canvas.drawPath(roadOne, roadAccentPaint);
+
+    final roadTwo = Path()
+      ..moveTo(size.width * 0.16, 0)
+      ..lineTo(size.width * 0.32, size.height)
+      ..moveTo(size.width * 0.72, 0)
+      ..lineTo(size.width * 0.58, size.height);
+    canvas.drawPath(roadTwo, roadPaint..strokeWidth = 4.0);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _EventMetricTile extends StatelessWidget {
+  const _EventMetricTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 82.0),
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF151720),
+        borderRadius: BorderRadius.circular(18.0),
+        border: Border.all(color: const Color(0x22FFFFFF)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(icon, color: const Color(0xFFFF4B4B), size: 22.0),
+          const SizedBox(height: 9.0),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.openSans(
+              color: const Color(0xFFAEB1BD),
+              fontSize: 12.0,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.0,
+            ),
+          ),
+          const SizedBox(height: 2.0),
+          Text(
+            value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.openSans(
+              color: Colors.white,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w800,
+              height: 1.12,
+              letterSpacing: 0.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EventSection extends StatelessWidget {
+  const _EventSection({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.openSans(
+            color: Colors.white,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.0,
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        child,
+      ],
+    );
+  }
+}
+
+class _EventTag extends StatelessWidget {
+  const _EventTag({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsetsDirectional.fromSTEB(11.0, 7.0, 11.0, 7.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF201D22),
+        borderRadius: BorderRadius.circular(99.0),
+        border: Border.all(color: const Color(0x33FF4B4B)),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.openSans(
+          color: const Color(0xFFFFDADA),
+          fontSize: 13.0,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.0,
         ),
       ),
     );

@@ -15,9 +15,9 @@ class DaStruct extends FFSupabaseStruct {
     DateTime? date,
     DatauserStruct? user,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _date = date,
-        _user = user,
-        super(supabaseUtilData);
+  }) : _date = date,
+       _user = user,
+       super(supabaseUtilData);
 
   // "date" field.
   DateTime? _date;
@@ -38,45 +38,33 @@ class DaStruct extends FFSupabaseStruct {
   bool hasUser() => _user != null;
 
   static DaStruct fromMap(Map<String, dynamic> data) => DaStruct(
-        date: data['date'] as DateTime?,
-        user: data['user'] is DatauserStruct
-            ? data['user']
-            : DatauserStruct.maybeFromMap(data['user']),
-      );
+    date: data['date'] as DateTime?,
+    user: data['user'] is DatauserStruct
+        ? data['user']
+        : DatauserStruct.maybeFromMap(data['user']),
+  );
 
   static DaStruct? maybeFromMap(dynamic data) =>
       data is Map ? DaStruct.fromMap(data.cast<String, dynamic>()) : null;
 
-  Map<String, dynamic> toMap() => {
-        'date': _date,
-        'user': _user?.toMap(),
-      }.withoutNulls;
+  Map<String, dynamic> toMap() =>
+      {'date': _date, 'user': _user?.toMap()}.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'date': serializeParam(
-          _date,
-          ParamType.DateTime,
-        ),
-        'user': serializeParam(
-          _user,
-          ParamType.DataStruct,
-        ),
-      }.withoutNulls;
+    'date': serializeParam(_date, ParamType.DateTime),
+    'user': serializeParam(_user, ParamType.DataStruct),
+  }.withoutNulls;
 
   static DaStruct fromSerializableMap(Map<String, dynamic> data) => DaStruct(
-        date: deserializeParam(
-          data['date'],
-          ParamType.DateTime,
-          false,
-        ),
-        user: deserializeStructParam(
-          data['user'],
-          ParamType.DataStruct,
-          false,
-          structBuilder: DatauserStruct.fromSerializableMap,
-        ),
-      );
+    date: deserializeParam(data['date'], ParamType.DateTime, false),
+    user: deserializeStructParam(
+      data['user'],
+      ParamType.DataStruct,
+      false,
+      structBuilder: DatauserStruct.fromSerializableMap,
+    ),
+  );
 
   @override
   String toString() => 'DaStruct(${toMap()})';
@@ -97,28 +85,26 @@ DaStruct createDaStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DaStruct(
-      date: date,
-      user: user ?? (clearUnsetFields ? DatauserStruct() : null),
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DaStruct(
+  date: date,
+  user: user ?? (clearUnsetFields ? DatauserStruct() : null),
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DaStruct? updateDaStruct(
   DaStruct? da, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    da
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => da
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDaStructData(
   Map<String, dynamic> supabaseData,
@@ -168,7 +154,5 @@ Map<String, dynamic> getDaSupabaseData(
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }
 
-List<Map<String, dynamic>> getDaListSupabaseData(
-  List<DaStruct>? das,
-) =>
+List<Map<String, dynamic>> getDaListSupabaseData(List<DaStruct>? das) =>
     das?.map((e) => getDaSupabaseData(e, true)).toList() ?? [];

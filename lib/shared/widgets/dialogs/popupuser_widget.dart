@@ -161,9 +161,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
 
@@ -198,10 +200,7 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
           ClipRRect(
             borderRadius: BorderRadius.circular(0.0),
             child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 2.0,
-                sigmaY: 2.0,
-              ),
+              filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
               child: Align(
                 alignment: AlignmentDirectional(0.0, 1.0),
                 child: Container(
@@ -231,7 +230,8 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                   }
                   if (_model.indexdata! >= 5) {
                     _model.update = await UsersRecord.getDocumentOnce(
-                        (widget.listref!.elementAtOrNull(_model.indexdata!))!);
+                      (widget.listref!.elementAtOrNull(_model.indexdata!))!,
+                    );
                     _model.updateDataloadAtIndex(
                       functions.int5(_model.indexdata)!,
                       (_) => _model.update!,
@@ -252,8 +252,12 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                   return Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0.0,
+                        0.0,
+                        100.0,
+                      ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -261,7 +265,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 20.0),
+                              0.0,
+                              0.0,
+                              0.0,
+                              20.0,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF131313),
@@ -269,12 +277,9 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                   BoxShadow(
                                     blurRadius: 4.0,
                                     color: Color(0x34000000),
-                                    offset: Offset(
-                                      0.0,
-                                      2.0,
-                                    ),
+                                    offset: Offset(0.0, 2.0),
                                     spreadRadius: 4.0,
-                                  )
+                                  ),
                                 ],
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -288,9 +293,7 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                       color: Color(0xFF131313),
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: Image.network(
-                                          '',
-                                        ).image,
+                                        image: Image.network('').image,
                                       ),
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(0.0),
@@ -314,12 +317,17 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(20.0, 5.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          20.0,
+                                                          5.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Container(
                                                       width: 57.0,
                                                       height: 57.0,
@@ -338,17 +346,14 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                 Colors
                                                                     .transparent,
                                                             onTap: () async {
-                                                              await Navigator
-                                                                  .push(
+                                                              await Navigator.push(
                                                                 context,
                                                                 PageTransition(
                                                                   type:
                                                                       PageTransitionType
                                                                           .fade,
-                                                                  child:
-                                                                      MundayExpandedImageView(
-                                                                    image: Image
-                                                                        .network(
+                                                                  child: MundayExpandedImageView(
+                                                                    image: Image.network(
                                                                       dataSWItem
                                                                           .photoUrl,
                                                                       fit: BoxFit
@@ -371,11 +376,10 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                   true,
                                                               child: ClipRRect(
                                                                 borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            90.0),
-                                                                child: Image
-                                                                    .network(
+                                                                    BorderRadius.circular(
+                                                                      90.0,
+                                                                    ),
+                                                                child: Image.network(
                                                                   dataSWItem
                                                                       .photoUrl,
                                                                   width: 57.0,
@@ -390,7 +394,9 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      1.1, 1.1),
+                                                                    1.1,
+                                                                    1.1,
+                                                                  ),
                                                               child: Container(
                                                                 width: 19.0,
                                                                 height: 18.0,
@@ -401,31 +407,35 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                     Align(
                                                                       alignment:
                                                                           AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                      child:
-                                                                          Container(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                      child: Container(
                                                                         width:
                                                                             19.0,
                                                                         height:
                                                                             19.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFF171717),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFF171717,
+                                                                          ),
                                                                           shape:
                                                                               BoxShape.circle,
                                                                         ),
-                                                                        child:
-                                                                            Stack(
+                                                                        child: Stack(
                                                                           children: [
                                                                             Align(
-                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              alignment: AlignmentDirectional(
+                                                                                0.0,
+                                                                                0.0,
+                                                                              ),
                                                                               child: Container(
                                                                                 width: 12.0,
                                                                                 height: 12.0,
                                                                                 decoration: BoxDecoration(
-                                                                                  color: Color(0xFF00D333),
+                                                                                  color: Color(
+                                                                                    0xFF00D333,
+                                                                                  ),
                                                                                   image: DecorationImage(
                                                                                     fit: BoxFit.cover,
                                                                                     image: Image.network(
@@ -452,12 +462,17 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 0.0),
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(2.0, 5.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          2.0,
+                                                          5.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Container(
                                                       width: 140.0,
                                                       height: 54.0,
@@ -465,12 +480,12 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                           BoxDecoration(),
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    12.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              12.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.min,
@@ -483,12 +498,12 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          7.0),
+                                                                  EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    7.0,
+                                                                  ),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -500,34 +515,46 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0.03,
-                                                                            0.33),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          2.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Text(
+                                                                          0.03,
+                                                                          0.33,
+                                                                        ),
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                      child: Text(
                                                                         dataSWItem
                                                                             .displayName,
                                                                         textAlign:
                                                                             TextAlign.start,
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .override(
+                                                                        style:
+                                                                            Theme.of(
+                                                                              context,
+                                                                            ).textTheme.bodyMedium!.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                               ),
-                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                              color:
+                                                                                  Theme.of(
+                                                                                        context,
+                                                                                      )
+                                                                                      .extension<
+                                                                                        CustomColors
+                                                                                      >()!
+                                                                                      .primaryText,
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.4,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                              fontStyle: Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -546,8 +573,9 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          -0.16,
-                                                                          0.91),
+                                                                        -0.16,
+                                                                        0.91,
+                                                                      ),
                                                                   child: Text(
                                                                     dataSWItem
                                                                         .caption,
@@ -555,32 +583,31 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                                         TextAlign
                                                                             .start,
                                                                     maxLines: 2,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -599,12 +626,17 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: Container(
                                                       decoration:
                                                           BoxDecoration(),
@@ -617,101 +649,121 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                         children: [
                                                           if (false)
                                                             Opacity(
-                                                              opacity: widget
+                                                              opacity:
+                                                                  widget
                                                                       .offchat!
                                                                   ? 1.0
                                                                   : 0.0,
                                                               child: Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.9,
-                                                                        0.07),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {},
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          50.0,
-                                                                      height:
-                                                                          50.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        boxShadow: [
-                                                                          BoxShadow(
-                                                                            color: (currentUserDocument?.cheers.toList() ?? []).contains(dataSWItem.reference)
-                                                                                ? Color(0xBABDBDBD)
-                                                                                : Color(0x480E0E0E),
-                                                                          )
-                                                                        ],
-                                                                        gradient:
-                                                                            LinearGradient(
-                                                                          colors: [
-                                                                            Color(0xFF1D1D1D),
-                                                                            Color(0xFF111111)
-                                                                          ],
-                                                                          stops: [
-                                                                            0.0,
-                                                                            1.0
-                                                                          ],
-                                                                          begin: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.98),
-                                                                          end: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.98),
-                                                                        ),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color: (currentUserDocument?.cheers.toList() ?? []).contains(dataSWItem.reference)
-                                                                              ? Color(0xFFCACACA)
-                                                                              : Color(0xFF1D1D1D),
+                                                                      0.9,
+                                                                      0.07,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) =>
+                                                                      InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {},
+                                                                        child: Container(
                                                                           width:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                      child:
-                                                                          Stack(
-                                                                        children: [
-                                                                          Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
-                                                                              child: Image.network(
-                                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/gracfgcqeckm/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%A7%E0%B8%8A%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%81%E0%B8%94%E0%B8%87.png',
-                                                                                width: 38.0,
-                                                                                height: 38.0,
-                                                                                fit: BoxFit.cover,
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          decoration: BoxDecoration(
+                                                                            boxShadow: [
+                                                                              BoxShadow(
+                                                                                color:
+                                                                                    (currentUserDocument?.cheers.toList() ??
+                                                                                            [])
+                                                                                        .contains(
+                                                                                          dataSWItem.reference,
+                                                                                        )
+                                                                                    ? Color(
+                                                                                        0xBABDBDBD,
+                                                                                      )
+                                                                                    : Color(
+                                                                                        0x480E0E0E,
+                                                                                      ),
+                                                                              ),
+                                                                            ],
+                                                                            gradient: LinearGradient(
+                                                                              colors: [
+                                                                                Color(
+                                                                                  0xFF1D1D1D,
+                                                                                ),
+                                                                                Color(
+                                                                                  0xFF111111,
+                                                                                ),
+                                                                              ],
+                                                                              stops: [
+                                                                                0.0,
+                                                                                1.0,
+                                                                              ],
+                                                                              begin: AlignmentDirectional(
+                                                                                1.0,
+                                                                                0.98,
+                                                                              ),
+                                                                              end: AlignmentDirectional(
+                                                                                -1.0,
+                                                                                -0.98,
                                                                               ),
                                                                             ),
+                                                                            borderRadius: BorderRadius.circular(
+                                                                              10.0,
+                                                                            ),
+                                                                            border: Border.all(
+                                                                              color:
+                                                                                  (currentUserDocument?.cheers.toList() ??
+                                                                                          [])
+                                                                                      .contains(
+                                                                                        dataSWItem.reference,
+                                                                                      )
+                                                                                  ? Color(
+                                                                                      0xFFCACACA,
+                                                                                    )
+                                                                                  : Color(
+                                                                                      0xFF1D1D1D,
+                                                                                    ),
+                                                                              width: 2.0,
+                                                                            ),
                                                                           ),
-                                                                        ],
+                                                                          child: Stack(
+                                                                            children: [
+                                                                              Align(
+                                                                                alignment: AlignmentDirectional(
+                                                                                  0.0,
+                                                                                  0.0,
+                                                                                ),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    1.0,
+                                                                                  ),
+                                                                                  child: Image.network(
+                                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/gracfgcqeckm/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%A7%E0%B8%8A%E0%B8%99%E0%B9%83%E0%B8%88%E0%B9%81%E0%B8%94%E0%B8%87.png',
+                                                                                    width: 38.0,
+                                                                                    height: 38.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ).animateOnActionTrigger(
+                                                                        animationsMap['containerOnActionTriggerAnimation1']!,
                                                                       ),
-                                                                    ),
-                                                                  ).animateOnActionTrigger(
-                                                                    animationsMap[
-                                                                        'containerOnActionTriggerAnimation1']!,
-                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -723,12 +775,17 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                20.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          20.0,
+                                                          0.0,
+                                                        ),
                                                     child: Container(
                                                       decoration:
                                                           BoxDecoration(),
@@ -741,101 +798,127 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                         children: [
                                                           if (false)
                                                             Opacity(
-                                                              opacity: widget
+                                                              opacity:
+                                                                  widget
                                                                       .offchat!
                                                                   ? 1.0
                                                                   : 0.0,
                                                               child: Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.9,
-                                                                        0.07),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {},
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          50.0,
-                                                                      height:
-                                                                          50.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        boxShadow: [
-                                                                          BoxShadow(
-                                                                            color: (currentUserDocument?.cheers.toList() ?? []).contains(dataSWItem.reference)
-                                                                                ? Color(0xBABDBDBD)
-                                                                                : Color(0x480E0E0E),
-                                                                          )
-                                                                        ],
-                                                                        gradient:
-                                                                            LinearGradient(
-                                                                          colors: [
-                                                                            Color(0xFF1D1D1D),
-                                                                            Color(0xFF111111)
-                                                                          ],
-                                                                          stops: [
-                                                                            0.0,
-                                                                            1.0
-                                                                          ],
-                                                                          begin: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.98),
-                                                                          end: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.98),
-                                                                        ),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10.0),
-                                                                        border:
-                                                                            Border.all(
-                                                                          color: (currentUserDocument?.cheers.toList() ?? []).contains(dataSWItem.reference) || (currentUserDocument?.usercheerme.toList() ?? []).contains(dataSWItem.reference)
-                                                                              ? Color(0xFFCACACA)
-                                                                              : Color(0xFF1D1D1D),
+                                                                      0.9,
+                                                                      0.07,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) =>
+                                                                      InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {},
+                                                                        child: Container(
                                                                           width:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                      child:
-                                                                          Stack(
-                                                                        children: [
-                                                                          Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
-                                                                              child: Image.network(
-                                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
-                                                                                width: 38.0,
-                                                                                height: 38.0,
-                                                                                fit: BoxFit.cover,
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          decoration: BoxDecoration(
+                                                                            boxShadow: [
+                                                                              BoxShadow(
+                                                                                color:
+                                                                                    (currentUserDocument?.cheers.toList() ??
+                                                                                            [])
+                                                                                        .contains(
+                                                                                          dataSWItem.reference,
+                                                                                        )
+                                                                                    ? Color(
+                                                                                        0xBABDBDBD,
+                                                                                      )
+                                                                                    : Color(
+                                                                                        0x480E0E0E,
+                                                                                      ),
+                                                                              ),
+                                                                            ],
+                                                                            gradient: LinearGradient(
+                                                                              colors: [
+                                                                                Color(
+                                                                                  0xFF1D1D1D,
+                                                                                ),
+                                                                                Color(
+                                                                                  0xFF111111,
+                                                                                ),
+                                                                              ],
+                                                                              stops: [
+                                                                                0.0,
+                                                                                1.0,
+                                                                              ],
+                                                                              begin: AlignmentDirectional(
+                                                                                1.0,
+                                                                                0.98,
+                                                                              ),
+                                                                              end: AlignmentDirectional(
+                                                                                -1.0,
+                                                                                -0.98,
                                                                               ),
                                                                             ),
+                                                                            borderRadius: BorderRadius.circular(
+                                                                              10.0,
+                                                                            ),
+                                                                            border: Border.all(
+                                                                              color:
+                                                                                  (currentUserDocument?.cheers
+                                                                                                  .toList() ??
+                                                                                              [])
+                                                                                          .contains(
+                                                                                            dataSWItem.reference,
+                                                                                          ) ||
+                                                                                      (currentUserDocument?.usercheerme.toList() ??
+                                                                                              [])
+                                                                                          .contains(
+                                                                                            dataSWItem.reference,
+                                                                                          )
+                                                                                  ? Color(
+                                                                                      0xFFCACACA,
+                                                                                    )
+                                                                                  : Color(
+                                                                                      0xFF1D1D1D,
+                                                                                    ),
+                                                                              width: 2.0,
+                                                                            ),
                                                                           ),
-                                                                        ],
+                                                                          child: Stack(
+                                                                            children: [
+                                                                              Align(
+                                                                                alignment: AlignmentDirectional(
+                                                                                  0.0,
+                                                                                  0.0,
+                                                                                ),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    1.0,
+                                                                                  ),
+                                                                                  child: Image.network(
+                                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
+                                                                                    width: 38.0,
+                                                                                    height: 38.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ).animateOnActionTrigger(
+                                                                        animationsMap['containerOnActionTriggerAnimation2']!,
                                                                       ),
-                                                                    ),
-                                                                  ).animateOnActionTrigger(
-                                                                    animationsMap[
-                                                                        'containerOnActionTriggerAnimation2']!,
-                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -849,12 +932,18 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                           ],
                                         ),
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, -1.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            -1.0,
+                                          ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                                  0.0,
+                                                  10.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Container(
                                               width: 35.0,
                                               height: 2.5,
@@ -877,11 +966,8 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                         BoxShadow(
                                           blurRadius: 4.0,
                                           color: Color(0x66000000),
-                                          offset: Offset(
-                                            0.0,
-                                            2.0,
-                                          ),
-                                        )
+                                          offset: Offset(0.0, 2.0),
+                                        ),
                                       ],
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(15.0),
@@ -897,9 +983,9 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                           width: double.infinity,
                                           height: valueOrDefault<double>(
                                             functions.scaleshowphoto(
-                                                MediaQuery.sizeOf(context)
-                                                    .width,
-                                                15.0),
+                                              MediaQuery.sizeOf(context).width,
+                                              15.0,
+                                            ),
                                             300.0,
                                           ),
                                           decoration: BoxDecoration(
@@ -909,18 +995,23 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                 (dataSWItem.photoshow.photo1 ==
                                                             '') &&
                                                         (dataSWItem
-                                                                .photoshow.photo2 ==
+                                                                .photoshow
+                                                                .photo2 ==
                                                             '') &&
                                                         (dataSWItem
-                                                                .photoshow.photo3 ==
+                                                                .photoshow
+                                                                .photo3 ==
                                                             '') &&
                                                         (dataSWItem
-                                                                .photoshow.photo4 ==
+                                                                .photoshow
+                                                                .photo4 ==
                                                             '') &&
-                                                        (dataSWItem.photoshow
+                                                        (dataSWItem
+                                                                .photoshow
                                                                 .photo5 ==
                                                             '') &&
-                                                        (dataSWItem.photoshow
+                                                        (dataSWItem
+                                                                .photoshow
                                                                 .photo6 ==
                                                             '')
                                                     ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/03t8zus95k5z/Nophoto.png'
@@ -932,11 +1023,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                             padding: EdgeInsets.zero,
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              crossAxisSpacing: 1.5,
-                                              mainAxisSpacing: 1.5,
-                                              childAspectRatio: 1.0,
-                                            ),
+                                                  crossAxisCount: 3,
+                                                  crossAxisSpacing: 1.5,
+                                                  mainAxisSpacing: 1.5,
+                                                  childAspectRatio: 1.0,
+                                                ),
                                             primary: false,
                                             scrollDirection: Axis.vertical,
                                             children: [
@@ -948,14 +1039,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo1 !=
+                                                          .photoshow
+                                                          .photo1 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo1)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo1,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -966,24 +1059,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo1,
                                                     width: 300.0,
@@ -1000,14 +1097,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo2 !=
+                                                          .photoshow
+                                                          .photo2 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo1)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo1,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -1018,24 +1117,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo2,
                                                     width: 300.0,
@@ -1052,14 +1155,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo3 !=
+                                                          .photoshow
+                                                          .photo3 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo3)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo3,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -1070,24 +1175,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo3,
                                                     width: 300.0,
@@ -1104,14 +1213,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo4 !=
+                                                          .photoshow
+                                                          .photo4 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo4)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo4,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -1122,24 +1233,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo4,
                                                     width: 300.0,
@@ -1156,14 +1271,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo5 !=
+                                                          .photoshow
+                                                          .photo5 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo5)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo5,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -1174,24 +1291,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo5,
                                                     width: 300.0,
@@ -1208,14 +1329,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   if (dataSWItem
-                                                          .photoshow.photo6 !=
+                                                          .photoshow
+                                                          .photo6 !=
                                                       '') {
                                                     _model.photolist = functions
                                                         .add6ListPhoto(
-                                                            dataSWItem
-                                                                .photoshow,
-                                                            dataSWItem.photoshow
-                                                                .photo6)!
+                                                          dataSWItem.photoshow,
+                                                          dataSWItem
+                                                              .photoshow
+                                                              .photo6,
+                                                        )!
                                                         .toList()
                                                         .cast<String>();
                                                     safeSetState(() {});
@@ -1226,24 +1349,28 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child:
                                                               ShowpromotionWidget(
-                                                            photo: _model
-                                                                .photolist,
-                                                          ),
+                                                                photo: _model
+                                                                    .photolist,
+                                                              ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   }
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          0.0),
+                                                        0.0,
+                                                      ),
                                                   child: Image.network(
                                                     dataSWItem.photoshow.photo6,
                                                     width: 300.0,
@@ -1281,7 +1408,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 7.0, 10.0, 10.0),
+                                  20.0,
+                                  7.0,
+                                  10.0,
+                                  10.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -1293,19 +1424,27 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                         Container(
                                           height: 50.0,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
+                                            borderRadius: BorderRadius.circular(
+                                              20.0,
+                                            ),
                                           ),
                                           child: Visibility(
-                                            visible: dataSWItem.reference !=
+                                            visible:
+                                                dataSWItem.reference !=
                                                 currentUserReference,
                                             child: Align(
                                               alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
+                                                0.0,
+                                                0.0,
+                                              ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 10.0, 15.0, 10.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      15.0,
+                                                      10.0,
+                                                      15.0,
+                                                      10.0,
+                                                    ),
                                                 child: InkWell(
                                                   splashColor:
                                                       Colors.transparent,
@@ -1324,42 +1463,48 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+                                                          padding:
+                                                              MediaQuery.viewInsetsOf(
+                                                                context,
+                                                              ),
                                                           child: BlockWidget(
                                                             iduser: dataSWItem
                                                                 .reference,
                                                           ),
                                                         );
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    ).then(
+                                                      (value) =>
+                                                          safeSetState(() {}),
+                                                    );
                                                   },
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_simcn6td,
+                                                      context,
+                                                    )!.k_simcn6td,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
-                                                          color:
-                                                              Color(0xFF7D7D7D),
+                                                          color: Color(
+                                                            0xFF7D7D7D,
+                                                          ),
                                                           fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1390,7 +1535,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
+                                                0.0,
+                                                0.0,
+                                                10.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             width: 50.0,
                                             height: 60.0,
@@ -1400,9 +1549,10 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 1.0),
-                                                    child:
-                                                        MundayIconButton(
+                                                          0.0,
+                                                          1.0,
+                                                        ),
+                                                    child: MundayIconButton(
                                                       borderRadius: 10.0,
                                                       borderWidth: 2.0,
                                                       buttonSize: 50.0,
@@ -1410,40 +1560,46 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                         Icons.facebook,
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         size: 24.0,
                                                       ),
                                                       onPressed: () async {
                                                         await launchURL(
-                                                            functions.addsocial(
-                                                                'https://www.facebook.com/',
-                                                                dataSWItem
-                                                                    .iDFacebook)!);
+                                                          functions.addsocial(
+                                                            'https://www.facebook.com/',
+                                                            dataSWItem
+                                                                .iDFacebook,
+                                                          )!,
+                                                        );
                                                       },
                                                     ),
                                                   ),
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, -1.0),
+                                                        0.0,
+                                                        -1.0,
+                                                      ),
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_apsy2i5q,
+                                                      context,
+                                                    )!.k_apsy2i5q,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                           fontSize: 11.0,
                                                           letterSpacing: 0.0,
@@ -1464,7 +1620,11 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
+                                                0.0,
+                                                0.0,
+                                                10.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             width: 50.0,
                                             height: 60.0,
@@ -1474,9 +1634,10 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0.0, 1.0),
-                                                    child:
-                                                        MundayIconButton(
+                                                          0.0,
+                                                          1.0,
+                                                        ),
+                                                    child: MundayIconButton(
                                                       borderRadius: 10.0,
                                                       borderWidth: 2.0,
                                                       buttonSize: 50.0,
@@ -1485,40 +1646,45 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                                                             .instagram,
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         size: 24.0,
                                                       ),
                                                       onPressed: () async {
                                                         await launchURL(
-                                                            functions.addsocial(
-                                                                'instagram://user?username=',
-                                                                dataSWItem
-                                                                    .idig)!);
+                                                          functions.addsocial(
+                                                            'instagram://user?username=',
+                                                            dataSWItem.idig,
+                                                          )!,
+                                                        );
                                                       },
                                                     ),
                                                   ),
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, -1.0),
+                                                        0.0,
+                                                        -1.0,
+                                                      ),
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_fowb1nw4,
+                                                      context,
+                                                    )!.k_fowb1nw4,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                           fontSize: 11.0,
                                                           letterSpacing: 0.0,
@@ -1554,11 +1720,16 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                 cardDisplayCount: 3,
                 scale: 0.86,
                 maxAngle: 20.0,
-                cardPadding:
-                    EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+                cardPadding: EdgeInsetsDirectional.fromSTEB(
+                  15.0,
+                  0.0,
+                  15.0,
+                  0.0,
+                ),
                 backCardOffset: const Offset(0.0, 25.0),
-                allowedSwipeDirection:
-                    AllowedSwipeDirection.symmetric(horizontal: true),
+                allowedSwipeDirection: AllowedSwipeDirection.symmetric(
+                  horizontal: true,
+                ),
               );
             },
           ),
@@ -1580,221 +1751,258 @@ class _PopupuserWidgetState extends ConsumerState<PopupuserWidget>
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 30.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                width: 60.0,
-                                height: 60.0,
-                                decoration: BoxDecoration(
-                                  color: Color(0x981D1D1D),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Icon(
-                                    Icons.clear_rounded,
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
-                                    size: 30.0,
-                                  ),
-                                ),
-                              ),
-                            ).animateOnActionTrigger(
-                              animationsMap[
-                                  'containerOnActionTriggerAnimation3']!,
+                              0.0,
+                              0.0,
+                              30.0,
+                              0.0,
                             ),
+                            child:
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x981D1D1D),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Icon(
+                                        Icons.clear_rounded,
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
+                                            .primaryText,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  ),
+                                ).animateOnActionTrigger(
+                                  animationsMap['containerOnActionTriggerAnimation3']!,
+                                ),
                           ),
                           Align(
                             alignment: AlignmentDirectional(0.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                _model.swipeableStackController.swipe(CardSwiperDirection.right);
-                                if (animationsMap[
-                                        'containerOnActionTriggerAnimation4'] !=
-                                    null) {
-                                  await animationsMap[
-                                          'containerOnActionTriggerAnimation4']!
-                                      .controller
-                                      .forward(from: 0.0);
-                                }
-                              },
-                              child: Container(
-                                width: 90.0,
-                                height: 90.0,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xFFFF0000),
-                                      Color(0xFFC10000)
-                                    ],
-                                    stops: [0.0, 1.0],
-                                    begin: AlignmentDirectional(0.0, -1.0),
-                                    end: AlignmentDirectional(0, 1.0),
-                                  ),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Container(
-                                        width: 70.0,
-                                        height: 70.0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFF0000),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4.0,
-                                              color: Color(0x33000000),
-                                              offset: Offset(
-                                                0.0,
-                                                2.0,
-                                              ),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Container(
-                                                width: 38.0,
-                                                height: 36.0,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/tpcoeg4f3ab4/iconmain.png',
-                                                    ).image,
+                            child:
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    _model.swipeableStackController.swipe(
+                                      CardSwiperDirection.right,
+                                    );
+                                    if (animationsMap['containerOnActionTriggerAnimation4'] !=
+                                        null) {
+                                      await animationsMap['containerOnActionTriggerAnimation4']!
+                                          .controller
+                                          .forward(from: 0.0);
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 90.0,
+                                    height: 90.0,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFFF0000),
+                                          Color(0xFFC10000),
+                                        ],
+                                        stops: [0.0, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
+                                      ),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          child: Container(
+                                            width: 70.0,
+                                            height: 70.0,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFFF0000),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 4.0,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(0.0, 2.0),
+                                                ),
+                                              ],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                        0.0,
+                                                        0.0,
+                                                      ),
+                                                  child: Container(
+                                                    width: 38.0,
+                                                    height: 36.0,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: Image.network(
+                                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/tpcoeg4f3ab4/iconmain.png',
+                                                        ).image,
+                                                      ),
+                                                      shape: BoxShape.rectangle,
+                                                    ),
                                                   ),
-                                                  shape: BoxShape.rectangle,
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(1.0, -1.0),
-                                      child: Container(
-                                        width: 25.0,
-                                        height: 25.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 1.0, 3.0),
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .k_oe059td2,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: Colors.black,
-                                                        fontSize: 9.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                        Align(
+                                          alignment: AlignmentDirectional(
+                                            1.0,
+                                            -1.0,
+                                          ),
+                                          child: Container(
+                                            width: 25.0,
+                                            height: 25.0,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                        0.0,
+                                                        0.0,
                                                       ),
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 1.0),
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .k_5gvgklgz,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                          fontStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          1.0,
+                                                          3.0,
                                                         ),
-                                                        color: Colors.black,
-                                                        fontSize: 9.4,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                    child: Text(
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!.k_oe059td2,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color: Colors.black,
+                                                            fontSize: 9.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                        0.0,
+                                                        0.0,
+                                                      ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          0.0,
+                                                          1.0,
+                                                        ),
+                                                    child: Text(
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!.k_5gvgklgz,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color: Colors.black,
+                                                            fontSize: 9.4,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
+                                ).animateOnActionTrigger(
+                                  animationsMap['containerOnActionTriggerAnimation4']!,
                                 ),
-                              ),
-                            ).animateOnActionTrigger(
-                              animationsMap[
-                                  'containerOnActionTriggerAnimation4']!,
-                            ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                30.0, 0.0, 0.0, 0.0),
+                              30.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,

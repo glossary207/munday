@@ -29,7 +29,9 @@ class SendOtpCall {
         return OtpApiResult(success: true, data: data);
       }
       return OtpApiResult(
-          success: false, error: data['error']?.toString() ?? 'เกิดข้อผิดพลาด');
+        success: false,
+        error: data['error']?.toString() ?? 'เกิดข้อผิดพลาด',
+      );
     } catch (e) {
       return OtpApiResult(success: false, error: e.toString());
     }
@@ -60,8 +62,9 @@ class VerifyOtpCall {
         return OtpApiResult(success: true, data: data);
       }
       return OtpApiResult(
-          success: false,
-          error: data['error']?.toString() ?? 'รหัส OTP ไม่ถูกต้อง');
+        success: false,
+        error: data['error']?.toString() ?? 'รหัส OTP ไม่ถูกต้อง',
+      );
     } catch (e) {
       return OtpApiResult(success: false, error: e.toString());
     }
@@ -84,17 +87,16 @@ class TestLoginCall {
           'Authorization': 'Bearer $_supabaseAnonKey',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({
-          'phone': phone,
-          'login_type': loginType,
-        }),
+        body: jsonEncode({'phone': phone, 'login_type': loginType}),
       );
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return OtpApiResult(success: true, data: data);
       }
       return OtpApiResult(
-          success: false, error: data['error']?.toString() ?? 'เกิดข้อผิดพลาด');
+        success: false,
+        error: data['error']?.toString() ?? 'เกิดข้อผิดพลาด',
+      );
     } catch (e) {
       return OtpApiResult(success: false, error: e.toString());
     }

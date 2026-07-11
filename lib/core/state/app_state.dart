@@ -9,22 +9,20 @@ import '/backend/backend.dart';
 import 'package:munday/core/utils/app_util.dart';
 import 'package:munday/core/theme/app_theme.dart';
 
-
 class AppState extends ChangeNotifier {
-  
   static SharedPreferences? _prefs;
   static AppState _instance = AppState._internal();
-  
+
   factory AppState() {
     return _instance;
   }
-  
+
   AppState._internal();
 
   static AppState of(BuildContext context, {bool listen = true}) =>
       listen ? context.watch<AppState>() : context.read<AppState>();
-      
-  static void reset() { 
+
+  static void reset() {
     _instance = AppState._internal();
   }
 
@@ -236,10 +234,7 @@ class AppState extends ChangeNotifier {
     addviewID.removeAt(index);
   }
 
-  void updateAddviewIDAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateAddviewIDAtIndex(int index, String Function(String) updateFn) {
     addviewID[index] = updateFn(_addviewID[index]);
   }
 
@@ -310,7 +305,7 @@ class AppState extends ChangeNotifier {
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/m7f50e60o4li/12.png',
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/ptigutwmwcxt/13.png',
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/to20g1xtx0w4/14.png',
-    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/2b9qe93zugdw/15.png'
+    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/2b9qe93zugdw/15.png',
   ];
   List<String> get photohowto => _photohowto;
   set photohowto(List<String> value) {
@@ -329,10 +324,7 @@ class AppState extends ChangeNotifier {
     photohowto.removeAt(index);
   }
 
-  void updatePhotohowtoAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updatePhotohowtoAtIndex(int index, String Function(String) updateFn) {
     photohowto[index] = updateFn(_photohowto[index]);
   }
 
@@ -364,10 +356,7 @@ class AppState extends ChangeNotifier {
     menuItems.removeAt(index);
   }
 
-  void updateMenuItemsAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateMenuItemsAtIndex(int index, String Function(String) updateFn) {
     menuItems[index] = updateFn(_menuItems[index]);
   }
 
@@ -413,7 +402,7 @@ class AppState extends ChangeNotifier {
   List<String> _BGTEST = [
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/2tq369gzi0mf/428195740_727411762896878_3952389177617707713_n.jpg',
     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/9it3k8cj92qi/456519889_931858535634681_5232096964936971543_n.jpg',
-    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/lx2juiwhujj0/368250799_669125878576117_3371658792756169447_n.jpg'
+    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/lx2juiwhujj0/368250799_669125878576117_3371658792756169447_n.jpg',
   ];
   List<String> get BGTEST => _BGTEST;
   set BGTEST(List<String> value) {
@@ -432,10 +421,7 @@ class AppState extends ChangeNotifier {
     BGTEST.removeAt(index);
   }
 
-  void updateBGTESTAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateBGTESTAtIndex(int index, String Function(String) updateFn) {
     BGTEST[index] = updateFn(_BGTEST[index]);
   }
 
@@ -497,10 +483,7 @@ class AppState extends ChangeNotifier {
     StyleVenuse.removeAt(index);
   }
 
-  void updateStyleVenuseAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateStyleVenuseAtIndex(int index, String Function(String) updateFn) {
     StyleVenuse[index] = updateFn(_StyleVenuse[index]);
   }
 
@@ -526,10 +509,7 @@ class AppState extends ChangeNotifier {
     StyleMusic.removeAt(index);
   }
 
-  void updateStyleMusicAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateStyleMusicAtIndex(int index, String Function(String) updateFn) {
     StyleMusic[index] = updateFn(_StyleMusic[index]);
   }
 
@@ -555,10 +535,7 @@ class AppState extends ChangeNotifier {
     SeatSelect.removeAt(index);
   }
 
-  void updateSeatSelectAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateSeatSelectAtIndex(int index, String Function(String) updateFn) {
     SeatSelect[index] = updateFn(_SeatSelect[index]);
   }
 
@@ -602,10 +579,7 @@ class AppState extends ChangeNotifier {
     datadate.removeAt(index);
   }
 
-  void updateDatadateAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateDatadateAtIndex(int index, String Function(String) updateFn) {
     datadate[index] = updateFn(_datadate[index]);
   }
 
@@ -662,10 +636,16 @@ class AppState extends ChangeNotifier {
   }
 
   List<StoryItemStruct> _storylist = [
-    StoryItemStruct.fromSerializableMap(jsonDecode(
-        '{\"type\":\"pageVideo\",\"title\":\"Hello World\",\"url\":\"https://firebasestorage.googleapis.com/v0/b/chatblack-6g2orl.appspot.com/o/cms_uploads%2FVenues%2F1734213238003000%2FDownload%20(25).mp4?alt=media&token=bd960803-f07e-4155-9fef-1f91d27c418e\",\"backgroundColor\":\"#0000\",\"caption\":\"Hello World\"}')),
-    StoryItemStruct.fromSerializableMap(jsonDecode(
-        '{\"type\":\"pageVideo\",\"title\":\"Hello World\",\"url\":\"https://firebasestorage.googleapis.com/v0/b/chatblack-6g2orl.appspot.com/o/cms_uploads%2FVenues%2F1734213238005000%2FDownload%20(26).mp4?alt=media&token=ef6ea896-11ee-423b-a5f9-9a845f1fd389\",\"backgroundColor\":\"#0000\",\"caption\":\"Hello World\"}'))
+    StoryItemStruct.fromSerializableMap(
+      jsonDecode(
+        '{\"type\":\"pageVideo\",\"title\":\"Hello World\",\"url\":\"https://firebasestorage.googleapis.com/v0/b/chatblack-6g2orl.appspot.com/o/cms_uploads%2FVenues%2F1734213238003000%2FDownload%20(25).mp4?alt=media&token=bd960803-f07e-4155-9fef-1f91d27c418e\",\"backgroundColor\":\"#0000\",\"caption\":\"Hello World\"}',
+      ),
+    ),
+    StoryItemStruct.fromSerializableMap(
+      jsonDecode(
+        '{\"type\":\"pageVideo\",\"title\":\"Hello World\",\"url\":\"https://firebasestorage.googleapis.com/v0/b/chatblack-6g2orl.appspot.com/o/cms_uploads%2FVenues%2F1734213238005000%2FDownload%20(26).mp4?alt=media&token=ef6ea896-11ee-423b-a5f9-9a845f1fd389\",\"backgroundColor\":\"#0000\",\"caption\":\"Hello World\"}',
+      ),
+    ),
   ];
   List<StoryItemStruct> get storylist => _storylist;
   set storylist(List<StoryItemStruct> value) {
@@ -700,17 +680,15 @@ class AppState extends ChangeNotifier {
     String? uniqueQueryKey,
     bool? overrideCache,
     required Stream<ChatRoomsRecord> Function() requestFn,
-  }) =>
-      _datachatManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
+  }) => _datachatManager.performRequest(
+    uniqueQueryKey: uniqueQueryKey,
+    overrideCache: overrideCache,
+    requestFn: requestFn,
+  );
   void clearDatachatCache() => _datachatManager.clear();
   void clearDatachatCacheKey(String? uniqueKey) =>
       _datachatManager.clearRequest(uniqueKey);
 }
-
 
 extension AppStateExtension on BuildContext {
   AppState get appState => AppState.of(this, listen: false);

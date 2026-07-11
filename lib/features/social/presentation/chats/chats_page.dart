@@ -51,7 +51,7 @@ class ChatsPage extends ConsumerStatefulWidget {
 }
 
 class _ChatsWidgetState extends ConsumerState<ChatsPage> {
-  static const bool _mockMode = true;
+  static const bool _mockMode = false;
 
   late ChatsModel _model;
 
@@ -73,8 +73,10 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
       _model.lockchatt = false;
       safeSetState(() {});
       if (!context.appState.relock) {
-        context.appState.namestorelink =
-            valueOrDefault(currentUserDocument?.checkin, '');
+        context.appState.namestorelink = valueOrDefault(
+          currentUserDocument?.checkin,
+          '',
+        );
         context.appState.ActivePromotion = false;
         context.appState.apiready = true;
         context.appState.relock = true;
@@ -135,14 +137,20 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 16.0),
+                          20.0,
+                          0.0,
+                          20.0,
+                          16.0,
+                        ),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, -1.0),
+                                alignment: const AlignmentDirectional(
+                                  -1.0,
+                                  -1.0,
+                                ),
                                 child: ListView.builder(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -154,7 +162,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                     return Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 24.0, 0.0, 0.0),
+                                            0.0,
+                                            24.0,
+                                            0.0,
+                                            0.0,
+                                          ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment: isMe
@@ -169,7 +181,8 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                               height: 36.0,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle),
+                                                shape: BoxShape.circle,
+                                              ),
                                               child: Image.network(
                                                 valueOrDefault<String>(
                                                   widget.userProfile,
@@ -182,7 +195,8 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                             const SizedBox(width: 16.0),
                                           Container(
                                             constraints: const BoxConstraints(
-                                                maxWidth: 260.0),
+                                              maxWidth: 260.0,
+                                            ),
                                             decoration: BoxDecoration(
                                               color: isMe
                                                   ? const Color(0xFFB50000)
@@ -194,20 +208,26 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                     const Radius.circular(24.0),
                                                 topLeft: isMe
                                                     ? const Radius.circular(
-                                                        24.0)
+                                                        24.0,
+                                                      )
                                                     : const Radius.circular(
-                                                        3.0),
+                                                        3.0,
+                                                      ),
                                                 topRight: isMe
                                                     ? const Radius.circular(3.0)
                                                     : const Radius.circular(
-                                                        24.0),
+                                                        24.0,
+                                                      ),
                                               ),
                                             ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      16.0, 12.0, 16.0, 12.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    16.0,
+                                                    12.0,
+                                                    16.0,
+                                                    12.0,
+                                                  ),
                                               child: Column(
                                                 crossAxisAlignment: isMe
                                                     ? CrossAxisAlignment.end
@@ -221,8 +241,8 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(),
+                                                          font:
+                                                              GoogleFonts.openSans(),
                                                           color: Colors.white,
                                                         ),
                                                   ),
@@ -233,12 +253,13 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(),
+                                                          font:
+                                                              GoogleFonts.openSans(),
                                                           color: isMe
                                                               ? Colors.white70
                                                               : const Color(
-                                                                  0xFFE0E0E0),
+                                                                  0xFFE0E0E0,
+                                                                ),
                                                           fontSize: 10.0,
                                                         ),
                                                   ),
@@ -262,11 +283,19 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
               ),
               // Input bar
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 28.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  0.0,
+                  0.0,
+                  28.0,
+                ),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      20.0, 0.0, 20.0, 0.0),
+                    20.0,
+                    0.0,
+                    20.0,
+                    0.0,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -278,7 +307,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                12.0, 6.0, 12.0, 6.0),
+                              12.0,
+                              6.0,
+                              12.0,
+                              6.0,
+                            ),
                             child: Row(
                               children: [
                                 const Expanded(
@@ -287,13 +320,16 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                     style: TextStyle(color: Color(0xFFBDBDBD)),
                                   ),
                                 ),
-                                Image.asset('assets/images/camera.png',
-                                    height: 16.0),
+                                Image.asset(
+                                  'assets/images/camera.png',
+                                  height: 16.0,
+                                ),
                                 const SizedBox(width: 10.0),
                                 Image.network(
-                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/w5g3s4lkc5m8/%E0%B9%80%E0%B8%9E%E0%B8%B4%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%83%E0%B8%99%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%A2_(3).png',
-                                    width: 20.0,
-                                    height: 20.0),
+                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/w5g3s4lkc5m8/%E0%B9%80%E0%B8%9E%E0%B8%B4%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%83%E0%B8%99%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%A2_(3).png',
+                                  width: 20.0,
+                                  height: 20.0,
+                                ),
                               ],
                             ),
                           ),
@@ -307,8 +343,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                           color: Color(0xFFFF0000),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.send_rounded,
-                            color: Colors.white, size: 20.0),
+                        child: const Icon(
+                          Icons.send_rounded,
+                          color: Colors.white,
+                          size: 20.0,
+                        ),
                       ),
                     ],
                   ),
@@ -328,8 +367,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                 children: [
                   InkWell(
                     onTap: () => context.pop(),
-                    child: const Icon(Icons.arrow_back_ios_new,
-                        color: Color(0xFFBDBDBD), size: 30.0),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Color(0xFFBDBDBD),
+                      size: 30.0,
+                    ),
                   ),
                   const SizedBox(width: 10.0),
                   Container(
@@ -349,16 +391,18 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                   Text(
                     widget.name,
                     style: Theme.of(context).textTheme.bodyMedium!.override(
-                          font:
-                              GoogleFonts.openSans(fontWeight: FontWeight.w600),
-                          color: Colors.white,
-                          fontSize: 17.0,
-                        ),
+                      font: GoogleFonts.openSans(fontWeight: FontWeight.w600),
+                      color: Colors.white,
+                      fontSize: 17.0,
+                    ),
                   ),
                 ],
               ),
-              const Icon(Icons.more_vert_sharp,
-                  color: Color(0xFFBDBDBD), size: 30.0),
+              const Icon(
+                Icons.more_vert_sharp,
+                color: Color(0xFFBDBDBD),
+                size: 30.0,
+              ),
             ],
           ),
         ),
@@ -379,10 +423,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: Colors.black,
-          body: SafeArea(
-            top: true,
-            child: _buildMockBody(context),
-          ),
+          body: SafeArea(top: true, child: _buildMockBody(context)),
         ),
       );
     }
@@ -400,26 +441,30 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
           body: SafeArea(
             top: true,
             child: StreamBuilder<ChatRoomsRecord>(
-              stream: context.appState.datachat(
-                uniqueQueryKey: valueOrDefault<String>(
-                  widget.roomref?.id,
-                  'aaa',
-                ),
-                requestFn: () => ChatRoomsRecord.getDocument(widget.roomref!),
-              )..listen((stackChatRoomsRecord) async {
-                  if (_model.stackPreviousSnapshot != null &&
-                      !ChatRoomsRecordDocumentEquality().equals(
-                          stackChatRoomsRecord, _model.stackPreviousSnapshot)) {
-                    await _model.columnController?.animateTo(
-                      _model.columnController!.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 100),
-                      curve: Curves.ease,
-                    );
+              stream:
+                  context.appState.datachat(
+                    uniqueQueryKey: valueOrDefault<String>(
+                      widget.roomref?.id,
+                      'aaa',
+                    ),
+                    requestFn: () =>
+                        ChatRoomsRecord.getDocument(widget.roomref!),
+                  )..listen((stackChatRoomsRecord) async {
+                    if (_model.stackPreviousSnapshot != null &&
+                        !ChatRoomsRecordDocumentEquality().equals(
+                          stackChatRoomsRecord,
+                          _model.stackPreviousSnapshot,
+                        )) {
+                      await _model.columnController?.animateTo(
+                        _model.columnController!.position.maxScrollExtent,
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.ease,
+                      );
 
-                    safeSetState(() {});
-                  }
-                  _model.stackPreviousSnapshot = stackChatRoomsRecord;
-                }),
+                      safeSetState(() {});
+                    }
+                    _model.stackPreviousSnapshot = stackChatRoomsRecord;
+                  }),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -441,8 +486,12 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                 return Stack(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 38.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        38.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -459,7 +508,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 0.0, 20.0, 16.0),
+                                      20.0,
+                                      0.0,
+                                      20.0,
+                                      16.0,
+                                    ),
                                     child: SingleChildScrollView(
                                       controller: _model.columnController,
                                       child: Column(
@@ -467,31 +520,35 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                         children: [
                                           Align(
                                             alignment: AlignmentDirectional(
-                                                -1.0, -1.0),
+                                              -1.0,
+                                              -1.0,
+                                            ),
                                             child: Builder(
                                               builder: (context) {
                                                 return StreamBuilder<
-                                                    List<MessagesRecord>>(
+                                                  List<MessagesRecord>
+                                                >(
                                                   stream: queryMessagesRecord(
                                                     queryBuilder: (query) =>
                                                         query
                                                             .where(
-                                                                'chat_room_id',
-                                                                isEqualTo: widget
-                                                                    .roomref!
-                                                                    .id)
+                                                              'chat_room_id',
+                                                              isEqualTo: widget
+                                                                  .roomref!
+                                                                  .id,
+                                                            )
                                                             .orderBy(
-                                                                'timestamp',
-                                                                descending:
-                                                                    false),
+                                                              'timestamp',
+                                                              descending: false,
+                                                            ),
                                                   ),
-                                                  builder: (context,
-                                                      messagesSnapshot) {
+                                                  builder: (context, messagesSnapshot) {
                                                     if (!messagesSnapshot
                                                         .hasData)
                                                       return const Center(
-                                                          child:
-                                                              CircularProgressIndicator());
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      );
                                                     final datachat =
                                                         messagesSnapshot.data!;
 
@@ -503,11 +560,9 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                           Axis.vertical,
                                                       itemCount:
                                                           datachat.length,
-                                                      itemBuilder: (context,
-                                                          datachatIndex) {
+                                                      itemBuilder: (context, datachatIndex) {
                                                         final datachatItem =
-                                                            datachat[
-                                                                datachatIndex];
+                                                            datachat[datachatIndex];
                                                         return Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -520,26 +575,28 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                     currentUserReference
                                                                         ?.id) &&
                                                                 !functions.checklist(
-                                                                    (currentUserDocument?.blockuser.toList() ??
-                                                                            [])
-                                                                        .map((e) => e
-                                                                            .id)
-                                                                        .toList(),
-                                                                    datachatItem
-                                                                        .senderId)!)
+                                                                  (currentUserDocument
+                                                                              ?.blockuser
+                                                                              .toList() ??
+                                                                          [])
+                                                                      .map(
+                                                                        (e) => e
+                                                                            .id,
+                                                                      )
+                                                                      .toList(),
+                                                                  datachatItem
+                                                                      .senderId,
+                                                                )!)
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            24.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Row(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      24.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) => Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
                                                                             .max,
@@ -561,22 +618,21 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                             Colors.transparent,
                                                                         onTap:
                                                                             () async {},
-                                                                        child:
-                                                                            Container(
+                                                                        child: Container(
                                                                           width:
                                                                               36.0,
                                                                           height:
                                                                               36.0,
                                                                           clipBehavior:
                                                                               Clip.antiAlias,
-                                                                          decoration:
-                                                                              BoxDecoration(
+                                                                          decoration: BoxDecoration(
                                                                             shape:
                                                                                 BoxShape.circle,
                                                                           ),
-                                                                          child:
-                                                                              Image.network(
-                                                                            valueOrDefault<String>(
+                                                                          child: Image.network(
+                                                                            valueOrDefault<
+                                                                              String
+                                                                            >(
                                                                               datachatItem.senderPhoto,
                                                                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
                                                                             ),
@@ -587,37 +643,42 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                       ),
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               300.0,
                                                                           height:
                                                                               180.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
+                                                                          constraints: BoxConstraints(
                                                                             maxWidth:
                                                                                 260.0,
                                                                             maxHeight:
                                                                                 180.0,
                                                                           ),
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFF232323),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(24.0),
-                                                                              bottomRight: Radius.circular(24.0),
-                                                                              topLeft: Radius.circular(3.0),
-                                                                              topRight: Radius.circular(24.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFF232323,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                24.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                24.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                3.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                24.0,
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                          child:
-                                                                              Stack(
+                                                                          child: Stack(
                                                                             children: [
                                                                               InkWell(
                                                                                 splashColor: Colors.transparent,
@@ -645,7 +706,9 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                   tag: datachatItem.imageUrl,
                                                                                   transitionOnUserGestures: true,
                                                                                   child: ClipRRect(
-                                                                                    borderRadius: BorderRadius.circular(8.0),
+                                                                                    borderRadius: BorderRadius.circular(
+                                                                                      8.0,
+                                                                                    ),
                                                                                     child: Image.network(
                                                                                       datachatItem.imageUrl,
                                                                                       width: 300.0,
@@ -656,38 +719,72 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                 ),
                                                                               ),
                                                                               Align(
-                                                                                alignment: AlignmentDirectional(1.0, 1.0),
+                                                                                alignment: AlignmentDirectional(
+                                                                                  1.0,
+                                                                                  1.0,
+                                                                                ),
                                                                                 child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    5.0,
+                                                                                    5.0,
+                                                                                  ),
                                                                                   child: Container(
                                                                                     width: 80.0,
                                                                                     height: 26.0,
                                                                                     decoration: BoxDecoration(
-                                                                                      color: Color(0xBF15161E),
+                                                                                      color: Color(
+                                                                                        0xBF15161E,
+                                                                                      ),
                                                                                       borderRadius: BorderRadius.only(
-                                                                                        bottomLeft: Radius.circular(15.0),
-                                                                                        bottomRight: Radius.circular(15.0),
-                                                                                        topLeft: Radius.circular(15.0),
-                                                                                        topRight: Radius.circular(15.0),
+                                                                                        bottomLeft: Radius.circular(
+                                                                                          15.0,
+                                                                                        ),
+                                                                                        bottomRight: Radius.circular(
+                                                                                          15.0,
+                                                                                        ),
+                                                                                        topLeft: Radius.circular(
+                                                                                          15.0,
+                                                                                        ),
+                                                                                        topRight: Radius.circular(
+                                                                                          15.0,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
                                                                                     child: Align(
-                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      alignment: AlignmentDirectional(
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                      ),
                                                                                       child: Text(
                                                                                         dateTimeFormat(
                                                                                           "Hm",
                                                                                           datachatItem.timestamp!,
-                                                                                          locale: Localizations.localeOf(context).languageCode,
+                                                                                          locale: Localizations.localeOf(
+                                                                                            context,
+                                                                                          ).languageCode,
                                                                                         ),
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
-                                                                                                fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontWeight: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontWeight,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
                                                                                               fontSize: 12.0,
                                                                                               letterSpacing: 0.0,
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                       ),
                                                                                     ),
@@ -711,12 +808,12 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                         ?.id))
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            24.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      24.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: InkWell(
                                                                   splashColor:
                                                                       Colors
@@ -728,8 +825,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                   highlightColor:
                                                                       Colors
                                                                           .transparent,
-                                                                  onLongPress:
-                                                                      () async {
+                                                                  onLongPress: () async {
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
                                                                           true,
@@ -738,23 +834,28 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                               .transparent,
                                                                       context:
                                                                           context,
-                                                                      builder:
-                                                                          (context) {
+                                                                      builder: (context) {
                                                                         return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
+                                                                          onTap: () {
+                                                                            FocusScope.of(
+                                                                              context,
+                                                                            ).unfocus();
                                                                             FocusManager.instance.primaryFocus?.unfocus();
                                                                           },
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
-                                                                            child:
-                                                                                DelchatWidget(
+                                                                          child: Padding(
+                                                                            padding: MediaQuery.viewInsetsOf(
+                                                                              context,
+                                                                            ),
+                                                                            child: DelchatWidget(
                                                                               chatID: datachatItem.reference.id.hashCode,
                                                                               room: widget.roomref!,
-                                                                              who: SupabaseFirestore.instance.collection('users').doc(datachatItem.senderId),
+                                                                              who: SupabaseFirestore.instance
+                                                                                  .collection(
+                                                                                    'users',
+                                                                                  )
+                                                                                  .doc(
+                                                                                    datachatItem.senderId,
+                                                                                  ),
                                                                               testmessage: datachatItem.text,
                                                                               photomessage: datachatItem.imageUrl,
                                                                               time: datachatItem.timestamp!,
@@ -762,9 +863,13 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                           ),
                                                                         );
                                                                       },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
+                                                                    ).then(
+                                                                      (
+                                                                        value,
+                                                                      ) => safeSetState(
+                                                                        () {},
+                                                                      ),
+                                                                    );
                                                                   },
                                                                   child: Row(
                                                                     mainAxisSize:
@@ -782,31 +887,32 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                             300.0,
                                                                         height:
                                                                             180.0,
-                                                                        constraints:
-                                                                            BoxConstraints(
+                                                                        constraints: BoxConstraints(
                                                                           maxWidth:
                                                                               260.0,
                                                                           maxHeight:
                                                                               180.0,
                                                                         ),
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFF232323),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(24.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(24.0),
-                                                                            topLeft:
-                                                                                Radius.circular(24.0),
-                                                                            topRight:
-                                                                                Radius.circular(3.0),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFF232323,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.only(
+                                                                            bottomLeft: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            bottomRight: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            topLeft: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            topRight: Radius.circular(
+                                                                              3.0,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                        child:
-                                                                            Stack(
+                                                                        child: Stack(
                                                                           children: [
                                                                             InkWell(
                                                                               splashColor: Colors.transparent,
@@ -834,7 +940,9 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                 tag: datachatItem.imageUrl,
                                                                                 transitionOnUserGestures: true,
                                                                                 child: ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  borderRadius: BorderRadius.circular(
+                                                                                    8.0,
+                                                                                  ),
                                                                                   child: Image.network(
                                                                                     datachatItem.imageUrl,
                                                                                     width: 300.0,
@@ -845,38 +953,72 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                               ),
                                                                             ),
                                                                             Align(
-                                                                              alignment: AlignmentDirectional(1.0, 1.0),
+                                                                              alignment: AlignmentDirectional(
+                                                                                1.0,
+                                                                                1.0,
+                                                                              ),
                                                                               child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                  0.0,
+                                                                                  0.0,
+                                                                                  5.0,
+                                                                                  5.0,
+                                                                                ),
                                                                                 child: Container(
                                                                                   width: 80.0,
                                                                                   height: 26.0,
                                                                                   decoration: BoxDecoration(
-                                                                                    color: Color(0xBF15161E),
+                                                                                    color: Color(
+                                                                                      0xBF15161E,
+                                                                                    ),
                                                                                     borderRadius: BorderRadius.only(
-                                                                                      bottomLeft: Radius.circular(15.0),
-                                                                                      bottomRight: Radius.circular(15.0),
-                                                                                      topLeft: Radius.circular(15.0),
-                                                                                      topRight: Radius.circular(15.0),
+                                                                                      bottomLeft: Radius.circular(
+                                                                                        15.0,
+                                                                                      ),
+                                                                                      bottomRight: Radius.circular(
+                                                                                        15.0,
+                                                                                      ),
+                                                                                      topLeft: Radius.circular(
+                                                                                        15.0,
+                                                                                      ),
+                                                                                      topRight: Radius.circular(
+                                                                                        15.0,
+                                                                                      ),
                                                                                     ),
                                                                                   ),
                                                                                   child: Align(
-                                                                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                    alignment: AlignmentDirectional(
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                    ),
                                                                                     child: Text(
                                                                                       dateTimeFormat(
                                                                                         "Hm",
                                                                                         datachatItem.timestamp!,
-                                                                                        locale: Localizations.localeOf(context).languageCode,
+                                                                                        locale: Localizations.localeOf(
+                                                                                          context,
+                                                                                        ).languageCode,
                                                                                       ),
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                             fontSize: 12.0,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontWeight: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontWeight,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -898,26 +1040,28 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                     currentUserReference
                                                                         ?.id) &&
                                                                 !functions.checklist(
-                                                                    (currentUserDocument?.blockuser.toList() ??
-                                                                            [])
-                                                                        .map((e) => e
-                                                                            .id)
-                                                                        .toList(),
-                                                                    datachatItem
-                                                                        .senderId)!)
+                                                                  (currentUserDocument
+                                                                              ?.blockuser
+                                                                              .toList() ??
+                                                                          [])
+                                                                      .map(
+                                                                        (e) => e
+                                                                            .id,
+                                                                      )
+                                                                      .toList(),
+                                                                  datachatItem
+                                                                      .senderId,
+                                                                )!)
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            24.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Row(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      24.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) => Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
                                                                             .max,
@@ -934,27 +1078,25 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                             Colors.transparent,
                                                                         highlightColor:
                                                                             Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
+                                                                        onTap: () async {
                                                                           if (widget
                                                                               .openchat!) {}
                                                                         },
-                                                                        child:
-                                                                            Container(
+                                                                        child: Container(
                                                                           width:
                                                                               36.0,
                                                                           height:
                                                                               36.0,
                                                                           clipBehavior:
                                                                               Clip.antiAlias,
-                                                                          decoration:
-                                                                              BoxDecoration(
+                                                                          decoration: BoxDecoration(
                                                                             shape:
                                                                                 BoxShape.circle,
                                                                           ),
-                                                                          child:
-                                                                              Image.network(
-                                                                            valueOrDefault<String>(
+                                                                          child: Image.network(
+                                                                            valueOrDefault<
+                                                                              String
+                                                                            >(
                                                                               datachatItem.senderPhoto,
                                                                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
                                                                             ),
@@ -965,40 +1107,45 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                       ),
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               300.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
+                                                                          constraints: BoxConstraints(
                                                                             maxWidth:
                                                                                 260.0,
                                                                           ),
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFF131313),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(24.0),
-                                                                              bottomRight: Radius.circular(24.0),
-                                                                              topLeft: Radius.circular(3.0),
-                                                                              topRight: Radius.circular(24.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFF131313,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                24.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                24.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                3.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                24.0,
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                          child:
-                                                                              Padding(
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                16.0,
-                                                                                12.0,
-                                                                                16.0,
-                                                                                12.0),
-                                                                            child:
-                                                                                Row(
+                                                                              16.0,
+                                                                              12.0,
+                                                                              16.0,
+                                                                              12.0,
+                                                                            ),
+                                                                            child: Row(
                                                                               mainAxisSize: MainAxisSize.max,
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -1013,19 +1160,39 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                         maxWidth: 260.0,
                                                                                       ),
                                                                                       decoration: BoxDecoration(
-                                                                                        color: Color(0xFF131313),
+                                                                                        color: Color(
+                                                                                          0xFF131313,
+                                                                                        ),
                                                                                       ),
                                                                                       child: Text(
                                                                                         datachatItem.text,
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
-                                                                                                fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontWeight: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontWeight,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
-                                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                              color:
+                                                                                                  Theme.of(
+                                                                                                        context,
+                                                                                                      )
+                                                                                                      .extension<
+                                                                                                        CustomColors
+                                                                                                      >()!
+                                                                                                      .primaryText,
                                                                                               letterSpacing: 0.0,
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                       ),
                                                                                     ),
@@ -1039,18 +1206,33 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                       dateTimeFormat(
                                                                                         "Hm",
                                                                                         datachatItem.timestamp!,
-                                                                                        locale: Localizations.localeOf(context).languageCode,
+                                                                                        locale: Localizations.localeOf(
+                                                                                          context,
+                                                                                        ).languageCode,
                                                                                       ),
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Color(0xFFE0E0E0),
+                                                                                            color: Color(
+                                                                                              0xFFE0E0E0,
+                                                                                            ),
                                                                                             fontSize: 12.0,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontWeight: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontWeight,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ],
@@ -1073,12 +1255,12 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                         ?.id))
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            24.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      24.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: InkWell(
                                                                   splashColor:
                                                                       Colors
@@ -1090,8 +1272,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                   highlightColor:
                                                                       Colors
                                                                           .transparent,
-                                                                  onLongPress:
-                                                                      () async {
+                                                                  onLongPress: () async {
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
                                                                           true,
@@ -1100,23 +1281,28 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                               .transparent,
                                                                       context:
                                                                           context,
-                                                                      builder:
-                                                                          (context) {
+                                                                      builder: (context) {
                                                                         return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
+                                                                          onTap: () {
+                                                                            FocusScope.of(
+                                                                              context,
+                                                                            ).unfocus();
                                                                             FocusManager.instance.primaryFocus?.unfocus();
                                                                           },
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
-                                                                            child:
-                                                                                DelchatWidget(
+                                                                          child: Padding(
+                                                                            padding: MediaQuery.viewInsetsOf(
+                                                                              context,
+                                                                            ),
+                                                                            child: DelchatWidget(
                                                                               chatID: datachatItem.reference.id.hashCode,
                                                                               room: widget.roomref!,
-                                                                              who: SupabaseFirestore.instance.collection('users').doc(datachatItem.senderId),
+                                                                              who: SupabaseFirestore.instance
+                                                                                  .collection(
+                                                                                    'users',
+                                                                                  )
+                                                                                  .doc(
+                                                                                    datachatItem.senderId,
+                                                                                  ),
                                                                               testmessage: datachatItem.text,
                                                                               photomessage: datachatItem.imageUrl,
                                                                               time: datachatItem.timestamp!,
@@ -1124,9 +1310,13 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                           ),
                                                                         );
                                                                       },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
+                                                                    ).then(
+                                                                      (
+                                                                        value,
+                                                                      ) => safeSetState(
+                                                                        () {},
+                                                                      ),
+                                                                    );
                                                                   },
                                                                   child: Row(
                                                                     mainAxisSize:
@@ -1142,36 +1332,37 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                       Container(
                                                                         width:
                                                                             300.0,
-                                                                        constraints:
-                                                                            BoxConstraints(
+                                                                        constraints: BoxConstraints(
                                                                           maxWidth:
                                                                               260.0,
                                                                         ),
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              Color(0xFFB50000),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(24.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(24.0),
-                                                                            topLeft:
-                                                                                Radius.circular(24.0),
-                                                                            topRight:
-                                                                                Radius.circular(3.0),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(
+                                                                            0xFFB50000,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.only(
+                                                                            bottomLeft: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            bottomRight: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            topLeft: Radius.circular(
+                                                                              24.0,
+                                                                            ),
+                                                                            topRight: Radius.circular(
+                                                                              3.0,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                        child:
-                                                                            Padding(
+                                                                        child: Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              16.0,
-                                                                              12.0,
-                                                                              16.0,
-                                                                              12.0),
-                                                                          child:
-                                                                              Row(
+                                                                            16.0,
+                                                                            12.0,
+                                                                            16.0,
+                                                                            12.0,
+                                                                          ),
+                                                                          child: Row(
                                                                             mainAxisSize:
                                                                                 MainAxisSize.max,
                                                                             mainAxisAlignment:
@@ -1188,15 +1379,33 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                     decoration: BoxDecoration(),
                                                                                     child: Text(
                                                                                       datachatItem.text,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
-                                                                                            color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                            color:
+                                                                                                Theme.of(
+                                                                                                      context,
+                                                                                                    )
+                                                                                                    .extension<
+                                                                                                      CustomColors
+                                                                                                    >()!
+                                                                                                    .primaryText,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontWeight: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontWeight,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -1214,18 +1423,38 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                         dateTimeFormat(
                                                                                           "Hm",
                                                                                           datachatItem.timestamp!,
-                                                                                          locale: Localizations.localeOf(context).languageCode,
+                                                                                          locale: Localizations.localeOf(
+                                                                                            context,
+                                                                                          ).languageCode,
                                                                                         ),
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
-                                                                                                fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontWeight: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontWeight,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
-                                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                              color:
+                                                                                                  Theme.of(
+                                                                                                        context,
+                                                                                                      )
+                                                                                                      .extension<
+                                                                                                        CustomColors
+                                                                                                      >()!
+                                                                                                      .primaryText,
                                                                                               fontSize: 12.0,
                                                                                               letterSpacing: 0.0,
-                                                                                              fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontWeight: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontWeight,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                       ),
                                                                                     ],
@@ -1261,13 +1490,21 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 28.0),
+                              0.0,
+                              0.0,
+                              0.0,
+                              28.0,
+                            ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 0.0, 20.0, 0.0),
+                                    20.0,
+                                    0.0,
+                                    20.0,
+                                    0.0,
+                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -1277,7 +1514,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
+                                                0.0,
+                                                0.0,
+                                                10.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             height: 38.0,
                                             decoration: BoxDecoration(
@@ -1286,38 +1527,43 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   BorderRadius.circular(45.0),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 6.0, 12.0, 6.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    12.0,
+                                                    6.0,
+                                                    12.0,
+                                                    6.0,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Expanded(
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            5.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: TextFormField(
                                                         controller: _model
                                                             .textController,
                                                         focusNode: _model
                                                             .textFieldFocusNode,
                                                         onChanged: (_) =>
-                                                            EasyDebounce
-                                                                .debounce(
-                                                          '_model.textController',
-                                                          Duration(
-                                                              milliseconds:
-                                                                  2000),
-                                                          () => safeSetState(
-                                                              () {}),
-                                                        ),
-                                                        onFieldSubmitted:
-                                                            (_) async {
+                                                            EasyDebounce.debounce(
+                                                              '_model.textController',
+                                                              Duration(
+                                                                milliseconds:
+                                                                    2000,
+                                                              ),
+                                                              () =>
+                                                                  safeSetState(
+                                                                    () {},
+                                                                  ),
+                                                            ),
+                                                        onFieldSubmitted: (_) async {
                                                           if (_model
                                                                   .lockchatt ==
                                                               false) {
@@ -1329,9 +1575,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                     .text !=
                                                                 '') {
                                                               // 1. Update chat_rooms metadata
-                                                              await widget
-                                                                  .roomref!
-                                                                  .update({
+                                                              await widget.roomref!.update({
                                                                 ...createChatRoomsRecordData(
                                                                   lastMessage:
                                                                       _model
@@ -1346,57 +1590,59 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                               });
 
                                                               // 2. Insert new message row
-                                                              await MessagesRecord
-                                                                  .collection
-                                                                  .add(
-                                                                      createMessagesRecordData(
-                                                                chatRoomId:
-                                                                    widget
-                                                                        .roomref!
-                                                                        .id,
-                                                                text: _model
-                                                                    .textController
-                                                                    .text,
-                                                                senderId:
-                                                                    currentUserReference
-                                                                        ?.id,
-                                                                senderName:
-                                                                    currentUserDisplayName,
-                                                                senderPhoto:
-                                                                    currentUserPhoto,
-                                                                timestamp:
-                                                                    getCurrentTimestamp,
-                                                              ));
+                                                              await MessagesRecord.collection.add(
+                                                                createMessagesRecordData(
+                                                                  chatRoomId:
+                                                                      widget
+                                                                          .roomref!
+                                                                          .id,
+                                                                  text: _model
+                                                                      .textController
+                                                                      .text,
+                                                                  senderId:
+                                                                      currentUserReference
+                                                                          ?.id,
+                                                                  senderName:
+                                                                      currentUserDisplayName,
+                                                                  senderPhoto:
+                                                                      currentUserPhoto,
+                                                                  timestamp:
+                                                                      getCurrentTimestamp,
+                                                                ),
+                                                              );
 
                                                               // 3. Notify other user(s)
                                                               if (!widget
                                                                   .openchat!) {
                                                                 // Derive the other user from user_ids
-                                                                final otherUserIds = stackChatRoomsRecord
-                                                                    .userIds
-                                                                    .where((id) =>
-                                                                        id !=
-                                                                        currentUserReference
-                                                                            ?.id)
-                                                                    .toList();
+                                                                final otherUserIds =
+                                                                    stackChatRoomsRecord
+                                                                        .userIds
+                                                                        .where(
+                                                                          (
+                                                                            id,
+                                                                          ) =>
+                                                                              id !=
+                                                                              currentUserReference?.id,
+                                                                        )
+                                                                        .toList();
                                                                 for (final otherUserId
                                                                     in otherUserIds) {
                                                                   final otherUserRef = SupabaseFirestore
                                                                       .instance
                                                                       .collection(
-                                                                          'users')
+                                                                        'users',
+                                                                      )
                                                                       .doc(
-                                                                          otherUserId);
-                                                                  await otherUserRef
-                                                                      .update({
-                                                                    ...mapToSupabase(
-                                                                      {
-                                                                        'usermassage':
-                                                                            FieldValue.arrayUnion([
-                                                                          currentUserReference
-                                                                        ]),
-                                                                      },
-                                                                    ),
+                                                                        otherUserId,
+                                                                      );
+                                                                  await otherUserRef.update({
+                                                                    ...mapToSupabase({
+                                                                      'usermassage':
+                                                                          FieldValue.arrayUnion([
+                                                                            currentUserReference,
+                                                                          ]),
+                                                                    }),
                                                                   });
                                                                   triggerPushNotification(
                                                                     notificationTitle:
@@ -1406,23 +1652,21 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                             .textController
                                                                             .text,
                                                                     userRefs: [
-                                                                      otherUserRef
+                                                                      otherUserRef,
                                                                     ],
                                                                     initialPageName:
                                                                         'HomePage',
-                                                                    parameterData: {},
+                                                                    parameterData:
+                                                                        {},
                                                                   );
 
-                                                                  await currentUserReference!
-                                                                      .update({
-                                                                    ...mapToSupabase(
-                                                                      {
-                                                                        'usermassageRead':
-                                                                            FieldValue.arrayUnion([
-                                                                          otherUserRef
-                                                                        ]),
-                                                                      },
-                                                                    ),
+                                                                  await currentUserReference!.update({
+                                                                    ...mapToSupabase({
+                                                                      'usermassageRead':
+                                                                          FieldValue.arrayUnion([
+                                                                            otherUserRef,
+                                                                          ]),
+                                                                    }),
                                                                   });
                                                                 }
                                                               }
@@ -1432,27 +1676,28 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                     ?.clear();
                                                               });
                                                             } else {
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
+                                                              ScaffoldMessenger.of(
+                                                                context,
+                                                              ).showSnackBar(
                                                                 SnackBar(
                                                                   content: Text(
                                                                     'Please type something...',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Theme.of(
-                                                                              context)
+                                                                    style: TextStyle(
+                                                                      color: Theme.of(context)
                                                                           .extension<
-                                                                              CustomColors>()!
+                                                                            CustomColors
+                                                                          >()!
                                                                           .primaryText,
                                                                     ),
                                                                   ),
                                                                   duration: Duration(
-                                                                      milliseconds:
-                                                                          4000),
+                                                                    milliseconds:
+                                                                        4000,
+                                                                  ),
                                                                   backgroundColor:
                                                                       Color(
-                                                                          0x00000000),
+                                                                        0x00000000,
+                                                                      ),
                                                                 ),
                                                               );
                                                             }
@@ -1464,186 +1709,196 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                         },
                                                         autofocus: false,
                                                         obscureText: false,
-                                                        decoration:
-                                                            InputDecoration(
+                                                        decoration: InputDecoration(
                                                           hintText:
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_mtwb7kux,
-                                                          hintStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: Color(
-                                                                        0xFFBDBDBD),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontStyle,
+                                                                context,
+                                                              )!.k_mtwb7kux,
+                                                          hintStyle: Theme.of(context).textTheme.bodyMedium!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color: Color(
+                                                              0xFFBDBDBD,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
+                                                          enabledBorder: UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                  color: Color(
+                                                                    0x00000000,
                                                                   ),
-                                                          enabledBorder:
-                                                              UnderlineInputBorder(
+                                                                  width: 1.0,
+                                                                ),
+                                                            borderRadius:
+                                                                const BorderRadius.only(
+                                                                  topLeft:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                  topRight:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                ),
+                                                          ),
+                                                          focusedBorder: UnderlineInputBorder(
                                                             borderSide:
                                                                 BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.0,
-                                                            ),
+                                                                  color: Color(
+                                                                    0x00000000,
+                                                                  ),
+                                                                  width: 1.0,
+                                                                ),
                                                             borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                            ),
+                                                                const BorderRadius.only(
+                                                                  topLeft:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                  topRight:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                ),
                                                           ),
-                                                          focusedBorder:
-                                                              UnderlineInputBorder(
+                                                          errorBorder: UnderlineInputBorder(
                                                             borderSide:
                                                                 BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.0,
-                                                            ),
+                                                                  color: Color(
+                                                                    0x00000000,
+                                                                  ),
+                                                                  width: 1.0,
+                                                                ),
                                                             borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                            ),
+                                                                const BorderRadius.only(
+                                                                  topLeft:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                  topRight:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                ),
                                                           ),
-                                                          errorBorder:
-                                                              UnderlineInputBorder(
+                                                          focusedErrorBorder: UnderlineInputBorder(
                                                             borderSide:
                                                                 BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.0,
-                                                            ),
+                                                                  color: Color(
+                                                                    0x00000000,
+                                                                  ),
+                                                                  width: 1.0,
+                                                                ),
                                                             borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                            ),
+                                                                const BorderRadius.only(
+                                                                  topLeft:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                  topRight:
+                                                                      Radius.circular(
+                                                                        4.0,
+                                                                      ),
+                                                                ),
                                                           ),
-                                                          focusedErrorBorder:
-                                                              UnderlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.0,
-                                                            ),
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      4.0),
-                                                            ),
-                                                          ),
-                                                          suffixIcon: _model
+                                                          suffixIcon:
+                                                              _model
                                                                   .textController!
                                                                   .text
                                                                   .isNotEmpty
                                                               ? InkWell(
-                                                                  onTap:
-                                                                      () async {
+                                                                  onTap: () async {
                                                                     _model
                                                                         .textController
                                                                         ?.clear();
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                   },
                                                                   child: Icon(
                                                                     Icons.clear,
                                                                     color: Color(
-                                                                        0xFF757575),
+                                                                      0xFF757575,
+                                                                    ),
                                                                     size: 22.0,
                                                                   ),
                                                                 )
                                                               : null,
                                                         ),
-                                                        style:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .fontWeight,
-                                                                  fontStyle: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .fontStyle,
-                                                                ),
+                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontStyle,
+                                                        ),
                                                         validator: _model
                                                             .textControllerValidator
                                                             .asValidator(
-                                                                context),
+                                                              context,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(6.0, 0.0,
-                                                                6.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          6.0,
+                                                          0.0,
+                                                          6.0,
+                                                          0.0,
+                                                        ),
                                                     child: InkWell(
                                                       splashColor:
                                                           Colors.transparent,
@@ -1661,25 +1916,37 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                           safeSetState(() {});
                                                           final selectedMedia =
                                                               await selectMedia(
-                                                            maxWidth: 700.00,
-                                                            maxHeight: 700.00,
-                                                            imageQuality: 70,
-                                                            mediaSource:
-                                                                MediaSource
-                                                                    .photoGallery,
-                                                            multiImage: false,
-                                                          );
+                                                                maxWidth:
+                                                                    700.00,
+                                                                maxHeight:
+                                                                    700.00,
+                                                                imageQuality:
+                                                                    70,
+                                                                mediaSource:
+                                                                    MediaSource
+                                                                        .photoGallery,
+                                                                multiImage:
+                                                                    false,
+                                                              );
                                                           if (selectedMedia !=
                                                                   null &&
-                                                              selectedMedia.every((m) =>
-                                                                  validateFileFormat(
-                                                                      m.storagePath,
-                                                                      context))) {
-                                                            safeSetState(() =>
-                                                                _model.isDataUploading_uploadData1ir =
-                                                                    true);
+                                                              selectedMedia.every(
+                                                                (
+                                                                  m,
+                                                                ) => validateFileFormat(
+                                                                  m.storagePath,
+                                                                  context,
+                                                                ),
+                                                              )) {
+                                                            safeSetState(
+                                                              () =>
+                                                                  _model.isDataUploading_uploadData1ir =
+                                                                      true,
+                                                            );
                                                             var selectedUploadedFiles =
-                                                                <FFUploadedFile>[];
+                                                                <
+                                                                  FFUploadedFile
+                                                                >[];
 
                                                             var downloadUrls =
                                                                 <String>[];
@@ -1690,46 +1957,58 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                 showLoading:
                                                                     true,
                                                               );
-                                                              selectedUploadedFiles =
-                                                                  selectedMedia
-                                                                      .map((m) =>
-                                                                          FFUploadedFile(
-                                                                            name:
-                                                                                m.storagePath.split('/').last,
-                                                                            bytes:
-                                                                                m.bytes,
-                                                                            height:
-                                                                                m.dimensions?.height,
-                                                                            width:
-                                                                                m.dimensions?.width,
-                                                                            blurHash:
-                                                                                m.blurHash,
-                                                                            originalFilename:
-                                                                                m.originalFilename,
-                                                                          ))
-                                                                      .toList();
+                                                              selectedUploadedFiles = selectedMedia
+                                                                  .map(
+                                                                    (
+                                                                      m,
+                                                                    ) => FFUploadedFile(
+                                                                      name: m
+                                                                          .storagePath
+                                                                          .split(
+                                                                            '/',
+                                                                          )
+                                                                          .last,
+                                                                      bytes: m
+                                                                          .bytes,
+                                                                      height: m
+                                                                          .dimensions
+                                                                          ?.height,
+                                                                      width: m
+                                                                          .dimensions
+                                                                          ?.width,
+                                                                      blurHash:
+                                                                          m.blurHash,
+                                                                      originalFilename:
+                                                                          m.originalFilename,
+                                                                    ),
+                                                                  )
+                                                                  .toList();
 
                                                               downloadUrls =
-                                                                  (await Future
-                                                                          .wait(
-                                                                selectedMedia
-                                                                    .map(
-                                                                  (m) async =>
-                                                                      await uploadData(
-                                                                          m.storagePath,
-                                                                          m.bytes),
-                                                                ),
-                                                              ))
-                                                                      .where((u) =>
-                                                                          u !=
-                                                                          null)
-                                                                      .map((u) =>
-                                                                          u!)
+                                                                  (await Future.wait(
+                                                                        selectedMedia.map(
+                                                                          (
+                                                                            m,
+                                                                          ) async => await uploadData(
+                                                                            m.storagePath,
+                                                                            m.bytes,
+                                                                          ),
+                                                                        ),
+                                                                      ))
+                                                                      .where(
+                                                                        (u) =>
+                                                                            u !=
+                                                                            null,
+                                                                      )
+                                                                      .map(
+                                                                        (u) =>
+                                                                            u!,
+                                                                      )
                                                                       .toList();
                                                             } finally {
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .hideCurrentSnackBar();
+                                                              ScaffoldMessenger.of(
+                                                                context,
+                                                              ).hideCurrentSnackBar();
                                                               _model.isDataUploading_uploadData1ir =
                                                                   false;
                                                             }
@@ -1750,14 +2029,17 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                         .first;
                                                               });
                                                               showUploadMessage(
-                                                                  context,
-                                                                  'Success!');
+                                                                context,
+                                                                'Success!',
+                                                              );
                                                             } else {
                                                               safeSetState(
-                                                                  () {});
+                                                                () {},
+                                                              );
                                                               showUploadMessage(
-                                                                  context,
-                                                                  'Failed to upload data');
+                                                                context,
+                                                                'Failed to upload data',
+                                                              );
                                                               return;
                                                             }
                                                           }
@@ -1766,9 +2048,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                   .uploadedFileUrl_uploadData1ir !=
                                                               '') {
                                                             // 1. Update chat_rooms metadata
-                                                            await widget
-                                                                .roomref!
-                                                                .update({
+                                                            await widget.roomref!.update({
                                                               ...createChatRoomsRecordData(
                                                                 lastMessageTime:
                                                                     getCurrentTimestamp,
@@ -1781,25 +2061,26 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                             });
 
                                                             // 2. Insert new message row with image
-                                                            await MessagesRecord
-                                                                .collection
-                                                                .add(
-                                                                    createMessagesRecordData(
-                                                              chatRoomId: widget
-                                                                  .roomref!.id,
-                                                              text: '',
-                                                              imageUrl: _model
-                                                                  .uploadedFileUrl_uploadData1ir,
-                                                              senderId:
-                                                                  currentUserReference
-                                                                      ?.id,
-                                                              senderName:
-                                                                  currentUserDisplayName,
-                                                              senderPhoto:
-                                                                  currentUserPhoto,
-                                                              timestamp:
-                                                                  getCurrentTimestamp,
-                                                            ));
+                                                            await MessagesRecord.collection.add(
+                                                              createMessagesRecordData(
+                                                                chatRoomId:
+                                                                    widget
+                                                                        .roomref!
+                                                                        .id,
+                                                                text: '',
+                                                                imageUrl: _model
+                                                                    .uploadedFileUrl_uploadData1ir,
+                                                                senderId:
+                                                                    currentUserReference
+                                                                        ?.id,
+                                                                senderName:
+                                                                    currentUserDisplayName,
+                                                                senderPhoto:
+                                                                    currentUserPhoto,
+                                                                timestamp:
+                                                                    getCurrentTimestamp,
+                                                              ),
+                                                            );
 
                                                             // 3. Notify other user(s)
                                                             if (!widget
@@ -1807,30 +2088,30 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                               final otherUserIds =
                                                                   stackChatRoomsRecord
                                                                       .userIds
-                                                                      .where((id) =>
-                                                                          id !=
-                                                                          currentUserReference
-                                                                              ?.id)
+                                                                      .where(
+                                                                        (id) =>
+                                                                            id !=
+                                                                            currentUserReference?.id,
+                                                                      )
                                                                       .toList();
                                                               for (final otherUserId
                                                                   in otherUserIds) {
-                                                                final otherUserRef = SupabaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'users')
-                                                                    .doc(
-                                                                        otherUserId);
-                                                                await otherUserRef
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'usermassage':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        currentUserReference
-                                                                      ]),
-                                                                    },
-                                                                  ),
+                                                                final otherUserRef =
+                                                                    SupabaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                          'users',
+                                                                        )
+                                                                        .doc(
+                                                                          otherUserId,
+                                                                        );
+                                                                await otherUserRef.update({
+                                                                  ...mapToSupabase({
+                                                                    'usermassage':
+                                                                        FieldValue.arrayUnion([
+                                                                          currentUserReference,
+                                                                        ]),
+                                                                  }),
                                                                 });
                                                                 triggerPushNotification(
                                                                   notificationTitle:
@@ -1838,24 +2119,21 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                   notificationText:
                                                                       'มีข้อความรูปภาพ',
                                                                   userRefs: [
-                                                                    otherUserRef
+                                                                    otherUserRef,
                                                                   ],
                                                                   initialPageName:
                                                                       'HomePage',
-                                                                  parameterData: {},
+                                                                  parameterData:
+                                                                      {},
                                                                 );
 
-                                                                await currentUserReference!
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'usermassageRead':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        otherUserRef
-                                                                      ]),
-                                                                    },
-                                                                  ),
+                                                                await currentUserReference!.update({
+                                                                  ...mapToSupabase({
+                                                                    'usermassageRead':
+                                                                        FieldValue.arrayUnion([
+                                                                          otherUserRef,
+                                                                        ]),
+                                                                  }),
                                                                 });
                                                               }
                                                             }
@@ -1864,36 +2142,39 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                   false;
                                                               _model.uploadedLocalFile_uploadData1ir =
                                                                   FFUploadedFile(
-                                                                      bytes: Uint8List
-                                                                          .fromList(
-                                                                              []),
-                                                                      originalFilename:
-                                                                          '');
+                                                                    bytes:
+                                                                        Uint8List.fromList(
+                                                                          [],
+                                                                        ),
+                                                                    originalFilename:
+                                                                        '',
+                                                                  );
                                                               _model.uploadedFileUrl_uploadData1ir =
                                                                   '';
                                                             });
                                                           } else {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
+                                                            ScaffoldMessenger.of(
+                                                              context,
+                                                            ).showSnackBar(
                                                               SnackBar(
                                                                 content: Text(
                                                                   'Please type something...',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                  style: TextStyle(
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                   ),
                                                                 ),
                                                                 duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
+                                                                  milliseconds:
+                                                                      4000,
+                                                                ),
                                                                 backgroundColor:
                                                                     Color(
-                                                                        0x00000000),
+                                                                      0x00000000,
+                                                                    ),
                                                               ),
                                                             );
                                                           }
@@ -1918,9 +2199,12 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(6.0, 0.0,
-                                                                6.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          6.0,
+                                                          0.0,
+                                                          6.0,
+                                                          0.0,
+                                                        ),
                                                     child: InkWell(
                                                       splashColor:
                                                           Colors.transparent,
@@ -1942,25 +2226,29 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                             return GestureDetector(
                                                               onTap: () {
                                                                 FocusScope.of(
-                                                                        context)
-                                                                    .unfocus();
+                                                                  context,
+                                                                ).unfocus();
                                                                 FocusManager
                                                                     .instance
                                                                     .primaryFocus
                                                                     ?.unfocus();
                                                               },
                                                               child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
+                                                                padding:
+                                                                    MediaQuery.viewInsetsOf(
+                                                                      context,
+                                                                    ),
                                                                 child:
                                                                     ItemWidget(),
                                                               ),
                                                             );
                                                           },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
+                                                        ).then(
+                                                          (value) =>
+                                                              safeSetState(
+                                                                () {},
+                                                              ),
+                                                        );
                                                       },
                                                       child: Image.network(
                                                         'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/w5g3s4lkc5m8/%E0%B9%80%E0%B8%9E%E0%B8%B4%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%83%E0%B8%99%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%A2_(3).png',
@@ -1991,7 +2279,8 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                               await widget.roomref!.update({
                                                 ...createChatRoomsRecordData(
                                                   lastMessage: _model
-                                                      .textController.text,
+                                                      .textController
+                                                      .text,
                                                   lastMessageTime:
                                                       getCurrentTimestamp,
                                                   lastMessageSenderId:
@@ -2001,26 +2290,35 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
                                               // 2. Insert new message row
                                               await MessagesRecord.collection
-                                                  .add(createMessagesRecordData(
-                                                chatRoomId: widget.roomref!.id,
-                                                text:
-                                                    _model.textController.text,
-                                                senderId:
-                                                    currentUserReference?.id,
-                                                senderName:
-                                                    currentUserDisplayName,
-                                                senderPhoto: currentUserPhoto,
-                                                timestamp: getCurrentTimestamp,
-                                              ));
+                                                  .add(
+                                                    createMessagesRecordData(
+                                                      chatRoomId:
+                                                          widget.roomref!.id,
+                                                      text: _model
+                                                          .textController
+                                                          .text,
+                                                      senderId:
+                                                          currentUserReference
+                                                              ?.id,
+                                                      senderName:
+                                                          currentUserDisplayName,
+                                                      senderPhoto:
+                                                          currentUserPhoto,
+                                                      timestamp:
+                                                          getCurrentTimestamp,
+                                                    ),
+                                                  );
 
                                               // 3. Notify other user(s)
                                               if (!widget.openchat!) {
                                                 final otherUserIds =
                                                     stackChatRoomsRecord.userIds
-                                                        .where((id) =>
-                                                            id !=
-                                                            currentUserReference
-                                                                ?.id)
+                                                        .where(
+                                                          (id) =>
+                                                              id !=
+                                                              currentUserReference
+                                                                  ?.id,
+                                                        )
                                                         .toList();
                                                 for (final otherUserId
                                                     in otherUserIds) {
@@ -2029,21 +2327,19 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                           .collection('users')
                                                           .doc(otherUserId);
                                                   await otherUserRef.update({
-                                                    ...mapToSupabase(
-                                                      {
-                                                        'usermassage':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          currentUserReference
-                                                        ]),
-                                                      },
-                                                    ),
+                                                    ...mapToSupabase({
+                                                      'usermassage':
+                                                          FieldValue.arrayUnion([
+                                                            currentUserReference,
+                                                          ]),
+                                                    }),
                                                   });
                                                   triggerPushNotification(
                                                     notificationTitle:
                                                         currentUserDisplayName,
                                                     notificationText: _model
-                                                        .textController.text,
+                                                        .textController
+                                                        .text,
                                                     scheduledTime:
                                                         getCurrentTimestamp,
                                                     notificationSound:
@@ -2055,38 +2351,39 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
 
                                                   await currentUserReference!
                                                       .update({
-                                                    ...mapToSupabase(
-                                                      {
-                                                        'usermassageRead':
-                                                            FieldValue
-                                                                .arrayUnion([
-                                                          otherUserRef
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
+                                                        ...mapToSupabase({
+                                                          'usermassageRead':
+                                                              FieldValue.arrayUnion(
+                                                                [otherUserRef],
+                                                              ),
+                                                        }),
+                                                      });
                                                 }
                                               }
                                               safeSetState(() {
                                                 _model.textController?.clear();
                                               });
                                             } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
                                                     'Please type something...',
                                                     style: TextStyle(
                                                       color: Theme.of(context)
                                                           .extension<
-                                                              CustomColors>()!
+                                                            CustomColors
+                                                          >()!
                                                           .primaryText,
                                                     ),
                                                   ),
                                                   duration: Duration(
-                                                      milliseconds: 4000),
-                                                  backgroundColor:
-                                                      Color(0x00000000),
+                                                    milliseconds: 4000,
+                                                  ),
+                                                  backgroundColor: Color(
+                                                    0x00000000,
+                                                  ),
                                                 ),
                                               );
                                             }
@@ -2112,14 +2409,19 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          3.0, 0.0, 0.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        3.0,
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.send_rounded,
                                                     color: Theme.of(context)
                                                         .extension<
-                                                            CustomColors>()!
+                                                          CustomColors
+                                                        >()!
                                                         .primaryText,
                                                     size: 20.0,
                                                   ),
@@ -2143,7 +2445,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                       decoration: BoxDecoration(),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
+                          20.0,
+                          0.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -2165,17 +2471,19 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
                                             context.pushNamed(
-                                                MainChatPage.routeName);
+                                              MainChatPage.routeName,
+                                            );
 
                                             if (!widget.openchat!) {
                                               // Derive other user from user_ids
                                               final otherIds =
-                                                  stackChatRoomsRecord
-                                                      .userIds
-                                                      .where((id) =>
-                                                          id !=
-                                                          currentUserReference
-                                                              ?.id)
+                                                  stackChatRoomsRecord.userIds
+                                                      .where(
+                                                        (id) =>
+                                                            id !=
+                                                            currentUserReference
+                                                                ?.id,
+                                                      )
                                                       .toList();
                                               for (final otherId in otherIds) {
                                                 final otherRef =
@@ -2184,25 +2492,21 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                         .doc(otherId);
                                                 await currentUserReference!
                                                     .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'usermassage': FieldValue
-                                                          .arrayRemove(
-                                                              [otherRef]),
-                                                    },
-                                                  ),
-                                                });
+                                                      ...mapToSupabase({
+                                                        'usermassage':
+                                                            FieldValue.arrayRemove(
+                                                              [otherRef],
+                                                            ),
+                                                      }),
+                                                    });
 
                                                 await otherRef.update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'usermassageRead':
-                                                          FieldValue
-                                                              .arrayRemove([
-                                                        currentUserReference
-                                                      ]),
-                                                    },
-                                                  ),
+                                                  ...mapToSupabase({
+                                                    'usermassageRead':
+                                                        FieldValue.arrayRemove([
+                                                          currentUserReference,
+                                                        ]),
+                                                  }),
                                                 });
                                               }
                                             }
@@ -2221,7 +2525,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  5.0, 0.0, 0.0, 0.0),
+                                                5.0,
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             width: 42.0,
                                             height: 42.0,
@@ -2260,7 +2568,9 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            1.13, 1.13),
+                                                          1.13,
+                                                          1.13,
+                                                        ),
                                                     child: Container(
                                                       width: 15.0,
                                                       height: 15.0,
@@ -2271,40 +2581,40 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                           Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Container(
                                                               width: 15.0,
                                                               height: 15.0,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Colors
-                                                                    .black,
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                              ),
+                                                                    color: Colors
+                                                                        .black,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
                                                               child: Stack(
                                                                 children: [
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Container(
+                                                                          0.0,
+                                                                          0.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width:
                                                                           10.0,
                                                                       height:
                                                                           10.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
+                                                                      decoration: BoxDecoration(
                                                                         color: Color(
-                                                                            0xFF00D333),
-                                                                        image:
-                                                                            DecorationImage(
+                                                                          0xFF00D333,
+                                                                        ),
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
@@ -2328,7 +2638,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 0.0, 0.0),
+                                                12.0,
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
@@ -2350,8 +2664,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                       .textTheme
                                                       .bodyMedium!
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               Theme.of(context)
                                                                   .textTheme
@@ -2365,7 +2678,8 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                         ),
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         fontSize: 17.0,
                                                         letterSpacing: 0.0,
@@ -2415,21 +2729,24 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                             },
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
-                                                  context),
+                                                context,
+                                              ),
                                               child: DelallchatWidget(
                                                 idroom: widget.roomref!,
                                                 userref: SupabaseFirestore
                                                     .instance
                                                     .collection('users')
-                                                    .doc(stackChatRoomsRecord
-                                                        .userIds
-                                                        .firstWhere(
-                                                      (id) =>
-                                                          id !=
-                                                          currentUserReference
-                                                              ?.id,
-                                                      orElse: () => '',
-                                                    )),
+                                                    .doc(
+                                                      stackChatRoomsRecord
+                                                          .userIds
+                                                          .firstWhere(
+                                                            (id) =>
+                                                                id !=
+                                                                currentUserReference
+                                                                    ?.id,
+                                                            orElse: () => '',
+                                                          ),
+                                                    ),
                                               ),
                                             ),
                                           );
@@ -2455,12 +2772,14 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                       AuthUserStreamWidget(
                         builder: (context) => StreamBuilder<UsersRecord>(
                           stream: UsersRecord.getDocument(
-                              (currentUserDocument?.cheersEnd.toList() ?? [])
-                                  .elementAtOrNull((currentUserDocument
-                                              ?.showprofilecheers
+                            (currentUserDocument?.cheersEnd.toList() ?? [])
+                                .elementAtOrNull(
+                                  (currentUserDocument?.showprofilecheers
                                               .toList() ??
                                           [])
-                                      .length)!),
+                                      .length,
+                                )!,
+                          ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -2488,20 +2807,18 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                 context.pushNamed(MainChatPage.routeName);
 
                                 await currentUserReference!.update({
-                                  ...mapToSupabase(
-                                    {
-                                      'showprofilecheers':
-                                          FieldValue.arrayUnion([
-                                        card33UserGridUsersRecord.reference
-                                      ]),
-                                    },
-                                  ),
+                                  ...mapToSupabase({
+                                    'showprofilecheers': FieldValue.arrayUnion([
+                                      card33UserGridUsersRecord.reference,
+                                    ]),
+                                  }),
                                 });
                               },
                               child: ChangeNotifierProvider.value(
                                 value: _model.card33UserGridModel.setOnUpdate(
-                                    onUpdate: () => safeSetState(() {}),
-                                    updateOnChange: true),
+                                  onUpdate: () => safeSetState(() {}),
+                                  updateOnChange: true,
+                                ),
                                 child: Card33UserGridWidget(
                                   name: valueOrDefault<String>(
                                     card33UserGridUsersRecord.displayName,

@@ -26,10 +26,7 @@ import 'package:munday/core/theme/theme.dart';
 export 'profile_model.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
-  const ProfilePage({
-    super.key,
-    required this.fromSeting,
-  });
+  const ProfilePage({super.key, required this.fromSeting});
 
   final bool? fromSeting;
 
@@ -93,7 +90,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
         final parsedUrl = Uri.parse(
           value.startsWith('http') ? value : 'https://$value',
         );
-        value = parsedUrl.pathSegments
+        value =
+            parsedUrl.pathSegments
                 .where((segment) => segment.isNotEmpty)
                 .firstOrNull ??
             '';
@@ -137,8 +135,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
     var followersCount = 0;
     var hasFollowersCount = false;
     try {
-      final response =
-          await GetInstagramProfileInfoCall.call(username: rawInput);
+      final response = await GetInstagramProfileInfoCall.call(
+        username: rawInput,
+      );
       if (!mounted || requestToken != _instagramRequestToken) {
         return;
       }
@@ -159,14 +158,16 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
 
     if (!hasFollowersCount) {
       try {
-        final publicResponse =
-            await GetInstagramPublicProfileCall.call(username: rawInput);
+        final publicResponse = await GetInstagramPublicProfileCall.call(
+          username: rawInput,
+        );
         if (!mounted || requestToken != _instagramRequestToken) {
           return;
         }
         final publicFollowersCount =
             GetInstagramPublicProfileCall.followersCount(
-                publicResponse.jsonBody);
+              publicResponse.jsonBody,
+            );
         if (publicResponse.succeeded && publicFollowersCount != null) {
           followersCount = publicFollowersCount;
           hasFollowersCount = true;
@@ -223,10 +224,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(20.0),
-            border: Border.all(
-              color: const Color(0xFF1D1D1D),
-              width: 2.0,
-            ),
+            border: Border.all(color: const Color(0xFF1D1D1D), width: 2.0),
           ),
           child: Row(
             children: [
@@ -274,8 +272,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                       color: Colors.white,
                       fontSize: 16.0,
                     ),
-                    validator:
-                        _model.textController3Validator.asValidator(context),
+                    validator: _model.textController3Validator.asValidator(
+                      context,
+                    ),
                   ),
                 ),
               ),
@@ -287,11 +286,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                 onTap: _clearInstagramHandle,
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15.0),
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
+                  child: Icon(Icons.close, color: Colors.white, size: 20.0),
                 ),
               ),
               AnimatedSwitcher(
@@ -332,7 +327,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                               child: Text(
                                 followersText,
                                 style: GoogleFonts.openSans(
-                                  color: _instagramFollowersCount == null &&
+                                  color:
+                                      _instagramFollowersCount == null &&
                                           !_instagramFollowersLoading
                                       ? const Color(0xFF9A9A9A)
                                       : Colors.white,
@@ -362,16 +358,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
 
   String _profileHeroTag(String prefix, String url) => '${prefix}_$url';
 
-  _PhotoshowGalleryItem? _profileGalleryItem({
-    Object? heroTagOverride,
-  }) {
+  _PhotoshowGalleryItem? _profileGalleryItem({Object? heroTagOverride}) {
     final resolvedUrl = _normalizedPhotoUrl(currentUserPhoto);
     if (resolvedUrl == null) {
       return null;
     }
     return _PhotoshowGalleryItem(
       url: resolvedUrl,
-      heroTag: heroTagOverride ??
+      heroTag:
+          heroTagOverride ??
           _profileHeroTag(_profileMainHeroPrefix, resolvedUrl),
       isProfile: true,
     );
@@ -430,9 +425,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
         reverseTransitionDuration: const Duration(milliseconds: 280),
         pageBuilder: (context, animation, secondaryAnimation) =>
             _PhotoshowGalleryViewer(
-          items: galleryItems,
-          initialIndex: initialIndex,
-        ),
+              items: galleryItems,
+              initialIndex: initialIndex,
+            ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return child;
         },
@@ -441,9 +436,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
   }
 
   Future<void> _openProfileGalleryViewer(Object heroTag) async {
-    final profileItem = _profileGalleryItem(
-      heroTagOverride: heroTag,
-    );
+    final profileItem = _profileGalleryItem(heroTagOverride: heroTag);
     if (profileItem == null) {
       return;
     }
@@ -493,9 +486,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
     ];
   }
 
-  List<String?> _effectivePhotoshowUrls() => List<String?>.from(
-        _photoshowDraftUrls ?? _photoshowUrlsFromDocument(),
-      );
+  List<String?> _effectivePhotoshowUrls() =>
+      List<String?>.from(_photoshowDraftUrls ?? _photoshowUrlsFromDocument());
 
   UserphotoshowStruct _photoshowStructFromUrls(
     List<String?> urls, {
@@ -537,12 +529,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
     });
 
     try {
-      await currentUserReference!.update(createUsersRecordData(
-        photoshow: _photoshowStructFromUrls(
-          sanitizedUrls,
-          clearUnsetFields: true,
+      await currentUserReference!.update(
+        createUsersRecordData(
+          photoshow: _photoshowStructFromUrls(
+            sanitizedUrls,
+            clearUnsetFields: true,
+          ),
         ),
-      ));
+      );
     } catch (error) {
       debugPrint('Failed to persist photoshow urls: $error');
       safeSetState(() {
@@ -553,11 +547,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
       }
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(errorMessage),
-          ),
-        );
+        ..showSnackBar(SnackBar(content: Text(errorMessage)));
     } finally {
       if (mounted) {
         safeSetState(() {
@@ -640,11 +630,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
 
     FFUploadedFile? selectedImage;
     try {
-      showUploadMessage(
-        context,
-        'Preparing image...',
-        showLoading: true,
-      );
+      showUploadMessage(context, 'Preparing image...', showLoading: true);
       selectedImage = selectedMedia.isNotEmpty
           ? FFUploadedFile(
               name: selectedMedia.first.storagePath.split('/').last,
@@ -718,10 +704,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
           image: Image.network(_photoshowPlaceholderUrl).image,
         ),
         border: isActiveTarget
-            ? Border.all(
-                color: const Color(0xFF00D333),
-                width: 2.5,
-              )
+            ? Border.all(color: const Color(0xFF00D333), width: 2.5)
             : null,
       ),
       child: Stack(
@@ -759,7 +742,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                           color: Color(0x33000000),
                           offset: Offset(0.0, 2.0),
                           spreadRadius: 1.0,
-                        )
+                        ),
                       ],
                       shape: BoxShape.circle,
                     ),
@@ -801,7 +784,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                           color: Color(0x33000000),
                           offset: Offset(0.0, 2.0),
                           spreadRadius: 1.0,
-                        )
+                        ),
                       ],
                       shape: BoxShape.circle,
                     ),
@@ -816,11 +799,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
             ),
           if (_isSavingPhotoshow)
             const Positioned.fill(
-              child: IgnorePointer(
-                child: ColoredBox(
-                  color: Color(0x22000000),
-                ),
-              ),
+              child: IgnorePointer(child: ColoredBox(color: Color(0x22000000))),
             ),
         ],
       ),
@@ -829,7 +808,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
 
   Widget _buildPhotoshowTile(int index, List<String?> photoshowUrls) {
     final resolvedUrl = _normalizedPhotoUrl(photoshowUrls[index]);
-    final dragEnabled = resolvedUrl != null &&
+    final dragEnabled =
+        resolvedUrl != null &&
         !_isSavingPhotoshow &&
         photoshowUrls.where((url) => _normalizedPhotoUrl(url) != null).length >
             1;
@@ -898,12 +878,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
       builder: (context) {
         final photoshowUrls = _effectivePhotoshowUrls();
         return Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-            20.0,
-            0.0,
-            20.0,
-            0.0,
-          ),
+          padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
           child: Container(
             width: double.infinity,
             height: 260.0,
@@ -929,11 +904,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 1.5,
-                        mainAxisSpacing: 1.5,
-                        childAspectRatio: 1.0,
-                      ),
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 1.5,
+                            mainAxisSpacing: 1.5,
+                            childAspectRatio: 1.0,
+                          ),
                       itemCount: _photoshowSlotCount,
                       itemBuilder: (context, index) =>
                           _buildPhotoshowTile(index, photoshowUrls),
@@ -958,8 +933,10 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
       _model.editphoto = false;
       safeSetState(() {});
       if (!context.appState.relock) {
-        context.appState.namestorelink =
-            valueOrDefault(currentUserDocument?.checkin, '');
+        context.appState.namestorelink = valueOrDefault(
+          currentUserDocument?.checkin,
+          '',
+        );
         context.appState.ActivePromotion = false;
         context.appState.apiready = true;
         context.appState.relock = true;
@@ -967,41 +944,38 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
       }
     });
 
-    _model.textController1 ??=
-        TextEditingController(text: currentUserDisplayName);
+    _model.textController1 ??= TextEditingController(
+      text: currentUserDisplayName,
+    );
     _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(
-      () async {
-        await currentUserReference!.update(createUsersRecordData(
-          displayName: _model.textController1.text,
-        ));
-        _model.datachange = true;
-      },
-    );
+    _model.textFieldFocusNode1!.addListener(() async {
+      await currentUserReference!.update(
+        createUsersRecordData(displayName: _model.textController1.text),
+      );
+      _model.datachange = true;
+    });
     _model.textController2 ??= TextEditingController(
-        text: valueOrDefault(currentUserDocument?.caption, ''));
+      text: valueOrDefault(currentUserDocument?.caption, ''),
+    );
     _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(
-      () async {
-        await currentUserReference!.update(createUsersRecordData(
-          caption: _model.textController2.text,
-        ));
-        _model.datachange = true;
-      },
-    );
+    _model.textFieldFocusNode2!.addListener(() async {
+      await currentUserReference!.update(
+        createUsersRecordData(caption: _model.textController2.text),
+      );
+      _model.datachange = true;
+    });
     final initialInstagramHandle = _currentInstagramHandle();
-    _model.textController3 ??=
-        TextEditingController(text: initialInstagramHandle);
-    _model.textFieldFocusNode3 ??= FocusNode();
-    _model.textFieldFocusNode3!.addListener(
-      () async {
-        if (_model.textFieldFocusNode3?.hasFocus ?? false) {
-          return;
-        }
-        _storeInstagramHandle(_model.textController3?.text ?? '');
-        _syncInstagramFollowersForInput(_model.textController3?.text);
-      },
+    _model.textController3 ??= TextEditingController(
+      text: initialInstagramHandle,
     );
+    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.textFieldFocusNode3!.addListener(() async {
+      if (_model.textFieldFocusNode3?.hasFocus ?? false) {
+        return;
+      }
+      _storeInstagramHandle(_model.textController3?.text ?? '');
+      _syncInstagramFollowersForInput(_model.textController3?.text);
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return;
@@ -1059,9 +1033,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
         if (currentUserDocument == null) {
           return Scaffold(
             backgroundColor: Colors.black,
-            body: Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            ),
+            body: Center(child: CircularProgressIndicator(color: Colors.white)),
           );
         }
         return GestureDetector(
@@ -1086,14 +1058,22 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                             decoration: BoxDecoration(),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 5.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                5.0,
+                              ),
                               child: Stack(
                                 children: [
                                   Align(
                                     alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          25.0, 5.0, 0.0, 0.0),
+                                        25.0,
+                                        5.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: InkWell(
                                         splashColor: Colors.transparent,
                                         focusColor: Colors.transparent,
@@ -1102,7 +1082,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                         onTap: () async {
                                           if (widget.fromSeting!) {
                                             context.pushNamed(
-                                                MainPage.routeName);
+                                              MainPage.routeName,
+                                            );
                                           } else {
                                             context.pop();
                                           }
@@ -1112,42 +1093,49 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                               nameupdated:
                                                   currentUserDisplayName,
                                               captionupdated: valueOrDefault(
-                                                  currentUserDocument?.caption,
-                                                  ''),
+                                                currentUserDocument?.caption,
+                                                '',
+                                              ),
                                               photoprofileupdated:
                                                   currentUserPhoto,
                                               storeid: currentUserDocument
-                                                  ?.checkinID?.id,
+                                                  ?.checkinID
+                                                  ?.id,
                                               uid: currentUserReference?.id,
                                             );
                                           }
                                           if ((currentUserDisplayName != '') &&
                                               (currentUserPhoto != '') &&
                                               functions.checkphotoshow(
-                                                  currentUserDocument
-                                                      ?.photoshow.photo1,
-                                                  currentUserDocument
-                                                      ?.photoshow.photo2,
-                                                  currentUserDocument
-                                                      ?.photoshow.photo3,
-                                                  currentUserDocument
-                                                      ?.photoshow.photo4,
-                                                  currentUserDocument
-                                                      ?.photoshow.photo5,
-                                                  currentUserDocument
-                                                      ?.photoshow.photo6)!) {
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo1,
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo2,
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo3,
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo4,
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo5,
+                                                currentUserDocument
+                                                    ?.photoshow
+                                                    .photo6,
+                                              )!) {
                                             await currentUserDocument!
                                                 .checkinID!
                                                 .update({
-                                              ...mapToSupabase(
-                                                {
-                                                  'goodprofile':
-                                                      FieldValue.arrayUnion([
-                                                    currentUserReference
-                                                  ]),
-                                                },
-                                              ),
-                                            });
+                                                  ...mapToSupabase({
+                                                    'goodprofile':
+                                                        FieldValue.arrayUnion([
+                                                          currentUserReference,
+                                                        ]),
+                                                  }),
+                                                });
                                           }
                                         },
                                         child: Icon(
@@ -1164,10 +1152,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                     alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 5.0, 0.0, 0.0),
+                                        10.0,
+                                        5.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_wkp4og0j,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_wkp4og0j,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -1182,10 +1175,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                               fontSize: 25.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),
@@ -1194,7 +1186,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                     alignment: AlignmentDirectional(1.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 5.0, 0.0),
+                                        0.0,
+                                        0.0,
+                                        5.0,
+                                        0.0,
+                                      ),
                                       child: MundayIconButton(
                                         borderColor: Colors.transparent,
                                         borderRadius: 30.0,
@@ -1208,7 +1204,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                         ),
                                         onPressed: () async {
                                           context.pushNamed(
-                                              AccountSettingsPage.routeName);
+                                            AccountSettingsPage.routeName,
+                                          );
                                         },
                                       ),
                                     ),
@@ -1219,7 +1216,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 5.0, 20.0, 0.0),
+                              20.0,
+                              5.0,
+                              20.0,
+                              0.0,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF131313),
@@ -1227,7 +1228,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 12.0, 20.0, 12.0),
+                                  12.0,
+                                  12.0,
+                                  20.0,
+                                  12.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -1246,39 +1251,38 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     builder: (context) {
                                                       final resolvedUrl =
                                                           _normalizedPhotoUrl(
-                                                              currentUserPhoto);
+                                                            currentUserPhoto,
+                                                          );
                                                       final mainHeroTag =
                                                           resolvedUrl == null
-                                                              ? null
-                                                              : _profileHeroTag(
-                                                                  _profileMainHeroPrefix,
-                                                                  resolvedUrl,
-                                                                );
+                                                          ? null
+                                                          : _profileHeroTag(
+                                                              _profileMainHeroPrefix,
+                                                              resolvedUrl,
+                                                            );
                                                       final profileItem =
                                                           _profileGalleryItem(
-                                                        heroTagOverride:
-                                                            mainHeroTag,
-                                                      );
-                                                      final imageUrl = profileItem
-                                                              ?.url ??
+                                                            heroTagOverride:
+                                                                mainHeroTag,
+                                                          );
+                                                      final imageUrl =
+                                                          profileItem?.url ??
                                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
                                                       final avatar = Container(
                                                         width: 100.0,
                                                         height: 100.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Theme.of(
-                                                                  context)
+                                                        decoration: BoxDecoration(
+                                                          color: Theme.of(context)
                                                               .extension<
-                                                                  CustomColors>()!
+                                                                CustomColors
+                                                              >()!
                                                               .secondaryBackground,
-                                                          image:
-                                                              DecorationImage(
+                                                          image: DecorationImage(
                                                             fit: BoxFit.cover,
                                                             image:
                                                                 Image.network(
-                                                              imageUrl,
-                                                            ).image,
+                                                                  imageUrl,
+                                                                ).image,
                                                           ),
                                                           shape:
                                                               BoxShape.circle,
@@ -1298,13 +1302,13 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                             Colors.transparent,
                                                         highlightColor:
                                                             Colors.transparent,
-                                                        onTap: mainHeroTag ==
-                                                                null
+                                                        onTap:
+                                                            mainHeroTag == null
                                                             ? null
                                                             : () =>
-                                                                _openProfileGalleryViewer(
-                                                                  mainHeroTag,
-                                                                ),
+                                                                  _openProfileGalleryViewer(
+                                                                    mainHeroTag,
+                                                                  ),
                                                         child: Hero(
                                                           tag: profileItem
                                                               .heroTag,
@@ -1318,13 +1322,16 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            1.0, 1.0),
+                                                          1.0,
+                                                          1.0,
+                                                        ),
                                                     child: Container(
                                                       width: 32.0,
                                                       height: 32.0,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFF171717),
+                                                        color: Color(
+                                                          0xFF171717,
+                                                        ),
                                                         shape: BoxShape.circle,
                                                       ),
                                                       child: Stack(
@@ -1332,7 +1339,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                           Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
@@ -1344,8 +1353,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       800.00,
                                                                   maxHeight:
@@ -1360,26 +1368,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadDataMainEditpopup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadDataMainEditpopup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadDataMainEditpopup =
@@ -1389,15 +1418,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadDataMainEditpopup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -1415,33 +1444,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadDataMainEditpopup,
@@ -1451,39 +1478,42 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage1 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage1 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage1
                                                                           ?.isNotEmpty ??
                                                                       false)) {
-                                                                    await currentUserReference!
-                                                                        .update(
-                                                                            createUsersRecordData(
-                                                                      photoUrl:
-                                                                          _model
-                                                                              .singleCroppedImage1,
-                                                                    ));
+                                                                    await currentUserReference!.update(
+                                                                      createUsersRecordData(
+                                                                        photoUrl:
+                                                                            _model.singleCroppedImage1,
+                                                                      ),
+                                                                    );
                                                                     _model.datachange =
                                                                         true;
                                                                   }
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 24.0,
                                                                 height: 24.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Theme.of(
-                                                                          context)
+                                                                decoration: BoxDecoration(
+                                                                  color: Theme.of(context)
                                                                       .extension<
-                                                                          CustomColors>()!
+                                                                        CustomColors
+                                                                      >()!
                                                                       .primaryText,
                                                                   shape: BoxShape
                                                                       .circle,
@@ -1491,8 +1521,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: FaIcon(
                                                                     FontAwesomeIcons
                                                                         .pen,
@@ -1518,7 +1549,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 0.0, 0.0, 0.0),
+                                          20.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(),
@@ -1539,200 +1574,191 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                         height: 35.0,
                                                         decoration:
                                                             BoxDecoration(),
-                                                        child:
-                                                            AuthUserStreamWidget(
-                                                          builder: (context) =>
-                                                              TextFormField(
+                                                        child: AuthUserStreamWidget(
+                                                          builder: (context) => TextFormField(
                                                             controller: _model
                                                                 .textController1,
                                                             focusNode: _model
                                                                 .textFieldFocusNode1,
                                                             autofocus: false,
                                                             obscureText: false,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelStyle: Theme
-                                                                      .of(context)
-                                                                  .textTheme
-                                                                  .labelMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .roboto(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
+                                                            decoration: InputDecoration(
+                                                              labelStyle: Theme.of(context).textTheme.labelMedium!.override(
+                                                                font: GoogleFonts.roboto(
+                                                                  fontWeight: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontWeight,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .labelMedium!
                                                                         .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .labelMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                               hintText:
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_6ju9gvsj,
-                                                              hintStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .roboto(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    fontSize:
-                                                                        23.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
+                                                                    context,
+                                                                  )!.k_6ju9gvsj,
+                                                              hintStyle: Theme.of(context).textTheme.labelMedium!.override(
+                                                                font: GoogleFonts.roboto(
+                                                                  fontWeight: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontWeight,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                fontSize: 23.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .labelMedium!
                                                                         .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .labelMedium!
                                                                         .fontStyle,
-                                                                  ),
-                                                              enabledBorder:
-                                                                  UnderlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: Color(
-                                                                      0xFF383838),
-                                                                  width: 1.3,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
                                                               ),
-                                                              focusedBorder:
-                                                                  UnderlineInputBorder(
+                                                              enabledBorder: UnderlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
-                                                                  color: Color(
-                                                                      0xFF383838),
-                                                                  width: 1.3,
-                                                                ),
+                                                                      color: Color(
+                                                                        0xFF383838,
+                                                                      ),
+                                                                      width:
+                                                                          1.3,
+                                                                    ),
                                                                 borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
+                                                                    BorderRadius.circular(
+                                                                      0.0,
+                                                                    ),
                                                               ),
-                                                              errorBorder:
-                                                                  UnderlineInputBorder(
+                                                              focusedBorder: UnderlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
-                                                                  color: Color(
-                                                                      0xFF383838),
-                                                                  width: 1.3,
-                                                                ),
+                                                                      color: Color(
+                                                                        0xFF383838,
+                                                                      ),
+                                                                      width:
+                                                                          1.3,
+                                                                    ),
                                                                 borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
+                                                                    BorderRadius.circular(
+                                                                      0.0,
+                                                                    ),
                                                               ),
-                                                              focusedErrorBorder:
-                                                                  UnderlineInputBorder(
+                                                              errorBorder: UnderlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
-                                                                  color: Color(
-                                                                      0xFF383838),
-                                                                  width: 1.3,
-                                                                ),
+                                                                      color: Color(
+                                                                        0xFF383838,
+                                                                      ),
+                                                                      width:
+                                                                          1.3,
+                                                                    ),
                                                                 borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
+                                                                    BorderRadius.circular(
+                                                                      0.0,
+                                                                    ),
+                                                              ),
+                                                              focusedErrorBorder: UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                      color: Color(
+                                                                        0xFF383838,
+                                                                      ),
+                                                                      width:
+                                                                          1.3,
+                                                                    ),
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                      0.0,
+                                                                    ),
                                                               ),
                                                               contentPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0),
+                                                                  EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    8.0,
+                                                                  ),
                                                             ),
-                                                            style:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      fontSize:
-                                                                          23.0,
-                                                                      letterSpacing:
-                                                                          0.6,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                      lineHeight:
-                                                                          0.0,
-                                                                    ),
+                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                              font: GoogleFonts.openSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                              ),
+                                                              fontSize: 23.0,
+                                                              letterSpacing:
+                                                                  0.6,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                              lineHeight: 0.0,
+                                                            ),
                                                             validator: _model
                                                                 .textController1Validator
                                                                 .asValidator(
-                                                                    context),
+                                                                  context,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    5.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              5.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width: 200.0,
                                                           height: 35.0,
                                                           decoration:
                                                               BoxDecoration(),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder: (context) =>
-                                                                TextFormField(
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => TextFormField(
                                                               controller: _model
                                                                   .textController2,
                                                               focusNode: _model
@@ -1740,175 +1766,153 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                               autofocus: false,
                                                               obscureText:
                                                                   false,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .labelMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .roboto(
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .labelMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .labelMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontStyle,
+                                                              decoration: InputDecoration(
+                                                                labelStyle: Theme.of(context).textTheme.labelMedium!.override(
+                                                                  font: GoogleFonts.roboto(
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .labelMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .labelMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontWeight,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                hintText:
+                                                                    AppLocalizations.of(
+                                                                      context,
+                                                                    )!.k_cy6tkoqn,
+                                                                hintStyle: Theme.of(context).textTheme.labelMedium!.override(
+                                                                  font: GoogleFonts.roboto(
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .labelMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .labelMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Theme.of(context)
+                                                                      .extension<
+                                                                        CustomColors
+                                                                      >()!
+                                                                      .primaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontWeight,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontStyle,
+                                                                  lineHeight:
+                                                                      0.0,
+                                                                ),
+                                                                enabledBorder: UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                    color: Color(
+                                                                      0xFF383838,
                                                                     ),
-                                                                hintText: AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_cy6tkoqn,
-                                                                hintStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .labelMedium!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .roboto(
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .labelMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .labelMedium!
-                                                                            .fontStyle,
+                                                                    width: 1.3,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                        0.0,
                                                                       ),
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .labelMedium!
-                                                                          .fontStyle,
-                                                                      lineHeight:
-                                                                          0.0,
+                                                                ),
+                                                                focusedBorder: UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                    color: Color(
+                                                                      0xFF383838,
                                                                     ),
-                                                                enabledBorder:
-                                                                    UnderlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: Color(
-                                                                        0xFF383838),
                                                                     width: 1.3,
                                                                   ),
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
+                                                                      BorderRadius.circular(
+                                                                        0.0,
+                                                                      ),
                                                                 ),
-                                                                focusedBorder:
-                                                                    UnderlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
+                                                                errorBorder: UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
                                                                     color: Color(
-                                                                        0xFF383838),
+                                                                      0xFF383838,
+                                                                    ),
                                                                     width: 1.3,
                                                                   ),
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
+                                                                      BorderRadius.circular(
+                                                                        0.0,
+                                                                      ),
                                                                 ),
-                                                                errorBorder:
-                                                                    UnderlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
+                                                                focusedErrorBorder: UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
                                                                     color: Color(
-                                                                        0xFF383838),
+                                                                      0xFF383838,
+                                                                    ),
                                                                     width: 1.3,
                                                                   ),
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                ),
-                                                                focusedErrorBorder:
-                                                                    UnderlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: Color(
-                                                                        0xFF383838),
-                                                                    width: 1.3,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
+                                                                      BorderRadius.circular(
+                                                                        0.0,
+                                                                      ),
                                                                 ),
                                                                 contentPadding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            10.0),
-                                                              ),
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
                                                                     ),
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
+                                                              ),
+                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                    lineHeight:
-                                                                        0.0,
-                                                                  ),
+                                                                lineHeight: 0.0,
+                                                              ),
                                                               validator: _model
                                                                   .textController2Validator
                                                                   .asValidator(
-                                                                      context),
+                                                                    context,
+                                                                  ),
                                                             ),
                                                           ),
                                                         ),
@@ -1925,19 +1929,26 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                   ],
                                 ),
                               ),
-                            ).animateOnPageLoad(
-                                animationsMap['containerOnPageLoadAnimation']!),
+                            ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 5.0),
+                              0.0,
+                              10.0,
+                              0.0,
+                              5.0,
+                            ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      25.0, 0.0, 0.0, 0.0),
+                                    25.0,
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: Text(
                                     AppLocalizations.of(context)!.k_f6ab0k03,
                                     style: Theme.of(context)
@@ -1946,30 +1957,36 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                         .override(
                                           font: GoogleFonts.openSans(
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 15.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 25.0, 0.0),
+                                    0.0,
+                                    0.0,
+                                    25.0,
+                                    0.0,
+                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 7.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          7.0,
+                                          0.0,
+                                        ),
                                         child: Icon(
                                           Icons.remove_red_eye,
                                           color: Theme.of(context)
@@ -1981,8 +1998,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                       AuthUserStreamWidget(
                                         builder: (context) => Text(
                                           valueOrDefault(
-                                                  currentUserDocument?.view, 0)
-                                              .toString(),
+                                            currentUserDocument?.view,
+                                            0,
+                                          ).toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -2015,7 +2033,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 10.0, 20.0, 0.0),
+                                  20.0,
+                                  10.0,
+                                  20.0,
+                                  0.0,
+                                ),
                                 child: Container(
                                   width: double.infinity,
                                   height: 87.0,
@@ -2030,13 +2052,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 0.0, 0.0, 0.0),
+                                      15.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(-0.88, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            -0.88,
+                                            0.0,
+                                          ),
                                           child: Container(
                                             width: 57.0,
                                             height: 57.0,
@@ -2047,27 +2075,28 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                   builder: (context) {
                                                     final resolvedUrl =
                                                         _normalizedPhotoUrl(
-                                                            currentUserPhoto);
+                                                          currentUserPhoto,
+                                                        );
                                                     final previewHeroTag =
                                                         resolvedUrl == null
-                                                            ? null
-                                                            : _profileHeroTag(
-                                                                _profilePreviewHeroPrefix,
-                                                                resolvedUrl,
-                                                              );
+                                                        ? null
+                                                        : _profileHeroTag(
+                                                            _profilePreviewHeroPrefix,
+                                                            resolvedUrl,
+                                                          );
                                                     final profileItem =
                                                         _profileGalleryItem(
-                                                      heroTagOverride:
-                                                          previewHeroTag,
-                                                    );
-                                                    final imageUrl = profileItem
-                                                            ?.url ??
+                                                          heroTagOverride:
+                                                              previewHeroTag,
+                                                        );
+                                                    final imageUrl =
+                                                        profileItem?.url ??
                                                         'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
-                                                    final previewImage =
-                                                        ClipRRect(
+                                                    final previewImage = ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              90.0),
+                                                            90.0,
+                                                          ),
                                                       child: Image.network(
                                                         imageUrl,
                                                         width: 57.0,
@@ -2089,13 +2118,13 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                           Colors.transparent,
                                                       highlightColor:
                                                           Colors.transparent,
-                                                      onTap: previewHeroTag ==
-                                                              null
+                                                      onTap:
+                                                          previewHeroTag == null
                                                           ? null
                                                           : () =>
-                                                              _openProfileGalleryViewer(
-                                                                previewHeroTag,
-                                                              ),
+                                                                _openProfileGalleryViewer(
+                                                                  previewHeroTag,
+                                                                ),
                                                       child: Hero(
                                                         tag:
                                                             profileItem.heroTag,
@@ -2109,7 +2138,9 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1.1, 1.1),
+                                                        1.1,
+                                                        1.1,
+                                                      ),
                                                   child: Container(
                                                     width: 19.0,
                                                     height: 18.0,
@@ -2119,39 +2150,40 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                         Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Container(
                                                             width: 19.0,
                                                             height: 19.0,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Color(
-                                                                  0xFF171717),
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                            ),
+                                                                  color: Color(
+                                                                    0xFF171717,
+                                                                  ),
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                ),
                                                             child: Stack(
                                                               children: [
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Container(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: 12.0,
                                                                     height:
                                                                         12.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFF00D333),
-                                                                      image:
-                                                                          DecorationImage(
+                                                                        0xFF00D333,
+                                                                      ),
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
@@ -2175,14 +2207,20 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                         Expanded(
                                           child: Align(
                                             alignment: AlignmentDirectional(
-                                                0.65, -0.1),
+                                              0.65,
+                                              -0.1,
+                                            ),
                                             child: Container(
                                               height: 54.0,
                                               decoration: BoxDecoration(),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 0.0, 0.0, 0.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      15.0,
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -2202,12 +2240,12 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      5.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                5.0,
+                                                              ),
                                                           child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -2216,47 +2254,45 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.03,
-                                                                        0.33),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Text(
+                                                                      0.03,
+                                                                      0.33,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) => Text(
                                                                     valueOrDefault<
-                                                                        String>(
+                                                                      String
+                                                                    >(
                                                                       currentUserDisplayName,
                                                                       'ไม่ระบุ',
                                                                     ),
                                                                     textAlign:
                                                                         TextAlign
                                                                             .start,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.6,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          17.0,
+                                                                      letterSpacing:
+                                                                          0.6,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -2270,55 +2306,53 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -0.16,
-                                                                      0.91),
+                                                                    -0.16,
+                                                                    0.91,
+                                                                  ),
                                                               child: Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Text(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: AuthUserStreamWidget(
+                                                                  builder: (context) => Text(
                                                                     valueOrDefault(
-                                                                        currentUserDocument
-                                                                            ?.caption,
-                                                                        ''),
+                                                                      currentUserDocument
+                                                                          ?.caption,
+                                                                      '',
+                                                                    ),
                                                                     textAlign:
                                                                         TextAlign
                                                                             .start,
                                                                     maxLines: 2,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          color: Theme.of(context)
-                                                                              .extension<CustomColors>()!
-                                                                              .primaryText,
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      color: Theme.of(context)
+                                                                          .extension<
+                                                                            CustomColors
+                                                                          >()!
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -2329,12 +2363,12 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  20.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            20.0,
+                                                            0.0,
+                                                          ),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -2342,15 +2376,17 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                           Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    0.0, 1.0),
+                                                                  0.0,
+                                                                  1.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          7.0,
-                                                                          8.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  EdgeInsetsDirectional.fromSTEB(
+                                                                    7.0,
+                                                                    8.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: InkWell(
                                                                 splashColor: Colors
                                                                     .transparent,
@@ -2361,27 +2397,30 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 highlightColor:
                                                                     Colors
                                                                         .transparent,
-                                                                onTap:
-                                                                    () async {
+                                                                onTap: () async {
                                                                   _model.editphoto =
                                                                       !_model
                                                                           .editphoto;
                                                                   safeSetState(
-                                                                      () {});
+                                                                    () {},
+                                                                  );
                                                                 },
                                                                 child: FaIcon(
                                                                   FontAwesomeIcons
                                                                       .pen,
-                                                                  color: _model
-                                                                              .editphoto ==
+                                                                  color:
+                                                                      _model.editphoto ==
                                                                           true
                                                                       ? Color(
-                                                                          0xFFFF2D38)
+                                                                          0xFFFF2D38,
+                                                                        )
                                                                       : Theme.of(
-                                                                              context)
-                                                                          .extension<
-                                                                              CustomColors>()!
-                                                                          .primaryText,
+                                                                              context,
+                                                                            )
+                                                                            .extension<
+                                                                              CustomColors
+                                                                            >()!
+                                                                            .primaryText,
                                                                   size: 17.0,
                                                                 ),
                                                               ),
@@ -2405,7 +2444,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                               if (false)
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 0.0, 20.0, 0.0),
+                                    20.0,
+                                    0.0,
+                                    20.0,
+                                    0.0,
+                                  ),
                                   child: Container(
                                     width: double.infinity,
                                     height: 260.0,
@@ -2429,11 +2472,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                             padding: EdgeInsets.zero,
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              crossAxisSpacing: 1.5,
-                                              mainAxisSpacing: 1.5,
-                                              childAspectRatio: 1.0,
-                                            ),
+                                                  crossAxisCount: 3,
+                                                  crossAxisSpacing: 1.5,
+                                                  mainAxisSpacing: 1.5,
+                                                  childAspectRatio: 1.0,
+                                                ),
                                             primary: false,
                                             scrollDirection: Axis.vertical,
                                             children: [
@@ -2451,10 +2494,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           _buildPhotoshowImage(
-                                                        currentUserDocument!
-                                                            .photoshow.photo1,
-                                                        'photo1_${currentUserDocument!.photoshow.photo1}',
-                                                      ),
+                                                            currentUserDocument!
+                                                                .photoshow
+                                                                .photo1,
+                                                            'photo1_${currentUserDocument!.photoshow.photo1}',
+                                                          ),
                                                     ),
                                                     if (currentUserDocument
                                                                 ?.photoshow
@@ -2467,20 +2511,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -2491,8 +2534,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       800.00,
                                                                   maxHeight:
@@ -2507,15 +2549,23 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData1popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData1popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     showUploadMessage(
@@ -2525,19 +2575,32 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           true,
                                                                     );
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     ScaffoldMessenger.of(
-                                                                            context)
-                                                                        .hideCurrentSnackBar();
+                                                                      context,
+                                                                    ).hideCurrentSnackBar();
                                                                     _model.isDataUploading_uploadData1popup =
                                                                         false;
                                                                   }
@@ -2545,21 +2608,23 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData1popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                     showUploadMessage(
-                                                                        context,
-                                                                        'Success!');
+                                                                      context,
+                                                                      'Success!',
+                                                                    );
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     showUploadMessage(
-                                                                        context,
-                                                                        'Failed to upload data');
+                                                                      context,
+                                                                      'Failed to upload data',
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -2577,33 +2642,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData1popup,
@@ -2613,10 +2676,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage2 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage2 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage2
@@ -2631,29 +2698,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -2681,20 +2750,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -2705,41 +2773,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo1: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo1:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -2772,10 +2842,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           _buildPhotoshowImage(
-                                                        currentUserDocument!
-                                                            .photoshow.photo2,
-                                                        'photo2_${currentUserDocument!.photoshow.photo2}',
-                                                      ),
+                                                            currentUserDocument!
+                                                                .photoshow
+                                                                .photo2,
+                                                            'photo2_${currentUserDocument!.photoshow.photo2}',
+                                                          ),
                                                     ),
                                                     if (currentUserDocument
                                                                 ?.photoshow
@@ -2788,20 +2859,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -2812,8 +2882,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       800.00,
                                                                   maxHeight:
@@ -2828,26 +2897,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData2popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData2popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadData2popup =
@@ -2857,15 +2947,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData2popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -2883,33 +2973,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData2popup,
@@ -2919,10 +3007,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage3 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage3 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage3
@@ -2937,29 +3029,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -2987,20 +3081,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3011,41 +3104,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo2: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo2:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3078,10 +3173,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           _buildPhotoshowImage(
-                                                        currentUserDocument!
-                                                            .photoshow.photo3,
-                                                        'photo3_${currentUserDocument!.photoshow.photo3}',
-                                                      ),
+                                                            currentUserDocument!
+                                                                .photoshow
+                                                                .photo3,
+                                                            'photo3_${currentUserDocument!.photoshow.photo3}',
+                                                          ),
                                                     ),
                                                     if (currentUserDocument
                                                                 ?.photoshow
@@ -3094,20 +3190,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3118,8 +3213,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       700.00,
                                                                   maxHeight:
@@ -3134,26 +3228,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData3popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData3popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadData3popup =
@@ -3163,15 +3278,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData3popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -3189,33 +3304,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData3popup,
@@ -3225,10 +3338,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage4 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage4 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage4
@@ -3243,29 +3360,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3293,20 +3412,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3317,41 +3435,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo3: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo3:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3384,15 +3504,17 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child:
-                                                          AuthUserStreamWidget(
+                                                            0.0,
+                                                            0.0,
+                                                          ),
+                                                      child: AuthUserStreamWidget(
                                                         builder: (context) =>
                                                             _buildPhotoshowImage(
-                                                          currentUserDocument!
-                                                              .photoshow.photo4,
-                                                          'photo4_${currentUserDocument!.photoshow.photo4}',
-                                                        ),
+                                                              currentUserDocument!
+                                                                  .photoshow
+                                                                  .photo4,
+                                                              'photo4_${currentUserDocument!.photoshow.photo4}',
+                                                            ),
                                                       ),
                                                     ),
                                                     if (currentUserDocument
@@ -3406,20 +3528,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3430,8 +3551,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       800.00,
                                                                   maxHeight:
@@ -3446,26 +3566,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData4popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData4popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadData4popup =
@@ -3475,15 +3616,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData4popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -3501,33 +3642,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData4popup,
@@ -3537,10 +3676,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage5 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage5 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage5
@@ -3555,29 +3698,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3605,20 +3750,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3629,41 +3773,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo4: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo4:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3696,10 +3842,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           _buildPhotoshowImage(
-                                                        currentUserDocument!
-                                                            .photoshow.photo5,
-                                                        'photo5_${currentUserDocument!.photoshow.photo5}',
-                                                      ),
+                                                            currentUserDocument!
+                                                                .photoshow
+                                                                .photo5,
+                                                            'photo5_${currentUserDocument!.photoshow.photo5}',
+                                                          ),
                                                     ),
                                                     if (currentUserDocument
                                                                 ?.photoshow
@@ -3712,20 +3859,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3736,8 +3882,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       800.00,
                                                                   maxHeight:
@@ -3752,26 +3897,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData5popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData5popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadData5popup =
@@ -3781,15 +3947,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData5popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -3807,33 +3973,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData5popup,
@@ -3843,10 +4007,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage6 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage6 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage6
@@ -3861,29 +4029,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -3911,20 +4081,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -3935,41 +4104,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo5: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo5:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -4002,10 +4173,11 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                     AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           _buildPhotoshowImage(
-                                                        currentUserDocument!
-                                                            .photoshow.photo6,
-                                                        'photo6_${currentUserDocument!.photoshow.photo6}',
-                                                      ),
+                                                            currentUserDocument!
+                                                                .photoshow
+                                                                .photo6,
+                                                            'photo6_${currentUserDocument!.photoshow.photo6}',
+                                                          ),
                                                     ),
                                                     if (currentUserDocument
                                                                 ?.photoshow
@@ -4018,20 +4190,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -4042,8 +4213,7 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                final selectedMedia =
-                                                                    await selectMedia(
+                                                                final selectedMedia = await selectMedia(
                                                                   maxWidth:
                                                                       700.00,
                                                                   maxHeight:
@@ -4058,26 +4228,47 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 );
                                                                 if (selectedMedia !=
                                                                         null &&
-                                                                    selectedMedia.every((m) =>
-                                                                        validateFileFormat(
-                                                                            m.storagePath,
-                                                                            context))) {
-                                                                  safeSetState(() =>
-                                                                      _model.isDataUploading_uploadData6popup =
-                                                                          true);
+                                                                    selectedMedia.every(
+                                                                      (
+                                                                        m,
+                                                                      ) => validateFileFormat(
+                                                                        m.storagePath,
+                                                                        context,
+                                                                      ),
+                                                                    )) {
+                                                                  safeSetState(
+                                                                    () =>
+                                                                        _model.isDataUploading_uploadData6popup =
+                                                                            true,
+                                                                  );
                                                                   var selectedUploadedFiles =
-                                                                      <FFUploadedFile>[];
+                                                                      <
+                                                                        FFUploadedFile
+                                                                      >[];
 
                                                                   try {
                                                                     selectedUploadedFiles = selectedMedia
-                                                                        .map((m) => FFUploadedFile(
-                                                                              name: m.storagePath.split('/').last,
-                                                                              bytes: m.bytes,
-                                                                              height: m.dimensions?.height,
-                                                                              width: m.dimensions?.width,
-                                                                              blurHash: m.blurHash,
-                                                                              originalFilename: m.originalFilename,
-                                                                            ))
+                                                                        .map(
+                                                                          (
+                                                                            m,
+                                                                          ) => FFUploadedFile(
+                                                                            name: m.storagePath
+                                                                                .split(
+                                                                                  '/',
+                                                                                )
+                                                                                .last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                            originalFilename:
+                                                                                m.originalFilename,
+                                                                          ),
+                                                                        )
                                                                         .toList();
                                                                   } finally {
                                                                     _model.isDataUploading_uploadData6popup =
@@ -4087,15 +4278,15 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                           .length ==
                                                                       selectedMedia
                                                                           .length) {
-                                                                    safeSetState(
-                                                                        () {
+                                                                    safeSetState(() {
                                                                       _model.uploadedLocalFile_uploadData6popup =
                                                                           selectedUploadedFiles
                                                                               .first;
                                                                     });
                                                                   } else {
                                                                     safeSetState(
-                                                                        () {});
+                                                                      () {},
+                                                                    );
                                                                     return;
                                                                   }
                                                                 }
@@ -4113,33 +4304,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                             .transparent,
                                                                     barrierColor:
                                                                         Color(
-                                                                            0x00000000),
+                                                                          0x00000000,
+                                                                        ),
                                                                     enableDrag:
                                                                         false,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              Container(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: Container(
                                                                             height:
                                                                                 double.infinity,
-                                                                            child:
-                                                                                EditImageModalWidget(
+                                                                            child: EditImageModalWidget(
                                                                               croppShape: 'square',
                                                                               cropPercentage: 0.8,
                                                                               selectedImage: _model.uploadedLocalFile_uploadData6popup,
@@ -4149,10 +4338,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(() =>
-                                                                          _model.singleCroppedImage7 =
-                                                                              value));
+                                                                  ).then(
+                                                                    (
+                                                                      value,
+                                                                    ) => safeSetState(
+                                                                      () => _model.singleCroppedImage7 =
+                                                                          value,
+                                                                    ),
+                                                                  );
 
                                                                   if ((_model
                                                                           .singleCroppedImage7
@@ -4167,29 +4360,31 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                 }
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFF00D333),
+                                                                    0xFF00D333,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -4217,20 +4412,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1.05, -1.04),
+                                                              1.05,
+                                                              -1.04,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      8.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                          child:
-                                                              AuthUserStreamWidget(
-                                                            builder:
-                                                                (context) =>
-                                                                    InkWell(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                8.0,
+                                                                8.0,
+                                                                0.0,
+                                                              ),
+                                                          child: AuthUserStreamWidget(
+                                                            builder: (context) => InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
                                                               focusColor: Colors
@@ -4241,41 +4435,43 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update(
-                                                                        createUsersRecordData(
-                                                                  photoshow:
-                                                                      createUserphotoshowStruct(
-                                                                    photo6: '',
-                                                                    clearUnsetFields:
-                                                                        false,
+                                                                await currentUserReference!.update(
+                                                                  createUsersRecordData(
+                                                                    photoshow: createUserphotoshowStruct(
+                                                                      photo6:
+                                                                          '',
+                                                                      clearUnsetFields:
+                                                                          false,
+                                                                    ),
                                                                   ),
-                                                                ));
+                                                                );
 
                                                                 safeSetState(
-                                                                    () {});
+                                                                  () {},
+                                                                );
                                                               },
                                                               child: Container(
                                                                 width: 23.0,
                                                                 height: 23.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Color(
-                                                                      0xFFFF2D38),
+                                                                    0xFFFF2D38,
+                                                                  ),
                                                                   boxShadow: [
                                                                     BoxShadow(
                                                                       blurRadius:
                                                                           4.0,
                                                                       color: Color(
-                                                                          0x33000000),
+                                                                        0x33000000,
+                                                                      ),
                                                                       offset:
                                                                           Offset(
-                                                                        0.0,
-                                                                        2.0,
-                                                                      ),
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
                                                                       spreadRadius:
                                                                           1.0,
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                   shape: BoxShape
                                                                       .circle,
@@ -4303,7 +4499,8 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                 ),
                             ],
                           ).animateOnPageLoad(
-                              animationsMap['columnOnPageLoadAnimation']!),
+                            animationsMap['columnOnPageLoadAnimation']!,
+                          ),
                           _buildInstagramSection(),
                         ].addToEnd(SizedBox(height: 80.0)),
                       ),
@@ -4320,13 +4517,14 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                         builder: (context) {
                           final cheersEndList =
                               currentUserDocument?.cheersEnd.toList() ?? [];
-                          final showProfileLength = (currentUserDocument
-                                      ?.showprofilecheers
-                                      .toList() ??
-                                  [])
-                              .length;
-                          final nextRef =
-                              cheersEndList.elementAtOrNull(showProfileLength);
+                          final showProfileLength =
+                              (currentUserDocument?.showprofilecheers
+                                          .toList() ??
+                                      [])
+                                  .length;
+                          final nextRef = cheersEndList.elementAtOrNull(
+                            showProfileLength,
+                          );
                           if (nextRef == null) return SizedBox.shrink();
                           return StreamBuilder<UsersRecord>(
                             stream: UsersRecord.getDocument(nextRef),
@@ -4357,20 +4555,19 @@ class _ProfileWidgetState extends ConsumerState<ProfilePage>
                                   context.pushNamed(MainChatPage.routeName);
 
                                   await currentUserReference!.update({
-                                    ...mapToSupabase(
-                                      {
-                                        'showprofilecheers':
-                                            FieldValue.arrayUnion([
-                                          card33UserGridUsersRecord.reference
-                                        ]),
-                                      },
-                                    ),
+                                    ...mapToSupabase({
+                                      'showprofilecheers':
+                                          FieldValue.arrayUnion([
+                                            card33UserGridUsersRecord.reference,
+                                          ]),
+                                    }),
                                   });
                                 },
                                 child: ChangeNotifierProvider.value(
                                   value: _model.card33UserGridModel.setOnUpdate(
-                                      onUpdate: () => safeSetState(() {}),
-                                      updateOnChange: true),
+                                    onUpdate: () => safeSetState(() {}),
+                                    updateOnChange: true,
+                                  ),
                                   child: Card33UserGridWidget(
                                     name: valueOrDefault<String>(
                                       card33UserGridUsersRecord.displayName,
@@ -4425,7 +4622,8 @@ class _PhotoshowGalleryViewer extends ConsumerStatefulWidget {
       _PhotoshowGalleryViewerState();
 }
 
-class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer> {
+class _PhotoshowGalleryViewerState
+    extends ConsumerState<_PhotoshowGalleryViewer> {
   late final PageController _pageController;
   late final List<TransformationController> _transformControllers;
   late int _currentIndex;
@@ -4457,8 +4655,8 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
   }
 
   void _updateZoomState() {
-    final scale =
-        _transformControllers[_currentIndex].value.getMaxScaleOnAxis();
+    final scale = _transformControllers[_currentIndex].value
+        .getMaxScaleOnAxis();
     final isZoomed = scale > 1.05;
     if (isZoomed != _isZoomed) {
       setState(() => _isZoomed = isZoomed);
@@ -4489,8 +4687,10 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
   }
 
   void _handleVerticalDragUpdate(DragUpdateDetails details) {
-    final nextOffset =
-        (_verticalDragOffset + details.delta.dy).clamp(0.0, 400.0);
+    final nextOffset = (_verticalDragOffset + details.delta.dy).clamp(
+      0.0,
+      400.0,
+    );
     if (nextOffset == _verticalDragOffset) {
       return;
     }
@@ -4520,8 +4720,9 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
       screenSize.height - padding.top - padding.bottom,
     );
     final currentItem = widget.items[_currentIndex];
-    final backgroundOpacity =
-        (1.0 - (_verticalDragOffset / 260.0)).clamp(0.0, 1.0).toDouble();
+    final backgroundOpacity = (1.0 - (_verticalDragOffset / 260.0))
+        .clamp(0.0, 1.0)
+        .toDouble();
 
     return Material(
       color: Colors.black.withValues(alpha: backgroundOpacity),
@@ -4539,8 +4740,9 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   // Disable swipe-to-dismiss while zoomed in
-                  onVerticalDragUpdate:
-                      _isZoomed ? null : _handleVerticalDragUpdate,
+                  onVerticalDragUpdate: _isZoomed
+                      ? null
+                      : _handleVerticalDragUpdate,
                   onVerticalDragEnd: _isZoomed ? null : _handleVerticalDragEnd,
                   child: PageView.builder(
                     controller: _pageController,
@@ -4551,16 +4753,18 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
                     itemCount: widget.items.length,
                     onPageChanged: (index) {
                       // Reset zoom on the old page and start listening to new
-                      _transformControllers[_currentIndex]
-                          .removeListener(_updateZoomState);
+                      _transformControllers[_currentIndex].removeListener(
+                        _updateZoomState,
+                      );
                       _transformControllers[_currentIndex].value =
                           Matrix4.identity();
                       setState(() {
                         _currentIndex = index;
                         _isZoomed = false;
                       });
-                      _transformControllers[index]
-                          .addListener(_updateZoomState);
+                      _transformControllers[index].addListener(
+                        _updateZoomState,
+                      );
                     },
                     itemBuilder: (context, index) {
                       final item = widget.items[index];
@@ -4569,9 +4773,9 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) =>
                             Image.asset(
-                          'assets/images/error_image.png',
-                          fit: BoxFit.contain,
-                        ),
+                              'assets/images/error_image.png',
+                              fit: BoxFit.contain,
+                            ),
                       );
                       return Stack(
                         fit: StackFit.expand,
@@ -4632,9 +4836,7 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
                         decoration: BoxDecoration(
                           color: const Color(0x99000000),
                           borderRadius: BorderRadius.circular(999.0),
-                          border: Border.all(
-                            color: const Color(0x55FFFFFF),
-                          ),
+                          border: Border.all(color: const Color(0x55FFFFFF)),
                         ),
                         child: const Text(
                           'รูปโปรไฟล์',
@@ -4653,11 +4855,7 @@ class _PhotoshowGalleryViewerState extends ConsumerState<_PhotoshowGalleryViewer
               right: 16.0,
               child: IconButton(
                 onPressed: _closeViewer,
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 28.0,
-                ),
+                icon: const Icon(Icons.close, color: Colors.white, size: 28.0),
               ),
             ),
             Positioned(

@@ -14,10 +14,7 @@ import 'package:munday/core/theme/theme.dart';
 export 'block_model.dart';
 
 class BlockWidget extends ConsumerStatefulWidget {
-  const BlockWidget({
-    super.key,
-    required this.iduser,
-  });
+  const BlockWidget({super.key, required this.iduser});
 
   final SupabaseDocRef? iduser;
 
@@ -60,11 +57,8 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
           BoxShadow(
             blurRadius: 5.0,
             color: Color(0x3B1D2429),
-            offset: Offset(
-              0.0,
-              -3.0,
-            ),
-          )
+            offset: Offset(0.0, -3.0),
+          ),
         ],
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
@@ -85,36 +79,41 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                   Navigator.pop(context);
 
                   await currentUserReference!.update({
-                    ...mapToSupabase(
-                      {
-                        'Blockuser': FieldValue.arrayUnion([widget.iduser]),
-                        'usermassage': FieldValue.arrayRemove([widget.iduser]),
-                        'usermassageRead':
-                            FieldValue.arrayRemove([widget.iduser]),
-                      },
-                    ),
+                    ...mapToSupabase({
+                      'Blockuser': FieldValue.arrayUnion([widget.iduser]),
+                      'usermassage': FieldValue.arrayRemove([widget.iduser]),
+                      'usermassageRead': FieldValue.arrayRemove([
+                        widget.iduser,
+                      ]),
+                    }),
                   });
 
                   await widget.iduser!.update({
-                    ...mapToSupabase(
-                      {
-                        'BlockEDuser':
-                            FieldValue.arrayUnion([currentUserReference]),
-                        'usermassage':
-                            FieldValue.arrayRemove([currentUserReference]),
-                        'usermassageRead':
-                            FieldValue.arrayRemove([currentUserReference]),
-                        'Report': FieldValue.increment(1),
-                      },
-                    ),
+                    ...mapToSupabase({
+                      'BlockEDuser': FieldValue.arrayUnion([
+                        currentUserReference,
+                      ]),
+                      'usermassage': FieldValue.arrayRemove([
+                        currentUserReference,
+                      ]),
+                      'usermassageRead': FieldValue.arrayRemove([
+                        currentUserReference,
+                      ]),
+                      'Report': FieldValue.increment(1),
+                    }),
                   });
-                  _model.aaaCopy = await queryChatRoomsRecordOnce(
-                    queryBuilder: (q) => q.where('user_ids',
-                        arrayContains: currentUserReference),
-                    singleRecord: true,
-                  ).then((s) => s
-                      .where((r) => r.userIds.contains(widget.iduser?.id))
-                      .firstOrNull);
+                  _model.aaaCopy =
+                      await queryChatRoomsRecordOnce(
+                        queryBuilder: (q) => q.where(
+                          'user_ids',
+                          arrayContains: currentUserReference,
+                        ),
+                        singleRecord: true,
+                      ).then(
+                        (s) => s
+                            .where((r) => r.userIds.contains(widget.iduser?.id))
+                            .firstOrNull,
+                      );
                   if (_model.aaaCopy?.reference != null) {
                     await _model.aaaCopy!.reference.delete();
                   }
@@ -128,30 +127,33 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   color: Color(0xFFB50000),
                   textStyle: Theme.of(context).textTheme.bodyLarge!.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight:
-                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                        ),
-                        color: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                      ),
-                  elevation: 2.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
+                    font: GoogleFonts.openSans(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontStyle,
+                    ),
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.fontWeight,
+                    fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
                   ),
+                  elevation: 2.0,
+                  borderSide: BorderSide(color: Colors.transparent, width: 1.0),
                 ),
               ),
             ),
@@ -162,35 +164,40 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                   Navigator.pop(context);
 
                   await currentUserReference!.update({
-                    ...mapToSupabase(
-                      {
-                        'Blockuser': FieldValue.arrayUnion([widget.iduser]),
-                        'usermassage': FieldValue.arrayRemove([widget.iduser]),
-                        'usermassageRead':
-                            FieldValue.arrayRemove([widget.iduser]),
-                      },
-                    ),
+                    ...mapToSupabase({
+                      'Blockuser': FieldValue.arrayUnion([widget.iduser]),
+                      'usermassage': FieldValue.arrayRemove([widget.iduser]),
+                      'usermassageRead': FieldValue.arrayRemove([
+                        widget.iduser,
+                      ]),
+                    }),
                   });
 
                   await widget.iduser!.update({
-                    ...mapToSupabase(
-                      {
-                        'BlockEDuser':
-                            FieldValue.arrayUnion([currentUserReference]),
-                        'usermassage':
-                            FieldValue.arrayRemove([currentUserReference]),
-                        'usermassageRead':
-                            FieldValue.arrayRemove([currentUserReference]),
-                      },
-                    ),
+                    ...mapToSupabase({
+                      'BlockEDuser': FieldValue.arrayUnion([
+                        currentUserReference,
+                      ]),
+                      'usermassage': FieldValue.arrayRemove([
+                        currentUserReference,
+                      ]),
+                      'usermassageRead': FieldValue.arrayRemove([
+                        currentUserReference,
+                      ]),
+                    }),
                   });
-                  _model.aaa = await queryChatRoomsRecordOnce(
-                    queryBuilder: (q) => q.where('user_ids',
-                        arrayContains: currentUserReference),
-                    singleRecord: true,
-                  ).then((s) => s
-                      .where((r) => r.userIds.contains(widget.iduser?.id))
-                      .firstOrNull);
+                  _model.aaa =
+                      await queryChatRoomsRecordOnce(
+                        queryBuilder: (q) => q.where(
+                          'user_ids',
+                          arrayContains: currentUserReference,
+                        ),
+                        singleRecord: true,
+                      ).then(
+                        (s) => s
+                            .where((r) => r.userIds.contains(widget.iduser?.id))
+                            .firstOrNull,
+                      );
                   if (_model.aaa?.reference != null) {
                     await _model.aaa!.reference.delete();
                   }
@@ -204,30 +211,33 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   color: Color(0xFFB50000),
                   textStyle: Theme.of(context).textTheme.bodyLarge!.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight:
-                              Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                        ),
-                        color: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            Theme.of(context).textTheme.bodyLarge!.fontWeight,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyLarge!.fontStyle,
-                      ),
-                  elevation: 2.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
+                    font: GoogleFonts.openSans(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge!.fontStyle,
+                    ),
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.fontWeight,
+                    fontStyle: Theme.of(context).textTheme.bodyLarge!.fontStyle,
                   ),
+                  elevation: 2.0,
+                  borderSide: BorderSide(color: Colors.transparent, width: 1.0),
                 ),
               ),
             ),
@@ -242,29 +252,32 @@ class _BlockWidgetState extends ConsumerState<BlockWidget> {
                   width: double.infinity,
                   height: 60.0,
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   color: Color(0xFF232323),
                   textStyle: Theme.of(context).textTheme.titleSmall!.override(
-                        font: GoogleFonts.lexendDeca(
-                          fontWeight: FontWeight.normal,
-                          fontStyle:
-                              Theme.of(context).textTheme.titleSmall!.fontStyle,
-                        ),
-                        color: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
-                        fontSize: 16.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.normal,
-                        fontStyle:
-                            Theme.of(context).textTheme.titleSmall!.fontStyle,
-                      ),
-                  elevation: 0.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 0.0,
+                    font: GoogleFonts.lexendDeca(
+                      fontWeight: FontWeight.normal,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.titleSmall!.fontStyle,
+                    ),
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
+                    fontSize: 16.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.normal,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.titleSmall!.fontStyle,
                   ),
+                  elevation: 0.0,
+                  borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                 ),
               ),
             ),

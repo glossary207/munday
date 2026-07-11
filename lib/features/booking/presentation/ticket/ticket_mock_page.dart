@@ -138,9 +138,11 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
             .toList();
       case 2:
         return kMockTickets
-            .where((t) =>
-                t.status == TicketStatus.used ||
-                t.status == TicketStatus.cancelled)
+            .where(
+              (t) =>
+                  t.status == TicketStatus.used ||
+                  t.status == TicketStatus.cancelled,
+            )
             .toList();
       default:
         return kMockTickets;
@@ -174,7 +176,7 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
     'ก.ย.',
     'ต.ค.',
     'พ.ย.',
-    'ธ.ค.'
+    'ธ.ค.',
   ];
   static const _dayTH = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];
 
@@ -221,8 +223,9 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
   }
 
   Widget _buildHeader(BuildContext context) {
-    final upcoming =
-        kMockTickets.where((t) => t.status == TicketStatus.upcoming).length;
+    final upcoming = kMockTickets
+        .where((t) => t.status == TicketStatus.upcoming)
+        .length;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 16, 0),
@@ -239,8 +242,11 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
                 shape: BoxShape.circle,
                 border: Border.all(color: const Color(0x44FFFFFF), width: 1),
               ),
-              child: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white, size: 15),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+                size: 15,
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -279,8 +285,11 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.confirmation_num_rounded,
-                    color: Color(0xFFFF4444), size: 16),
+                const Icon(
+                  Icons.confirmation_num_rounded,
+                  color: Color(0xFFFF4444),
+                  size: 16,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   kMockTickets.length.toString(),
@@ -339,13 +348,18 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.confirmation_num_outlined,
-              color: Color(0xFF333333), size: 64),
+          const Icon(
+            Icons.confirmation_num_outlined,
+            color: Color(0xFF333333),
+            size: 64,
+          ),
           const SizedBox(height: 16),
           Text(
             'ไม่มี Ticket ในหมวดนี้',
             style: GoogleFonts.openSans(
-                color: const Color(0xFF555555), fontSize: 16),
+              color: const Color(0xFF555555),
+              fontSize: 16,
+            ),
           ),
         ],
       ),
@@ -400,10 +414,7 @@ class _TicketCard extends ConsumerWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Column(
-          children: [
-            _buildPosterHalf(context),
-            _buildDetailHalf(context),
-          ],
+          children: [_buildPosterHalf(context), _buildDetailHalf(context)],
         ),
       ),
     );
@@ -445,12 +456,15 @@ class _TicketCard extends ConsumerWidget {
                     // Status badge
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 4),
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: _statusColor.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                            color: _statusColor.withValues(alpha: 0.6)),
+                          color: _statusColor.withValues(alpha: 0.6),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -481,7 +495,9 @@ class _TicketCard extends ConsumerWidget {
                     if (ticket.quantity > 1)
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0x33FFFFFF),
                           borderRadius: BorderRadius.circular(20),
@@ -512,8 +528,11 @@ class _TicketCard extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.location_on_rounded,
-                        color: Color(0xFFFF4444), size: 14),
+                    const Icon(
+                      Icons.location_on_rounded,
+                      color: Color(0xFFFF4444),
+                      size: 14,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       ticket.nameVenues,
@@ -543,7 +562,7 @@ class _TicketCard extends ConsumerWidget {
       child: Column(
         children: [
           // Perforated edge
-//          _PerforatedEdge(),
+          //          _PerforatedEdge(),
           // Details row
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
@@ -613,8 +632,11 @@ class _TicketCard extends ConsumerWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.access_time_rounded,
-                              color: Color(0xFF666666), size: 14),
+                          const Icon(
+                            Icons.access_time_rounded,
+                            color: Color(0xFF666666),
+                            size: 14,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             ticket.timeEvent,
@@ -648,8 +670,11 @@ class _TicketCard extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFF333333)),
                     ),
-                    child: const Icon(Icons.qr_code_rounded,
-                        color: Colors.white, size: 24),
+                    child: const Icon(
+                      Icons.qr_code_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
                 ),
               ],
@@ -725,9 +750,7 @@ class _TicketDivider extends ConsumerWidget {
             ),
           ),
           // Dashed line
-          Expanded(
-            child: CustomPaint(painter: _DashedLinePainter()),
-          ),
+          Expanded(child: CustomPaint(painter: _DashedLinePainter())),
           // Right notch
           Container(
             width: 12,
@@ -761,7 +784,10 @@ class _DashedLinePainter extends CustomPainter {
 
     while (x < size.width) {
       canvas.drawLine(
-          Offset(x, y), Offset(math.min(x + dashWidth, size.width), y), paint);
+        Offset(x, y),
+        Offset(math.min(x + dashWidth, size.width), y),
+        paint,
+      );
       x += dashWidth + gap;
     }
   }

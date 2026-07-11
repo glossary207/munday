@@ -22,11 +22,11 @@ class UserInGroupInviteStruct extends FFSupabaseStruct {
     /// none= show select
     int? status,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _username = username,
-        _uid = uid,
-        _photoPath = photoPath,
-        _status = status,
-        super(supabaseUtilData);
+  }) : _username = username,
+       _uid = uid,
+       _photoPath = photoPath,
+       _status = status,
+       super(supabaseUtilData);
 
   // "username" field.
   String? _username;
@@ -71,57 +71,33 @@ class UserInGroupInviteStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'username': _username,
-        'uid': _uid,
-        'photo_path': _photoPath,
-        'status': _status,
-      }.withoutNulls;
+    'username': _username,
+    'uid': _uid,
+    'photo_path': _photoPath,
+    'status': _status,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'username': serializeParam(
-          _username,
-          ParamType.String,
-        ),
-        'uid': serializeParam(
-          _uid,
-          ParamType.SupabaseDocRef,
-        ),
-        'photo_path': serializeParam(
-          _photoPath,
-          ParamType.String,
-        ),
-        'status': serializeParam(
-          _status,
-          ParamType.int,
-        ),
-      }.withoutNulls;
+    'username': serializeParam(_username, ParamType.String),
+    'uid': serializeParam(_uid, ParamType.SupabaseDocRef),
+    'photo_path': serializeParam(_photoPath, ParamType.String),
+    'status': serializeParam(_status, ParamType.int),
+  }.withoutNulls;
 
   static UserInGroupInviteStruct fromSerializableMap(
-          Map<String, dynamic> data) =>
-      UserInGroupInviteStruct(
-        username: deserializeParam(
-          data['username'],
-          ParamType.String,
-          false,
-        ),
-        uid: deserializeParam(
-          data['uid'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['users'],
-        ),
-        photoPath: deserializeParam(
-          data['photo_path'],
-          ParamType.String,
-          false,
-        ),
-        status: deserializeParam(
-          data['status'],
-          ParamType.int,
-          false,
-        ),
-      );
+    Map<String, dynamic> data,
+  ) => UserInGroupInviteStruct(
+    username: deserializeParam(data['username'], ParamType.String, false),
+    uid: deserializeParam(
+      data['uid'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['users'],
+    ),
+    photoPath: deserializeParam(data['photo_path'], ParamType.String, false),
+    status: deserializeParam(data['status'], ParamType.int, false),
+  );
 
   @override
   String toString() => 'UserInGroupInviteStruct(${toMap()})';
@@ -148,30 +124,28 @@ UserInGroupInviteStruct createUserInGroupInviteStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    UserInGroupInviteStruct(
-      username: username,
-      uid: uid,
-      photoPath: photoPath,
-      status: status,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => UserInGroupInviteStruct(
+  username: username,
+  uid: uid,
+  photoPath: photoPath,
+  status: status,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 UserInGroupInviteStruct? updateUserInGroupInviteStruct(
   UserInGroupInviteStruct? userInGroupInvite, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    userInGroupInvite
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => userInGroupInvite
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addUserInGroupInviteStructData(
   Map<String, dynamic> supabaseData,
@@ -192,10 +166,13 @@ void addUserInGroupInviteStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final userInGroupInviteData =
-      getUserInGroupInviteFirestoreData(userInGroupInvite, forFieldValue);
-  final nestedData =
-      userInGroupInviteData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final userInGroupInviteData = getUserInGroupInviteFirestoreData(
+    userInGroupInvite,
+    forFieldValue,
+  );
+  final nestedData = userInGroupInviteData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = userInGroupInvite.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -211,8 +188,9 @@ Map<String, dynamic> getUserInGroupInviteFirestoreData(
   final supabaseData = mapToSupabase(userInGroupInvite.toMap());
 
   // Add any Firestore field values
-  userInGroupInvite.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  userInGroupInvite.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

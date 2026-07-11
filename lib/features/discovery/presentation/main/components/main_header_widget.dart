@@ -29,8 +29,12 @@ class MainHeaderWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    20.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                  ),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -46,10 +50,7 @@ class MainHeaderWidget extends StatelessWidget {
                       context.pushNamed(
                         ProfilePage.routeName,
                         queryParameters: {
-                          'fromSeting': serializeParam(
-                            false,
-                            ParamType.bool,
-                          ),
+                          'fromSeting': serializeParam(false, ParamType.bool),
                         }.withoutNulls,
                       );
                     },
@@ -90,8 +91,10 @@ class MainHeaderWidget extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Icon(
                                         Icons.settings,
                                         color: Theme.of(context)
@@ -113,7 +116,11 @@ class MainHeaderWidget extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        18.0, 0.0, 0.0, 0.0),
+                      18.0,
+                      0.0,
+                      0.0,
+                      0.0,
+                    ),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -130,7 +137,11 @@ class MainHeaderWidget extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 2.0, 0.0, 0.0),
+                              0.0,
+                              2.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -140,16 +151,25 @@ class MainHeaderWidget extends StatelessWidget {
                                   height: 20.0,
                                   decoration: const BoxDecoration(),
                                   child: Align(
-                                    alignment:
-                                        const AlignmentDirectional(0.0, 0.0),
+                                    alignment: const AlignmentDirectional(
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Stack(
                                       children: [
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 0.0),
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 0.0, 3.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0,
+                                                  0.0,
+                                                  0.0,
+                                                  3.0,
+                                                ),
                                             child: Container(
                                               width: 6.0,
                                               height: 6.0,
@@ -164,8 +184,10 @@ class MainHeaderWidget extends StatelessWidget {
                                           ),
                                         ),
                                         const Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Icon(
                                             Icons.location_pin,
                                             color: Color(0xFFFF0000),
@@ -178,14 +200,19 @@ class MainHeaderWidget extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      4.0, 0.0, 0.0, 0.0),
+                                    4.0,
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: SizedBox(
                                     width: 100.0,
                                     height: 15.0,
                                     child: custom_widgets.LocationName(
                                       width: 100.0,
                                       height: 15.0,
-                                      locationNow: context.appState.locationsearch,
+                                      locationNow:
+                                          context.appState.locationsearch,
                                     ),
                                   ),
                                 ),
@@ -194,27 +221,27 @@ class MainHeaderWidget extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                2.0, 0.0, 0.0, 0.0),
+                              2.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Text(
                               'Home',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
+                              style: Theme.of(context).textTheme.bodyMedium!
                                   .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium!.fontStyle,
                                     ),
                                     fontSize: 17.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontStyle,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium!.fontStyle,
                                   ),
                             ),
                           ),
@@ -225,8 +252,12 @@ class MainHeaderWidget extends StatelessWidget {
                 ),
                 // ── Ticket ──
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 10.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    5.0,
+                    10.0,
+                    0.0,
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       if (currentUser == null) {
@@ -247,8 +278,12 @@ class MainHeaderWidget extends StatelessWidget {
                 ),
                 // ── Chat ──
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 10.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    5.0,
+                    10.0,
+                    0.0,
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       if (currentUser == null) {
@@ -268,12 +303,15 @@ class MainHeaderWidget extends StatelessWidget {
                 ),
                 // ── Notifications ──
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    5.0,
+                    16.0,
+                    0.0,
+                  ),
                   child: AuthUserStreamWidget(
                     builder: (context) => NotificationBadgeButton(
-                      onTap: () =>
-                          context.pushNamed('NotificationPage'),
+                      onTap: () => context.pushNamed('NotificationPage'),
                     ),
                   ),
                 ),
@@ -287,13 +325,18 @@ class MainHeaderWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   PageView(
-                    controller: _model.pageViewController ??=
-                        PageController(initialPage: 0),
+                    controller: _model.pageViewController ??= PageController(
+                      initialPage: 0,
+                    ),
                     scrollDirection: Axis.horizontal,
                     children: [
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 0.0, 0.0),
+                          20.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: SizedBox(
                           width: double.infinity,
                           height: 200.0,
@@ -304,7 +347,11 @@ class MainHeaderWidget extends StatelessWidget {
                                 alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 14.0, 20.0, 16.0),
+                                    0.0,
+                                    14.0,
+                                    20.0,
+                                    16.0,
+                                  ),
                                   child: Container(
                                     width: double.infinity,
                                     height:
@@ -321,9 +368,7 @@ class MainHeaderWidget extends StatelessWidget {
                                     ),
                                     child: const Align(
                                       alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Stack(
-                                        children: [],
-                                      ),
+                                      child: Stack(children: []),
                                     ),
                                   ),
                                 ),
@@ -334,7 +379,11 @@ class MainHeaderWidget extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 0.0, 0.0),
+                          20.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: SizedBox(
                           width: double.infinity,
                           height: 200.0,
@@ -345,7 +394,11 @@ class MainHeaderWidget extends StatelessWidget {
                                 alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 14.0, 20.0, 20.0),
+                                    0.0,
+                                    14.0,
+                                    20.0,
+                                    20.0,
+                                  ),
                                   child: Container(
                                     width: double.infinity,
                                     height:
@@ -362,9 +415,7 @@ class MainHeaderWidget extends StatelessWidget {
                                     ),
                                     child: const Align(
                                       alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Stack(
-                                        children: [],
-                                      ),
+                                      child: Stack(children: []),
                                     ),
                                   ),
                                 ),
@@ -387,8 +438,9 @@ class MainHeaderWidget extends StatelessWidget {
                   Align(
                     alignment: const AlignmentDirectional(0.0, 1.0),
                     child: smooth_page_indicator.SmoothPageIndicator(
-                      controller: _model.pageViewController ??=
-                          PageController(initialPage: 0),
+                      controller: _model.pageViewController ??= PageController(
+                        initialPage: 0,
+                      ),
                       count: 3,
                       axisDirection: Axis.horizontal,
                       onDotClicked: (i) async {

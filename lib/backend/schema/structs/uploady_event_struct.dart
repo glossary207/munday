@@ -16,10 +16,10 @@ class UploadyEventStruct extends FFSupabaseStruct {
     String? current,
     String? old,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _type = type,
-        _current = current,
-        _old = old,
-        super(supabaseUtilData);
+  }) : _type = type,
+       _current = current,
+       _old = old,
+       super(supabaseUtilData);
 
   // "type" field.
   String? _type;
@@ -53,45 +53,21 @@ class UploadyEventStruct extends FFSupabaseStruct {
       ? UploadyEventStruct.fromMap(data.cast<String, dynamic>())
       : null;
 
-  Map<String, dynamic> toMap() => {
-        'type': _type,
-        'current': _current,
-        'old': _old,
-      }.withoutNulls;
+  Map<String, dynamic> toMap() =>
+      {'type': _type, 'current': _current, 'old': _old}.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'type': serializeParam(
-          _type,
-          ParamType.String,
-        ),
-        'current': serializeParam(
-          _current,
-          ParamType.String,
-        ),
-        'old': serializeParam(
-          _old,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'type': serializeParam(_type, ParamType.String),
+    'current': serializeParam(_current, ParamType.String),
+    'old': serializeParam(_old, ParamType.String),
+  }.withoutNulls;
 
   static UploadyEventStruct fromSerializableMap(Map<String, dynamic> data) =>
       UploadyEventStruct(
-        type: deserializeParam(
-          data['type'],
-          ParamType.String,
-          false,
-        ),
-        current: deserializeParam(
-          data['current'],
-          ParamType.String,
-          false,
-        ),
-        old: deserializeParam(
-          data['old'],
-          ParamType.String,
-          false,
-        ),
+        type: deserializeParam(data['type'], ParamType.String, false),
+        current: deserializeParam(data['current'], ParamType.String, false),
+        old: deserializeParam(data['old'], ParamType.String, false),
       );
 
   @override
@@ -117,29 +93,27 @@ UploadyEventStruct createUploadyEventStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    UploadyEventStruct(
-      type: type,
-      current: current,
-      old: old,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => UploadyEventStruct(
+  type: type,
+  current: current,
+  old: old,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 UploadyEventStruct? updateUploadyEventStruct(
   UploadyEventStruct? uploadyEvent, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    uploadyEvent
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => uploadyEvent
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addUploadyEventStructData(
   Map<String, dynamic> supabaseData,
@@ -160,10 +134,13 @@ void addUploadyEventStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final uploadyEventData =
-      getUploadyEventFirestoreData(uploadyEvent, forFieldValue);
-  final nestedData =
-      uploadyEventData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final uploadyEventData = getUploadyEventFirestoreData(
+    uploadyEvent,
+    forFieldValue,
+  );
+  final nestedData = uploadyEventData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = uploadyEvent.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -179,8 +156,9 @@ Map<String, dynamic> getUploadyEventFirestoreData(
   final supabaseData = mapToSupabase(uploadyEvent.toMap());
 
   // Add any Firestore field values
-  uploadyEvent.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  uploadyEvent.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

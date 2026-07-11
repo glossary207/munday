@@ -14,11 +14,7 @@ import 'package:munday/core/theme/theme.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 class DataVenuseDocRef extends ConsumerStatefulWidget {
-  const DataVenuseDocRef({
-    super.key,
-    this.width,
-    this.height,
-  });
+  const DataVenuseDocRef({super.key, this.width, this.height});
 
   final double? width;
   final double? height;

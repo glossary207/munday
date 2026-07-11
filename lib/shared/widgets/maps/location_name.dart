@@ -17,12 +17,7 @@ import 'dart:convert';
 import 'package:munday/core/theme/theme.dart';
 
 class LocationName extends ConsumerStatefulWidget {
-  const LocationName({
-    super.key,
-    this.width,
-    this.height,
-    this.locationNow,
-  });
+  const LocationName({super.key, this.width, this.height, this.locationNow});
 
   final double? width;
   final double? height;

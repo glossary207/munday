@@ -9,15 +9,13 @@ import 'package:munday/core/theme/theme.dart';
 export 'youarenothere_model.dart';
 
 class YouarenothereWidget extends ConsumerStatefulWidget {
-  const YouarenothereWidget({
-    super.key,
-    required this.poperror,
-  });
+  const YouarenothereWidget({super.key, required this.poperror});
 
   final bool? poperror;
 
   @override
-  ConsumerState<YouarenothereWidget> createState() => _YouarenothereWidgetState();
+  ConsumerState<YouarenothereWidget> createState() =>
+      _YouarenothereWidgetState();
 }
 
 class _YouarenothereWidgetState extends ConsumerState<YouarenothereWidget> {
@@ -49,16 +47,11 @@ class _YouarenothereWidgetState extends ConsumerState<YouarenothereWidget> {
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Container(
-        decoration: BoxDecoration(
-          color: Color(0xB2000000),
-        ),
+        decoration: BoxDecoration(color: Color(0xB2000000)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(0.0),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 2.0,
-              sigmaY: 2.0,
-            ),
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -88,64 +81,60 @@ class _YouarenothereWidgetState extends ConsumerState<YouarenothereWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 12.0, 0.0, 0.0),
+                            0.0,
+                            12.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Text(
                             AppLocalizations.of(context)!.k_nyazsf47,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
+                            style: Theme.of(context).textTheme.headlineMedium!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.headlineMedium!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.headlineMedium!.fontStyle,
                                   ),
                                   letterSpacing: 0.0,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .fontWeight,
-                                  fontStyle: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .fontStyle,
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.headlineMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.headlineMedium!.fontStyle,
                                 ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 4.0, 0.0, 0.0),
+                            0.0,
+                            4.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Text(
                             AppLocalizations.of(context)!.k_mp8ty4ge,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
+                            style: Theme.of(context).textTheme.labelMedium!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontStyle,
                                   ),
                                   color: Color(0xFFBABABA),
                                   letterSpacing: 0.0,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .fontWeight,
-                                  fontStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .fontStyle,
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontStyle,
                                 ),
                           ),
                         ),

@@ -16,10 +16,10 @@ class TableStatusStruct extends FFSupabaseStruct {
     String? statusReserveId,
     DateTime? statusActionTimestamp,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _statusCode = statusCode,
-        _statusReserveId = statusReserveId,
-        _statusActionTimestamp = statusActionTimestamp,
-        super(supabaseUtilData);
+  }) : _statusCode = statusCode,
+       _statusReserveId = statusReserveId,
+       _statusActionTimestamp = statusActionTimestamp,
+       super(supabaseUtilData);
 
   // "status_code" field.
   String? _statusCode;
@@ -54,26 +54,20 @@ class TableStatusStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'status_code': _statusCode,
-        'status_reserve_Id': _statusReserveId,
-        'status_action_timestamp': _statusActionTimestamp,
-      }.withoutNulls;
+    'status_code': _statusCode,
+    'status_reserve_Id': _statusReserveId,
+    'status_action_timestamp': _statusActionTimestamp,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'status_code': serializeParam(
-          _statusCode,
-          ParamType.String,
-        ),
-        'status_reserve_Id': serializeParam(
-          _statusReserveId,
-          ParamType.String,
-        ),
-        'status_action_timestamp': serializeParam(
-          _statusActionTimestamp,
-          ParamType.DateTime,
-        ),
-      }.withoutNulls;
+    'status_code': serializeParam(_statusCode, ParamType.String),
+    'status_reserve_Id': serializeParam(_statusReserveId, ParamType.String),
+    'status_action_timestamp': serializeParam(
+      _statusActionTimestamp,
+      ParamType.DateTime,
+    ),
+  }.withoutNulls;
 
   static TableStatusStruct fromSerializableMap(Map<String, dynamic> data) =>
       TableStatusStruct(
@@ -106,8 +100,11 @@ class TableStatusStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([statusCode, statusReserveId, statusActionTimestamp]);
+  int get hashCode => const ListEquality().hash([
+    statusCode,
+    statusReserveId,
+    statusActionTimestamp,
+  ]);
 }
 
 TableStatusStruct createTableStatusStruct({
@@ -118,29 +115,27 @@ TableStatusStruct createTableStatusStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    TableStatusStruct(
-      statusCode: statusCode,
-      statusReserveId: statusReserveId,
-      statusActionTimestamp: statusActionTimestamp,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => TableStatusStruct(
+  statusCode: statusCode,
+  statusReserveId: statusReserveId,
+  statusActionTimestamp: statusActionTimestamp,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 TableStatusStruct? updateTableStatusStruct(
   TableStatusStruct? tableStatus, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    tableStatus
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => tableStatus
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addTableStatusStructData(
   Map<String, dynamic> supabaseData,
@@ -161,10 +156,13 @@ void addTableStatusStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final tableStatusData =
-      getTableStatusFirestoreData(tableStatus, forFieldValue);
-  final nestedData =
-      tableStatusData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final tableStatusData = getTableStatusFirestoreData(
+    tableStatus,
+    forFieldValue,
+  );
+  final nestedData = tableStatusData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = tableStatus.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -180,8 +178,9 @@ Map<String, dynamic> getTableStatusFirestoreData(
   final supabaseData = mapToSupabase(tableStatus.toMap());
 
   // Add any Firestore field values
-  tableStatus.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  tableStatus.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

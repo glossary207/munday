@@ -25,7 +25,8 @@ class EditImageModalWidget extends ConsumerStatefulWidget {
   final int? direct;
 
   @override
-  ConsumerState<EditImageModalWidget> createState() => _EditImageModalWidgetState();
+  ConsumerState<EditImageModalWidget> createState() =>
+      _EditImageModalWidgetState();
 }
 
 class _EditImageModalWidgetState extends ConsumerState<EditImageModalWidget> {
@@ -104,11 +105,7 @@ class _EditImageModalWidgetState extends ConsumerState<EditImageModalWidget> {
               borderRadius: 30.0,
               borderWidth: 1.0,
               buttonSize: 60.0,
-              icon: Icon(
-                Icons.close_rounded,
-                color: Colors.white,
-                size: 30.0,
-              ),
+              icon: Icon(Icons.close_rounded, color: Colors.white, size: 30.0),
               onPressed: () async {
                 await actions.clearCroppImageShareCache();
                 Navigator.pop(context);

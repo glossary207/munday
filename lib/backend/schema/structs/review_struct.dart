@@ -18,12 +18,12 @@ class ReviewStruct extends FFSupabaseStruct {
     DateTime? dateupdate,
     String? nameuser,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _profilePhoto = profilePhoto,
-        _comment = comment,
-        _rate = rate,
-        _dateupdate = dateupdate,
-        _nameuser = nameuser,
-        super(supabaseUtilData);
+  }) : _profilePhoto = profilePhoto,
+       _comment = comment,
+       _rate = rate,
+       _dateupdate = dateupdate,
+       _nameuser = nameuser,
+       super(supabaseUtilData);
 
   // "ProfilePhoto" field.
   String? _profilePhoto;
@@ -63,47 +63,32 @@ class ReviewStruct extends FFSupabaseStruct {
   bool hasNameuser() => _nameuser != null;
 
   static ReviewStruct fromMap(Map<String, dynamic> data) => ReviewStruct(
-        profilePhoto: data['ProfilePhoto'] as String?,
-        comment: data['comment'] as String?,
-        rate: castToType<int>(data['rate']),
-        dateupdate: data['dateupdate'] as DateTime?,
-        nameuser: data['nameuser'] as String?,
-      );
+    profilePhoto: data['ProfilePhoto'] as String?,
+    comment: data['comment'] as String?,
+    rate: castToType<int>(data['rate']),
+    dateupdate: data['dateupdate'] as DateTime?,
+    nameuser: data['nameuser'] as String?,
+  );
 
   static ReviewStruct? maybeFromMap(dynamic data) =>
       data is Map ? ReviewStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
-        'ProfilePhoto': _profilePhoto,
-        'comment': _comment,
-        'rate': _rate,
-        'dateupdate': _dateupdate,
-        'nameuser': _nameuser,
-      }.withoutNulls;
+    'ProfilePhoto': _profilePhoto,
+    'comment': _comment,
+    'rate': _rate,
+    'dateupdate': _dateupdate,
+    'nameuser': _nameuser,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'ProfilePhoto': serializeParam(
-          _profilePhoto,
-          ParamType.String,
-        ),
-        'comment': serializeParam(
-          _comment,
-          ParamType.String,
-        ),
-        'rate': serializeParam(
-          _rate,
-          ParamType.int,
-        ),
-        'dateupdate': serializeParam(
-          _dateupdate,
-          ParamType.DateTime,
-        ),
-        'nameuser': serializeParam(
-          _nameuser,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'ProfilePhoto': serializeParam(_profilePhoto, ParamType.String),
+    'comment': serializeParam(_comment, ParamType.String),
+    'rate': serializeParam(_rate, ParamType.int),
+    'dateupdate': serializeParam(_dateupdate, ParamType.DateTime),
+    'nameuser': serializeParam(_nameuser, ParamType.String),
+  }.withoutNulls;
 
   static ReviewStruct fromSerializableMap(Map<String, dynamic> data) =>
       ReviewStruct(
@@ -112,26 +97,14 @@ class ReviewStruct extends FFSupabaseStruct {
           ParamType.String,
           false,
         ),
-        comment: deserializeParam(
-          data['comment'],
-          ParamType.String,
-          false,
-        ),
-        rate: deserializeParam(
-          data['rate'],
-          ParamType.int,
-          false,
-        ),
+        comment: deserializeParam(data['comment'], ParamType.String, false),
+        rate: deserializeParam(data['rate'], ParamType.int, false),
         dateupdate: deserializeParam(
           data['dateupdate'],
           ParamType.DateTime,
           false,
         ),
-        nameuser: deserializeParam(
-          data['nameuser'],
-          ParamType.String,
-          false,
-        ),
+        nameuser: deserializeParam(data['nameuser'], ParamType.String, false),
       );
 
   @override
@@ -148,8 +121,13 @@ class ReviewStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([profilePhoto, comment, rate, dateupdate, nameuser]);
+  int get hashCode => const ListEquality().hash([
+    profilePhoto,
+    comment,
+    rate,
+    dateupdate,
+    nameuser,
+  ]);
 }
 
 ReviewStruct createReviewStruct({
@@ -162,31 +140,29 @@ ReviewStruct createReviewStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    ReviewStruct(
-      profilePhoto: profilePhoto,
-      comment: comment,
-      rate: rate,
-      dateupdate: dateupdate,
-      nameuser: nameuser,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => ReviewStruct(
+  profilePhoto: profilePhoto,
+  comment: comment,
+  rate: rate,
+  dateupdate: dateupdate,
+  nameuser: nameuser,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 ReviewStruct? updateReviewStruct(
   ReviewStruct? review, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    review
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => review
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addReviewStructData(
   Map<String, dynamic> supabaseData,
@@ -231,5 +207,4 @@ Map<String, dynamic> getReviewFirestoreData(
 
 List<Map<String, dynamic>> getReviewListFirestoreData(
   List<ReviewStruct>? reviews,
-) =>
-    reviews?.map((e) => getReviewFirestoreData(e, true)).toList() ?? [];
+) => reviews?.map((e) => getReviewFirestoreData(e, true)).toList() ?? [];

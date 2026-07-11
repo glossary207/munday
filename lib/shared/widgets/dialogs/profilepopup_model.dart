@@ -11,8 +11,10 @@ class ProfilepopupModel extends BaseModel {
   ///  State fields for stateful widgets in this component.
 
   bool isDataUploading_uploadDataMainEdit = false;
-  FFUploadedFile uploadedLocalFile_uploadDataMainEdit =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadDataMainEdit = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage1;
@@ -25,38 +27,50 @@ class ProfilepopupModel extends BaseModel {
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;
   bool isDataUploading_uploadData1 = false;
-  FFUploadedFile uploadedLocalFile_uploadData1 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData1 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage2;
   bool isDataUploading_uploadData2 = false;
-  FFUploadedFile uploadedLocalFile_uploadData2 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData2 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage3;
   bool isDataUploading_uploadData3 = false;
-  FFUploadedFile uploadedLocalFile_uploadData3 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData3 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage4;
   bool isDataUploading_uploadData4 = false;
-  FFUploadedFile uploadedLocalFile_uploadData4 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData4 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage5;
   bool isDataUploading_uploadData5 = false;
-  FFUploadedFile uploadedLocalFile_uploadData5 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData5 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage6;
   bool isDataUploading_uploadData6 = false;
-  FFUploadedFile uploadedLocalFile_uploadData6 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData6 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
 
   // Stores action output result for [Bottom Sheet - EditImageModal] action in Container widget.
   String? singleCroppedImage7;

@@ -3,17 +3,14 @@
 import '/backend/supabase/supabase_shim.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import '/backend/schema/util/supabase_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
 import '/backend/schema/util/schema_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 class ContactStruct extends FFSupabaseStruct {
   ContactStruct({
@@ -24,13 +21,13 @@ class ContactStruct extends FFSupabaseStruct {
     String? tiktok,
     String? name,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _phone = phone,
-        _ig = ig,
-        _facebook = facebook,
-        _line = line,
-        _tiktok = tiktok,
-        _name = name,
-        super(supabaseUtilData);
+  }) : _phone = phone,
+       _ig = ig,
+       _facebook = facebook,
+       _line = line,
+       _tiktok = tiktok,
+       _name = name,
+       super(supabaseUtilData);
 
   // "phone" field.
   String? _phone;
@@ -75,13 +72,13 @@ class ContactStruct extends FFSupabaseStruct {
   bool hasName() => _name != null;
 
   static ContactStruct fromMap(Map<String, dynamic> data) => ContactStruct(
-        phone: data['phone'] as String?,
-        ig: (data['IG'] ?? data['ig']) as String?,
-        facebook: data['facebook'] as String?,
-        line: data['line'] as String?,
-        tiktok: (data['Tiktok'] ?? data['tiktok']) as String?,
-        name: (data['Name'] ?? data['name']) as String?,
-      );
+    phone: data['phone'] as String?,
+    ig: (data['IG'] ?? data['ig']) as String?,
+    facebook: data['facebook'] as String?,
+    line: data['line'] as String?,
+    tiktok: (data['Tiktok'] ?? data['tiktok']) as String?,
+    name: (data['Name'] ?? data['name']) as String?,
+  );
 
   static ContactStruct? maybeFromMap(dynamic data) {
     final dataMap = getDataMap(data);
@@ -89,74 +86,32 @@ class ContactStruct extends FFSupabaseStruct {
   }
 
   Map<String, dynamic> toMap() => {
-        'phone': _phone,
-        'IG': _ig,
-        'facebook': _facebook,
-        'line': _line,
-        'Tiktok': _tiktok,
-        'Name': _name,
-      }.withoutNulls;
+    'phone': _phone,
+    'IG': _ig,
+    'facebook': _facebook,
+    'line': _line,
+    'Tiktok': _tiktok,
+    'Name': _name,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'phone': serializeParam(
-          _phone,
-          ParamType.String,
-        ),
-        'IG': serializeParam(
-          _ig,
-          ParamType.String,
-        ),
-        'facebook': serializeParam(
-          _facebook,
-          ParamType.String,
-        ),
-        'line': serializeParam(
-          _line,
-          ParamType.String,
-        ),
-        'Tiktok': serializeParam(
-          _tiktok,
-          ParamType.String,
-        ),
-        'Name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'phone': serializeParam(_phone, ParamType.String),
+    'IG': serializeParam(_ig, ParamType.String),
+    'facebook': serializeParam(_facebook, ParamType.String),
+    'line': serializeParam(_line, ParamType.String),
+    'Tiktok': serializeParam(_tiktok, ParamType.String),
+    'Name': serializeParam(_name, ParamType.String),
+  }.withoutNulls;
 
   static ContactStruct fromSerializableMap(Map<String, dynamic> data) =>
       ContactStruct(
-        phone: deserializeParam(
-          data['phone'],
-          ParamType.String,
-          false,
-        ),
-        ig: deserializeParam(
-          data['IG'],
-          ParamType.String,
-          false,
-        ),
-        facebook: deserializeParam(
-          data['facebook'],
-          ParamType.String,
-          false,
-        ),
-        line: deserializeParam(
-          data['line'],
-          ParamType.String,
-          false,
-        ),
-        tiktok: deserializeParam(
-          data['Tiktok'],
-          ParamType.String,
-          false,
-        ),
-        name: deserializeParam(
-          data['Name'],
-          ParamType.String,
-          false,
-        ),
+        phone: deserializeParam(data['phone'], ParamType.String, false),
+        ig: deserializeParam(data['IG'], ParamType.String, false),
+        facebook: deserializeParam(data['facebook'], ParamType.String, false),
+        line: deserializeParam(data['line'], ParamType.String, false),
+        tiktok: deserializeParam(data['Tiktok'], ParamType.String, false),
+        name: deserializeParam(data['Name'], ParamType.String, false),
       );
 
   @override
@@ -189,32 +144,30 @@ ContactStruct createContactStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    ContactStruct(
-      phone: phone,
-      ig: ig,
-      facebook: facebook,
-      line: line,
-      tiktok: tiktok,
-      name: name,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => ContactStruct(
+  phone: phone,
+  ig: ig,
+  facebook: facebook,
+  line: line,
+  tiktok: tiktok,
+  name: name,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 ContactStruct? updateContactStruct(
   ContactStruct? contact, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    contact
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => contact
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addContactStructData(
   Map<String, dynamic> supabaseData,
@@ -259,5 +212,4 @@ Map<String, dynamic> getContactFirestoreData(
 
 List<Map<String, dynamic>> getContactListFirestoreData(
   List<ContactStruct>? contacts,
-) =>
-    contacts?.map((e) => getContactFirestoreData(e, true)).toList() ?? [];
+) => contacts?.map((e) => getContactFirestoreData(e, true)).toList() ?? [];

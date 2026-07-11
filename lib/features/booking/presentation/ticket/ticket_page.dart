@@ -46,8 +46,7 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (animationsMap['containerOnActionTriggerAnimation2'] != null) {
-        await animationsMap['containerOnActionTriggerAnimation2']!
-            .controller
+        await animationsMap['containerOnActionTriggerAnimation2']!.controller
             .forward(from: 0.0);
       }
     });
@@ -95,9 +94,11 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
 
@@ -147,9 +148,11 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                           child: AuthUserStreamWidget(
                             builder: (context) => StreamBuilder<TicketRecord>(
                               stream: TicketRecord.getDocument(
-                                  (currentUserDocument?.tickets.toList() ?? [])
-                                      .elementAtOrNull(
-                                          _model.carouselCurrentIndex)!),
+                                (currentUserDocument?.tickets.toList() ?? [])
+                                    .elementAtOrNull(
+                                      _model.carouselCurrentIndex,
+                                    )!,
+                              ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
@@ -160,8 +163,8 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                       child: CircularProgressIndicator(
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                          Colors.transparent,
-                                        ),
+                                              Colors.transparent,
+                                            ),
                                       ),
                                     ),
                                   );
@@ -180,33 +183,39 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 80.0, 0.0, 0.0),
+                                                0.0,
+                                                80.0,
+                                                0.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             width: double.infinity,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
+                                            height:
+                                                MediaQuery.sizeOf(
+                                                  context,
+                                                ).height *
                                                 0.425,
                                             decoration: BoxDecoration(),
                                             child: Stack(
                                               children: [
                                                 Opacity(
                                                   opacity: 0.3,
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: Image.network(
-                                                          containerTicketRecord
-                                                              .bg,
-                                                        ).image,
+                                                  child:
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image: Image.network(
+                                                              containerTicketRecord
+                                                                  .bg,
+                                                            ).image,
+                                                          ),
+                                                        ),
+                                                      ).animateOnActionTrigger(
+                                                        animationsMap['containerOnActionTriggerAnimation2']!,
                                                       ),
-                                                    ),
-                                                  ).animateOnActionTrigger(
-                                                    animationsMap[
-                                                        'containerOnActionTriggerAnimation2']!,
-                                                  ),
                                                 ),
                                                 Container(
                                                   width: double.infinity,
@@ -217,32 +226,40 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                         Colors.black,
                                                         Color(0x33000000),
                                                         Color(0x33000000),
-                                                        Colors.black
+                                                        Colors.black,
                                                       ],
                                                       stops: [
                                                         0.0,
                                                         0.3,
                                                         0.6,
-                                                        1.0
+                                                        1.0,
                                                       ],
                                                       begin:
                                                           AlignmentDirectional(
-                                                              0.0, -1.0),
+                                                            0.0,
+                                                            -1.0,
+                                                          ),
                                                       end: AlignmentDirectional(
-                                                          0, 1.0),
+                                                        0,
+                                                        1.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                                 StreamBuilder<
-                                                    List<TicketRecord>>(
+                                                  List<TicketRecord>
+                                                >(
                                                   stream: queryTicketRecord(
-                                                    queryBuilder: (ticketRecord) =>
-                                                        ticketRecord.whereIn(
-                                                            'IDticket',
-                                                            (currentUserDocument
-                                                                    ?.tickets
-                                                                    .toList() ??
-                                                                [])),
+                                                    queryBuilder:
+                                                        (
+                                                          ticketRecord,
+                                                        ) => ticketRecord.whereIn(
+                                                          'IDticket',
+                                                          (currentUserDocument
+                                                                  ?.tickets
+                                                                  .toList() ??
+                                                              []),
+                                                        ),
                                                   ),
                                                   builder: (context, snapshot) {
                                                     // Customize what your widget looks like when it's loading.
@@ -251,43 +268,43 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                         child: SizedBox(
                                                           width: 50.0,
                                                           height: 50.0,
-                                                          child:
-                                                              CircularProgressIndicator(
+                                                          child: CircularProgressIndicator(
                                                             valueColor:
                                                                 AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              Colors
-                                                                  .transparent,
-                                                            ),
+                                                                  Color
+                                                                >(
+                                                                  Colors
+                                                                      .transparent,
+                                                                ),
                                                           ),
                                                         ),
                                                       );
                                                     }
                                                     List<TicketRecord>
-                                                        carouselTicketRecordList =
+                                                    carouselTicketRecordList =
                                                         snapshot.data!;
 
                                                     return Container(
                                                       width: double.infinity,
                                                       height: double.infinity,
-                                                      child: CarouselSlider
-                                                          .builder(
+                                                      child: CarouselSlider.builder(
                                                         itemCount:
                                                             carouselTicketRecordList
                                                                 .length,
-                                                        itemBuilder: (context,
-                                                            carouselIndex, _) {
+                                                        itemBuilder: (context, carouselIndex, _) {
                                                           final carouselTicketRecord =
-                                                              carouselTicketRecordList[
-                                                                  carouselIndex];
+                                                              carouselTicketRecordList[carouselIndex];
                                                           return Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsets
-                                                                      .all(5.0),
+                                                                  EdgeInsets.all(
+                                                                    5.0,
+                                                                  ),
                                                               child: InkWell(
                                                                 splashColor: Colors
                                                                     .transparent,
@@ -298,45 +315,42 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                 highlightColor:
                                                                     Colors
                                                                         .transparent,
-                                                                onTap:
-                                                                    () async {
+                                                                onTap: () async {
                                                                   currentUserLocationValue = await getCurrentUserLocation(
-                                                                      defaultLocation:
-                                                                          LatLng(
-                                                                              0.0,
-                                                                              0.0));
+                                                                    defaultLocation:
+                                                                        LatLng(
+                                                                          0.0,
+                                                                          0.0,
+                                                                        ),
+                                                                  );
 
-                                                                  context
-                                                                      .pushNamed(
+                                                                  context.pushNamed(
                                                                     InVenusePage
                                                                         .routeName,
-                                                                    queryParameters:
-                                                                        {
-                                                                      'idVenues':
-                                                                          serializeParam(
+                                                                    queryParameters: {
+                                                                      'idVenues': serializeParam(
                                                                         carouselTicketRecord
                                                                             .idVenues,
                                                                         ParamType
                                                                             .SupabaseDocRef,
                                                                       ),
-                                                                      'distance':
-                                                                          serializeParam(
+                                                                      'distance': serializeParam(
                                                                         functions
-                                                                            .distanceLocation(carouselTicketRecord.location,
-                                                                                currentUserLocationValue)
+                                                                            .distanceLocation(
+                                                                              carouselTicketRecord.location,
+                                                                              currentUserLocationValue,
+                                                                            )
                                                                             .toString(),
                                                                         ParamType
                                                                             .String,
                                                                       ),
-                                                                      'dateclick':
-                                                                          serializeParam(
+                                                                      'dateclick': serializeParam(
                                                                         carouselTicketRecord
                                                                             .dateEvent,
                                                                         ParamType
                                                                             .DateTime,
                                                                       ),
-                                                                      'index':
-                                                                          serializeParam(
+                                                                      'index': serializeParam(
                                                                         0,
                                                                         ParamType
                                                                             .int,
@@ -344,26 +358,25 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                     }.withoutNulls,
                                                                   );
                                                                 },
-                                                                child:
-                                                                    Container(
-                                                                  width: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width *
+                                                                child: Container(
+                                                                  width:
+                                                                      MediaQuery.sizeOf(
+                                                                        context,
+                                                                      ).width *
                                                                       0.444,
-                                                                  height: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .height *
+                                                                  height:
+                                                                      MediaQuery.sizeOf(
+                                                                        context,
+                                                                      ).height *
                                                                       0.3,
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                  decoration: BoxDecoration(
                                                                     color: Color(
-                                                                        0xFF161616),
-                                                                    image:
-                                                                        DecorationImage(
+                                                                      0xFF161616,
+                                                                    ),
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .network(
+                                                                      image: Image.network(
                                                                         carouselTicketRecord.eventOrNormal
                                                                             ? carouselTicketRecord.poster
                                                                             : carouselTicketRecord.bg,
@@ -371,7 +384,8 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            10.0),
+                                                                          10.0,
+                                                                        ),
                                                                   ),
                                                                   child: Column(
                                                                     mainAxisSize:
@@ -385,57 +399,113 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 0.0, 0.0),
+                                                                            alignment: AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                10.0,
+                                                                                10.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                              ),
                                                                               child: Container(
                                                                                 width: 42.0,
                                                                                 height: 42.0,
                                                                                 decoration: BoxDecoration(
-                                                                                  color: Color(0xFFFF0000),
-                                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                                  color: Color(
+                                                                                    0xFFFF0000,
+                                                                                  ),
+                                                                                  borderRadius: BorderRadius.circular(
+                                                                                    10.0,
+                                                                                  ),
                                                                                 ),
                                                                                 child: Column(
                                                                                   mainAxisSize: MainAxisSize.min,
                                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 3.0, 0.0, 0.0),
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                        0.0,
+                                                                                        3.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                      ),
                                                                                       child: Text(
-                                                                                        functions.dateEventday(carouselTicketRecord.dateEvent).toString(),
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        functions
+                                                                                            .dateEventday(
+                                                                                              carouselTicketRecord.dateEvent,
+                                                                                            )
+                                                                                            .toString(),
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
                                                                                                 fontWeight: FontWeight.w600,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
-                                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                              color:
+                                                                                                  Theme.of(
+                                                                                                        context,
+                                                                                                      )
+                                                                                                      .extension<
+                                                                                                        CustomColors
+                                                                                                      >()!
+                                                                                                      .primaryText,
                                                                                               fontSize: 17.0,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                               lineHeight: 1.0,
                                                                                             ),
                                                                                       ),
                                                                                     ),
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 2.0),
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                        0.0,
+                                                                                        2.0,
+                                                                                        0.0,
+                                                                                        2.0,
+                                                                                      ),
                                                                                       child: Text(
-                                                                                        valueOrDefault<String>(
-                                                                                          functions.dateMonthTH(carouselTicketRecord.dateEvent),
+                                                                                        valueOrDefault<
+                                                                                          String
+                                                                                        >(
+                                                                                          functions.dateMonthTH(
+                                                                                            carouselTicketRecord.dateEvent,
+                                                                                          ),
                                                                                           'ไม่ระบุ',
                                                                                         ),
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
                                                                                                 fontWeight: FontWeight.w600,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
-                                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                              color:
+                                                                                                  Theme.of(
+                                                                                                        context,
+                                                                                                      )
+                                                                                                      .extension<
+                                                                                                        CustomColors
+                                                                                                      >()!
+                                                                                                      .primaryText,
                                                                                               fontSize: 13.0,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                               lineHeight: 1.0,
                                                                                             ),
                                                                                       ),
@@ -448,8 +518,7 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                         ],
                                                                       ),
                                                                       Expanded(
-                                                                        child:
-                                                                            Container(
+                                                                        child: Container(
                                                                           width:
                                                                               double.infinity,
                                                                           height:
@@ -461,68 +530,99 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       Container(
                                                                         width: double
                                                                             .infinity,
-                                                                        height: MediaQuery.sizeOf(context).height *
+                                                                        height:
+                                                                            MediaQuery.sizeOf(
+                                                                              context,
+                                                                            ).height *
                                                                             0.22,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          gradient:
-                                                                              LinearGradient(
+                                                                        decoration: BoxDecoration(
+                                                                          gradient: LinearGradient(
                                                                             colors: [
                                                                               Colors.transparent,
-                                                                              Color(0xED000000)
+                                                                              Color(
+                                                                                0xED000000,
+                                                                              ),
                                                                             ],
                                                                             stops: [
                                                                               0.0,
-                                                                              1.0
+                                                                              1.0,
                                                                             ],
-                                                                            begin:
-                                                                                AlignmentDirectional(0.0, -1.0),
-                                                                            end:
-                                                                                AlignmentDirectional(0, 1.0),
+                                                                            begin: AlignmentDirectional(
+                                                                              0.0,
+                                                                              -1.0,
+                                                                            ),
+                                                                            end: AlignmentDirectional(
+                                                                              0,
+                                                                              1.0,
+                                                                            ),
                                                                           ),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(10.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(10.0),
-                                                                            topLeft:
-                                                                                Radius.circular(0.0),
-                                                                            topRight:
-                                                                                Radius.circular(0.0),
+                                                                          borderRadius: BorderRadius.only(
+                                                                            bottomLeft: Radius.circular(
+                                                                              10.0,
+                                                                            ),
+                                                                            bottomRight: Radius.circular(
+                                                                              10.0,
+                                                                            ),
+                                                                            topLeft: Radius.circular(
+                                                                              0.0,
+                                                                            ),
+                                                                            topRight: Radius.circular(
+                                                                              0.0,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                        child:
-                                                                            Padding(
+                                                                        child: Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              5.0,
-                                                                              0.0,
-                                                                              5.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Column(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Column(
                                                                             mainAxisSize:
                                                                                 MainAxisSize.max,
                                                                             mainAxisAlignment:
                                                                                 MainAxisAlignment.end,
                                                                             children: [
                                                                               Align(
-                                                                                alignment: AlignmentDirectional(-1.0, 0.0),
+                                                                                alignment: AlignmentDirectional(
+                                                                                  -1.0,
+                                                                                  0.0,
+                                                                                ),
                                                                                 child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                    5.0,
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                  ),
                                                                                   child: Text(
                                                                                     carouselTicketRecord.nameEvent,
                                                                                     maxLines: 18,
-                                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                    style:
+                                                                                        Theme.of(
+                                                                                          context,
+                                                                                        ).textTheme.bodyMedium!.override(
                                                                                           font: GoogleFonts.openSans(
                                                                                             fontWeight: FontWeight.w600,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
-                                                                                          color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                          color:
+                                                                                              Theme.of(
+                                                                                                    context,
+                                                                                                  )
+                                                                                                  .extension<
+                                                                                                    CustomColors
+                                                                                                  >()!
+                                                                                                  .primaryText,
                                                                                           fontSize: 18.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w600,
-                                                                                          fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                          fontStyle: Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.fontStyle,
                                                                                         ),
                                                                                   ),
                                                                                 ),
@@ -532,51 +632,87 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 2.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      2.0,
+                                                                                    ),
                                                                                     child: Text(
                                                                                       carouselTicketRecord.nameVenues,
                                                                                       maxLines: 18,
-                                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                      style:
+                                                                                          Theme.of(
+                                                                                            context,
+                                                                                          ).textTheme.bodyMedium!.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.normal,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                             color: Colors.white,
                                                                                             fontSize: 14.0,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.normal,
-                                                                                            fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                            fontStyle: Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
                                                                                 ],
                                                                               ),
                                                                               Align(
-                                                                                alignment: AlignmentDirectional(1.0, 0.0),
+                                                                                alignment: AlignmentDirectional(
+                                                                                  1.0,
+                                                                                  0.0,
+                                                                                ),
                                                                                 child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 5.0),
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                    5.0,
+                                                                                    0.0,
+                                                                                    5.0,
+                                                                                    5.0,
+                                                                                  ),
                                                                                   child: Row(
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     mainAxisAlignment: MainAxisAlignment.end,
                                                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 7.0, 2.0),
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                          0.0,
+                                                                                          2.0,
+                                                                                          7.0,
+                                                                                          2.0,
+                                                                                        ),
                                                                                         child: Row(
                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                                                           children: [
                                                                                             Text(
                                                                                               carouselTicketRecord.timeEvent,
-                                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                              style:
+                                                                                                  Theme.of(
+                                                                                                    context,
+                                                                                                  ).textTheme.bodyMedium!.override(
                                                                                                     font: GoogleFonts.openSans(
-                                                                                                      fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                      fontWeight: Theme.of(
+                                                                                                        context,
+                                                                                                      ).textTheme.bodyMedium!.fontWeight,
+                                                                                                      fontStyle: Theme.of(
+                                                                                                        context,
+                                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                                     ),
                                                                                                     fontSize: 14.0,
                                                                                                     letterSpacing: 0.0,
-                                                                                                    fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                    fontWeight: Theme.of(
+                                                                                                      context,
+                                                                                                    ).textTheme.bodyMedium!.fontWeight,
+                                                                                                    fontStyle: Theme.of(
+                                                                                                      context,
+                                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                                   ),
                                                                                             ),
                                                                                           ],
@@ -604,18 +740,19 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                             ),
                                                           );
                                                         },
-                                                        carouselController: _model
-                                                                .carouselController ??=
-                                                            CarouselSliderController(),
-                                                        options:
-                                                            CarouselOptions(
+                                                        carouselController:
+                                                            _model.carouselController ??=
+                                                                CarouselSliderController(),
+                                                        options: CarouselOptions(
                                                           initialPage: max(
-                                                              0,
-                                                              min(
+                                                            0,
+                                                            min(
+                                                              1,
+                                                              carouselTicketRecordList
+                                                                      .length -
                                                                   1,
-                                                                  carouselTicketRecordList
-                                                                          .length -
-                                                                      1)),
+                                                            ),
+                                                          ),
                                                           viewportFraction:
                                                               0.54,
                                                           disableCenter: true,
@@ -627,21 +764,18 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                           scrollDirection:
                                                               Axis.horizontal,
                                                           autoPlay: false,
-                                                          onPageChanged:
-                                                              (index, _) async {
+                                                          onPageChanged: (index, _) async {
                                                             _model.carouselCurrentIndex =
                                                                 index;
 
                                                             safeSetState(() {});
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation2'] !=
+                                                            if (animationsMap['containerOnActionTriggerAnimation2'] !=
                                                                 null) {
-                                                              await animationsMap[
-                                                                      'containerOnActionTriggerAnimation2']!
+                                                              await animationsMap['containerOnActionTriggerAnimation2']!
                                                                   .controller
                                                                   .forward(
-                                                                      from:
-                                                                          0.0);
+                                                                    from: 0.0,
+                                                                  );
                                                             }
                                                           },
                                                         ),
@@ -652,26 +786,33 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          -1.0, 0.0),
+                                                        -1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Container(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
+                                                    width:
+                                                        MediaQuery.sizeOf(
+                                                          context,
+                                                        ).width *
                                                         0.15,
                                                     height: double.infinity,
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
                                                           Colors.black,
-                                                          Colors.transparent
+                                                          Colors.transparent,
                                                         ],
                                                         stops: [0.0, 1.0],
                                                         begin:
                                                             AlignmentDirectional(
-                                                                -1.0, 0.0),
+                                                              -1.0,
+                                                              0.0,
+                                                            ),
                                                         end:
                                                             AlignmentDirectional(
-                                                                1.0, 0),
+                                                              1.0,
+                                                              0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
@@ -679,26 +820,33 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1.0, 0.0),
+                                                        1.0,
+                                                        0.0,
+                                                      ),
                                                   child: Container(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
+                                                    width:
+                                                        MediaQuery.sizeOf(
+                                                          context,
+                                                        ).width *
                                                         0.15,
                                                     height: double.infinity,
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
                                                           Colors.black,
-                                                          Colors.transparent
+                                                          Colors.transparent,
                                                         ],
                                                         stops: [0.0, 1.0],
                                                         begin:
                                                             AlignmentDirectional(
-                                                                1.0, 0.0),
+                                                              1.0,
+                                                              0.0,
+                                                            ),
                                                         end:
                                                             AlignmentDirectional(
-                                                                -1.0, 0),
+                                                              -1.0,
+                                                              0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
@@ -706,12 +854,17 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.0, 1.0),
+                                                        0.0,
+                                                        1.0,
+                                                      ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(20.0, 0.0,
-                                                                20.0, 10.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          20.0,
+                                                          0.0,
+                                                          20.0,
+                                                          10.0,
+                                                        ),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -720,23 +873,23 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                               .spaceBetween,
                                                       children: [
                                                         Container(
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             color: Color(
-                                                                0xFFFF0000),
+                                                              0xFFFF0000,
+                                                            ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        7.0,
-                                                                        2.0,
-                                                                        7.0,
-                                                                        2.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  7.0,
+                                                                  2.0,
+                                                                  7.0,
+                                                                  2.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -746,14 +899,14 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       .center,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          7.0,
-                                                                          0.0),
-                                                                  child: Image
-                                                                      .network(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        7.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Image.network(
                                                                     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                     width: 13.0,
                                                                     height:
@@ -765,58 +918,53 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                 Text(
                                                                   containerTicketRecord
                                                                       .seatCode,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        fontSize:
-                                                                            13.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         Container(
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             color: Color(
-                                                                0xFFFF0000),
+                                                              0xFFFF0000,
+                                                            ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        10.0,
-                                                                        3.0,
-                                                                        10.0,
-                                                                        3.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  10.0,
+                                                                  3.0,
+                                                                  10.0,
+                                                                  3.0,
+                                                                ),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -826,19 +974,20 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       .center,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          7.0,
-                                                                          0.0),
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        7.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Icon(
                                                                     Icons
                                                                         .people,
-                                                                    color: Theme.of(
-                                                                            context)
+                                                                    color: Theme.of(context)
                                                                         .extension<
-                                                                            CustomColors>()!
+                                                                          CustomColors
+                                                                        >()!
                                                                         .primaryText,
                                                                     size: 15.0,
                                                                   ),
@@ -847,107 +996,95 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                   containerTicketRecord
                                                                       .scannedAmont
                                                                       .toString(),
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        fontSize:
-                                                                            13.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          2.0,
-                                                                          0.0,
-                                                                          2.0,
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    AppLocalizations.of(
-                                                                            context)!
-                                                                        .k_um0tzanu,
-                                                                    style: Theme.of(
-                                                                            context)
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
                                                                         .textTheme
                                                                         .bodyMedium!
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.openSans(
-                                                                            fontWeight:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                          fontSize:
-                                                                              13.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        2.0,
+                                                                        0.0,
+                                                                        2.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Text(
+                                                                    AppLocalizations.of(
+                                                                      context,
+                                                                    )!.k_um0tzanu,
+                                                                    style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                      font: GoogleFonts.openSans(
+                                                                        fontWeight: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontWeight,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
+                                                                      fontSize:
+                                                                          13.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Text(
                                                                   containerTicketRecord
                                                                       .scanAmont
                                                                       .toString(),
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontWeight,
-                                                                          fontStyle: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        fontSize:
-                                                                            13.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyMedium!
-                                                                            .fontStyle,
-                                                                      ),
+                                                                  style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontWeight,
+                                                                      fontStyle: Theme.of(context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontWeight,
+                                                                    fontStyle: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
+                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
@@ -962,97 +1099,104 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                           ),
                                         ),
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 1.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            1.0,
+                                          ),
                                           child: Container(
                                             width: double.infinity,
                                             decoration: BoxDecoration(),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      15.0, 0.0, 15.0, 15.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    15.0,
+                                                    0.0,
+                                                    15.0,
+                                                    15.0,
+                                                  ),
                                               child: Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          15.0),
+                                                        15.0,
+                                                      ),
                                                   border: Border.all(
                                                     color: Color(0xFF2A2A2A),
                                                     width: 2.0,
                                                   ),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 15.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                        15.0,
+                                                      ),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    15.0,
-                                                                    15.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              15.0,
+                                                              15.0,
+                                                              0.0,
+                                                            ),
                                                         child: Container(
                                                           width:
                                                               double.infinity,
                                                           height: 102.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            image:
-                                                                DecorationImage(
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
                                                               fit: BoxFit.cover,
-                                                              image:
-                                                                  Image.network(
+                                                              image: Image.network(
                                                                 containerTicketRecord
                                                                     .bg,
                                                               ).image,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
+                                                                BorderRadius.circular(
+                                                                  15.0,
+                                                                ),
                                                           ),
                                                           child: Stack(
                                                             children: [
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           containerTicketRecord
                                                                               .bg,
                                                                         ).image,
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1062,52 +1206,54 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                 child: Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                    child: Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           100.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                          image:
-                                                                              Image.network(
+                                                                          image: Image.network(
                                                                             '',
                                                                           ).image,
                                                                         ),
-                                                                        gradient:
-                                                                            LinearGradient(
+                                                                        gradient: LinearGradient(
                                                                           colors: [
-                                                                            Color(0xFFFF0000),
-                                                                            Colors.transparent
+                                                                            Color(
+                                                                              0xFFFF0000,
+                                                                            ),
+                                                                            Colors.transparent,
                                                                           ],
                                                                           stops: [
                                                                             0.0,
-                                                                            1.0
+                                                                            1.0,
                                                                           ],
                                                                           begin: AlignmentDirectional(
-                                                                              -1.0,
-                                                                              -0.64),
+                                                                            -1.0,
+                                                                            -0.64,
+                                                                          ),
                                                                           end: AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.64),
+                                                                            1.0,
+                                                                            0.64,
+                                                                          ),
                                                                         ),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(15.0),
+                                                                            BorderRadius.circular(
+                                                                              15.0,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1116,54 +1262,55 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          1.0),
-                                                                  child:
-                                                                      Container(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0,
+                                                                        1.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: double
                                                                         .infinity,
                                                                     height:
                                                                         100.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           '',
                                                                         ).image,
                                                                       ),
-                                                                      gradient:
-                                                                          LinearGradient(
+                                                                      gradient: LinearGradient(
                                                                         colors: [
                                                                           Colors
                                                                               .transparent,
                                                                           Color(
-                                                                              0xCB000000)
+                                                                            0xCB000000,
+                                                                          ),
                                                                         ],
                                                                         stops: [
                                                                           0.0,
-                                                                          1.0
+                                                                          1.0,
                                                                         ],
                                                                         begin: AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
                                                                         end: AlignmentDirectional(
-                                                                            0,
-                                                                            1.0),
+                                                                          0,
+                                                                          1.0,
+                                                                        ),
                                                                       ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              15.0),
+                                                                            15.0,
+                                                                          ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1183,26 +1330,33 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                     children: [
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Container(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Container(
                                                                           width:
                                                                               80.0,
                                                                           height:
                                                                               100.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFFD8181B),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(15.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(15.0),
-                                                                              topRight: Radius.circular(0.0),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Color(
+                                                                              0xFFD8181B,
+                                                                            ),
+                                                                            borderRadius: BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
+                                                                              topLeft: Radius.circular(
+                                                                                15.0,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                0.0,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -1216,19 +1370,18 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                                 3.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
+                                                                            decoration: BoxDecoration(
                                                                               color: Colors.black,
                                                                             ),
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
@@ -1238,12 +1391,12 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
@@ -1253,12 +1406,12 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
@@ -1268,12 +1421,12 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                           ),
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                3.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              0.0,
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 3.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
@@ -1306,26 +1459,34 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Padding(
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                65.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
+                                                                              65.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Container(
                                                                               width: 30.0,
                                                                               height: 15.0,
                                                                               decoration: BoxDecoration(
                                                                                 color: Colors.black,
                                                                                 borderRadius: BorderRadius.only(
-                                                                                  bottomLeft: Radius.circular(90.0),
-                                                                                  bottomRight: Radius.circular(90.0),
-                                                                                  topLeft: Radius.circular(0.0),
-                                                                                  topRight: Radius.circular(0.0),
+                                                                                  bottomLeft: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  bottomRight: Radius.circular(
+                                                                                    90.0,
+                                                                                  ),
+                                                                                  topLeft: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  topRight: Radius.circular(
+                                                                                    0.0,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -1340,24 +1501,31 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              65.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
+                                                                            65.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Container(
                                                                             width:
                                                                                 30.0,
                                                                             height:
                                                                                 15.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
+                                                                            decoration: BoxDecoration(
                                                                               color: Colors.black,
                                                                               borderRadius: BorderRadius.only(
-                                                                                bottomLeft: Radius.circular(0.0),
-                                                                                bottomRight: Radius.circular(0.0),
-                                                                                topLeft: Radius.circular(90.0),
-                                                                                topRight: Radius.circular(90.0),
+                                                                                bottomLeft: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                bottomRight: Radius.circular(
+                                                                                  0.0,
+                                                                                ),
+                                                                                topLeft: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
+                                                                                topRight: Radius.circular(
+                                                                                  90.0,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -1368,12 +1536,13 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        105.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      105.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1385,94 +1554,144 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                     Text(
                                                                       containerTicketRecord
                                                                           .nameVenues,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            fontSize:
-                                                                                20.0,
-                                                                            letterSpacing:
-                                                                                0.5,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
+                                                                      style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                        font: GoogleFonts.openSans(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: Theme.of(
+                                                                            context,
+                                                                          ).textTheme.bodyMedium!.fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            20.0,
+                                                                        letterSpacing:
+                                                                            0.5,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: Theme.of(
+                                                                          context,
+                                                                        ).textTheme.bodyMedium!.fontStyle,
+                                                                      ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          1.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Row(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            1.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                          ),
+                                                                      child: Row(
                                                                         mainAxisSize:
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                2.0),
-                                                                            child:
-                                                                                Text(
-                                                                              AppLocalizations.of(context)!.k_ms688xec,
-                                                                              style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              2.0,
+                                                                            ),
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_ms688xec,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
                                                                                     font: GoogleFonts.openSans(
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
                                                                                     ),
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),
                                                                           Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.22, -0.49),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                                                            alignment: AlignmentDirectional(
+                                                                              0.22,
+                                                                              -0.49,
+                                                                            ),
+                                                                            child: Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                              ),
                                                                               child: Container(
                                                                                 decoration: BoxDecoration(
-                                                                                  color: Color(0xFFD8181B),
-                                                                                  borderRadius: BorderRadius.circular(90.0),
+                                                                                  color: Color(
+                                                                                    0xFFD8181B,
+                                                                                  ),
+                                                                                  borderRadius: BorderRadius.circular(
+                                                                                    90.0,
+                                                                                  ),
                                                                                 ),
                                                                                 child: Row(
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 1.0),
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                        5.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0,
+                                                                                      ),
                                                                                       child: Icon(
                                                                                         Icons.star_rounded,
-                                                                                        color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                        color:
+                                                                                            Theme.of(
+                                                                                                  context,
+                                                                                                )
+                                                                                                .extension<
+                                                                                                  CustomColors
+                                                                                                >()!
+                                                                                                .primaryText,
                                                                                         size: 15.0,
                                                                                       ),
                                                                                     ),
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(2.5, 1.0, 7.0, 1.5),
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                        2.5,
+                                                                                        1.0,
+                                                                                        7.0,
+                                                                                        1.5,
+                                                                                      ),
                                                                                       child: Text(
                                                                                         containerTicketRecord.zone,
-                                                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                                        style:
+                                                                                            Theme.of(
+                                                                                              context,
+                                                                                            ).textTheme.bodyMedium!.override(
                                                                                               font: GoogleFonts.openSans(
                                                                                                 fontWeight: FontWeight.w600,
-                                                                                                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                                fontStyle: Theme.of(
+                                                                                                  context,
+                                                                                                ).textTheme.bodyMedium!.fontStyle,
                                                                                               ),
-                                                                                              color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                                                                                              color:
+                                                                                                  Theme.of(
+                                                                                                        context,
+                                                                                                      )
+                                                                                                      .extension<
+                                                                                                        CustomColors
+                                                                                                      >()!
+                                                                                                      .primaryText,
                                                                                               fontSize: 12.0,
                                                                                               letterSpacing: 1.0,
                                                                                               fontWeight: FontWeight.w600,
-                                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                              fontStyle: Theme.of(
+                                                                                                context,
+                                                                                              ).textTheme.bodyMedium!.fontStyle,
                                                                                             ),
                                                                                       ),
                                                                                     ),
@@ -1491,12 +1710,12 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              7.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Image.network(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            7.0,
+                                                                            0.0,
+                                                                          ),
+                                                                          child: Image.network(
                                                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/4kl4e8mwdzi6/MEE2.png',
                                                                             width:
                                                                                 13.0,
@@ -1508,22 +1727,29 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              2.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              Text(
+                                                                            0.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: Text(
                                                                             containerTicketRecord.seatCode,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w500,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   fontSize: 13.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1535,24 +1761,26 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        1.0,
-                                                                        1.0),
+                                                                      1.0,
+                                                                      1.0,
+                                                                    ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          15.0,
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
+                                                                  padding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        15.0,
+                                                                        10.0,
+                                                                      ),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
                                                                       color: Color(
-                                                                          0xFFD8181B),
+                                                                        0xFFD8181B,
+                                                                      ),
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              45.0),
+                                                                            45.0,
+                                                                          ),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -1561,41 +1789,57 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                       children: [
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              10.0,
-                                                                              1.0,
-                                                                              3.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
-                                                                            AppLocalizations.of(context)!.k_q5fl9it3,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            10.0,
+                                                                            1.0,
+                                                                            3.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(
+                                                                              context,
+                                                                            )!.k_q5fl9it3,
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              1.0,
-                                                                              10.0,
-                                                                              1.0),
-                                                                          child:
-                                                                              Text(
+                                                                            0.0,
+                                                                            1.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                          child: Text(
                                                                             containerTicketRecord.price,
-                                                                            style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                                            style:
+                                                                                Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.override(
                                                                                   font: GoogleFonts.openSans(
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
                                                                                   ),
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
-                                                                                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1606,24 +1850,20 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
+                                                                    EdgeInsetsDirectional.fromSTEB(
+                                                                      7.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
+                                                                child: Container(
                                                                   width: 54.0,
                                                                   height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    image:
-                                                                        DecorationImage(
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/_(27).png',
                                                                       ).image,
                                                                     ),
@@ -1644,7 +1884,11 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 0.0, 15.0, 0.0),
+                                                15.0,
+                                                0.0,
+                                                15.0,
+                                                0.0,
+                                              ),
                                           child: Container(
                                             width: double.infinity,
                                             decoration: BoxDecoration(
@@ -1656,12 +1900,17 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 10.0, 10.0, 10.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    10.0,
+                                                    10.0,
+                                                    10.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_fo4qjvz8,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_fo4qjvz8,
                                                 textAlign: TextAlign.start,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -1669,17 +1918,21 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           Theme.of(context)
@@ -1697,12 +1950,18 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                           ),
                                         ),
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 15.0, 15.0, 10.0),
+                                                  15.0,
+                                                  15.0,
+                                                  15.0,
+                                                  10.0,
+                                                ),
                                             child: InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,
@@ -1710,17 +1969,14 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await currentUserReference!
-                                                    .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'tickets': FieldValue
-                                                          .arrayRemove([
-                                                        containerTicketRecord
-                                                            .reference
-                                                      ]),
-                                                    },
-                                                  ),
+                                                await currentUserReference!.update({
+                                                  ...mapToSupabase({
+                                                    'tickets':
+                                                        FieldValue.arrayRemove([
+                                                          containerTicketRecord
+                                                              .reference,
+                                                        ]),
+                                                  }),
                                                 });
                                                 await containerTicketRecord
                                                     .reference
@@ -1732,7 +1988,8 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          20.0),
+                                                        20.0,
+                                                      ),
                                                   border: Border.all(
                                                     color: Color(0xFF1D1D1D),
                                                     width: 2.0,
@@ -1746,12 +2003,12 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            20.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Icon(
                                                         Icons.cancel_sharp,
                                                         color: Colors.white,
@@ -1761,47 +2018,49 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                     Expanded(
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    15.0,
-                                                                    0.0,
-                                                                    10.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              15.0,
+                                                              0.0,
+                                                              10.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_pn3wac0c,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontStyle,
-                                                                  ),
+                                                            context,
+                                                          )!.k_pn3wac0c,
+                                                          style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -1828,7 +2087,7 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                   colors: [
                                     Colors.black,
                                     Colors.black,
-                                    Colors.transparent
+                                    Colors.transparent,
                                   ],
                                   stops: [0.0, 0.3, 1.0],
                                   begin: AlignmentDirectional(0.0, -1.0),
@@ -1840,7 +2099,11 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 15.0),
+                                      0.0,
+                                      5.0,
+                                      0.0,
+                                      15.0,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -1851,11 +2114,17 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                           children: [
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.0, 0.0),
+                                                -1.0,
+                                                0.0,
+                                              ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      5.0,
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: InkWell(
                                                   splashColor:
                                                       Colors.transparent,
@@ -1879,33 +2148,36 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                         Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                0.0,
+                                                                0.0,
+                                                              ),
                                                           child: Container(
                                                             width: 25.0,
                                                             height: 25.0,
-                                                            decoration:
-                                                                BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                               color: Color(
-                                                                  0x98FF0000),
+                                                                0x98FF0000,
+                                                              ),
                                                               boxShadow: [
                                                                 BoxShadow(
                                                                   blurRadius:
                                                                       4.0,
                                                                   color: Color(
-                                                                      0x7A000000),
+                                                                    0x7A000000,
+                                                                  ),
                                                                   offset:
                                                                       Offset(
-                                                                    2.0,
-                                                                    2.0,
-                                                                  ),
-                                                                )
+                                                                        2.0,
+                                                                        2.0,
+                                                                      ),
+                                                                ),
                                                               ],
                                                               shape: BoxShape
                                                                   .circle,
-                                                              border:
-                                                                  Border.all(
+                                                              border: Border.all(
                                                                 color: Color(
-                                                                    0x98FF0000),
+                                                                  0x98FF0000,
+                                                                ),
                                                                 width: 2.0,
                                                               ),
                                                             ),
@@ -1914,23 +2186,24 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            2.0,
-                                                                            0.0),
+                                                                          0.0,
+                                                                          2.0,
+                                                                          0.0,
+                                                                        ),
                                                                     child: Icon(
                                                                       Icons
                                                                           .arrow_back_ios_new_sharp,
-                                                                      color: Theme.of(
-                                                                              context)
+                                                                      color: Theme.of(context)
                                                                           .extension<
-                                                                              CustomColors>()!
+                                                                            CustomColors
+                                                                          >()!
                                                                           .primaryText,
                                                                       size:
                                                                           14.0,
@@ -1948,26 +2221,33 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    10.0,
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_euoa19dw,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_euoa19dw,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       fontSize: 24.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1988,8 +2268,13 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               CrossAxisAlignment.end,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    5.0,
+                                                    0.0,
+                                                  ),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
@@ -2002,28 +2287,38 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    5.0,
+                                                    5.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_utzl4v9d,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_utzl4v9d,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       fontSize: 15.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -2040,9 +2335,13 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 30.0, 2.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    30.0,
+                                                    2.0,
+                                                  ),
                                               child: AuthUserStreamWidget(
                                                 builder: (context) => Text(
                                                   (currentUserDocument?.tickets
@@ -2054,8 +2353,7 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                                       .textTheme
                                                       .bodyMedium!
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontStyle:
@@ -2084,7 +2382,11 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        25.0, 0.0, 25.0, 25.0),
+                                      25.0,
+                                      0.0,
+                                      25.0,
+                                      25.0,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -2095,19 +2397,27 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                           height: 47.0,
                                           decoration: BoxDecoration(
                                             color: Color(0x9A000000),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
+                                            borderRadius: BorderRadius.circular(
+                                              10.0,
+                                            ),
                                             border: Border.all(
                                               color: Color(0xFF2C2C2C),
                                               width: 2.0,
                                             ),
                                           ),
                                           child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                            alignment: AlignmentDirectional(
+                                              0.0,
+                                              0.0,
+                                            ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 5.0, 5.0, 5.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    5.0,
+                                                    5.0,
+                                                    5.0,
+                                                    5.0,
+                                                  ),
                                               child: Icon(
                                                 Icons.qr_code,
                                                 color: Colors.white,
@@ -2121,19 +2431,27 @@ class _TicketWidgetState extends ConsumerState<TicketPage>
                                           height: 47.0,
                                           decoration: BoxDecoration(
                                             color: Color(0x9A000000),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
+                                            borderRadius: BorderRadius.circular(
+                                              10.0,
+                                            ),
                                             border: Border.all(
                                               color: Color(0xFF2C2C2C),
                                               width: 2.0,
                                             ),
                                           ),
                                           child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                            alignment: AlignmentDirectional(
+                                              0.0,
+                                              0.0,
+                                            ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 2.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    2.0,
+                                                  ),
                                               child: Icon(
                                                 Icons.ios_share,
                                                 color: Colors.white,

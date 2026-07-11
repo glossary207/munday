@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class GroupInviteRecord extends SupabaseRecord {
-  GroupInviteRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  GroupInviteRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -68,8 +66,7 @@ class GroupInviteRecord extends SupabaseRecord {
   static GroupInviteRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      GroupInviteRecord._(reference, mapFromSupabase(data));
+  ) => GroupInviteRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -111,8 +108,12 @@ class GroupInviteRecordDocumentEquality implements Equality<GroupInviteRecord> {
   }
 
   @override
-  int hash(GroupInviteRecord? e) => const ListEquality()
-      .hash([e?.nameGroup, e?.userInGroup, e?.iDVenues, e?.chatRoom]);
+  int hash(GroupInviteRecord? e) => const ListEquality().hash([
+    e?.nameGroup,
+    e?.userInGroup,
+    e?.iDVenues,
+    e?.chatRoom,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is GroupInviteRecord;

@@ -65,7 +65,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              4.0, 4.0, 4.0, 4.0),
+                            4.0,
+                            4.0,
+                            4.0,
+                            4.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             height: 100.0,
@@ -77,7 +81,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 8.0, 8.0, 8.0),
+                            8.0,
+                            8.0,
+                            8.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             height: 100.0,
@@ -91,7 +99,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                           alignment: AlignmentDirectional(-1.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                2.0, 2.0, 0.0, 0.0),
+                              2.0,
+                              2.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Container(
                               width: 8.0,
                               height: 8.0,
@@ -106,7 +118,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                           alignment: AlignmentDirectional(1.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 2.0, 2.0, 0.0),
+                              0.0,
+                              2.0,
+                              2.0,
+                              0.0,
+                            ),
                             child: Container(
                               width: 8.0,
                               height: 8.0,
@@ -132,8 +148,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                 child: Stack(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0,
+                      ),
                       child: Container(
                         width: 100.0,
                         height: 100.0,
@@ -144,8 +164,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        8.0,
+                        8.0,
+                        8.0,
+                        8.0,
+                      ),
                       child: Container(
                         width: 100.0,
                         height: 100.0,
@@ -158,8 +182,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                     Align(
                       alignment: AlignmentDirectional(-1.0, 1.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 0.0, 2.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          2.0,
+                          0.0,
+                          0.0,
+                          2.0,
+                        ),
                         child: Container(
                           width: 8.0,
                           height: 8.0,
@@ -173,8 +201,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                     Align(
                       alignment: AlignmentDirectional(1.0, 1.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 2.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0.0,
+                          0.0,
+                          2.0,
+                          2.0,
+                        ),
                         child: Container(
                           width: 8.0,
                           height: 8.0,
@@ -208,25 +240,23 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                   Text(
                     AppLocalizations.of(context)!.k_oxahnggw,
                     style: Theme.of(context).textTheme.bodyMedium!.override(
-                          font: GoogleFonts.openSans(
-                            fontWeight: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontWeight,
-                            fontStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontStyle,
-                          ),
-                          fontSize: 25.0,
-                          letterSpacing: 0.2,
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                        ),
+                      font: GoogleFonts.openSans(
+                        fontWeight: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.fontWeight,
+                        fontStyle: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.fontStyle,
+                      ),
+                      fontSize: 25.0,
+                      letterSpacing: 0.2,
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontStyle,
+                    ),
                   ),
                 ],
               ),
@@ -255,7 +285,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              4.0, 4.0, 4.0, 4.0),
+                            4.0,
+                            4.0,
+                            4.0,
+                            4.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             height: 100.0,
@@ -267,7 +301,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 8.0, 8.0, 8.0),
+                            8.0,
+                            8.0,
+                            8.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             height: 100.0,
@@ -281,7 +319,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                           alignment: AlignmentDirectional(-1.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                2.0, 2.0, 0.0, 0.0),
+                              2.0,
+                              2.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Container(
                               width: 8.0,
                               height: 8.0,
@@ -296,7 +338,11 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                           alignment: AlignmentDirectional(1.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 2.0, 2.0, 0.0),
+                              0.0,
+                              2.0,
+                              2.0,
+                              0.0,
+                            ),
                             child: Container(
                               width: 8.0,
                               height: 8.0,
@@ -322,8 +368,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                 child: Stack(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0,
+                      ),
                       child: Container(
                         width: 100.0,
                         height: 100.0,
@@ -334,8 +384,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        8.0,
+                        8.0,
+                        8.0,
+                        8.0,
+                      ),
                       child: Container(
                         width: 100.0,
                         height: 100.0,
@@ -348,8 +402,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                     Align(
                       alignment: AlignmentDirectional(-1.0, 1.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 0.0, 2.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          2.0,
+                          0.0,
+                          0.0,
+                          2.0,
+                        ),
                         child: Container(
                           width: 8.0,
                           height: 8.0,
@@ -363,8 +421,12 @@ class _StageWidgetState extends ConsumerState<StageWidget> {
                     Align(
                       alignment: AlignmentDirectional(1.0, 1.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 2.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0.0,
+                          0.0,
+                          2.0,
+                          2.0,
+                        ),
                         child: Container(
                           width: 8.0,
                           height: 8.0,

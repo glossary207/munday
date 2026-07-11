@@ -51,16 +51,18 @@ Stream<List<T>> queryCollection<T>(
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);
   }
-  return query.snapshots().map((s) => s.docs
-      .map(
-        (d) => safeGet(
-          () => recordBuilder(d),
-          (e) => print('Error serializing doc ${d.reference.path}\n$e'),
-        ),
-      )
-      .where((d) => d != null)
-      .map((d) => d!)
-      .toList());
+  return query.snapshots().map(
+    (s) => s.docs
+        .map(
+          (d) => safeGet(
+            () => recordBuilder(d),
+            (e) => print('Error serializing doc ${d.reference.path}\n$e'),
+          ),
+        )
+        .where((d) => d != null)
+        .map((d) => d!)
+        .toList(),
+  );
 }
 
 Future<List<T>> queryCollectionOnce<T>(
@@ -75,16 +77,18 @@ Future<List<T>> queryCollectionOnce<T>(
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);
   }
-  return query.get().then((s) => s.docs
-      .map(
-        (d) => safeGet(
-          () => recordBuilder(d),
-          (e) => print('Error serializing doc ${d.reference.path}\n$e'),
-        ),
-      )
-      .where((d) => d != null)
-      .map((d) => d!)
-      .toList());
+  return query.get().then(
+    (s) => s.docs
+        .map(
+          (d) => safeGet(
+            () => recordBuilder(d),
+            (e) => print('Error serializing doc ${d.reference.path}\n$e'),
+          ),
+        )
+        .where((d) => d != null)
+        .map((d) => d!)
+        .toList(),
+  );
 }
 
 Future<int> queryCollectionCount(
@@ -107,445 +111,409 @@ typedef RecordBuilder<T> = T? Function(SupabaseDocSnapshot snapshot);
 Future<int> queryUsersRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      UsersRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  UsersRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<UsersRecord>> queryUsersRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      UsersRecord.collection,
-      UsersRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  UsersRecord.collection,
+  UsersRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<UsersRecord>> queryUsersRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      UsersRecord.collection,
-      UsersRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  UsersRecord.collection,
+  UsersRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- StoreRecord ---
 Future<int> queryStoreRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      StoreRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  StoreRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<StoreRecord>> queryStoreRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      StoreRecord.collection,
-      StoreRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  StoreRecord.collection,
+  StoreRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<StoreRecord>> queryStoreRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      StoreRecord.collection,
-      StoreRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  StoreRecord.collection,
+  StoreRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- ChatRoomsRecord ---
 Future<int> queryChatRoomsRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      ChatRoomsRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  ChatRoomsRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<ChatRoomsRecord>> queryChatRoomsRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      ChatRoomsRecord.collection,
-      ChatRoomsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  ChatRoomsRecord.collection,
+  ChatRoomsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<ChatRoomsRecord>> queryChatRoomsRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      ChatRoomsRecord.collection,
-      ChatRoomsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  ChatRoomsRecord.collection,
+  ChatRoomsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- MessagesRecord ---
 Future<int> queryMessagesRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      MessagesRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  MessagesRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<MessagesRecord>> queryMessagesRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      MessagesRecord.collection,
-      MessagesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  MessagesRecord.collection,
+  MessagesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<MessagesRecord>> queryMessagesRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      MessagesRecord.collection,
-      MessagesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  MessagesRecord.collection,
+  MessagesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- EventsRecord ---
 Future<int> queryEventsRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      EventsRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  EventsRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<EventsRecord>> queryEventsRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      EventsRecord.collection,
-      EventsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  EventsRecord.collection,
+  EventsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<EventsRecord>> queryEventsRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      EventsRecord.collection,
-      EventsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  EventsRecord.collection,
+  EventsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- VenuesRecord ---
 Future<int> queryVenuesRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      VenuesRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  VenuesRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<VenuesRecord>> queryVenuesRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      VenuesRecord.collection,
-      VenuesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  VenuesRecord.collection,
+  VenuesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<VenuesRecord>> queryVenuesRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      VenuesRecord.collection,
-      VenuesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  VenuesRecord.collection,
+  VenuesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- TicketRecord ---
 Future<int> queryTicketRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      TicketRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  TicketRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<TicketRecord>> queryTicketRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      TicketRecord.collection,
-      TicketRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  TicketRecord.collection,
+  TicketRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<TicketRecord>> queryTicketRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      TicketRecord.collection,
-      TicketRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  TicketRecord.collection,
+  TicketRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- UserInVenuesRecord ---
 Future<int> queryUserInVenuesRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      UserInVenuesRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  UserInVenuesRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<UserInVenuesRecord>> queryUserInVenuesRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      UserInVenuesRecord.collection,
-      UserInVenuesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  UserInVenuesRecord.collection,
+  UserInVenuesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<UserInVenuesRecord>> queryUserInVenuesRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      UserInVenuesRecord.collection,
-      UserInVenuesRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  UserInVenuesRecord.collection,
+  UserInVenuesRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- PromotionRecord ---
 Future<int> queryPromotionRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      PromotionRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  PromotionRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<PromotionRecord>> queryPromotionRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      PromotionRecord.collection,
-      PromotionRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  PromotionRecord.collection,
+  PromotionRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<PromotionRecord>> queryPromotionRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      PromotionRecord.collection,
-      PromotionRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  PromotionRecord.collection,
+  PromotionRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- VenueLayoutsRecord ---
 Future<int> queryVenueLayoutsRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      VenueLayoutsRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  VenueLayoutsRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<VenueLayoutsRecord>> queryVenueLayoutsRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      VenueLayoutsRecord.collection,
-      VenueLayoutsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  VenueLayoutsRecord.collection,
+  VenueLayoutsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<VenueLayoutsRecord>> queryVenueLayoutsRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      VenueLayoutsRecord.collection,
-      VenueLayoutsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  VenueLayoutsRecord.collection,
+  VenueLayoutsRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- RoomVenuesLiveChatRecord ---
 Future<int> queryRoomVenuesLiveChatRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      RoomVenuesLiveChatRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  RoomVenuesLiveChatRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<RoomVenuesLiveChatRecord>> queryRoomVenuesLiveChatRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      RoomVenuesLiveChatRecord.collection,
-      RoomVenuesLiveChatRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  RoomVenuesLiveChatRecord.collection,
+  RoomVenuesLiveChatRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<RoomVenuesLiveChatRecord>> queryRoomVenuesLiveChatRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      RoomVenuesLiveChatRecord.collection,
-      RoomVenuesLiveChatRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  RoomVenuesLiveChatRecord.collection,
+  RoomVenuesLiveChatRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 // --- GroupInviteRecord ---
 Future<int> queryGroupInviteRecordCount({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
-}) =>
-    queryCollectionCount(
-      GroupInviteRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
+}) => queryCollectionCount(
+  GroupInviteRecord.collection,
+  queryBuilder: queryBuilder,
+  limit: limit,
+);
 
 Stream<List<GroupInviteRecord>> queryGroupInviteRecord({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      GroupInviteRecord.collection,
-      GroupInviteRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollection(
+  GroupInviteRecord.collection,
+  GroupInviteRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 Future<List<GroupInviteRecord>> queryGroupInviteRecordOnce({
   SupabaseQuery Function(SupabaseQuery)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      GroupInviteRecord.collection,
-      GroupInviteRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) => queryCollectionOnce(
+  GroupInviteRecord.collection,
+  GroupInviteRecord.fromSnapshot,
+  queryBuilder: queryBuilder,
+  limit: limit,
+  singleRecord: singleRecord,
+);
 
 class FFSupabasePage<T> {
   final List<T> data;
@@ -624,8 +592,9 @@ Future maybeCreateUser(User user) async {
         displayName: currentUserDocument!.hasDisplayName() ? null : displayName,
         photoUrl: currentUserDocument!.hasPhotoUrl() ? null : photoUrl,
         phoneNumber: currentUserDocument!.hasPhoneNumber() ? null : user.phone,
-        createdTime:
-            currentUserDocument!.hasCreatedTime() ? null : getCurrentTimestamp,
+        createdTime: currentUserDocument!.hasCreatedTime()
+            ? null
+            : getCurrentTimestamp,
       );
       if (backfillData.isNotEmpty) {
         await userRecord.update(backfillData);
@@ -648,6 +617,7 @@ Future maybeCreateUser(User user) async {
 }
 
 Future updateUserDocument({String? email}) async {
-  await currentUserDocument?.reference
-      .update(createUsersRecordData(email: email));
+  await currentUserDocument?.reference.update(
+    createUsersRecordData(email: email),
+  );
 }

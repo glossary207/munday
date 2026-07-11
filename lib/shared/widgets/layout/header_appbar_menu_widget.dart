@@ -8,10 +8,12 @@ class HeaderAppbarMenuWidget extends ConsumerStatefulWidget {
   const HeaderAppbarMenuWidget({super.key});
 
   @override
-  ConsumerState<HeaderAppbarMenuWidget> createState() => _HeaderAppbarMenuWidgetState();
+  ConsumerState<HeaderAppbarMenuWidget> createState() =>
+      _HeaderAppbarMenuWidgetState();
 }
 
-class _HeaderAppbarMenuWidgetState extends ConsumerState<HeaderAppbarMenuWidget> {
+class _HeaderAppbarMenuWidgetState
+    extends ConsumerState<HeaderAppbarMenuWidget> {
   late HeaderAppbarMenuModel _model;
 
   @override
@@ -40,9 +42,7 @@ class _HeaderAppbarMenuWidgetState extends ConsumerState<HeaderAppbarMenuWidget>
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-      ),
+      decoration: BoxDecoration(color: Colors.transparent),
     );
   }
 }

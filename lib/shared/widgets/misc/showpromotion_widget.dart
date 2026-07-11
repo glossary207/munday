@@ -12,15 +12,13 @@ import 'showpromotion_model.dart';
 export 'showpromotion_model.dart';
 
 class ShowpromotionWidget extends ConsumerStatefulWidget {
-  const ShowpromotionWidget({
-    super.key,
-    required this.photo,
-  });
+  const ShowpromotionWidget({super.key, required this.photo});
 
   final List<String>? photo;
 
   @override
-  ConsumerState<ShowpromotionWidget> createState() => _ShowpromotionWidgetState();
+  ConsumerState<ShowpromotionWidget> createState() =>
+      _ShowpromotionWidgetState();
 }
 
 class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
@@ -88,10 +86,7 @@ class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(0.0),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 2.0,
-              sigmaY: 2.0,
-            ),
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,8 +109,11 @@ class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
                                 PageView.builder(
                                   controller: _model.pageViewController ??=
                                       PageController(
-                                          initialPage: max(
-                                              0, min(0, dataphoto.length - 1))),
+                                        initialPage: max(
+                                          0,
+                                          min(0, dataphoto.length - 1),
+                                        ),
+                                      ),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: dataphoto.length,
                                   itemBuilder: (context, dataphotoIndex) {
@@ -127,23 +125,31 @@ class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
                                           MainAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          borderRadius: BorderRadius.circular(
+                                            8.0,
+                                          ),
                                           child: Image.network(
                                             dataphotoItem,
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
+                                            width:
+                                                MediaQuery.sizeOf(
+                                                  context,
+                                                ).width *
                                                 1.0,
                                             fit: BoxFit.cover,
                                             errorBuilder:
-                                                (context, error, stackTrace) =>
-                                                    Image.asset(
-                                              'assets/images/error_image.png',
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              fit: BoxFit.cover,
-                                            ),
+                                                (
+                                                  context,
+                                                  error,
+                                                  stackTrace,
+                                                ) => Image.asset(
+                                                  'assets/images/error_image.png',
+                                                  width:
+                                                      MediaQuery.sizeOf(
+                                                        context,
+                                                      ).width *
+                                                      1.0,
+                                                  fit: BoxFit.cover,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -154,37 +160,43 @@ class _ShowpromotionWidgetState extends ConsumerState<ShowpromotionWidget>
                                   alignment: AlignmentDirectional(0.0, 1.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 15.0),
-                                    child: smooth_page_indicator
-                                        .SmoothPageIndicator(
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                      15.0,
+                                    ),
+                                    child: smooth_page_indicator.SmoothPageIndicator(
                                       controller: _model.pageViewController ??=
                                           PageController(
-                                              initialPage: max(
-                                                  0,
-                                                  min(0,
-                                                      dataphoto.length - 1))),
+                                            initialPage: max(
+                                              0,
+                                              min(0, dataphoto.length - 1),
+                                            ),
+                                          ),
                                       count: dataphoto.length,
                                       axisDirection: Axis.horizontal,
                                       onDotClicked: (i) async {
                                         await _model.pageViewController!
                                             .animateToPage(
-                                          i,
-                                          duration: Duration(milliseconds: 500),
-                                          curve: Curves.ease,
-                                        );
+                                              i,
+                                              duration: Duration(
+                                                milliseconds: 500,
+                                              ),
+                                              curve: Curves.ease,
+                                            );
                                         safeSetState(() {});
                                       },
-                                      effect: smooth_page_indicator
-                                          .ExpandingDotsEffect(
-                                        expansionFactor: 3.0,
-                                        spacing: 10.0,
-                                        radius: 8.0,
-                                        dotWidth: 11.0,
-                                        dotHeight: 11.0,
-                                        dotColor: Colors.white,
-                                        activeDotColor: Color(0xFFFF0000),
-                                        paintStyle: PaintingStyle.fill,
-                                      ),
+                                      effect:
+                                          smooth_page_indicator.ExpandingDotsEffect(
+                                            expansionFactor: 3.0,
+                                            spacing: 10.0,
+                                            radius: 8.0,
+                                            dotWidth: 11.0,
+                                            dotHeight: 11.0,
+                                            dotColor: Colors.white,
+                                            activeDotColor: Color(0xFFFF0000),
+                                            paintStyle: PaintingStyle.fill,
+                                          ),
                                     ),
                                   ),
                                 ),

@@ -18,10 +18,7 @@ import 'package:munday/core/theme/theme.dart';
 export 'reviewgive_model.dart';
 
 class ReviewgiveWidget extends ConsumerStatefulWidget {
-  const ReviewgiveWidget({
-    super.key,
-    required this.reviewto,
-  });
+  const ReviewgiveWidget({super.key, required this.reviewto});
 
   final SupabaseDocRef? reviewto;
 
@@ -85,8 +82,12 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 24.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      24.0,
+                      20.0,
+                      24.0,
+                      0.0,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -94,36 +95,34 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                           child: Text(
                             AppLocalizations.of(context)!.k_xfvpitv9,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
+                            style: Theme.of(context).textTheme.headlineSmall!
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.headlineSmall!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.headlineSmall!.fontStyle,
                                   ),
                                   fontSize: 30.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .fontWeight,
-                                  fontStyle: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .fontStyle,
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.headlineSmall!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.headlineSmall!.fontStyle,
                                 ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 12.0, 0.0, 0.0),
+                            0.0,
+                            12.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -132,24 +131,20 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                                   AppLocalizations.of(context)!.k_z0f12e5c,
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
+                                  style: Theme.of(context).textTheme.labelLarge!
                                       .override(
                                         font: GoogleFonts.roboto(
                                           fontWeight: FontWeight.w500,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.labelLarge!.fontStyle,
                                         ),
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge!
-                                            .fontStyle,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.labelLarge!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -158,7 +153,11 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 0.0),
+                            0.0,
+                            24.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +177,11 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 24.0),
+                            0.0,
+                            24.0,
+                            0.0,
+                            24.0,
+                          ),
                           child: TextFormField(
                             controller: _model.textController,
                             focusNode: _model.textFieldFocusNode,
@@ -190,52 +193,45 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                                   .labelMedium!
                                   .override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.labelMedium!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.labelMedium!.fontStyle,
                                     ),
                                     color: Color(0xFFC8C8C8),
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontStyle,
                                   ),
-                              hintText:
-                                  AppLocalizations.of(context)!.k_yb1d4pp3,
+                              hintText: AppLocalizations.of(
+                                context,
+                              )!.k_yb1d4pp3,
                               hintStyle: Theme.of(context)
                                   .textTheme
                                   .labelMedium!
                                   .override(
                                     font: GoogleFonts.roboto(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.labelMedium!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.labelMedium!.fontStyle,
                                     ),
                                     color: Color(0xFFC6C6C6),
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium!.fontStyle,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -246,9 +242,9 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .extension<CustomColors>()!
-                                      .primaryText,
+                                  color: Theme.of(
+                                    context,
+                                  ).extension<CustomColors>()!.primaryText,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -268,32 +264,26 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
+                            style: Theme.of(context).textTheme.bodyMedium!
                                 .override(
                                   font: GoogleFonts.openSans(
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium!.fontStyle,
                                   ),
-                                  color: Theme.of(context)
-                                      .extension<CustomColors>()!
-                                      .primaryText,
+                                  color: Theme.of(
+                                    context,
+                                  ).extension<CustomColors>()!.primaryText,
                                   letterSpacing: 0.0,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .fontWeight,
-                                  fontStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .fontStyle,
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.fontStyle,
                                 ),
                             maxLines: 5,
                             minLines: 3,
@@ -305,8 +295,12 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 24.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      24.0,
+                      0.0,
+                      24.0,
+                      24.0,
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -322,34 +316,32 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                               height: 54.0,
                               padding: EdgeInsets.all(0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                              ),
                               color: Color(0x00292929),
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
+                              textStyle: Theme.of(context).textTheme.bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontStyle,
                                     ),
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
+                                    color: Theme.of(
+                                      context,
+                                    ).extension<CustomColors>()!.primaryText,
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontStyle,
                                   ),
                               elevation: 0.0,
                               borderSide: BorderSide(
@@ -364,35 +356,36 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                           child: MundayButton(
                             onPressed: () async {
                               await widget.reviewto!.update({
-                                ...mapToSupabase(
-                                  {
-                                    'user_review': FieldValue.arrayUnion([
-                                      getReviewFirestoreData(
-                                        updateReviewStruct(
-                                          ReviewStruct(
-                                            profilePhoto: currentUserPhoto,
-                                            comment: _model.textController.text,
-                                            rate: context.appState.ratingreview,
-                                            dateupdate: getCurrentTimestamp,
-                                            nameuser: currentUserDisplayName,
-                                          ),
-                                          clearUnsetFields: false,
+                                ...mapToSupabase({
+                                  'user_review': FieldValue.arrayUnion([
+                                    getReviewFirestoreData(
+                                      updateReviewStruct(
+                                        ReviewStruct(
+                                          profilePhoto: currentUserPhoto,
+                                          comment: _model.textController.text,
+                                          rate: context.appState.ratingreview,
+                                          dateupdate: getCurrentTimestamp,
+                                          nameuser: currentUserDisplayName,
                                         ),
-                                        true,
-                                      )
-                                    ]),
-                                  },
-                                ),
+                                        clearUnsetFields: false,
+                                      ),
+                                      true,
+                                    ),
+                                  ]),
+                                }),
                               });
                               _model.dataread =
                                   await VenuesRecord.getDocumentOnce(
-                                      widget.reviewto!);
+                                    widget.reviewto!,
+                                  );
 
-                              await widget.reviewto!
-                                  .update(createVenuesRecordData(
-                                rating: functions.listaverage(
-                                    _model.dataread?.userReview.toList()),
-                              ));
+                              await widget.reviewto!.update(
+                                createVenuesRecordData(
+                                  rating: functions.listaverage(
+                                    _model.dataread?.userReview.toList(),
+                                  ),
+                                ),
+                              );
                               context.appState.ratingreview = 0;
                               safeSetState(() {});
                               Navigator.pop(context);
@@ -403,34 +396,36 @@ class _ReviewgiveWidgetState extends ConsumerState<ReviewgiveWidget> {
                             options: MundayButtonOptions(
                               height: 54.0,
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
+                                24.0,
+                                0.0,
+                                24.0,
+                                0.0,
+                              ),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                              ),
                               color: Color(0xFFFF0000),
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
+                              textStyle: Theme.of(context).textTheme.bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontStyle,
                                     ),
                                     color: Colors.white,
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontStyle,
                                   ),
                               elevation: 10.0,
                               borderSide: BorderSide(

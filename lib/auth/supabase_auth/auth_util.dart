@@ -51,8 +51,9 @@ bool get currentUserEmailVerified =>
 
 /// Create a Stream that listens to the current user's JWT Token
 String? _currentJwtToken;
-final jwtTokenStream =
-    Supabase.instance.client.auth.onAuthStateChange.map((event) async {
+final jwtTokenStream = Supabase.instance.client.auth.onAuthStateChange.map((
+  event,
+) async {
   _currentJwtToken = event.session?.accessToken;
   return _currentJwtToken;
 }).asBroadcastStream();
@@ -66,32 +67,34 @@ final authenticatedUserStream = Supabase.instance.client.auth.onAuthStateChange
     .switchMap(
       (uid) => uid.isEmpty
           ? Stream.value(null)
-          : UsersRecord.getDocument(UsersRecord.collection.doc(uid))
-              .handleError((_) {}),
+          : UsersRecord.getDocument(
+              UsersRecord.collection.doc(uid),
+            ).handleError((_) {}),
     )
     .asyncMap((user) async {
-  // If the stream emits a sparse UsersRecord with no timestamps, bootstrap it.
-  // Ensure the row is created/loaded so currentUserDocument is always valid.
-  if (user != null && !user.hasCreatedTime()) {
-    final supabaseUser = Supabase.instance.client.auth.currentUser;
-    if (supabaseUser != null) {
-      await maybeCreateUser(supabaseUser);
-    }
-  } else {
-    currentUserDocument = user;
-  }
-  return currentUserDocument;
-}).asBroadcastStream();
+      // If the stream emits a sparse UsersRecord with no timestamps, bootstrap it.
+      // Ensure the row is created/loaded so currentUserDocument is always valid.
+      if (user != null && !user.hasCreatedTime()) {
+        final supabaseUser = Supabase.instance.client.auth.currentUser;
+        if (supabaseUser != null) {
+          await maybeCreateUser(supabaseUser);
+        }
+      } else {
+        currentUserDocument = user;
+      }
+      return currentUserDocument;
+    })
+    .asBroadcastStream();
 
 class AuthUserStreamWidget extends StatelessWidget {
   const AuthUserStreamWidget({Key? key, required this.builder})
-      : super(key: key);
+    : super(key: key);
 
   final WidgetBuilder builder;
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: authenticatedUserStream,
-        builder: (context, _) => builder(context),
-      );
+    stream: authenticatedUserStream,
+    builder: (context, _) => builder(context),
+  );
 }

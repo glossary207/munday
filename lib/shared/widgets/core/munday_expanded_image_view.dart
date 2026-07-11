@@ -56,7 +56,7 @@ class MundayExpandedImageView extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],

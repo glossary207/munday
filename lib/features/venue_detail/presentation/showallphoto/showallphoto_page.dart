@@ -9,10 +9,7 @@ import 'showallphoto_model.dart';
 export 'showallphoto_model.dart';
 
 class ShowallphotoPage extends ConsumerStatefulWidget {
-  const ShowallphotoPage({
-    super.key,
-    required this.dataphoto,
-  });
+  const ShowallphotoPage({super.key, required this.dataphoto});
 
   final List<String>? dataphoto;
 
@@ -74,8 +71,12 @@ class _ShowallphotoWidgetState extends ConsumerState<ShowallphotoPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        10.0,
+                        0.0,
+                        10.0,
+                        0.0,
+                      ),
                       child: Container(
                         width: double.infinity,
                         height: MediaQuery.sizeOf(context).height * 0.85,
@@ -91,13 +92,14 @@ class _ShowallphotoWidgetState extends ConsumerState<ShowallphotoPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(0.0),
                           child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 2.0,
-                              sigmaY: 2.0,
-                            ),
+                            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 40.0, 10.0, 0.0),
+                                10.0,
+                                40.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Builder(
                                 builder: (context) {
                                   final data = widget.dataphoto!.toList();
@@ -105,16 +107,17 @@ class _ShowallphotoWidgetState extends ConsumerState<ShowallphotoPage> {
                                   return MasonryGridView.builder(
                                     gridDelegate:
                                         SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                    ),
+                                          crossAxisCount: 2,
+                                        ),
                                     crossAxisSpacing: 10.0,
                                     mainAxisSpacing: 10.0,
                                     itemCount: data.length,
                                     itemBuilder: (context, dataIndex) {
                                       final dataItem = data[dataIndex];
                                       return ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
+                                        borderRadius: BorderRadius.circular(
+                                          4.0,
+                                        ),
                                         child: Image.network(
                                           dataItem,
                                           fit: BoxFit.cover,

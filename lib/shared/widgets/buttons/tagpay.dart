@@ -37,8 +37,9 @@ class _TagpayState extends ConsumerState<Tagpay> {
   @override
   Widget build(BuildContext context) {
     final bool isTrue = widget.condition ?? false;
-    final String displayText =
-        isTrue ? widget.ifture ?? '' : widget.iffalse ?? '';
+    final String displayText = isTrue
+        ? widget.ifture ?? ''
+        : widget.iffalse ?? '';
     final Color displayColor = isTrue ? Color(0xFF07B53B) : Colors.grey;
 
     return Align(
@@ -59,11 +60,11 @@ class _TagpayState extends ConsumerState<Tagpay> {
             child: Text(
               displayText,
               style: Theme.of(context).textTheme.bodyMedium!.override(
-                    fontFamily: 'Readex Pro',
-                    color: Colors.white,
-                    fontSize: 6,
-                    fontWeight: FontWeight.w500,
-                  ),
+                fontFamily: 'Readex Pro',
+                color: Colors.white,
+                fontSize: 6,
+                fontWeight: FontWeight.w500,
+              ),
               textAlign: TextAlign.center,
             ),
           ),

@@ -16,10 +16,10 @@ class ReservedUserDataStruct extends FFSupabaseStruct {
     SupabaseDocRef? uid,
     String? photoPath,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _username = username,
-        _uid = uid,
-        _photoPath = photoPath,
-        super(supabaseUtilData);
+  }) : _username = username,
+       _uid = uid,
+       _photoPath = photoPath,
+       super(supabaseUtilData);
 
   // "username" field.
   String? _username;
@@ -54,47 +54,30 @@ class ReservedUserDataStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'username': _username,
-        'uid': _uid,
-        'photo_path': _photoPath,
-      }.withoutNulls;
+    'username': _username,
+    'uid': _uid,
+    'photo_path': _photoPath,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'username': serializeParam(
-          _username,
-          ParamType.String,
-        ),
-        'uid': serializeParam(
-          _uid,
-          ParamType.SupabaseDocRef,
-        ),
-        'photo_path': serializeParam(
-          _photoPath,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'username': serializeParam(_username, ParamType.String),
+    'uid': serializeParam(_uid, ParamType.SupabaseDocRef),
+    'photo_path': serializeParam(_photoPath, ParamType.String),
+  }.withoutNulls;
 
   static ReservedUserDataStruct fromSerializableMap(
-          Map<String, dynamic> data) =>
-      ReservedUserDataStruct(
-        username: deserializeParam(
-          data['username'],
-          ParamType.String,
-          false,
-        ),
-        uid: deserializeParam(
-          data['uid'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['users'],
-        ),
-        photoPath: deserializeParam(
-          data['photo_path'],
-          ParamType.String,
-          false,
-        ),
-      );
+    Map<String, dynamic> data,
+  ) => ReservedUserDataStruct(
+    username: deserializeParam(data['username'], ParamType.String, false),
+    uid: deserializeParam(
+      data['uid'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['users'],
+    ),
+    photoPath: deserializeParam(data['photo_path'], ParamType.String, false),
+  );
 
   @override
   String toString() => 'ReservedUserDataStruct(${toMap()})';
@@ -119,29 +102,27 @@ ReservedUserDataStruct createReservedUserDataStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    ReservedUserDataStruct(
-      username: username,
-      uid: uid,
-      photoPath: photoPath,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => ReservedUserDataStruct(
+  username: username,
+  uid: uid,
+  photoPath: photoPath,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 ReservedUserDataStruct? updateReservedUserDataStruct(
   ReservedUserDataStruct? reservedUserData, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    reservedUserData
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => reservedUserData
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addReservedUserDataStructData(
   Map<String, dynamic> supabaseData,
@@ -162,10 +143,13 @@ void addReservedUserDataStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final reservedUserDataData =
-      getReservedUserDataFirestoreData(reservedUserData, forFieldValue);
-  final nestedData =
-      reservedUserDataData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final reservedUserDataData = getReservedUserDataFirestoreData(
+    reservedUserData,
+    forFieldValue,
+  );
+  final nestedData = reservedUserDataData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = reservedUserData.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -181,8 +165,9 @@ Map<String, dynamic> getReservedUserDataFirestoreData(
   final supabaseData = mapToSupabase(reservedUserData.toMap());
 
   // Add any Firestore field values
-  reservedUserData.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  reservedUserData.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

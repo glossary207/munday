@@ -164,6 +164,7 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
             backgroundColor: Colors.black,
             body: SafeArea(
               top: true,
+              bottom: false,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -220,9 +221,11 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                       context.appState.StyleVenuse.toList(),
                                       venuesVenuesRecordList.toList(),
                                     ),
-                                    locationStart: context.appState.locationsearch,
+                                    locationStart:
+                                        context.appState.locationsearch,
                                     itemClick: context.appState.VenuseSelection,
-                                    currentLocation: context.appState.locationsearch,
+                                    currentLocation:
+                                        context.appState.locationsearch,
                                     whenSelect: () async {
                                       _model.slide = false;
                                       safeSetState(() {});
@@ -231,8 +234,12 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                             functions.searchIndexVenuse(
                                               functions
                                                   .dataVenuseDocref(
-                                                    context.appState.Filterdistance,
-                                                    context.appState.locationsearch,
+                                                    context
+                                                        .appState
+                                                        .Filterdistance,
+                                                    context
+                                                        .appState
+                                                        .locationsearch,
                                                     (currentUserDocument
                                                                 ?.loveVenuse
                                                                 .toList() ??
@@ -337,16 +344,24 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                                 )!,
                                                           )
                                                           .toList(),
-                                                      context.appState.Filterdistance,
+                                                      context
+                                                          .appState
+                                                          .Filterdistance,
                                                       (currentUserDocument
                                                                   ?.loveVenuse
                                                                   .toList() ??
                                                               [])
                                                           .toList(),
-                                                      context.appState.locationsearch,
-                                                      context.appState.StyleMusic
+                                                      context
+                                                          .appState
+                                                          .locationsearch,
+                                                      context
+                                                          .appState
+                                                          .StyleMusic
                                                           .toList(),
-                                                      context.appState.StyleVenuse
+                                                      context
+                                                          .appState
+                                                          .StyleVenuse
                                                           .toList(),
                                                       _model.page,
                                                       _model.map,
@@ -1741,16 +1756,24 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                                 )!,
                                                           )
                                                           .toList(),
-                                                      context.appState.Filterdistance,
+                                                      context
+                                                          .appState
+                                                          .Filterdistance,
                                                       (currentUserDocument
                                                                   ?.loveVenuse
                                                                   .toList() ??
                                                               [])
                                                           .toList(),
-                                                      context.appState.locationsearch,
-                                                      context.appState.StyleMusic
+                                                      context
+                                                          .appState
+                                                          .locationsearch,
+                                                      context
+                                                          .appState
+                                                          .StyleMusic
                                                           .toList(),
-                                                      context.appState.StyleVenuse
+                                                      context
+                                                          .appState
+                                                          .StyleVenuse
                                                           .toList(),
                                                       _model.page,
                                                       true,
@@ -2001,8 +2024,12 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    if (currentUserDocument?.loginVenuesRoom != null &&
-                                        (currentUserDocument?.iDROOMVenues.isNotEmpty ?? false))
+                                    if (currentUserDocument?.loginVenuesRoom !=
+                                            null &&
+                                        (currentUserDocument
+                                                ?.iDROOMVenues
+                                                .isNotEmpty ??
+                                            false))
                                       Align(
                                         alignment: AlignmentDirectional(
                                           1.0,
@@ -2064,7 +2091,10 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                           .routeName,
                                                     );
 
-                                                    context.appState.StyleVenuse = [];
+                                                    context
+                                                            .appState
+                                                            .StyleVenuse =
+                                                        [];
                                                     safeSetState(() {});
                                                   },
                                                   child: Container(
@@ -2160,7 +2190,9 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                                                     (
                                                                                       e,
                                                                                     ) => functions.checkdate(
-                                                                                      (e as dynamic)?.date,
+                                                                                      (e
+                                                                                              as dynamic)
+                                                                                          ?.date,
                                                                                       getCurrentTimestamp,
                                                                                     )!,
                                                                                   )
@@ -2220,7 +2252,9 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                                                                 (
                                                                                                   e,
                                                                                                 ) => functions.checkdate(
-                                                                                                  (e as dynamic)?.date,
+                                                                                                  (e
+                                                                                                          as dynamic)
+                                                                                                      ?.date,
                                                                                                   getCurrentTimestamp,
                                                                                                 )!,
                                                                                               )
@@ -2369,17 +2403,6 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                           ),
                                         ),
                                       ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
-                                      child: ChangeNotifierProvider.value(
-                                        value: _model.navBarModel.setOnUpdate(
-                                          onUpdate: () => safeSetState(() {}),
-                                        ),
-                                        child: NavBarWidget(
-                                          items: context.appState.menuItems,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -2617,7 +2640,9 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                                 .locationsearch =
                                                             currentUserLocationValue;
                                                         safeSetState(() {});
-                                                        context.appState.MoveMap =
+                                                        context
+                                                                .appState
+                                                                .MoveMap =
                                                             true;
                                                         safeSetState(() {});
                                                       },
@@ -2662,9 +2687,13 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                               .toList(),
                                                           AppState()
                                                               .locationsearch,
-                                                          context.appState.StyleMusic
+                                                          context
+                                                              .appState
+                                                              .StyleMusic
                                                               .toList(),
-                                                          context.appState.StyleVenuse
+                                                          context
+                                                              .appState
+                                                              .StyleVenuse
                                                               .toList(),
                                                           _model.page,
                                                           _model.map,

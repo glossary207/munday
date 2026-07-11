@@ -148,9 +148,9 @@ class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
           elevation: 0,
         ),
         colorScheme: Theme.of(context).colorScheme.copyWith(
-              surface: Colors.transparent,
-              background: Colors.transparent,
-            ),
+          surface: Colors.transparent,
+          background: Colors.transparent,
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -166,8 +166,9 @@ class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
               expandedHeight: _expandedHeight,
               backgroundColor: widget.backgroundColorSliverAppBar,
               shape: ContinuousRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(widget.shareborderRadius ?? 0),
+                borderRadius: BorderRadius.circular(
+                  widget.shareborderRadius ?? 0,
+                ),
               ),
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(

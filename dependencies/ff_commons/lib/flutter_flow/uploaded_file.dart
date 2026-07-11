@@ -73,4 +73,3 @@ class FFUploadedFile {
       blurHash == other.blurHash &&
       originalFilename == other.originalFilename;
 }
-

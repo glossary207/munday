@@ -11,10 +11,8 @@ import '/core/utils/app_util.dart';
 
 /// data of booking table
 class VenueLayoutsRecord extends SupabaseRecord {
-  VenueLayoutsRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  VenueLayoutsRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -54,8 +52,7 @@ class VenueLayoutsRecord extends SupabaseRecord {
   static VenueLayoutsRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      VenueLayoutsRecord._(reference, mapFromSupabase(data));
+  ) => VenueLayoutsRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -70,13 +67,9 @@ class VenueLayoutsRecord extends SupabaseRecord {
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createVenueLayoutsRecordData({
-  SupabaseDocRef? venueRef,
-}) {
+Map<String, dynamic> createVenueLayoutsRecordData({SupabaseDocRef? venueRef}) {
   final supabaseData = mapToSupabase(
-    <String, dynamic>{
-      'venue_ref': venueRef,
-    }.withoutNulls,
+    <String, dynamic>{'venue_ref': venueRef}.withoutNulls,
   );
 
   return supabaseData;

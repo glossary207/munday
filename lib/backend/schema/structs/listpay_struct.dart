@@ -16,9 +16,9 @@ class ListpayStruct extends FFSupabaseStruct {
     List<String>? pack,
     List<DateTime>? timepay,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _pack = pack,
-        _timepay = timepay,
-        super(supabaseUtilData);
+  }) : _pack = pack,
+       _timepay = timepay,
+       super(supabaseUtilData);
 
   // "pack" field.
   List<String>? _pack;
@@ -43,39 +43,25 @@ class ListpayStruct extends FFSupabaseStruct {
   bool hasTimepay() => _timepay != null;
 
   static ListpayStruct fromMap(Map<String, dynamic> data) => ListpayStruct(
-        pack: getDataList(data['pack']),
-        timepay: getDataList(data['timepay']),
-      );
+    pack: getDataList(data['pack']),
+    timepay: getDataList(data['timepay']),
+  );
 
   static ListpayStruct? maybeFromMap(dynamic data) =>
       data is Map ? ListpayStruct.fromMap(data.cast<String, dynamic>()) : null;
 
-  Map<String, dynamic> toMap() => {
-        'pack': _pack,
-        'timepay': _timepay,
-      }.withoutNulls;
+  Map<String, dynamic> toMap() =>
+      {'pack': _pack, 'timepay': _timepay}.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'pack': serializeParam(
-          _pack,
-          ParamType.String,
-          isList: true,
-        ),
-        'timepay': serializeParam(
-          _timepay,
-          ParamType.DateTime,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'pack': serializeParam(_pack, ParamType.String, isList: true),
+    'timepay': serializeParam(_timepay, ParamType.DateTime, isList: true),
+  }.withoutNulls;
 
   static ListpayStruct fromSerializableMap(Map<String, dynamic> data) =>
       ListpayStruct(
-        pack: deserializeParam<String>(
-          data['pack'],
-          ParamType.String,
-          true,
-        ),
+        pack: deserializeParam<String>(data['pack'], ParamType.String, true),
         timepay: deserializeParam<DateTime>(
           data['timepay'],
           ParamType.DateTime,
@@ -103,26 +89,24 @@ ListpayStruct createListpayStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    ListpayStruct(
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => ListpayStruct(
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 ListpayStruct? updateListpayStruct(
   ListpayStruct? listpay, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    listpay
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => listpay
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addListpayStructData(
   Map<String, dynamic> supabaseData,
@@ -167,5 +151,4 @@ Map<String, dynamic> getListpayFirestoreData(
 
 List<Map<String, dynamic>> getListpayListFirestoreData(
   List<ListpayStruct>? listpays,
-) =>
-    listpays?.map((e) => getListpayFirestoreData(e, true)).toList() ?? [];
+) => listpays?.map((e) => getListpayFirestoreData(e, true)).toList() ?? [];

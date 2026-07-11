@@ -32,22 +32,46 @@ class _Artist {
 // ─── Static data ─────────────────────────────────────────────────────────────
 
 const _genres = [
-  _Genre('EDM', 'EDM',
-      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80'),
-  _Genre('Rock', 'ROCK',
-      'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&q=80'),
-  _Genre('Pop', 'POP',
-      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80'),
-  _Genre('Hiphop', 'HIP-HOP',
-      'https://images.unsplash.com/photo-1571609826773-2571af1dec74?w=400&q=80'),
-  _Genre('ThaiLife', 'เพื่อชีวิต',
-      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80'),
-  _Genre('Jazz', 'JAZZ',
-      'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&q=80'),
-  _Genre('Techno', 'TECHNO',
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80'),
-  _Genre('Chill', 'CHILL',
-      'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80'),
+  _Genre(
+    'EDM',
+    'EDM',
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80',
+  ),
+  _Genre(
+    'Rock',
+    'ROCK',
+    'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&q=80',
+  ),
+  _Genre(
+    'Pop',
+    'POP',
+    'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80',
+  ),
+  _Genre(
+    'Hiphop',
+    'HIP-HOP',
+    'https://images.unsplash.com/photo-1571609826773-2571af1dec74?w=400&q=80',
+  ),
+  _Genre(
+    'ThaiLife',
+    'เพื่อชีวิต',
+    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80',
+  ),
+  _Genre(
+    'Jazz',
+    'JAZZ',
+    'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&q=80',
+  ),
+  _Genre(
+    'Techno',
+    'TECHNO',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+  ),
+  _Genre(
+    'Chill',
+    'CHILL',
+    'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80',
+  ),
 ];
 
 const _artists = [
@@ -143,7 +167,8 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
         final parsedUrl = Uri.parse(
           value.startsWith('http') ? value : 'https://$value',
         );
-        value = parsedUrl.pathSegments
+        value =
+            parsedUrl.pathSegments
                 .where((segment) => segment.isNotEmpty)
                 .firstOrNull ??
             '';
@@ -187,8 +212,9 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
     var followersCount = 0;
     var hasFollowersCount = false;
     try {
-      final response =
-          await GetInstagramProfileInfoCall.call(username: rawInput);
+      final response = await GetInstagramProfileInfoCall.call(
+        username: rawInput,
+      );
       if (!mounted || requestToken != _instagramRequestToken) {
         return;
       }
@@ -209,14 +235,16 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
 
     if (!hasFollowersCount) {
       try {
-        final publicResponse =
-            await GetInstagramPublicProfileCall.call(username: rawInput);
+        final publicResponse = await GetInstagramPublicProfileCall.call(
+          username: rawInput,
+        );
         if (!mounted || requestToken != _instagramRequestToken) {
           return;
         }
         final publicFollowersCount =
             GetInstagramPublicProfileCall.followersCount(
-                publicResponse.jsonBody);
+              publicResponse.jsonBody,
+            );
         if (publicResponse.succeeded && publicFollowersCount != null) {
           followersCount = publicFollowersCount;
           hasFollowersCount = true;
@@ -244,8 +272,10 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
     if (_instagramFollowersCount == null) {
       return '-';
     }
-    return formatNumber(_instagramFollowersCount,
-        formatType: FormatType.compact);
+    return formatNumber(
+      _instagramFollowersCount,
+      formatType: FormatType.compact,
+    );
   }
 
   void _goNext() {
@@ -315,8 +345,9 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
     );
     if (result != null && mounted) {
       setState(() => _croppedPhotoUrl = result);
-      await currentUserReference!
-          .update(createUsersRecordData(photoUrl: result));
+      await currentUserReference!.update(
+        createUsersRecordData(photoUrl: result),
+      );
     }
   }
 
@@ -330,20 +361,32 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
       context.appState.update(() {
         context.appState.profileInstagramHandle = _igController.text.trim();
       });
-      // Only update columns that exist in Supabase (IDIG/IDFacebook not migrated)
-      await currentUserReference!.update(createUsersRecordData(
-        displayName: name,
-        caption: caption.isNotEmpty ? caption : null,
-      ));
+      // Update user document
+      await currentUserReference!.update(
+        createUsersRecordData(
+          displayName: name,
+          caption: caption.isNotEmpty ? caption : null,
+        ),
+      );
+
+      // Forcefully fetch the updated document to ensure the router doesn't bounce us back.
+      // This works even if the user hasn't enabled Realtime for the users table.
+      final updatedUser = await UsersRecord.getDocumentOnce(
+        currentUserReference!,
+      );
+      currentUserDocument = updatedUser;
+
       context.appState.StyleVenuse = [];
       context.appState.StyleMusic = _selectedGenres.toList();
       if (mounted) context.go('/');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('เกิดข้อผิดพลาด: $e'),
-          backgroundColor: const Color(0xFF2A2A2A),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('เกิดข้อผิดพลาด: $e'),
+            backgroundColor: const Color(0xFF2A2A2A),
+          ),
+        );
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -457,16 +500,22 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                               fit: BoxFit.cover,
                               errorBuilder: (_, __, ___) => Container(
                                 color: const Color(0xFF2A2A2A),
-                                child: const Icon(Icons.person,
-                                    color: Colors.white54, size: 36),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: Colors.white54,
+                                  size: 36,
+                                ),
                               ),
                             ),
                             if (selected)
                               Container(
                                 color: const Color(0x55E53935),
                                 child: const Center(
-                                  child: Icon(Icons.check_circle,
-                                      color: Colors.white, size: 28),
+                                  child: Icon(
+                                    Icons.check_circle,
+                                    color: Colors.white,
+                                    size: 28,
+                                  ),
                                 ),
                               ),
                           ],
@@ -646,7 +695,7 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                                   const Shadow(
                                     color: Colors.black54,
                                     blurRadius: 8,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -735,33 +784,37 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
     setState(() => _photoUrls[index] = result);
     // Map index → photoshow field name
     final photoKey = 'photo${index + 1}';
-    await currentUserReference!.update(createUsersRecordData(
-      photoshow: createUserphotoshowStruct(
-        photo1: index == 0 ? result : null,
-        photo2: index == 1 ? result : null,
-        photo3: index == 2 ? result : null,
-        photo4: index == 3 ? result : null,
-        photo5: index == 4 ? result : null,
-        photo6: index == 5 ? result : null,
-        clearUnsetFields: false,
+    await currentUserReference!.update(
+      createUsersRecordData(
+        photoshow: createUserphotoshowStruct(
+          photo1: index == 0 ? result : null,
+          photo2: index == 1 ? result : null,
+          photo3: index == 2 ? result : null,
+          photo4: index == 3 ? result : null,
+          photo5: index == 4 ? result : null,
+          photo6: index == 5 ? result : null,
+          clearUnsetFields: false,
+        ),
       ),
-    ));
+    );
     debugPrint('Saved $photoKey');
   }
 
   Future<void> _clearPhoto(int index) async {
     setState(() => _photoUrls[index] = null);
-    await currentUserReference!.update(createUsersRecordData(
-      photoshow: createUserphotoshowStruct(
-        photo1: index == 0 ? '' : null,
-        photo2: index == 1 ? '' : null,
-        photo3: index == 2 ? '' : null,
-        photo4: index == 3 ? '' : null,
-        photo5: index == 4 ? '' : null,
-        photo6: index == 5 ? '' : null,
-        clearUnsetFields: false,
+    await currentUserReference!.update(
+      createUsersRecordData(
+        photoshow: createUserphotoshowStruct(
+          photo1: index == 0 ? '' : null,
+          photo2: index == 1 ? '' : null,
+          photo3: index == 2 ? '' : null,
+          photo4: index == 3 ? '' : null,
+          photo5: index == 4 ? '' : null,
+          photo6: index == 5 ? '' : null,
+          clearUnsetFields: false,
+        ),
       ),
-    ));
+    );
   }
 
   Widget _photoSlot(int index) {
@@ -807,8 +860,8 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                 color: isLoading
                     ? Colors.grey
                     : isEmpty
-                        ? const Color(0xFF00D333)
-                        : const Color(0xFFFF2D38),
+                    ? const Color(0xFF00D333)
+                    : const Color(0xFFFF2D38),
                 shape: BoxShape.circle,
                 boxShadow: const [
                   BoxShadow(
@@ -823,7 +876,9 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                   ? const Padding(
                       padding: EdgeInsets.all(4),
                       child: CircularProgressIndicator(
-                          color: Colors.white, strokeWidth: 2),
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
                     )
                   : Icon(
                       isEmpty ? Icons.add : Icons.close,
@@ -894,8 +949,10 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                     ),
                     const SizedBox(width: 8),
                     Expanded(
-                      child:
-                          Container(height: 1, color: const Color(0xFF1E1E1E)),
+                      child: Container(
+                        height: 1,
+                        color: const Color(0xFF1E1E1E),
+                      ),
                     ),
                   ],
                 ),
@@ -964,8 +1021,11 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : const FaIcon(FontAwesomeIcons.pen,
-                                      color: Colors.white, size: 13),
+                                  : const FaIcon(
+                                      FontAwesomeIcons.pen,
+                                      color: Colors.white,
+                                      size: 13,
+                                    ),
                             ),
                           ),
                         ),
@@ -998,17 +1058,23 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                               contentPadding: const EdgeInsets.only(bottom: 8),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color(0xFF383838), width: 1.3),
+                                  color: Color(0xFF383838),
+                                  width: 1.3,
+                                ),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color(0xFF383838), width: 1.3),
+                                  color: Color(0xFF383838),
+                                  width: 1.3,
+                                ),
                               ),
                               errorText: (_nameTouched && !_nameValid)
                                   ? 'กรุณากรอกชื่อ'
                                   : null,
                               errorStyle: GoogleFonts.openSans(
-                                  color: const Color(0xFFE53935), fontSize: 10),
+                                color: const Color(0xFFE53935),
+                                fontSize: 10,
+                              ),
                             ),
                             onChanged: (_) => setState(() {
                               _nameTouched = true;
@@ -1034,11 +1100,15 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                               contentPadding: const EdgeInsets.only(bottom: 10),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color(0xFF383838), width: 1.3),
+                                  color: Color(0xFF383838),
+                                  width: 1.3,
+                                ),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color(0xFF383838), width: 1.3),
+                                  color: Color(0xFF383838),
+                                  width: 1.3,
+                                ),
                               ),
                             ),
                           ),
@@ -1094,8 +1164,11 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 20),
-                    child: FaIcon(FontAwesomeIcons.instagram,
-                        color: Colors.white, size: 25),
+                    child: FaIcon(
+                      FontAwesomeIcons.instagram,
+                      color: Colors.white,
+                      size: 25,
+                    ),
                   ),
                   Expanded(
                     child: Padding(
@@ -1116,11 +1189,15 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                           );
                         },
                         style: GoogleFonts.openSans(
-                            color: Colors.white, fontSize: 16),
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Name Instagram',
                           hintStyle: GoogleFonts.openSans(
-                              color: Colors.white, fontSize: 16),
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                           border: InputBorder.none,
                           isDense: true,
                         ),
@@ -1154,12 +1231,15 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 15.0, right: 7.0),
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 7.0,
+                            ),
                             child: Text(
                               _instagramFollowersText(),
                               style: GoogleFonts.openSans(
-                                color: _instagramFollowersCount == null &&
+                                color:
+                                    _instagramFollowersCount == null &&
                                         !_instagramFollowersLoading
                                     ? const Color(0xFF9A9A9A)
                                     : Colors.white,
@@ -1240,8 +1320,9 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFE53935),
-          disabledBackgroundColor:
-              const Color(0xFFE53935).withValues(alpha: 0.4),
+          disabledBackgroundColor: const Color(
+            0xFFE53935,
+          ).withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -1310,16 +1391,16 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                   if (_currentPage > 0)
                     GestureDetector(
                       onTap: _goBack,
-                      child: const Icon(Icons.arrow_back_ios,
-                          color: Colors.white54, size: 18),
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white54,
+                        size: 18,
+                      ),
                     )
                   else
                     const SizedBox(width: 18),
                   const Spacer(),
-                  SizedBox(
-                    width: 160,
-                    child: _progressBar(),
-                  ),
+                  SizedBox(width: 160, child: _progressBar()),
                   const Spacer(),
                   const SizedBox(width: 18),
                 ],
@@ -1331,11 +1412,7 @@ class _WelcomeNewAccountPageState extends ConsumerState<WelcomeNewAccountPage> {
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 onPageChanged: (i) => setState(() => _currentPage = i),
-                children: [
-                  _page1(),
-                  _page2(),
-                  _page3(),
-                ],
+                children: [_page1(), _page2(), _page3()],
               ),
             ),
           ],

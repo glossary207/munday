@@ -59,27 +59,33 @@ class _CalendarslideState extends ConsumerState<Calendarslide> {
           // currentDate จะเป็น 07:00 ของแต่ละวันตาม block start
 
           bool isSelected = selectedDate == currentDate;
-          bool isDateClickWidget = widget.dateclickwidget != null &&
+          bool isDateClickWidget =
+              widget.dateclickwidget != null &&
               widget.dateclickwidget!.year == currentDate.year &&
               widget.dateclickwidget!.month == currentDate.month &&
               widget.dateclickwidget!.day == currentDate.day;
 
           // ตรวจสอบว่ามีเหตุการณ์ในวันนี้หรือไม่ (ตามวันที่ปฏิทิน)
-          bool isEventDate = widget.dateEvent?.any((eventDate) =>
-                  eventDate.year == currentDate.year &&
-                  eventDate.month == currentDate.month &&
-                  eventDate.day == currentDate.day) ??
+          bool isEventDate =
+              widget.dateEvent?.any(
+                (eventDate) =>
+                    eventDate.year == currentDate.year &&
+                    eventDate.month == currentDate.month &&
+                    eventDate.day == currentDate.day,
+              ) ??
               false;
 
           // กำหนดว่าเป็นวันหยุดสุดสัปดาห์หรือไม่
-          bool isWeekend = currentDate.weekday == DateTime.saturday ||
+          bool isWeekend =
+              currentDate.weekday == DateTime.saturday ||
               currentDate.weekday == DateTime.sunday;
 
           // กำหนดสีของตัวอักษรวัน
           Color dayNameColor;
           if (isWeekend) {
-            dayNameColor =
-                isSelected || isDateClickWidget ? Colors.white : Colors.red;
+            dayNameColor = isSelected || isDateClickWidget
+                ? Colors.white
+                : Colors.red;
           } else {
             dayNameColor = Theme.of(context).textTheme.bodyMedium!.color!;
           }
@@ -89,7 +95,9 @@ class _CalendarslideState extends ConsumerState<Calendarslide> {
               setState(() {
                 selectedDate = currentDate;
                 // เมื่อกดเลือก ให้บวกเวลาอีก 8 ชั่วโมง
-                context.appState.dateclick = selectedDate!.add(Duration(hours: 8));
+                context.appState.dateclick = selectedDate!.add(
+                  Duration(hours: 8),
+                );
                 widget.onselect(); // เรียกใช้ action เมื่อเลือกวันที่
               });
             },
@@ -100,7 +108,7 @@ class _CalendarslideState extends ConsumerState<Calendarslide> {
               decoration: BoxDecoration(
                 color: isDateClickWidget
                     ? widget.colorPicker ??
-                        Theme.of(context).colorScheme.primary
+                          Theme.of(context).colorScheme.primary
                     : const Color.fromARGB(255, 13, 13, 13),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -114,22 +122,22 @@ class _CalendarslideState extends ConsumerState<Calendarslide> {
                     Text(
                       _getDayName(currentDate),
                       style: Theme.of(context).textTheme.bodyMedium!.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 11,
-                            fontWeight: FontWeight.normal,
-                            color: dayNameColor,
-                          ),
+                        fontFamily: 'Poppins',
+                        fontSize: 11,
+                        fontWeight: FontWeight.normal,
+                        color: dayNameColor,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         currentDate.day.toString(),
                         style: Theme.of(context).textTheme.bodyMedium!.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white, // ตัวเลขวันเป็นสีขาวเสมอ
-                            ),
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white, // ตัวเลขวันเป็นสีขาวเสมอ
+                        ),
                       ),
                     ),
                     // ไอคอนเหตุการณ์ (ดาว) หากมีเหตุการณ์ในวันนี้

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import "package:munday/shared/widgets/cards/showpeople_model.dart";
 
 import 'package:munday/core/state/base_model.dart';
@@ -6,12 +8,22 @@ import '/shared/widgets/misc/rowpromotion_widget.dart';
 import '/shared/widgets/misc/rowpromotion_model.dart';
 import '/shared/widgets/cards/showpeople_widget.dart';
 import '/core/utils/app_util.dart';
-import '/index.dart';
-import 'in_venuse_page.dart' show InVenuseWidget;
 import 'package:flutter/material.dart';
+
+const _kInVenuseDemoVenueCoverVideoPaths = [
+  'assets/videos/video 1.mp4',
+  'assets/videos/video 2.mp4',
+  'assets/videos/video 3.mp4',
+  'assets/videos/video4.mp4',
+  'assets/videos/video5.mp4',
+];
+
+final _inVenuseDemoVideoRandom = math.Random();
 
 class InVenuseModel extends BaseModel {
   ///  Local state fields for this page.
+
+  late String demoVenueCoverVideoPath;
 
   bool? zoom;
 
@@ -43,6 +55,10 @@ class InVenuseModel extends BaseModel {
 
   @override
   void initState(BuildContext context) {
+    demoVenueCoverVideoPath =
+        _kInVenuseDemoVenueCoverVideoPaths[_inVenuseDemoVideoRandom.nextInt(
+          _kInVenuseDemoVenueCoverVideoPaths.length,
+        )];
     rowpromotionModel = RowpromotionModel()..internalInit(context);
     showpeopleModel = ShowpeopleModel()..internalInit(context);
   }

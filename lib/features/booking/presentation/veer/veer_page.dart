@@ -48,8 +48,9 @@ class _VeerWidgetState extends ConsumerState<VeerPage> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor:
-            Theme.of(context).extension<CustomColors>()!.primaryBackground,
+        backgroundColor: Theme.of(
+          context,
+        ).extension<CustomColors>()!.primaryBackground,
         body: SafeArea(
           top: true,
           child: Column(
@@ -89,38 +90,40 @@ class _VeerWidgetState extends ConsumerState<VeerPage> {
               Text(
                 AppLocalizations.of(context)!.k_akurgq59,
                 style: Theme.of(context).textTheme.headlineMedium!.override(
-                      font: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
-                        fontStyle: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontStyle,
-                      ),
-                      color: Colors.white,
-                      fontSize: 32.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w500,
-                      fontStyle:
-                          Theme.of(context).textTheme.headlineMedium!.fontStyle,
-                    ),
+                  font: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w500,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontStyle,
+                  ),
+                  color: Colors.white,
+                  fontSize: 32.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w500,
+                  fontStyle: Theme.of(
+                    context,
+                  ).textTheme.headlineMedium!.fontStyle,
+                ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                 child: Text(
                   AppLocalizations.of(context)!.k_19sjwccm,
                   style: Theme.of(context).textTheme.titleSmall!.override(
-                        font: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w300,
-                          fontStyle:
-                              Theme.of(context).textTheme.titleSmall!.fontStyle,
-                        ),
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w300,
-                        fontStyle:
-                            Theme.of(context).textTheme.titleSmall!.fontStyle,
-                      ),
+                    font: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w300,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.titleSmall!.fontStyle,
+                    ),
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.titleSmall!.fontStyle,
+                  ),
                 ),
               ),
               Padding(
@@ -134,24 +137,28 @@ class _VeerWidgetState extends ConsumerState<VeerPage> {
                     width: 130.0,
                     height: 50.0,
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0,
+                    ),
                     color: Colors.white,
                     textStyle: Theme.of(context).textTheme.titleSmall!.override(
-                          font: GoogleFonts.outfit(
-                            fontWeight: FontWeight.normal,
-                            fontStyle: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .fontStyle,
-                          ),
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 16.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.normal,
-                          fontStyle:
-                              Theme.of(context).textTheme.titleSmall!.fontStyle,
-                        ),
+                      font: GoogleFonts.outfit(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: Theme.of(
+                          context,
+                        ).textTheme.titleSmall!.fontStyle,
+                      ),
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 16.0,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.normal,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.titleSmall!.fontStyle,
+                    ),
                     elevation: 3.0,
                     borderSide: BorderSide(
                       color: Colors.transparent,

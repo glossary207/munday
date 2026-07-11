@@ -17,9 +17,11 @@ extension TextStyleHelper on TextStyle {
     String? package,
   }) {
     if (useGoogleFonts && fontFamily != null) {
-      font = GoogleFonts.getFont(fontFamily,
-          fontWeight: fontWeight ?? this.fontWeight,
-          fontStyle: fontStyle ?? this.fontStyle);
+      font = GoogleFonts.getFont(
+        fontFamily,
+        fontWeight: fontWeight ?? this.fontWeight,
+        fontStyle: fontStyle ?? this.fontStyle,
+      );
     }
 
     return font != null

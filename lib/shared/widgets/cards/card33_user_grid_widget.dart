@@ -28,7 +28,8 @@ class Card33UserGridWidget extends ConsumerStatefulWidget {
   final SupabaseDocRef? uid;
 
   @override
-  ConsumerState<Card33UserGridWidget> createState() => _Card33UserGridWidgetState();
+  ConsumerState<Card33UserGridWidget> createState() =>
+      _Card33UserGridWidgetState();
 }
 
 class _Card33UserGridWidgetState extends ConsumerState<Card33UserGridWidget>
@@ -96,9 +97,11 @@ class _Card33UserGridWidgetState extends ConsumerState<Card33UserGridWidget>
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
 
@@ -117,256 +120,265 @@ class _Card33UserGridWidgetState extends ConsumerState<Card33UserGridWidget>
     context.watch<AppState>();
 
     return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(2.0),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 3.0,
-            sigmaY: 3.0,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                  child: Container(
-                    height: 241.0,
-                    constraints: BoxConstraints(
-                      maxWidth: 570.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF0E0E0E),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0),
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                      ),
-                    ),
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(2.0),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 1.0, 12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              AppLocalizations.of(context)!.k_nifsved0,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
-                                    ),
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
-                                    fontSize: 25.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
-                                  ),
-                            ),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        20.0,
+                        0.0,
+                        20.0,
+                        0.0,
+                      ),
+                      child: Container(
+                        height: 241.0,
+                        constraints: BoxConstraints(maxWidth: 570.0),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF0E0E0E),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10.0),
+                            bottomRight: Radius.circular(10.0),
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 15.0, 12.0, 12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 75.0,
-                                  height: 75.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: AuthUserStreamWidget(
-                                    builder: (context) => ClipRRect(
-                                      borderRadius: BorderRadius.circular(40.0),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          currentUserPhoto,
-                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png',
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0,
+                            12.0,
+                            1.0,
+                            12.0,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0,
+                                  10.0,
+                                  0.0,
+                                  0.0,
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.k_nifsved0,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.labelMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.labelMedium!.fontStyle,
                                         ),
-                                        width: 90.0,
-                                        height: 90.0,
-                                        fit: BoxFit.cover,
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
+                                            .primaryText,
+                                        fontSize: 25.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.labelMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.labelMedium!.fontStyle,
+                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0,
+                                  15.0,
+                                  12.0,
+                                  12.0,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 75.0,
+                                      height: 75.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            40.0,
+                                          ),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              currentUserPhoto,
+                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png',
+                                            ),
+                                            width: 90.0,
+                                            height: 90.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Stack(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  children: [
-                                    Align(
+                                    Stack(
                                       alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Container(
-                                        width: 120.0,
-                                        height: 4.0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF4E4E4E),
-                                          borderRadius:
-                                              BorderRadius.circular(2.0),
+                                      children: [
+                                        Align(
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          child: Container(
+                                            width: 120.0,
+                                            height: 4.0,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF4E4E4E),
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Container(
+                                          width: 75.0,
+                                          height: 75.0,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF0E0E0E),
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Color(0xFF0E0E0E),
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child:
+                                                Container(
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/5s0qvzhuscfm/6.png',
+                                                      ).image,
+                                                    ),
+                                                  ),
+                                                ).animateOnPageLoad(
+                                                  animationsMap['containerOnPageLoadAnimation2']!,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Container(
                                       width: 75.0,
                                       height: 75.0,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFF0E0E0E),
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Color(0xFF0E0E0E),
-                                          width: 2.0,
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          40.0,
+                                        ),
+                                        child: Image.network(
+                                          valueOrDefault<String>(
+                                            widget.image,
+                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png',
+                                          ),
+                                          width: 90.0,
+                                          height: 90.0,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: Image.network(
-                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/5s0qvzhuscfm/6.png',
-                                              ).image,
-                                            ),
-                                          ),
-                                        ).animateOnPageLoad(animationsMap[
-                                            'containerOnPageLoadAnimation2']!),
+                                    ),
+                                  ].divide(SizedBox(width: 16.0)),
+                                ),
+                              ),
+                              Text(
+                                valueOrDefault<String>(widget.name, 'ไม่ระบุ'),
+                                textAlign: TextAlign.end,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .override(
+                                      font: GoogleFonts.roboto(
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.headlineSmall!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.headlineSmall!.fontStyle,
                                       ),
+                                      fontSize: 18.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.headlineSmall!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.headlineSmall!.fontStyle,
                                     ),
-                                  ],
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0,
+                                  5.0,
+                                  0.0,
+                                  5.0,
                                 ),
-                                Container(
-                                  width: 75.0,
-                                  height: 75.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    child: Image.network(
-                                      valueOrDefault<String>(
-                                        widget.image,
-                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png',
+                                child: Text(
+                                  AppLocalizations.of(context)!.k_7hzb9e7k,
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .override(
+                                        font: GoogleFonts.openSans(
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
+                                        ),
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
+                                            .primaryText,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
-                                      width: 90.0,
-                                      height: 90.0,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
                                 ),
-                              ].divide(SizedBox(width: 16.0)),
-                            ),
+                              ),
+                            ].divide(SizedBox(height: 4.0)).addToEnd(SizedBox(height: 12.0)),
                           ),
-                          Text(
-                            valueOrDefault<String>(
-                              widget.name,
-                              'ไม่ระบุ',
-                            ),
-                            textAlign: TextAlign.end,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .override(
-                                  font: GoogleFonts.roboto(
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .fontStyle,
-                                  ),
-                                  fontSize: 18.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .fontWeight,
-                                  fontStyle: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .fontStyle,
-                                ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 0.0, 5.0),
-                            child: Text(
-                              AppLocalizations.of(context)!.k_7hzb9e7k,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
-                                    ),
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                        ]
-                            .divide(SizedBox(height: 4.0))
-                            .addToEnd(SizedBox(height: 12.0)),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    )
+        )
         .animateOnPageLoad(animationsMap['containerOnPageLoadAnimation1']!)
         .animateOnActionTrigger(
           animationsMap['containerOnActionTriggerAnimation']!,

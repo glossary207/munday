@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class StoreRecord extends SupabaseRecord {
-  StoreRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  StoreRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -82,10 +80,7 @@ class StoreRecord extends SupabaseRecord {
     _ad = getDataList(snapshotData['AD']);
     _position = snapshotData['position'] as LatLng?;
     _iNIcheers = castToType<int>(snapshotData['INIcheers']);
-    _user = getStructList(
-      snapshotData['user'],
-      DatauserStruct.fromMap,
-    );
+    _user = getStructList(snapshotData['user'], DatauserStruct.fromMap);
     _logo = snapshotData['logo'] as String?;
     _iDroom = getSupabaseDocRef(snapshotData['IDroom'], 'room');
     _goodprofile = getDataList(snapshotData['goodprofile']);
@@ -113,8 +108,7 @@ class StoreRecord extends SupabaseRecord {
   static StoreRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      StoreRecord._(reference, mapFromSupabase(data));
+  ) => StoreRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -177,19 +171,19 @@ class StoreRecordDocumentEquality implements Equality<StoreRecord> {
 
   @override
   int hash(StoreRecord? e) => const ListEquality().hash([
-        e?.namestore,
-        e?.ad,
-        e?.position,
-        e?.iNIcheers,
-        e?.user,
-        e?.logo,
-        e?.iDroom,
-        e?.goodprofile,
-        e?.qr,
-        e?.bGshow1,
-        e?.events,
-        e?.tableId
-      ]);
+    e?.namestore,
+    e?.ad,
+    e?.position,
+    e?.iNIcheers,
+    e?.user,
+    e?.logo,
+    e?.iDroom,
+    e?.goodprofile,
+    e?.qr,
+    e?.bGshow1,
+    e?.events,
+    e?.tableId,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is StoreRecord;

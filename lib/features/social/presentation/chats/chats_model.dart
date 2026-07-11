@@ -41,8 +41,10 @@ class ChatsModel extends BaseModel {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
   bool isDataUploading_uploadData1ir = false;
-  FFUploadedFile uploadedLocalFile_uploadData1ir =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  FFUploadedFile uploadedLocalFile_uploadData1ir = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
   String uploadedFileUrl_uploadData1ir = '';
 
   // Model for Card33UserGrid component.

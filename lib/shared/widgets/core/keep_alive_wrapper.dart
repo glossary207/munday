@@ -2,15 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 class KeepAliveWidgetWrapper extends ConsumerStatefulWidget {
-  const KeepAliveWidgetWrapper({
-    Key? key,
-    required this.builder,
-  }) : super(key: key);
+  const KeepAliveWidgetWrapper({Key? key, required this.builder})
+    : super(key: key);
 
   final WidgetBuilder builder;
 
   @override
-  ConsumerState<KeepAliveWidgetWrapper> createState() => _KeepAliveWidgetWrapperState();
+  ConsumerState<KeepAliveWidgetWrapper> createState() =>
+      _KeepAliveWidgetWrapperState();
 }
 
 class _KeepAliveWidgetWrapperState extends ConsumerState<KeepAliveWidgetWrapper>

@@ -46,7 +46,8 @@ class SocialInVenusePage extends ConsumerStatefulWidget {
   static String routePath = 'socialInvenuse';
 
   @override
-  ConsumerState<SocialInVenusePage> createState() => _SocialInVenuseWidgetState();
+  ConsumerState<SocialInVenusePage> createState() =>
+      _SocialInVenuseWidgetState();
 }
 
 @NowaGenerated()
@@ -64,13 +65,16 @@ class _SocialInVenuseWidgetState extends ConsumerState<SocialInVenusePage>
     _model = SocialInVenuseModel()..internalInit(context);
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (context.appState.readyshowcheers == true) {
-        _model.cheersshow = functions
-            .nonIntersectList(
-              (currentUserDocument?.cheersEnd.toList() ?? []).toList(),
-              (currentUserDocument?.showprofilecheers.toList() ?? []).toList(),
-            )
-            ?.toList()
-            .cast<SupabaseDocRef>() ?? [];
+        _model.cheersshow =
+            functions
+                .nonIntersectList(
+                  (currentUserDocument?.cheersEnd.toList() ?? []).toList(),
+                  (currentUserDocument?.showprofilecheers.toList() ?? [])
+                      .toList(),
+                )
+                ?.toList()
+                .cast<SupabaseDocRef>() ??
+            [];
         _model.numshow = 0;
         _model.showAd = context.appState.ActivePromotion;
         context.appState.ActivePromotion = false;
@@ -862,21 +866,39 @@ class _SocialInVenuseWidgetState extends ConsumerState<SocialInVenusePage>
                                                                                 (
                                                                                   e,
                                                                                 ) => functions.checkdate(
-                                                                                  (e as dynamic)?.date,
+                                                                                  (e
+                                                                                          as dynamic)
+                                                                                      ?.date,
                                                                                   getCurrentTimestamp,
                                                                                 )!,
                                                                               )
                                                                               .toList()
                                                                               .sortedList(
-                                                                                keyOf: (e) => ((e as dynamic)?.user?.view as num?),
+                                                                                keyOf:
+                                                                                    (
+                                                                                      e,
+                                                                                    ) =>
+                                                                                        ((e
+                                                                                                    as dynamic)
+                                                                                                ?.user
+                                                                                                ?.view
+                                                                                            as num?),
                                                                                 desc: false,
                                                                               )
                                                                               .map(
                                                                                 (
                                                                                   e,
-                                                                                ) => (e as dynamic)?.user?.userinstore,
+                                                                                ) =>
+                                                                                    (e
+                                                                                            as dynamic)
+                                                                                        ?.user
+                                                                                        ?.userinstore,
                                                                               )
-                                                                              .withoutNulls.toList().cast<SupabaseDocRef>(),
+                                                                              .withoutNulls
+                                                                              .toList()
+                                                                              .cast<
+                                                                                SupabaseDocRef
+                                                                              >(),
                                                                         ),
                                                                       ),
                                                                     );

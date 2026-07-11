@@ -101,10 +101,16 @@ class CustomColors extends ThemeExtension<CustomColors> {
       alternate: Color.lerp(alternate, other.alternate, t)!,
       primaryText: Color.lerp(primaryText, other.primaryText, t)!,
       secondaryText: Color.lerp(secondaryText, other.secondaryText, t)!,
-      primaryBackground:
-          Color.lerp(primaryBackground, other.primaryBackground, t)!,
-      secondaryBackground:
-          Color.lerp(secondaryBackground, other.secondaryBackground, t)!,
+      primaryBackground: Color.lerp(
+        primaryBackground,
+        other.primaryBackground,
+        t,
+      )!,
+      secondaryBackground: Color.lerp(
+        secondaryBackground,
+        other.secondaryBackground,
+        t,
+      )!,
       accent1: Color.lerp(accent1, other.accent1, t)!,
       accent2: Color.lerp(accent2, other.accent2, t)!,
       accent3: Color.lerp(accent3, other.accent3, t)!,
@@ -115,8 +121,11 @@ class CustomColors extends ThemeExtension<CustomColors> {
       info: Color.lerp(info, other.info, t)!,
       primaryBtnText: Color.lerp(primaryBtnText, other.primaryBtnText, t)!,
       lineColor: Color.lerp(lineColor, other.lineColor, t)!,
-      backgroundComponents:
-          Color.lerp(backgroundComponents, other.backgroundComponents, t)!,
+      backgroundComponents: Color.lerp(
+        backgroundComponents,
+        other.backgroundComponents,
+        t,
+      )!,
     );
   }
 

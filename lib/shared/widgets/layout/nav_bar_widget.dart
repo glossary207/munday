@@ -1,465 +1,126 @@
-import 'package:provider/provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:munday/core/state/app_state.dart';
-import '/shared/widgets/core/munday_animations.dart';
-import '/core/utils/app_util.dart';
-import 'dart:ui';
-import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
+import 'package:munday/core/state/app_state.dart';
 
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'nav_bar_model.dart';
-import 'package:munday/core/theme/theme.dart';
+import '/features/discovery/presentation/events/events_page.dart';
+import '/features/discovery/presentation/main/main_page.dart';
+import '/features/discovery/presentation/promotion/promotion_page.dart';
+import '/features/discovery/presentation/venues/venues_page.dart';
+
 export 'nav_bar_model.dart';
 
-class NavBarWidget extends ConsumerStatefulWidget {
-  const NavBarWidget({
-    super.key,
-    required this.items,
-  });
-
-  final List<String>? items;
-
-  @override
-  ConsumerState<NavBarWidget> createState() => _NavBarWidgetState();
+String? _navIconAsset(String menuItem) {
+  switch (menuItem) {
+    case 'Home':
+      return 'assets/images/nav_home.png';
+    case 'Events':
+      return 'assets/images/nav_events.png';
+    case 'Venues':
+      return 'assets/images/nav_venues.png';
+    case 'Promotion':
+      return 'assets/images/nav_promotion.png';
+    default:
+      return null;
+  }
 }
 
-class _NavBarWidgetState extends ConsumerState<NavBarWidget>
-    with TickerProviderStateMixin {
-  late NavBarModel _model;
+String _fallbackIcon(String menuItem) {
+  switch (menuItem) {
+    case 'Home':
+      return 'house.fill';
+    case 'Events':
+      return 'ticket.fill';
+    case 'Venues':
+      return 'building.2.fill';
+    case 'Promotion':
+      return 'tag.fill';
+    default:
+      return 'circle.fill';
+  }
+}
 
-  final animationsMap = <String, AnimationInfo>{};
+dynamic _buildNavIcon(String menuItem) {
+  final assetPath = _navIconAsset(menuItem);
+  if (assetPath == null) {
+    return _fallbackIcon(menuItem);
+  }
+  return AssetImage(assetPath);
+}
 
-  @override
-  void setState(VoidCallback callback) {
-    super.setState(callback);
-    _model.onUpdate();
+void _handleMenuTap(BuildContext context, String menuItem) {
+  if (menuItem == context.appState.menuActiveitem) {
+    return;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _model = NavBarModel()..internalInit(context);
-
-    animationsMap.addAll({
-      'containerOnPageLoadAnimation1': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 1000.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'textOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          VisibilityEffect(duration: 100.ms),
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 100.0.ms,
-            duration: 200.0.ms,
-            begin: Offset(0.0, 22.0),
-            end: Offset(0.0, 0.0),
-          ),
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 100.0.ms,
-            duration: 200.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'containerOnPageLoadAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          VisibilityEffect(duration: 1.ms),
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 300.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 300.0.ms,
-            begin: Offset(0.0, 18.0),
-            end: Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  if (menuItem == 'Events') {
+    context.goNamed(EventsPage.routeName);
+  } else if (menuItem == 'Venues') {
+    context.goNamed(VenuesPage.routeName);
+  } else if (menuItem == 'Promotion') {
+    context.goNamed(PromotionPage.routeName);
+  } else if (menuItem == 'Home') {
+    context.goNamed(MainPage.routeName);
   }
 
-  @override
-  void dispose() {
-    _model.maybeDispose();
+  context.appState.menuActiveitem = menuItem;
+}
 
-    super.dispose();
-  }
+AdaptiveBottomNavigationBar buildAdaptiveNavBar(BuildContext context) {
+  final menuItems = context.appState.menuItems;
+  final activeItem = context.appState.menuActiveitem;
+  final activeIndex = menuItems.indexOf(activeItem);
 
-  @override
-  Widget build(BuildContext context) {
-    context.watch<AppState>();
+  final destinations = <AdaptiveNavigationDestination>[];
 
-    return Container(
-      width: double.infinity,
-      height: 80.0,
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.transparent, Colors.black],
-                stops: [0.0, 1.0],
-                begin: AlignmentDirectional(0.0, -1.0),
-                end: AlignmentDirectional(0, 1.0),
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0.0),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 5.0,
-                  sigmaY: 4.0,
-                ),
-              ),
-            ),
-          ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation1']!),
-          Align(
-            alignment: AlignmentDirectional(0.0, 1.0),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-              child: Container(
-                width: double.infinity,
-                height: 65.0,
-                decoration: BoxDecoration(
-                  color: Color(0x00FFFFFF),
-                ),
-                child: Container(
-                  width: double.infinity,
-                  height: 75.0,
-                  child: Stack(
-                    alignment: AlignmentDirectional(0.0, 1.0),
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(0.0, -1.0),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 0.75,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color(0xFFFF0000), Color(0xFFC10000)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
-                            ),
-                            borderRadius: BorderRadius.circular(45.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 12.0, 0.0),
-                            child: Builder(
-                              builder: (context) {
-                                final menuItem = widget.items!.toList();
-
-                                return Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: List.generate(menuItem.length,
-                                      (menuItemIndex) {
-                                    final menuItemItem =
-                                        menuItem[menuItemIndex];
-                                    return Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                if ((menuItemItem ==
-                                                        'Events') &&
-                                                    (AppState()
-                                                            .menuActiveitem !=
-                                                        'Events')) {
-                                                  context.goNamed(
-                                                      EventsPage.routeName);
-                                                } else {
-                                                  if ((menuItemItem ==
-                                                          'Venues') &&
-                                                      (AppState()
-                                                              .menuActiveitem !=
-                                                          'Venues')) {
-                                                    context.goNamed(
-                                                        VenuesPage.routeName);
-                                                  } else {
-                                                    if ((menuItemItem ==
-                                                            'Promotion') &&
-                                                        (AppState()
-                                                                .menuActiveitem !=
-                                                            'Promotion')) {
-                                                      context.goNamed(
-                                                          PromotionPage
-                                                              .routeName);
-                                                    } else {
-                                                      if ((menuItemItem ==
-                                                              'Home') &&
-                                                          (AppState()
-                                                                  .menuActiveitem !=
-                                                              'Home')) {
-                                                        context.goNamed(
-                                                            MainPage
-                                                                .routeName);
-                                                      }
-                                                    }
-                                                  }
-                                                }
-
-                                                context.appState.menuActiveitem =
-                                                    menuItemItem;
-                                                safeSetState(() {});
-                                              },
-                                              child: Container(
-                                                width: 60.0,
-                                                height: double.infinity,
-                                                decoration: BoxDecoration(),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          if (menuItemItem ==
-                                                              AppState()
-                                                                  .menuActiveitem)
-                                                            Container(
-                                                              width: 1.0,
-                                                              height: 7.0,
-                                                              decoration:
-                                                                  BoxDecoration(),
-                                                            ),
-                                                          Stack(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    0.0, 0.0),
-                                                            children: [
-                                                              if (menuItemItem ==
-                                                                  AppState()
-                                                                      .menuActiveitem)
-                                                                Container(
-                                                                  width: 35.0,
-                                                                  height: 35.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: Color(
-                                                                        0x00FFFFFF),
-                                                                    boxShadow: [
-                                                                      BoxShadow(
-                                                                        blurRadius:
-                                                                            12.0,
-                                                                        color: Color(
-                                                                            0x00FFFFFF),
-                                                                        offset:
-                                                                            Offset(
-                                                                          0.0,
-                                                                          0.0,
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            14.0),
-                                                                  ),
-                                                                ),
-                                                              Container(
-                                                                width: 35.0,
-                                                                height: 35.0,
-                                                                child: Stack(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
-                                                                  children: [
-                                                                    if (menuItemItem ==
-                                                                        'Home')
-                                                                      Image
-                                                                          .network(
-                                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/2nj8yl2yaelb/21.png',
-                                                                        width: MediaQuery.sizeOf(context).width *
-                                                                            1.0,
-                                                                        height: MediaQuery.sizeOf(context).height *
-                                                                            1.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ),
-                                                                    if (menuItemItem ==
-                                                                        'Events')
-                                                                      Image
-                                                                          .network(
-                                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/dutfa1nii34m/20.png',
-                                                                        width: MediaQuery.sizeOf(context).width *
-                                                                            1.0,
-                                                                        height: MediaQuery.sizeOf(context).height *
-                                                                            1.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ),
-                                                                    if (menuItemItem ==
-                                                                        'Venues')
-                                                                      Image
-                                                                          .network(
-                                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/lgesbg9egut8/toast.png',
-                                                                        width: MediaQuery.sizeOf(context).width *
-                                                                            1.0,
-                                                                        height: MediaQuery.sizeOf(context).height *
-                                                                            1.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ),
-                                                                    if (menuItemItem ==
-                                                                        'Promotion')
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            2.0,
-                                                                            2.0,
-                                                                            2.0,
-                                                                            2.0),
-                                                                        child: Image
-                                                                            .network(
-                                                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/biv861aii9ne/promotions.png',
-                                                                          width:
-                                                                              MediaQuery.sizeOf(context).width * 1.0,
-                                                                          height:
-                                                                              MediaQuery.sizeOf(context).height * 1.0,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          if (menuItemItem ==
-                                                              AppState()
-                                                                  .menuActiveitem)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          2.0),
-                                                              child: Text(
-                                                                menuItemItem,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                maxLines: 1,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .displaySmall!
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .roboto(
-                                                                        fontWeight: Theme.of(context)
-                                                                            .textTheme
-                                                                            .displaySmall!
-                                                                            .fontWeight,
-                                                                        fontStyle: Theme.of(context)
-                                                                            .textTheme
-                                                                            .displaySmall!
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          10.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .displaySmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .displaySmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ).animateOnPageLoad(
-                                                                  animationsMap[
-                                                                      'textOnPageLoadAnimation']!),
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          if (menuItemItem ==
-                                              context.appState.menuActiveitem)
-                                            Container(
-                                              width: 45.0,
-                                              height: 3.0,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(50.0),
-                                              ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'containerOnPageLoadAnimation2']!),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+  for (int i = 0; i < menuItems.length; i++) {
+    final item = menuItems[i];
+    destinations.add(
+      AdaptiveNavigationDestination(
+        icon: _buildNavIcon(item),
+        label: item,
+        // Spacer after the last standard menu item ensures the search button gets pushed
+        addSpacerAfter: i == menuItems.length - 1,
       ),
     );
   }
+
+  final currentPath = GoRouterState.of(context).uri.toString();
+  final isSearchActive = currentPath.startsWith('/search');
+
+  // Add the custom AI Search button
+  destinations.add(
+    AdaptiveNavigationDestination(
+      isSearch: true, // Native iOS 26+ search layout
+      icon: Image.asset(
+        'assets/images/ Gemini_Generated_Image_9r9y1j9r9y1j9r9y ขนาดใหญ่.png',
+        color: isSearchActive
+            ? const Color(0xFFFF0000)
+            : const Color(0xFFFFFFFF),
+        width: 24,
+        height: 24,
+      ),
+      label: 'Search',
+    ),
+  );
+
+  int finalSelectedIndex = activeIndex >= 0 ? activeIndex : 0;
+  if (isSearchActive) {
+    finalSelectedIndex = menuItems.length;
+  }
+
+  return AdaptiveBottomNavigationBar(
+    useNativeBottomBar: true,
+    items: destinations,
+    selectedIndex: finalSelectedIndex,
+    selectedItemColor: const Color(0xFFFF0000), // Red when selected
+    unselectedItemColor: const Color(0xFFFFFFFF), // White when unselected
+    onTap: (index) {
+      if (index < menuItems.length) {
+        _handleMenuTap(context, menuItems[index]);
+      } else {
+        context.goNamed('Search');
+      }
+    },
+  );
 }

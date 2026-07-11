@@ -20,12 +20,12 @@ class StoryItemStruct extends FFSupabaseStruct {
     Color? backgroundColor,
     String? caption,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _type = type,
-        _title = title,
-        _url = url,
-        _backgroundColor = backgroundColor,
-        _caption = caption,
-        super(supabaseUtilData);
+  }) : _type = type,
+       _title = title,
+       _url = url,
+       _backgroundColor = backgroundColor,
+       _caption = caption,
+       super(supabaseUtilData);
 
   // "type" field.
   StoryItemEnum? _type;
@@ -63,50 +63,35 @@ class StoryItemStruct extends FFSupabaseStruct {
   bool hasCaption() => _caption != null;
 
   static StoryItemStruct fromMap(Map<String, dynamic> data) => StoryItemStruct(
-        type: data['type'] is StoryItemEnum
-            ? data['type']
-            : deserializeEnum<StoryItemEnum>(data['type']),
-        title: data['title'] as String?,
-        url: data['url'] as String?,
-        backgroundColor: getSchemaColor(data['backgroundColor']),
-        caption: data['caption'] as String?,
-      );
+    type: data['type'] is StoryItemEnum
+        ? data['type']
+        : deserializeEnum<StoryItemEnum>(data['type']),
+    title: data['title'] as String?,
+    url: data['url'] as String?,
+    backgroundColor: getSchemaColor(data['backgroundColor']),
+    caption: data['caption'] as String?,
+  );
 
   static StoryItemStruct? maybeFromMap(dynamic data) => data is Map
       ? StoryItemStruct.fromMap(data.cast<String, dynamic>())
       : null;
 
   Map<String, dynamic> toMap() => {
-        'type': _type?.serialize(),
-        'title': _title,
-        'url': _url,
-        'backgroundColor': _backgroundColor,
-        'caption': _caption,
-      }.withoutNulls;
+    'type': _type?.serialize(),
+    'title': _title,
+    'url': _url,
+    'backgroundColor': _backgroundColor,
+    'caption': _caption,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'type': serializeParam(
-          _type,
-          ParamType.Enum,
-        ),
-        'title': serializeParam(
-          _title,
-          ParamType.String,
-        ),
-        'url': serializeParam(
-          _url,
-          ParamType.String,
-        ),
-        'backgroundColor': serializeParam(
-          _backgroundColor,
-          ParamType.Color,
-        ),
-        'caption': serializeParam(
-          _caption,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'type': serializeParam(_type, ParamType.Enum),
+    'title': serializeParam(_title, ParamType.String),
+    'url': serializeParam(_url, ParamType.String),
+    'backgroundColor': serializeParam(_backgroundColor, ParamType.Color),
+    'caption': serializeParam(_caption, ParamType.String),
+  }.withoutNulls;
 
   static StoryItemStruct fromSerializableMap(Map<String, dynamic> data) =>
       StoryItemStruct(
@@ -115,26 +100,14 @@ class StoryItemStruct extends FFSupabaseStruct {
           ParamType.Enum,
           false,
         ),
-        title: deserializeParam(
-          data['title'],
-          ParamType.String,
-          false,
-        ),
-        url: deserializeParam(
-          data['url'],
-          ParamType.String,
-          false,
-        ),
+        title: deserializeParam(data['title'], ParamType.String, false),
+        url: deserializeParam(data['url'], ParamType.String, false),
         backgroundColor: deserializeParam(
           data['backgroundColor'],
           ParamType.Color,
           false,
         ),
-        caption: deserializeParam(
-          data['caption'],
-          ParamType.String,
-          false,
-        ),
+        caption: deserializeParam(data['caption'], ParamType.String, false),
       );
 
   @override
@@ -165,31 +138,29 @@ StoryItemStruct createStoryItemStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    StoryItemStruct(
-      type: type,
-      title: title,
-      url: url,
-      backgroundColor: backgroundColor,
-      caption: caption,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => StoryItemStruct(
+  type: type,
+  title: title,
+  url: url,
+  backgroundColor: backgroundColor,
+  caption: caption,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 StoryItemStruct? updateStoryItemStruct(
   StoryItemStruct? storyItem, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    storyItem
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => storyItem
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addStoryItemStructData(
   Map<String, dynamic> supabaseData,
@@ -234,5 +205,4 @@ Map<String, dynamic> getStoryItemFirestoreData(
 
 List<Map<String, dynamic>> getStoryItemListFirestoreData(
   List<StoryItemStruct>? storyItems,
-) =>
-    storyItems?.map((e) => getStoryItemFirestoreData(e, true)).toList() ?? [];
+) => storyItems?.map((e) => getStoryItemFirestoreData(e, true)).toList() ?? [];

@@ -29,8 +29,10 @@ String randomString(
   if (digits) {
     chars += '0123456789';
   }
-  return List.generate(randomInteger(minLength, maxLength),
-      (index) => chars[_random.nextInt(chars.length)]).join();
+  return List.generate(
+    randomInteger(minLength, maxLength),
+    (index) => chars[_random.nextInt(chars.length)],
+  ).join();
 }
 
 // Random date between 1970 and 2025.
@@ -38,7 +40,8 @@ DateTime randomDate() {
   // Random max must be in range 0 < max <= 2^32.
   // So we have to generate the time in seconds and then convert to milliseconds.
   return DateTime.fromMillisecondsSinceEpoch(
-      randomInteger(0, 1735689600) * 1000);
+    randomInteger(0, 1735689600) * 1000,
+  );
 }
 
 String randomImageUrl(int width, int height) {
@@ -47,5 +50,9 @@ String randomImageUrl(int width, int height) {
 
 Color randomColor() {
   return Color.fromARGB(
-      255, _random.nextInt(255), _random.nextInt(255), _random.nextInt(255));
+    255,
+    _random.nextInt(255),
+    _random.nextInt(255),
+    _random.nextInt(255),
+  );
 }

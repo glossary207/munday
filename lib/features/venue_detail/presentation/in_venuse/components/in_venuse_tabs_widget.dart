@@ -1,7 +1,5 @@
 part of '../in_venuse_page.dart';
 
-
-
 @NowaGenerated()
 class InVenuseTabsWidget extends StatelessWidget {
   @NowaGenerated({'loader': 'auto-constructor'})
@@ -838,10 +836,9 @@ class InVenuseTabsWidget extends StatelessWidget {
                                               AppLocalizations.of(
                                                 context,
                                               )!.k_ru3pw87v,
-                                              style:
-                                                  MundayTheme.of(
-                                                    context,
-                                                  ).headlineMedium.override(
+                                              style: MundayTheme.of(context)
+                                                  .headlineMedium
+                                                  .override(
                                                     font: GoogleFonts.outfit(
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -856,12 +853,9 @@ class InVenuseTabsWidget extends StatelessWidget {
                                                     fontSize: 30.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                              context,
-                                                            )
-                                                            .headlineMedium
-                                                            .fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).headlineMedium.fontStyle,
                                                   ),
                                             ),
                                           ),
@@ -878,30 +872,29 @@ class InVenuseTabsWidget extends StatelessWidget {
                                                 context,
                                               )!.k_ff7cf9o6,
                                               textAlign: TextAlign.center,
-                                              style:
-                                                  MundayTheme.of(
-                                                    context,
-                                                  ).labelMedium.override(
-                                                    font: GoogleFonts.plusJakartaSans(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontStyle:
-                                                          MundayTheme.of(
-                                                                context,
-                                                              )
-                                                              .labelMedium
-                                                              .fontStyle,
-                                                    ),
+                                              style: MundayTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.plusJakartaSans(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontStyle:
+                                                              MundayTheme.of(
+                                                                    context,
+                                                                  )
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
                                                     color: const Color(
                                                       0xFFBCBCBC,
                                                     ),
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                          context,
-                                                        ).labelMedium.fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).labelMedium.fontStyle,
                                                   ),
                                             ),
                                           ),
@@ -979,10 +972,9 @@ class InVenuseTabsWidget extends StatelessWidget {
                                               AppLocalizations.of(
                                                 context,
                                               )!.k_ufk1gvu8,
-                                              style:
-                                                  MundayTheme.of(
-                                                    context,
-                                                  ).headlineMedium.override(
+                                              style: MundayTheme.of(context)
+                                                  .headlineMedium
+                                                  .override(
                                                     font: GoogleFonts.outfit(
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -997,12 +989,9 @@ class InVenuseTabsWidget extends StatelessWidget {
                                                     fontSize: 30.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                              context,
-                                                            )
-                                                            .headlineMedium
-                                                            .fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).headlineMedium.fontStyle,
                                                   ),
                                             ),
                                           ),
@@ -1019,30 +1008,29 @@ class InVenuseTabsWidget extends StatelessWidget {
                                                 context,
                                               )!.k_9v0vv7rb,
                                               textAlign: TextAlign.center,
-                                              style:
-                                                  MundayTheme.of(
-                                                    context,
-                                                  ).labelMedium.override(
-                                                    font: GoogleFonts.plusJakartaSans(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontStyle:
-                                                          MundayTheme.of(
-                                                                context,
-                                                              )
-                                                              .labelMedium
-                                                              .fontStyle,
-                                                    ),
+                                              style: MundayTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.plusJakartaSans(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontStyle:
+                                                              MundayTheme.of(
+                                                                    context,
+                                                                  )
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
                                                     color: const Color(
                                                       0xFFBCBCBC,
                                                     ),
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                          context,
-                                                        ).labelMedium.fontStyle,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).labelMedium.fontStyle,
                                                   ),
                                             ),
                                           ),
@@ -1716,24 +1704,20 @@ class InVenuseTabsWidget extends StatelessWidget {
                                                 .bodyMedium
                                                 .override(
                                                   font: GoogleFonts.openSans(
-                                                    fontWeight:
-                                                        MundayTheme.of(
-                                                          context,
-                                                        ).bodyMedium.fontWeight,
-                                                    fontStyle:
-                                                        MundayTheme.of(
-                                                          context,
-                                                        ).bodyMedium.fontStyle,
+                                                    fontWeight: MundayTheme.of(
+                                                      context,
+                                                    ).bodyMedium.fontWeight,
+                                                    fontStyle: MundayTheme.of(
+                                                      context,
+                                                    ).bodyMedium.fontStyle,
                                                   ),
                                                   letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      MundayTheme.of(
-                                                        context,
-                                                      ).bodyMedium.fontWeight,
-                                                  fontStyle:
-                                                      MundayTheme.of(
-                                                        context,
-                                                      ).bodyMedium.fontStyle,
+                                                  fontWeight: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontWeight,
+                                                  fontStyle: MundayTheme.of(
+                                                    context,
+                                                  ).bodyMedium.fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -1773,16 +1757,12 @@ class InVenuseTabsWidget extends StatelessWidget {
                     style: MundayTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600,
-                        fontStyle: MundayTheme.of(
-                          context,
-                        ).bodyMedium.fontStyle,
+                        fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
                       ),
                       fontSize: 16.0,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
-                      fontStyle: MundayTheme.of(
-                        context,
-                      ).bodyMedium.fontStyle,
+                      fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
                     ),
                   ),
                 ),

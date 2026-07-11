@@ -37,8 +37,12 @@ class _SocialInvenuesHeaderWidgetState
             Align(
               alignment: const AlignmentDirectional(-1.0, 0.0),
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 12.5),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  5.0,
+                  0.0,
+                  0.0,
+                  12.5,
+                ),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -50,9 +54,7 @@ class _SocialInvenuesHeaderWidgetState
                   child: Container(
                     width: 40.0,
                     height: 40.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: Stack(
                       children: [
                         Align(
@@ -66,11 +68,8 @@ class _SocialInvenuesHeaderWidgetState
                                 BoxShadow(
                                   blurRadius: 4.0,
                                   color: Color(0x7A000000),
-                                  offset: Offset(
-                                    2.0,
-                                    2.0,
-                                  ),
-                                )
+                                  offset: Offset(2.0, 2.0),
+                                ),
                               ],
                               shape: BoxShape.circle,
                               border: Border.all(
@@ -81,17 +80,23 @@ class _SocialInvenuesHeaderWidgetState
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.0, 0.0),
+                                  alignment: const AlignmentDirectional(
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 2.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          2.0,
+                                          0.0,
+                                        ),
                                     child: Icon(
                                       Icons.arrow_back_ios_new_sharp,
-                                      color: Theme.of(context)
-                                          .extension<CustomColors>()!
-                                          .primaryText,
+                                      color: Theme.of(
+                                        context,
+                                      ).extension<CustomColors>()!.primaryText,
                                       size: 14.0,
                                     ),
                                   ),
@@ -111,14 +116,15 @@ class _SocialInvenuesHeaderWidgetState
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      0.0, 41.0, 10.0, 0.0),
+                    0.0,
+                    41.0,
+                    10.0,
+                    0.0,
+                  ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45.0),
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 4.5,
-                        sigmaY: 4.5,
-                      ),
+                      filter: ImageFilter.blur(sigmaX: 4.5, sigmaY: 4.5),
                       child: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
@@ -136,14 +142,22 @@ class _SocialInvenuesHeaderWidgetState
                         ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 7.5, 0.0, 7.5),
+                            0.0,
+                            7.5,
+                            0.0,
+                            7.5,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 0.0, 0.0),
+                                  8.0,
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                ),
                                 child: Container(
                                   width: 50.0,
                                   height: 50.0,
@@ -173,9 +187,11 @@ class _SocialInvenuesHeaderWidgetState
                                           ),
                                           child: CachedNetworkImage(
                                             fadeInDuration: const Duration(
-                                                milliseconds: 500),
+                                              milliseconds: 500,
+                                            ),
                                             fadeOutDuration: const Duration(
-                                                milliseconds: 500),
+                                              milliseconds: 500,
+                                            ),
                                             imageUrl: valueOrDefault<String>(
                                               currentUserPhoto,
                                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
@@ -191,7 +207,11 @@ class _SocialInvenuesHeaderWidgetState
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 0.0),
+                                    10.0,
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                  ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -199,8 +219,13 @@ class _SocialInvenuesHeaderWidgetState
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 2.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              0.0,
+                                              2.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -209,9 +234,12 @@ class _SocialInvenuesHeaderWidgetState
                                             Expanded(
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        0.0, 0.0, 0.0, 2.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                      2.0,
+                                                    ),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -222,49 +250,60 @@ class _SocialInvenuesHeaderWidgetState
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(4.0,
-                                                              0.0, 0.0, 0.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            4.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_jza53d0o,
+                                                          context,
+                                                        )!.k_jza53d0o,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .labelMedium!
                                                             .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
+                                                              font: GoogleFonts.openSans(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
-                                                                fontStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .labelMedium!
-                                                                    .fontStyle,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .labelMedium!
+                                                                        .fontStyle,
                                                               ),
-                                                              color: const Color(
-                                                                  0xFFCACACA),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFCACACA,
+                                                                  ),
                                                               fontSize: 12.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .labelMedium!
+                                                                      .fontStyle,
                                                             ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(0.0,
-                                                              2.0, 0.0, 0.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            2.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -275,134 +314,156 @@ class _SocialInvenuesHeaderWidgetState
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
-                                                                    -1.0, 0.0),
+                                                                  -1.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      2.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                              child: StreamBuilder<
-                                                                  List<
-                                                                      VenuesRecord>>(
-                                                                stream:
-                                                                    queryVenuesRecord(),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return const Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            50.0,
-                                                                        height:
-                                                                            50.0,
-                                                                        child:
-                                                                            CircularProgressIndicator(
-                                                                          valueColor:
-                                                                              AlwaysStoppedAnimation<Color>(
-                                                                            Colors.transparent,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<VenuesRecord>
-                                                                      textVenuesRecordList =
-                                                                      snapshot
-                                                                          .data!;
-
-                                                                  return InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      await showModalBottomSheet(
-                                                                        isScrollControlled:
-                                                                            true,
-                                                                        backgroundColor:
-                                                                            Colors.transparent,
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (context) {
-                                                                          return GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: JoinroomWidget(
-                                                                                datavenuse: textVenuesRecordList.take(3).toList().map((e) => e.reference).toList(),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    2.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
+                                                              child:
+                                                                  StreamBuilder<
+                                                                    List<
+                                                                      VenuesRecord
+                                                                    >
+                                                                  >(
+                                                                    stream:
+                                                                        queryVenuesRecord(),
+                                                                    builder:
+                                                                        (
+                                                                          context,
+                                                                          snapshot,
+                                                                        ) {
+                                                                          // Customize what your widget looks like when it's loading.
+                                                                          if (!snapshot
+                                                                              .hasData) {
+                                                                            return const Center(
+                                                                              child: SizedBox(
+                                                                                width: 50.0,
+                                                                                height: 50.0,
+                                                                                child: CircularProgressIndicator(
+                                                                                  valueColor:
+                                                                                      AlwaysStoppedAnimation<
+                                                                                        Color
+                                                                                      >(
+                                                                                        Colors.transparent,
+                                                                                      ),
+                                                                                ),
                                                                               ),
+                                                                            );
+                                                                          }
+                                                                          List<
+                                                                            VenuesRecord
+                                                                          >
+                                                                          textVenuesRecordList =
+                                                                              snapshot.data!;
+
+                                                                          return InkWell(
+                                                                            splashColor:
+                                                                                Colors.transparent,
+                                                                            focusColor:
+                                                                                Colors.transparent,
+                                                                            hoverColor:
+                                                                                Colors.transparent,
+                                                                            highlightColor:
+                                                                                Colors.transparent,
+                                                                            onTap: () async {
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                context: context,
+                                                                                builder:
+                                                                                    (
+                                                                                      context,
+                                                                                    ) {
+                                                                                      return GestureDetector(
+                                                                                        onTap: () {
+                                                                                          FocusScope.of(
+                                                                                            context,
+                                                                                          ).unfocus();
+                                                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                                                        },
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                                            context,
+                                                                                          ),
+                                                                                          child: JoinroomWidget(
+                                                                                            datavenuse: textVenuesRecordList
+                                                                                                .take(
+                                                                                                  3,
+                                                                                                )
+                                                                                                .toList()
+                                                                                                .map(
+                                                                                                  (
+                                                                                                    e,
+                                                                                                  ) => e.reference,
+                                                                                                )
+                                                                                                .toList(),
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                              ).then(
+                                                                                (
+                                                                                  value,
+                                                                                ) => safeSetState(
+                                                                                  () {},
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child: Text(
+                                                                              AppLocalizations.of(
+                                                                                context,
+                                                                              )!.k_ifexozan,
+                                                                              style:
+                                                                                  Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.override(
+                                                                                    font: GoogleFonts.openSans(
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: Theme.of(
+                                                                                        context,
+                                                                                      ).textTheme.bodyMedium!.fontStyle,
+                                                                                    ),
+                                                                                    color:
+                                                                                        Theme.of(
+                                                                                              context,
+                                                                                            )
+                                                                                            .extension<
+                                                                                              CustomColors
+                                                                                            >()!
+                                                                                            .primaryText,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.2,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: Theme.of(
+                                                                                      context,
+                                                                                    ).textTheme.bodyMedium!.fontStyle,
+                                                                                  ),
                                                                             ),
                                                                           );
                                                                         },
-                                                                      ).then((value) =>
-                                                                          safeSetState(
-                                                                              () {}));
-                                                                    },
-                                                                    child: Text(
-                                                                      AppLocalizations.of(
-                                                                              context)!
-                                                                          .k_ifexozan,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                Theme.of(context).extension<CustomColors>()!.primaryText,
-                                                                            fontSize:
-                                                                                16.0,
-                                                                            letterSpacing:
-                                                                                0.2,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
+                                                                  ),
                                                             ),
                                                           ),
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
-                                                                    0.22,
-                                                                    -0.49),
+                                                                  0.22,
+                                                                  -0.49,
+                                                                ),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      7.0,
-                                                                      3.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    7.0,
+                                                                    3.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: InkWell(
                                                                 splashColor: Colors
                                                                     .transparent,
@@ -413,8 +474,7 @@ class _SocialInvenuesHeaderWidgetState
                                                                 highlightColor:
                                                                     Colors
                                                                         .transparent,
-                                                                onTap:
-                                                                    () async {
+                                                                onTap: () async {
                                                                   await showModalBottomSheet(
                                                                     isScrollControlled:
                                                                         true,
@@ -425,52 +485,51 @@ class _SocialInvenuesHeaderWidgetState
                                                                         true,
                                                                     context:
                                                                         context,
-                                                                    builder:
-                                                                        (context) {
+                                                                    builder: (context) {
                                                                       return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
+                                                                        onTap: () {
+                                                                          FocusScope.of(
+                                                                            context,
+                                                                          ).unfocus();
                                                                           FocusManager
                                                                               .instance
                                                                               .primaryFocus
                                                                               ?.unfocus();
                                                                         },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              ReviewWidget(
+                                                                        child: Padding(
+                                                                          padding: MediaQuery.viewInsetsOf(
+                                                                            context,
+                                                                          ),
+                                                                          child: ReviewWidget(
                                                                             idVenues:
                                                                                 currentUserDocument?.loginVenuesRoom,
                                                                           ),
                                                                         ),
                                                                       );
                                                                     },
-                                                                  ).then((value) =>
-                                                                      safeSetState(
-                                                                          () {}));
+                                                                  ).then(
+                                                                    (value) =>
+                                                                        safeSetState(
+                                                                          () {},
+                                                                        ),
+                                                                  );
                                                                 },
-                                                                child:
-                                                                    Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
+                                                                child: Container(
+                                                                  decoration: BoxDecoration(
                                                                     color: const Color(
-                                                                        0xFF666666),
-                                                                    image:
-                                                                        DecorationImage(
+                                                                      0xFF666666,
+                                                                    ),
+                                                                    image: DecorationImage(
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      image: Image
-                                                                          .asset(
+                                                                      image: Image.asset(
                                                                         'assets/images/colorful-vibrant-holographic-pastel-foil-background-texture-toxic-rave-party-backdrop_232693-243_3.jpeg',
                                                                       ).image,
                                                                     ),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            90.0),
+                                                                          90.0,
+                                                                        ),
                                                                   ),
                                                                   child: Row(
                                                                     mainAxisSize:
@@ -481,43 +540,46 @@ class _SocialInvenuesHeaderWidgetState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            10.0,
-                                                                            1.0,
-                                                                            10.0,
-                                                                            2.0),
-                                                                        child:
-                                                                            Text(
-                                                                          AppLocalizations.of(context)!
-                                                                              .k_1lam8xke,
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyMedium!
-                                                                              .override(
-                                                                            font:
-                                                                                GoogleFonts.openSans(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize:
-                                                                                11.0,
-                                                                            letterSpacing:
-                                                                                1.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            fontStyle:
-                                                                                Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                                                                            shadows: [
-                                                                              const Shadow(
-                                                                                color: Color(0xFF262626),
-                                                                                offset: Offset(2.0, 2.0),
-                                                                                blurRadius: 4.0,
-                                                                              )
-                                                                            ],
-                                                                          ),
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          10.0,
+                                                                          1.0,
+                                                                          10.0,
+                                                                          2.0,
+                                                                        ),
+                                                                        child: Text(
+                                                                          AppLocalizations.of(
+                                                                            context,
+                                                                          )!.k_1lam8xke,
+                                                                          style:
+                                                                              Theme.of(
+                                                                                context,
+                                                                              ).textTheme.bodyMedium!.override(
+                                                                                font: GoogleFonts.openSans(
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontStyle: Theme.of(
+                                                                                    context,
+                                                                                  ).textTheme.bodyMedium!.fontStyle,
+                                                                                ),
+                                                                                color: Colors.white,
+                                                                                fontSize: 11.0,
+                                                                                letterSpacing: 1.0,
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontStyle: Theme.of(
+                                                                                  context,
+                                                                                ).textTheme.bodyMedium!.fontStyle,
+                                                                                shadows: [
+                                                                                  const Shadow(
+                                                                                    color: Color(
+                                                                                      0xFF262626,
+                                                                                    ),
+                                                                                    offset: Offset(
+                                                                                      2.0,
+                                                                                      2.0,
+                                                                                    ),
+                                                                                    blurRadius: 4.0,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
                                                                         ),
                                                                       ),
                                                                     ],
@@ -542,7 +604,11 @@ class _SocialInvenuesHeaderWidgetState
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 2.0, 10.0, 0.0),
+                                  0.0,
+                                  2.0,
+                                  10.0,
+                                  0.0,
+                                ),
                                 child: Container(
                                   width: 45.0,
                                   height: 45.0,
@@ -556,7 +622,9 @@ class _SocialInvenuesHeaderWidgetState
                                     children: [
                                       Align(
                                         alignment: const AlignmentDirectional(
-                                            0.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Container(
                                           width: 33.0,
                                           height: 33.0,
@@ -572,20 +640,24 @@ class _SocialInvenuesHeaderWidgetState
                                       ),
                                       if (functions
                                               .aminusB(
-                                                  (currentUserDocument
-                                                              ?.usercheerme
-                                                              .toList() ??
-                                                          [])
-                                                      .length,
-                                                  valueOrDefault(
-                                                      currentUserDocument
-                                                          ?.readcheers,
-                                                      0))
+                                                (currentUserDocument
+                                                            ?.usercheerme
+                                                            .toList() ??
+                                                        [])
+                                                    .length,
+                                                valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.readcheers,
+                                                  0,
+                                                ),
+                                              )
                                               .toString() !=
                                           '0')
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              1.2, -1.2),
+                                            1.2,
+                                            -1.2,
+                                          ),
                                           child: Container(
                                             width: 18.0,
                                             height: 18.0,
@@ -597,19 +669,23 @@ class _SocialInvenuesHeaderWidgetState
                                             child: Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      0.0, 0.0),
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
                                                 functions
                                                     .aminusB(
-                                                        (currentUserDocument
-                                                                    ?.usercheerme
-                                                                    .toList() ??
-                                                                [])
-                                                            .length,
-                                                        valueOrDefault(
-                                                            currentUserDocument
-                                                                ?.readcheers,
-                                                            0))
+                                                      (currentUserDocument
+                                                                  ?.usercheerme
+                                                                  .toList() ??
+                                                              [])
+                                                          .length,
+                                                      valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.readcheers,
+                                                        0,
+                                                      ),
+                                                    )
                                                     .toString(),
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -617,17 +693,20 @@ class _SocialInvenuesHeaderWidgetState
                                                     .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
-                                                      ),
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                       color: Theme.of(context)
                                                           .extension<
-                                                              CustomColors>()!
+                                                            CustomColors
+                                                          >()!
                                                           .primaryText,
                                                       fontSize: 10.0,
                                                       letterSpacing: 0.0,
@@ -649,7 +728,11 @@ class _SocialInvenuesHeaderWidgetState
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 2.0, 8.0, 0.0),
+                                  0.0,
+                                  2.0,
+                                  8.0,
+                                  0.0,
+                                ),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -671,7 +754,9 @@ class _SocialInvenuesHeaderWidgetState
                                       children: [
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 0.0),
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Image.network(
                                             'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/ucvx51dhc4gx/message2.png',
                                             width: 36.0,
@@ -686,7 +771,9 @@ class _SocialInvenuesHeaderWidgetState
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    1.2, -1.2),
+                                                  1.2,
+                                                  -1.2,
+                                                ),
                                             child: Container(
                                               width: 18.0,
                                               height: 18.0,
@@ -694,12 +781,15 @@ class _SocialInvenuesHeaderWidgetState
                                                 color: const Color(0xFFFF0000),
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                        180.0),
+                                                      180.0,
+                                                    ),
                                               ),
                                               child: Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        0.1, 0.0),
+                                                      0.1,
+                                                      0.0,
+                                                    ),
                                                 child: Text(
                                                   (currentUserDocument
                                                               ?.usermassage
@@ -711,8 +801,7 @@ class _SocialInvenuesHeaderWidgetState
                                                       .textTheme
                                                       .bodyMedium!
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
@@ -723,7 +812,8 @@ class _SocialInvenuesHeaderWidgetState
                                                         ),
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         fontSize: 10.0,
                                                         letterSpacing: 0.0,
@@ -767,7 +857,11 @@ class _SocialInvenuesHeaderWidgetState
                 children: [
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 80.0, 0.0, 5.0),
+                      0.0,
+                      80.0,
+                      0.0,
+                      5.0,
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -789,14 +883,22 @@ class _SocialInvenuesHeaderWidgetState
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              17.0, 0.0, 0.0, 0.0),
+                            17.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  4.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -811,7 +913,9 @@ class _SocialInvenuesHeaderWidgetState
                                       child: Text(
                                         valueOrDefault<String>(
                                           functions.newCustomFunction(
-                                              stackVenuesRecord.nameVenuse, 14),
+                                            stackVenuesRecord.nameVenuse,
+                                            14,
+                                          ),
                                           'ไม่ระบุ',
                                         ),
                                         style: Theme.of(context)
@@ -828,10 +932,9 @@ class _SocialInvenuesHeaderWidgetState
                                               fontSize: 27.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),
@@ -840,7 +943,11 @@ class _SocialInvenuesHeaderWidgetState
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 2.0, 0.0, 7.0),
+                                  0.0,
+                                  2.0,
+                                  0.0,
+                                  7.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -852,26 +959,31 @@ class _SocialInvenuesHeaderWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                     Align(
                                       alignment: const AlignmentDirectional(
-                                          0.22, -0.49),
+                                        0.22,
+                                        -0.49,
+                                      ),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              10.0,
+                                              0.0,
+                                              0.0,
+                                              0.0,
+                                            ),
                                         child: InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -887,16 +999,19 @@ class _SocialInvenuesHeaderWidgetState
                                               builder: (context) {
                                                 return GestureDetector(
                                                   onTap: () {
-                                                    FocusScope.of(context)
-                                                        .unfocus();
+                                                    FocusScope.of(
+                                                      context,
+                                                    ).unfocus();
                                                     FocusManager
-                                                        .instance.primaryFocus
+                                                        .instance
+                                                        .primaryFocus
                                                         ?.unfocus();
                                                   },
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
-                                                            context),
+                                                          context,
+                                                        ),
                                                     child: ReviewWidget(
                                                       idVenues:
                                                           currentUserDocument
@@ -906,7 +1021,8 @@ class _SocialInvenuesHeaderWidgetState
                                                 );
                                               },
                                             ).then(
-                                                (value) => safeSetState(() {}));
+                                              (value) => safeSetState(() {}),
+                                            );
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -922,46 +1038,55 @@ class _SocialInvenuesHeaderWidgetState
                                               children: [
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          5.0, 0.0, 0.0, 1.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        5.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0,
+                                                      ),
                                                   child: Icon(
                                                     Icons.star_rounded,
                                                     color: Theme.of(context)
                                                         .extension<
-                                                            CustomColors>()!
+                                                          CustomColors
+                                                        >()!
                                                         .primaryText,
                                                     size: 15.0,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          2.5, 1.0, 7.0, 1.5),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        2.5,
+                                                        1.0,
+                                                        7.0,
+                                                        1.5,
+                                                      ),
                                                   child: Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_sx8oo1l5,
+                                                      context,
+                                                    )!.k_sx8oo1l5,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .extension<
-                                                                  CustomColors>()!
-                                                              .primaryText,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .extension<
+                                                                    CustomColors
+                                                                  >()!
+                                                                  .primaryText,
                                                           fontSize: 13.0,
                                                           letterSpacing: 1.0,
                                                           fontWeight:
@@ -989,7 +1114,11 @@ class _SocialInvenuesHeaderWidgetState
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 10.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          10.0,
+                                          0.0,
+                                        ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.asset(
@@ -1003,13 +1132,18 @@ class _SocialInvenuesHeaderWidgetState
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 25.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          25.0,
+                                          0.0,
+                                        ),
                                     child: StreamBuilder<UserInVenuesRecord>(
                                       stream: UserInVenuesRecord.getDocument(
-                                          (currentUserDocument?.iDROOMVenues
-                                                      .toList() ??
-                                                  [])
-                                              .firstOrNull!),
+                                        (currentUserDocument?.iDROOMVenues
+                                                    .toList() ??
+                                                [])
+                                            .firstOrNull!,
+                                      ),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
                                         if (!snapshot.hasData) {
@@ -1020,9 +1154,8 @@ class _SocialInvenuesHeaderWidgetState
                                               child: CircularProgressIndicator(
                                                 valueColor:
                                                     AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  Colors.transparent,
-                                                ),
+                                                      Color
+                                                    >(Colors.transparent),
                                               ),
                                             ),
                                           );
@@ -1032,8 +1165,9 @@ class _SocialInvenuesHeaderWidgetState
                                             snapshot.data!;
 
                                         return Text(
-                                          AppLocalizations.of(context)!
-                                              .k_n9q37elg,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_n9q37elg,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -1060,19 +1194,27 @@ class _SocialInvenuesHeaderWidgetState
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 10.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          10.0,
+                                          0.0,
+                                        ),
                                     child: Icon(
                                       Icons.people_rounded,
-                                      color: Theme.of(context)
-                                          .extension<CustomColors>()!
-                                          .primaryText,
+                                      color: Theme.of(
+                                        context,
+                                      ).extension<CustomColors>()!.primaryText,
                                       size: 22.0,
                                     ),
                                   ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 2.0, 0.0),
+                                          0.0,
+                                          0.0,
+                                          2.0,
+                                          0.0,
+                                        ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_89nb8pgs,
                                       style: Theme.of(context)
@@ -1081,18 +1223,16 @@ class _SocialInvenuesHeaderWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ),
@@ -1103,30 +1243,30 @@ class _SocialInvenuesHeaderWidgetState
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            2.0, 0.0, 0.0, 0.0),
+                                          2.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                        ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_bvjy4cxr,
                                       style: Theme.of(context)
@@ -1135,18 +1275,16 @@ class _SocialInvenuesHeaderWidgetState
                                           .override(
                                             font: GoogleFonts.openSans(
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ),

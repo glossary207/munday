@@ -63,10 +63,7 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
           ),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 5.0,
-            sigmaY: 5.0,
-          ),
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,17 +73,21 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 35.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      0.0,
+                      35.0,
+                      0.0,
+                    ),
                     child: MundayIconButton(
                       borderRadius: 20.0,
                       borderWidth: 1.0,
                       buttonSize: 40.0,
                       icon: Icon(
                         Icons.close,
-                        color: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
+                        color: Theme.of(
+                          context,
+                        ).extension<CustomColors>()!.primaryText,
                         size: 24.0,
                       ),
                       onPressed: () async {
@@ -104,11 +105,8 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
-                      offset: Offset(
-                        0.0,
-                        2.0,
-                      ),
-                    )
+                      offset: Offset(0.0, 2.0),
+                    ),
                   ],
                   borderRadius: BorderRadius.circular(12.0),
                 ),
@@ -120,35 +118,41 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 12.0, 0.0, 0.0),
+                          12.0,
+                          12.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Text(
                           AppLocalizations.of(context)!.k_fvrj4p08,
                           textAlign: TextAlign.start,
-                          style:
-                              Theme.of(context).textTheme.labelMedium!.override(
-                                    font: GoogleFonts.plusJakartaSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
-                                    ),
-                                    color: Theme.of(context)
-                                        .extension<CustomColors>()!
-                                        .primaryText,
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
-                                  ),
+                          style: Theme.of(context).textTheme.labelMedium!
+                              .override(
+                                font: GoogleFonts.plusJakartaSans(
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontStyle,
+                                ),
+                                color: Theme.of(
+                                  context,
+                                ).extension<CustomColors>()!.primaryText,
+                                fontSize: 20.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.labelMedium!.fontStyle,
+                              ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            10.0, 12.0, 10.0, 10.0),
+                          10.0,
+                          12.0,
+                          10.0,
+                          10.0,
+                        ),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -166,20 +170,28 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color: Theme.of(context)
-                                    .extension<CustomColors>()!
-                                    .secondaryText,
+                                color: Theme.of(
+                                  context,
+                                ).extension<CustomColors>()!.secondaryText,
                               ),
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 8.0),
+                                0.0,
+                                8.0,
+                                0.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: 22.0,
                                       height: 22.0,
@@ -197,10 +209,15 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_bd2xz340,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_bd2xz340,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -216,10 +233,9 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),
@@ -232,7 +248,11 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            10.0, 0.0, 10.0, 10.0),
+                          10.0,
+                          0.0,
+                          10.0,
+                          10.0,
+                        ),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -250,20 +270,28 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color: Theme.of(context)
-                                    .extension<CustomColors>()!
-                                    .secondaryText,
+                                color: Theme.of(
+                                  context,
+                                ).extension<CustomColors>()!.secondaryText,
                               ),
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 8.0),
+                                0.0,
+                                8.0,
+                                0.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: 22.0,
                                       height: 22.0,
@@ -281,10 +309,15 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_6w69b1uq,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_6w69b1uq,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -300,10 +333,9 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),
@@ -316,7 +348,11 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            10.0, 0.0, 10.0, 10.0),
+                          10.0,
+                          0.0,
+                          10.0,
+                          10.0,
+                        ),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -334,20 +370,28 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color: Theme.of(context)
-                                    .extension<CustomColors>()!
-                                    .secondaryText,
+                                color: Theme.of(
+                                  context,
+                                ).extension<CustomColors>()!.secondaryText,
                               ),
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 8.0),
+                                0.0,
+                                8.0,
+                                0.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: 22.0,
                                       height: 22.0,
@@ -365,10 +409,15 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_74gcpyy4,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_74gcpyy4,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -384,10 +433,9 @@ class _LanguageWidgetState extends ConsumerState<LanguageWidget> {
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),

@@ -19,13 +19,13 @@ class UserphotoshowStruct extends FFSupabaseStruct {
     String? photo5,
     String? photo6,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _photo1 = photo1,
-        _photo2 = photo2,
-        _photo3 = photo3,
-        _photo4 = photo4,
-        _photo5 = photo5,
-        _photo6 = photo6,
-        super(supabaseUtilData);
+  }) : _photo1 = photo1,
+       _photo2 = photo2,
+       _photo3 = photo3,
+       _photo4 = photo4,
+       _photo5 = photo5,
+       _photo6 = photo6,
+       super(supabaseUtilData);
 
   // "photo1" field.
   String? _photo1;
@@ -84,74 +84,32 @@ class UserphotoshowStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'photo1': _photo1,
-        'photo2': _photo2,
-        'photo3': _photo3,
-        'photo4': _photo4,
-        'photo5': _photo5,
-        'photo6': _photo6,
-      }.withoutNulls;
+    'photo1': _photo1,
+    'photo2': _photo2,
+    'photo3': _photo3,
+    'photo4': _photo4,
+    'photo5': _photo5,
+    'photo6': _photo6,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'photo1': serializeParam(
-          _photo1,
-          ParamType.String,
-        ),
-        'photo2': serializeParam(
-          _photo2,
-          ParamType.String,
-        ),
-        'photo3': serializeParam(
-          _photo3,
-          ParamType.String,
-        ),
-        'photo4': serializeParam(
-          _photo4,
-          ParamType.String,
-        ),
-        'photo5': serializeParam(
-          _photo5,
-          ParamType.String,
-        ),
-        'photo6': serializeParam(
-          _photo6,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'photo1': serializeParam(_photo1, ParamType.String),
+    'photo2': serializeParam(_photo2, ParamType.String),
+    'photo3': serializeParam(_photo3, ParamType.String),
+    'photo4': serializeParam(_photo4, ParamType.String),
+    'photo5': serializeParam(_photo5, ParamType.String),
+    'photo6': serializeParam(_photo6, ParamType.String),
+  }.withoutNulls;
 
   static UserphotoshowStruct fromSerializableMap(Map<String, dynamic> data) =>
       UserphotoshowStruct(
-        photo1: deserializeParam(
-          data['photo1'],
-          ParamType.String,
-          false,
-        ),
-        photo2: deserializeParam(
-          data['photo2'],
-          ParamType.String,
-          false,
-        ),
-        photo3: deserializeParam(
-          data['photo3'],
-          ParamType.String,
-          false,
-        ),
-        photo4: deserializeParam(
-          data['photo4'],
-          ParamType.String,
-          false,
-        ),
-        photo5: deserializeParam(
-          data['photo5'],
-          ParamType.String,
-          false,
-        ),
-        photo6: deserializeParam(
-          data['photo6'],
-          ParamType.String,
-          false,
-        ),
+        photo1: deserializeParam(data['photo1'], ParamType.String, false),
+        photo2: deserializeParam(data['photo2'], ParamType.String, false),
+        photo3: deserializeParam(data['photo3'], ParamType.String, false),
+        photo4: deserializeParam(data['photo4'], ParamType.String, false),
+        photo5: deserializeParam(data['photo5'], ParamType.String, false),
+        photo6: deserializeParam(data['photo6'], ParamType.String, false),
       );
 
   @override
@@ -169,8 +127,14 @@ class UserphotoshowStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([photo1, photo2, photo3, photo4, photo5, photo6]);
+  int get hashCode => const ListEquality().hash([
+    photo1,
+    photo2,
+    photo3,
+    photo4,
+    photo5,
+    photo6,
+  ]);
 }
 
 UserphotoshowStruct createUserphotoshowStruct({
@@ -184,32 +148,30 @@ UserphotoshowStruct createUserphotoshowStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    UserphotoshowStruct(
-      photo1: photo1,
-      photo2: photo2,
-      photo3: photo3,
-      photo4: photo4,
-      photo5: photo5,
-      photo6: photo6,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => UserphotoshowStruct(
+  photo1: photo1,
+  photo2: photo2,
+  photo3: photo3,
+  photo4: photo4,
+  photo5: photo5,
+  photo6: photo6,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 UserphotoshowStruct? updateUserphotoshowStruct(
   UserphotoshowStruct? userphotoshow, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    userphotoshow
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => userphotoshow
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addUserphotoshowStructData(
   Map<String, dynamic> supabaseData,
@@ -230,10 +192,13 @@ void addUserphotoshowStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final userphotoshowData =
-      getUserphotoshowFirestoreData(userphotoshow, forFieldValue);
-  final nestedData =
-      userphotoshowData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final userphotoshowData = getUserphotoshowFirestoreData(
+    userphotoshow,
+    forFieldValue,
+  );
+  final nestedData = userphotoshowData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = userphotoshow.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -249,8 +214,9 @@ Map<String, dynamic> getUserphotoshowFirestoreData(
   final supabaseData = mapToSupabase(userphotoshow.toMap());
 
   // Add any Firestore field values
-  userphotoshow.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  userphotoshow.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

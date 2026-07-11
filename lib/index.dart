@@ -31,8 +31,7 @@ export '/features/venue_detail/presentation/in_venuse/in_venuse_page.dart'
     show InVenusePage;
 export '/features/booking/presentation/veer/veer_page.dart' show VeerPage;
 
-export '/features/booking/presentation/ticket/ticket_page.dart'
-    show TicketPage;
+export '/features/booking/presentation/ticket/ticket_page.dart' show TicketPage;
 export '/features/booking/presentation/ticket/ticket_mock_page.dart'
     show TicketMockPage;
 export '/features/booking/presentation/booking/booking_page.dart'

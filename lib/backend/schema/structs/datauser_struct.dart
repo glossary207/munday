@@ -19,13 +19,13 @@ class DatauserStruct extends FFSupabaseStruct {
     int? view,
     String? caption,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _userinstore = userinstore,
-        _photoprofile = photoprofile,
-        _name = name,
-        _online = online,
-        _view = view,
-        _caption = caption,
-        super(supabaseUtilData);
+  }) : _userinstore = userinstore,
+       _photoprofile = photoprofile,
+       _name = name,
+       _online = online,
+       _view = view,
+       _caption = caption,
+       super(supabaseUtilData);
 
   // "userinstore" field.
   SupabaseDocRef? _userinstore;
@@ -72,53 +72,35 @@ class DatauserStruct extends FFSupabaseStruct {
   bool hasCaption() => _caption != null;
 
   static DatauserStruct fromMap(Map<String, dynamic> data) => DatauserStruct(
-        userinstore: getSupabaseDocRef(data['userinstore'], 'UserInVenues'),
-        photoprofile: data['photoprofile'] as String?,
-        name: data['name'] as String?,
-        online: data['online'] as bool?,
-        view: castToType<int>(data['view']),
-        caption: data['caption'] as String?,
-      );
+    userinstore: getSupabaseDocRef(data['userinstore'], 'UserInVenues'),
+    photoprofile: data['photoprofile'] as String?,
+    name: data['name'] as String?,
+    online: data['online'] as bool?,
+    view: castToType<int>(data['view']),
+    caption: data['caption'] as String?,
+  );
 
   static DatauserStruct? maybeFromMap(dynamic data) =>
       data is Map ? DatauserStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
-        'userinstore': _userinstore,
-        'photoprofile': _photoprofile,
-        'name': _name,
-        'online': _online,
-        'view': _view,
-        'caption': _caption,
-      }.withoutNulls;
+    'userinstore': _userinstore,
+    'photoprofile': _photoprofile,
+    'name': _name,
+    'online': _online,
+    'view': _view,
+    'caption': _caption,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'userinstore': serializeParam(
-          _userinstore,
-          ParamType.SupabaseDocRef,
-        ),
-        'photoprofile': serializeParam(
-          _photoprofile,
-          ParamType.String,
-        ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-        'online': serializeParam(
-          _online,
-          ParamType.bool,
-        ),
-        'view': serializeParam(
-          _view,
-          ParamType.int,
-        ),
-        'caption': serializeParam(
-          _caption,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'userinstore': serializeParam(_userinstore, ParamType.SupabaseDocRef),
+    'photoprofile': serializeParam(_photoprofile, ParamType.String),
+    'name': serializeParam(_name, ParamType.String),
+    'online': serializeParam(_online, ParamType.bool),
+    'view': serializeParam(_view, ParamType.int),
+    'caption': serializeParam(_caption, ParamType.String),
+  }.withoutNulls;
 
   static DatauserStruct fromSerializableMap(Map<String, dynamic> data) =>
       DatauserStruct(
@@ -133,26 +115,10 @@ class DatauserStruct extends FFSupabaseStruct {
           ParamType.String,
           false,
         ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
-        online: deserializeParam(
-          data['online'],
-          ParamType.bool,
-          false,
-        ),
-        view: deserializeParam(
-          data['view'],
-          ParamType.int,
-          false,
-        ),
-        caption: deserializeParam(
-          data['caption'],
-          ParamType.String,
-          false,
-        ),
+        name: deserializeParam(data['name'], ParamType.String, false),
+        online: deserializeParam(data['online'], ParamType.bool, false),
+        view: deserializeParam(data['view'], ParamType.int, false),
+        caption: deserializeParam(data['caption'], ParamType.String, false),
       );
 
   @override
@@ -170,8 +136,14 @@ class DatauserStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([userinstore, photoprofile, name, online, view, caption]);
+  int get hashCode => const ListEquality().hash([
+    userinstore,
+    photoprofile,
+    name,
+    online,
+    view,
+    caption,
+  ]);
 }
 
 DatauserStruct createDatauserStruct({
@@ -185,32 +157,30 @@ DatauserStruct createDatauserStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DatauserStruct(
-      userinstore: userinstore,
-      photoprofile: photoprofile,
-      name: name,
-      online: online,
-      view: view,
-      caption: caption,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DatauserStruct(
+  userinstore: userinstore,
+  photoprofile: photoprofile,
+  name: name,
+  online: online,
+  view: view,
+  caption: caption,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DatauserStruct? updateDatauserStruct(
   DatauserStruct? datauser, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    datauser
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => datauser
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDatauserStructData(
   Map<String, dynamic> supabaseData,
@@ -255,5 +225,4 @@ Map<String, dynamic> getDatauserFirestoreData(
 
 List<Map<String, dynamic>> getDatauserListFirestoreData(
   List<DatauserStruct>? datausers,
-) =>
-    datausers?.map((e) => getDatauserFirestoreData(e, true)).toList() ?? [];
+) => datausers?.map((e) => getDatauserFirestoreData(e, true)).toList() ?? [];

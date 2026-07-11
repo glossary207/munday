@@ -53,7 +53,8 @@ class Containerborder extends StatelessWidget {
           alignment: Alignment.center,
           child: Icon(
             icon,
-            color: iconColor ??
+            color:
+                iconColor ??
                 Theme.of(context).extension<CustomColors>()!.primaryText,
             size: iconSize,
           ),
@@ -95,7 +96,9 @@ class _DashedCirclePainter extends CustomPainter {
           start + (dashAngle * dashWidth / (dashWidth + dashSpace));
       canvas.drawArc(
         Rect.fromCircle(
-            center: Offset(size.width / 2, size.height / 2), radius: radius),
+          center: Offset(size.width / 2, size.height / 2),
+          radius: radius,
+        ),
         start,
         end - start,
         false,

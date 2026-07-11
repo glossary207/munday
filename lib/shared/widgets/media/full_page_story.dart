@@ -40,27 +40,29 @@ class _FullPageStoryState extends ConsumerState<FullPageStory> {
   StoryItem storyItemSwitch(StoryItemStruct storyItem) {
     return switch (storyItem.type) {
       StoryItemEnum.text => StoryItem.text(
-          title: storyItem.title,
-          backgroundColor: storyItem.backgroundColor ?? Colors.white,
-        ),
+        title: storyItem.title,
+        backgroundColor: storyItem.backgroundColor ?? Colors.white,
+      ),
       StoryItemEnum.inlineImage => StoryItem.inlineImage(
-          url: storyItem.url,
-          controller: controller,
-          caption: Text(
-            storyItem.caption,
-            style: TextStyle(
-              color: Colors.white,
-              backgroundColor: Colors.black54,
-              fontSize: 17,
-            ),
+        url: storyItem.url,
+        controller: controller,
+        caption: Text(
+          storyItem.caption,
+          style: TextStyle(
+            color: Colors.white,
+            backgroundColor: Colors.black54,
+            fontSize: 17,
           ),
         ),
-      StoryItemEnum.pageImage =>
-        StoryItem.pageImage(url: storyItem.url, controller: controller),
+      ),
+      StoryItemEnum.pageImage => StoryItem.pageImage(
+        url: storyItem.url,
+        controller: controller,
+      ),
       StoryItemEnum.pageVideo => StoryItem.pageVideo(
-          storyItem.url,
-          controller: controller,
-        ),
+        storyItem.url,
+        controller: controller,
+      ),
     };
   }
 

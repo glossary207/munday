@@ -58,7 +58,7 @@ class SocialInVenuseModel extends BaseModel {
     false,
     false,
     false,
-    false
+    false,
   ];
   void addToOpenroom(bool item) => openroom.add(item);
   void removeFromOpenroom(bool item) => openroom.remove(item);

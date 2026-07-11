@@ -676,7 +676,8 @@ class _SocialInvenuesChatTabWidgetState
                                                             .where(
                                                               (e) => functions
                                                                   .checkdate(
-                                                                    (e as dynamic)?.date,
+                                                                    (e as dynamic)
+                                                                        ?.date,
                                                                     getCurrentTimestamp,
                                                                   )!,
                                                             )
@@ -773,7 +774,11 @@ class _SocialInvenuesChatTabWidgetState
                                                       )
                                                       .toList()
                                                       .sortedList(
-                                                        keyOf: (e) => ((e as dynamic)?.user?.view as num?),
+                                                        keyOf: (e) =>
+                                                            ((e as dynamic)
+                                                                    ?.user
+                                                                    ?.view
+                                                                as num?),
                                                         desc: true,
                                                       )
                                                       .toList();
@@ -851,13 +856,20 @@ class _SocialInvenuesChatTabWidgetState
                                                                             (
                                                                               e,
                                                                             ) => functions.checkdate(
-                                                                              (e as dynamic)?.date,
+                                                                              (e
+                                                                                      as dynamic)
+                                                                                  ?.date,
                                                                               getCurrentTimestamp,
                                                                             )!,
                                                                           )
                                                                           .toList()
                                                                           .sortedList(
-                                                                            keyOf: (e) => ((e as dynamic)?.user?.view as num?),
+                                                                            keyOf: (e) =>
+                                                                                ((e
+                                                                                            as dynamic)
+                                                                                        ?.user
+                                                                                        ?.view
+                                                                                    as num?),
                                                                             desc:
                                                                                 true,
                                                                           )
@@ -865,9 +877,16 @@ class _SocialInvenuesChatTabWidgetState
                                                                             (
                                                                               e,
                                                                             ) =>
-                                                                                (e as dynamic)?.user?.userinstore,
+                                                                                (e
+                                                                                        as dynamic)
+                                                                                    ?.user
+                                                                                    ?.userinstore,
                                                                           )
-                                                                          .withoutNulls.toList().cast<SupabaseDocRef>(),
+                                                                          .withoutNulls
+                                                                          .toList()
+                                                                          .cast<
+                                                                            SupabaseDocRef
+                                                                          >(),
                                                                       userinroomItem
                                                                           .user
                                                                           .userinstore,
@@ -902,9 +921,8 @@ class _SocialInvenuesChatTabWidgetState
                                                             AppState()
                                                                     .addviewID =
                                                                 [];
-                                                            context.appState.update(
-                                                              () {},
-                                                            );
+                                                            context.appState
+                                                                .update(() {});
                                                           }
                                                         } else {
                                                           await showModalBottomSheet(
@@ -941,13 +959,20 @@ class _SocialInvenuesChatTabWidgetState
                                                                             (
                                                                               e,
                                                                             ) => functions.checkdate(
-                                                                              (e as dynamic)?.date,
+                                                                              (e
+                                                                                      as dynamic)
+                                                                                  ?.date,
                                                                               getCurrentTimestamp,
                                                                             )!,
                                                                           )
                                                                           .toList()
                                                                           .sortedList(
-                                                                            keyOf: (e) => ((e as dynamic)?.user?.view as num?),
+                                                                            keyOf: (e) =>
+                                                                                ((e
+                                                                                            as dynamic)
+                                                                                        ?.user
+                                                                                        ?.view
+                                                                                    as num?),
                                                                             desc:
                                                                                 true,
                                                                           )
@@ -955,9 +980,16 @@ class _SocialInvenuesChatTabWidgetState
                                                                             (
                                                                               e,
                                                                             ) =>
-                                                                                (e as dynamic)?.user?.userinstore,
+                                                                                (e
+                                                                                        as dynamic)
+                                                                                    ?.user
+                                                                                    ?.userinstore,
                                                                           )
-                                                                          .withoutNulls.toList().cast<SupabaseDocRef>(),
+                                                                          .withoutNulls
+                                                                          .toList()
+                                                                          .cast<
+                                                                            SupabaseDocRef
+                                                                          >(),
                                                                       userinroomItem
                                                                           .user
                                                                           .userinstore,

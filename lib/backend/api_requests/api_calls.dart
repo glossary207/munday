@@ -33,9 +33,7 @@ class CreatePaymentLinkCall {
       callName: 'Create Payment Link',
       apiUrl: '${baseUrl}checkout/sessions',
       callType: ApiCallType.POST,
-      headers: {
-        'Authorization': 'Basic ${token}',
-      },
+      headers: {'Authorization': 'Basic ${token}'},
       params: {
         'payment_method_types': paymentMethodTypes,
         'success_url': successfulUrl,
@@ -69,11 +67,7 @@ class CreatecheckoutoneCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/createStripeCheckoutSession1',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'email': email,
-        'store_id': storeId,
-      },
+      params: {'uid': uid, 'email': email, 'store_id': storeId},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -84,14 +78,9 @@ class CreatecheckoutoneCall {
     );
   }
 
-  static dynamic respon(dynamic response) => getJsonField(
-        response,
-        r'''$''',
-      );
-  static String? url(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.url''',
-      ));
+  static dynamic respon(dynamic response) => getJsonField(response, r'''$''');
+  static String? url(dynamic response) =>
+      castToType<String>(getJsonField(response, r'''$.url'''));
 }
 
 class CreatecheckouttwoCall {
@@ -106,11 +95,7 @@ class CreatecheckouttwoCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/createStripeCheckoutSession2',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'email': email,
-        'store_id': storeId,
-      },
+      params: {'uid': uid, 'email': email, 'store_id': storeId},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -134,11 +119,7 @@ class CreatecheckoutthreeCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/createStripeCheckoutSession3',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'email': email,
-        'store_id': storeId,
-      },
+      params: {'uid': uid, 'email': email, 'store_id': storeId},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -151,9 +132,7 @@ class CreatecheckoutthreeCall {
 }
 
 class ReadupdateCall {
-  static Future<ApiCallResponse> call({
-    List<String>? chatidList,
-  }) async {
+  static Future<ApiCallResponse> call({List<String>? chatidList}) async {
     final chatid = _serializeList(chatidList);
 
     return ApiManager.instance.makeApiCall(
@@ -162,9 +141,7 @@ class ReadupdateCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/readupdate',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'chatid': chatid,
-      },
+      params: {'chatid': chatid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -186,9 +163,7 @@ class DeleteuserfromotheruserCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deleteuserfromotheruser',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -201,18 +176,14 @@ class DeleteuserfromotheruserCall {
 }
 
 class DeleteuserfromstoreCall {
-  static Future<ApiCallResponse> call({
-    String? uid = '',
-  }) async {
+  static Future<ApiCallResponse> call({String? uid = ''}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'deleteuserfromstore',
       apiUrl:
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deleteuserfromstore',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -225,18 +196,14 @@ class DeleteuserfromstoreCall {
 }
 
 class DeleteroomCall {
-  static Future<ApiCallResponse> call({
-    String? uid = '',
-  }) async {
+  static Future<ApiCallResponse> call({String? uid = ''}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'deleteroom',
       apiUrl:
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deleteroom',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -249,18 +216,14 @@ class DeleteroomCall {
 }
 
 class DeletechatCall {
-  static Future<ApiCallResponse> call({
-    String? uid = '',
-  }) async {
+  static Future<ApiCallResponse> call({String? uid = ''}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'deletechat',
       apiUrl:
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deletechat',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -283,10 +246,7 @@ class DeleteblockedchatCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deleteblockedchat',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'blocked_uid': blockedUid,
-        'block_uid': blockUid,
-      },
+      params: {'blocked_uid': blockedUid, 'block_uid': blockUid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -309,10 +269,7 @@ class UpdateonlinestatusCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/updateOnlineStatus',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'storeid': storeid,
-      },
+      params: {'uid': uid, 'storeid': storeid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -335,10 +292,7 @@ class UpdateofflinestatusCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/updateOfflineStatus',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'storeid': storeid,
-      },
+      params: {'uid': uid, 'storeid': storeid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -363,10 +317,7 @@ class UpdateotheruserviewCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/updateotheruserview',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'views': views,
-        'storeid': storeid,
-      },
+      params: {'views': views, 'storeid': storeid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -421,10 +372,7 @@ class DeleteuserfromstoretwoCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/deleteuserfromstore2',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'storeid': storeid,
-      },
+      params: {'uid': uid, 'storeid': storeid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -447,10 +395,7 @@ class SorttableCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/sorttable',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-        'tid': tid,
-      },
+      params: {'uid': uid, 'tid': tid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -510,10 +455,7 @@ class SlipurlCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/slipUrl',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'slipUrl': slipUrl,
-        'id': id,
-      },
+      params: {'slipUrl': slipUrl, 'id': id},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -536,10 +478,7 @@ class VerifytransactionCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/verifytransaction',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'id': id,
-        'user_acc_no': userAccNo,
-      },
+      params: {'id': id, 'user_acc_no': userAccNo},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -562,10 +501,7 @@ class TicketgenCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/ticketgenforHost',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'ticketid': ticketid,
-        'ownerid': ownerid,
-      },
+      params: {'ticketid': ticketid, 'ownerid': ownerid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -587,9 +523,7 @@ class UpdateOnlineStatusCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/updateOnlineStatus',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -611,9 +545,7 @@ class UpdateOfflineStatusCall {
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/updateOfflineStatus',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'uid': uid,
-      },
+      params: {'uid': uid},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -654,18 +586,14 @@ class DeletepeoplefromvenueCall {
 }
 
 class LogerrorCall {
-  static Future<ApiCallResponse> call({
-    String? err = 'off',
-  }) async {
+  static Future<ApiCallResponse> call({String? err = 'off'}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'logerror',
       apiUrl:
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/logerror',
       callType: ApiCallType.POST,
       headers: {},
-      params: {
-        'err': err,
-      },
+      params: {'err': err},
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -678,18 +606,14 @@ class LogerrorCall {
 }
 
 class GetInstagramProfileInfoCall {
-  static Future<ApiCallResponse> call({
-    String? username = '',
-  }) async {
+  static Future<ApiCallResponse> call({String? username = ''}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'getInstagramProfileInfo',
       apiUrl:
           'https://asia-southeast1-chatblack-6g2orl.cloudfunctions.net/getInstagramProfileInfo',
       callType: ApiCallType.GET,
       headers: {},
-      params: {
-        'username': username,
-      },
+      params: {'username': username},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -699,26 +623,18 @@ class GetInstagramProfileInfoCall {
     );
   }
 
-  static int? followersCount(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.followers_count''',
-      ));
+  static int? followersCount(dynamic response) =>
+      castToType<int>(getJsonField(response, r'''$.followers_count'''));
 
-  static int? followingCount(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.following_count''',
-      ));
+  static int? followingCount(dynamic response) =>
+      castToType<int>(getJsonField(response, r'''$.following_count'''));
 
-  static String? username(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.username''',
-      ));
+  static String? username(dynamic response) =>
+      castToType<String>(getJsonField(response, r'''$.username'''));
 }
 
 class GetInstagramPublicProfileCall {
-  static Future<ApiCallResponse> call({
-    String? username = '',
-  }) async {
+  static Future<ApiCallResponse> call({String? username = ''}) async {
     return ApiManager.instance.makeApiCall(
       callName: 'getInstagramPublicProfile',
       apiUrl: 'https://www.instagram.com/api/v1/users/web_profile_info/',
@@ -729,9 +645,7 @@ class GetInstagramPublicProfileCall {
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
         'Accept': 'application/json, text/plain, */*',
       },
-      params: {
-        'username': username,
-      },
+      params: {'username': username},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -741,10 +655,9 @@ class GetInstagramPublicProfileCall {
     );
   }
 
-  static int? followersCount(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.data.user.edge_followed_by.count''',
-      ));
+  static int? followersCount(dynamic response) => castToType<int>(
+    getJsonField(response, r'''$.data.user.edge_followed_by.count'''),
+  );
 }
 
 String _toEncodable(dynamic item) {

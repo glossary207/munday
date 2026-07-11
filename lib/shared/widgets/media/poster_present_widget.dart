@@ -12,17 +12,14 @@ import 'package:munday/core/theme/theme.dart';
 export 'poster_present_model.dart';
 
 class PosterPresentWidget extends ConsumerStatefulWidget {
-  const PosterPresentWidget({
-    super.key,
-    this.detail,
-    required this.poster,
-  });
+  const PosterPresentWidget({super.key, this.detail, required this.poster});
 
   final String? detail;
   final String? poster;
 
   @override
-  ConsumerState<PosterPresentWidget> createState() => _PosterPresentWidgetState();
+  ConsumerState<PosterPresentWidget> createState() =>
+      _PosterPresentWidgetState();
 }
 
 class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
@@ -92,7 +89,11 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 0.0),
+                              10.0,
+                              10.0,
+                              10.0,
+                              0.0,
+                            ),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -126,8 +127,9 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                       height: 200.0,
                                       decoration: BoxDecoration(
                                         color: const Color(0xFF1A1A1A),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
                                       ),
                                     );
                                   }
@@ -143,10 +145,12 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                         errorBuilder:
                                             (context, error, stackTrace) =>
                                                 Container(
-                                          width: double.infinity,
-                                          height: 200.0,
-                                          color: const Color(0xFF1A1A1A),
-                                        ),
+                                                  width: double.infinity,
+                                                  height: 200.0,
+                                                  color: const Color(
+                                                    0xFF1A1A1A,
+                                                  ),
+                                                ),
                                       ),
                                     ),
                                   );
@@ -156,7 +160,11 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 0.0),
+                              20.0,
+                              20.0,
+                              20.0,
+                              0.0,
+                            ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,16 +174,35 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        10.0,
+                                      ),
                                       child: SelectionArea(
-                                          child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_sjar8369,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .override(
-                                              font: GoogleFonts.openSans(
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_sjar8369,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .override(
+                                                font: GoogleFonts.openSans(
+                                                  fontWeight: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontWeight,
+                                                  fontStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .fontStyle,
+                                                ),
+                                                color: Theme.of(context)
+                                                    .extension<CustomColors>()!
+                                                    .primaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
@@ -185,65 +212,56 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                                     .bodyMedium!
                                                     .fontStyle,
                                               ),
-                                              color: Theme.of(context)
-                                                  .extension<CustomColors>()!
-                                                  .primaryText,
-                                              fontSize: 20.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontWeight,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
-                                            ),
-                                      )),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                                 SelectionArea(
-                                    child: Text(
-                                  valueOrDefault<String>(
-                                    widget.detail,
-                                    '-',
-                                  ),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .override(
-                                        font: GoogleFonts.openSans(
+                                  child: Text(
+                                    valueOrDefault<String>(widget.detail, '-'),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .override(
+                                          font: GoogleFonts.openSans(
+                                            fontWeight: FontWeight.w300,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
+                                          ),
+                                          color: Theme.of(context)
+                                              .extension<CustomColors>()!
+                                              .secondaryText,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w300,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
-                                        color: Theme.of(context)
-                                            .extension<CustomColors>()!
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w300,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
-                                      ),
-                                )),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 20.0, 10.0, 0.0),
+                              10.0,
+                              20.0,
+                              10.0,
+                              0.0,
+                            ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 10.0, 0.0),
+                                    0.0,
+                                    0.0,
+                                    10.0,
+                                    0.0,
+                                  ),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -256,16 +274,19 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                       width: 50.0,
                                       height: 50.0,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
                                         border: Border.all(
                                           color: Color(0xFF2C2C2C),
                                           width: 2.0,
                                         ),
                                       ),
                                       child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                        alignment: AlignmentDirectional(
+                                          0.0,
+                                          0.0,
+                                        ),
                                         child: Icon(
                                           Icons.arrow_back_ios_outlined,
                                           color: Theme.of(context)
@@ -286,7 +307,7 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0xFFFF0000),
-                                          Color(0xFFCB0000)
+                                          Color(0xFFCB0000),
                                         ],
                                         stops: [0.0, 1.0],
                                         begin: AlignmentDirectional(0.0, -1.0),
@@ -300,8 +321,9 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          AppLocalizations.of(context)!
-                                              .k_13ru3pxc,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.k_13ru3pxc,
                                           maxLines: 1,
                                           style: Theme.of(context)
                                               .textTheme
@@ -350,11 +372,7 @@ class _PosterPresentWidgetState extends ConsumerState<PosterPresentWidget> {
                   borderWidth: 1.0,
                   buttonSize: 50.0,
                   fillColor: Color(0x80000000),
-                  icon: Icon(
-                    Icons.ios_share,
-                    color: Colors.white,
-                    size: 30.0,
-                  ),
+                  icon: Icon(Icons.ios_share, color: Colors.white, size: 30.0),
                   onPressed: () {
                     print('IconButton pressed ...');
                   },

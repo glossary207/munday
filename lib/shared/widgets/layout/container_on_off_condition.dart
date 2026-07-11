@@ -33,7 +33,8 @@ class ContainerOnOffCondition extends ConsumerStatefulWidget {
       _ContainerOnOffConditionState();
 }
 
-class _ContainerOnOffConditionState extends ConsumerState<ContainerOnOffCondition> {
+class _ContainerOnOffConditionState
+    extends ConsumerState<ContainerOnOffCondition> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(

@@ -36,6 +36,72 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
     with TickerProviderStateMixin {
   static const bool _mockMode = false;
   int _selectedTab = 0; // 0=All, 1=Chats, 2=Cheers
+  String? _showDeleteId;
+
+  bool _loadingFriends = true;
+  List<Map<String, dynamic>> _friendsList = [];
+
+  Future<void> _fetchFriends() async {
+    final currentUserUid = currentUserReference?.id;
+    if (currentUserUid == null) {
+      debugPrint('DEBUG _fetchFriends: currentUserUid is null');
+      if (mounted) setState(() => _loadingFriends = false);
+      return;
+    }
+    try {
+      debugPrint('DEBUG _fetchFriends: querying for user $currentUserUid');
+      final res = await Supabase.instance.client
+          .from('friend')
+          .select()
+          .or('user_low_id.eq.$currentUserUid,user_high_id.eq.$currentUserUid');
+
+      debugPrint(
+        'DEBUG _fetchFriends: found ${res.length} rows in friend table',
+      );
+      final List<String> friendUids = [];
+      for (final row in res) {
+        final low = row['user_low_id'] as String;
+        final high = row['user_high_id'] as String;
+        friendUids.add(low == currentUserUid ? high : low);
+      }
+
+      final List<Map<String, dynamic>> friends = [];
+      for (final uid in friendUids) {
+        try {
+          final userRes = await Supabase.instance.client
+              .from('users')
+              .select('id, display_name, photo_url, online')
+              .eq('id', uid)
+              .maybeSingle();
+          if (userRes != null) {
+            friends.add({
+              'uid': uid,
+              'name': userRes['display_name'] ?? '?',
+              'photo':
+                  userRes['photo_url'] ??
+                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+              'online': userRes['online'] ?? false,
+            });
+          }
+        } catch (e) {
+          debugPrint('DEBUG _fetchFriends: error fetching user $uid - $e');
+        }
+      }
+
+      debugPrint(
+        'DEBUG _fetchFriends: finished fetching ${friends.length} user profiles',
+      );
+      if (mounted) {
+        setState(() {
+          _friendsList = friends;
+          _loadingFriends = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('DEBUG _fetchFriends: Error querying friend table: $e');
+      if (mounted) setState(() => _loadingFriends = false);
+    }
+  }
 
   late MainChatModel _model;
 
@@ -47,12 +113,15 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
   void initState() {
     super.initState();
     _model = MainChatModel()..internalInit(context);
+    _fetchFriends();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (!context.appState.relock) {
-        context.appState.namestorelink =
-            valueOrDefault(currentUserDocument?.checkin, '');
+        context.appState.namestorelink = valueOrDefault(
+          currentUserDocument?.checkin,
+          '',
+        );
         context.appState.ActivePromotion = false;
         context.appState.apiready = true;
         context.appState.relock = true;
@@ -97,21 +166,44 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
     StoreRecord? stackStoreRecord,
     ChatRoomsRecord? containerChatRoomsRecord,
   ) {
-    final groupChats =
-        containerChatRoomsRecordList.where((r) => r.groupChat).toList();
-    final dmRooms =
-        containerChatRoomsRecordList.where((r) => !r.groupChat).toList();
-    final dmData = functions
-            .jsonDataRoomAndStore(
-                currentUserReference, dmRooms, stackStoreRecord)
-            ?.toList() ??
-        [];
+    final groupChats = containerChatRoomsRecordList
+        .where((r) => r.groupChat)
+        .toList();
+    final dmRooms = containerChatRoomsRecordList
+        .where((r) => !r.groupChat)
+        .toList();
 
+    final List<Map<String, dynamic>> finalFriendsList = _friendsList.map((
+      friend,
+    ) {
+      final uid = friend['uid'] as String;
+      ChatRoomsRecord? match;
+      for (var r in dmRooms) {
+        if (r.userIds.contains(uid)) {
+          match = r;
+          break;
+        }
+      }
+      return {
+        'room_ref': match?.reference,
+        'user_ref': SupabaseDocRef('users', uid),
+        'photoprofile': friend['photo'],
+        'timeupdate': match?.lastMessageTime,
+        'lastmassage': match?.lastMessage ?? '',
+        'online': friend['online'],
+        'name': friend['name'],
+        'startchat': match?.lastMessage.isNotEmpty ?? false,
+        'LastpersonUpdate': (match?.lastMessageSenderId.isNotEmpty ?? false)
+            ? SupabaseDocRef('users', match!.lastMessageSenderId)
+            : null,
+      };
+    }).toList();
+    final dmData = finalFriendsList;
     final cheersEndSet = {
-      for (final r in currentUserDocument?.cheersEnd ?? []) r.id
+      for (final r in currentUserDocument?.cheersEnd ?? []) r.id,
     };
     final unreadSet = {
-      for (final r in currentUserDocument?.usermassage ?? []) r.id
+      for (final r in currentUserDocument?.usermassage ?? []) r.id,
     };
 
     int unreadChats = 0, unreadCheers = 0;
@@ -132,7 +224,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       Color(0xFFD4EE8C),
       Color(0xFFD0B8F0),
       Color(0xFFFFC5A0),
-      Color(0xFF98E4D0)
+      Color(0xFF98E4D0),
     ];
     final storeName = stackStoreRecord?.namestore ?? '';
     final storeLogo = stackStoreRecord?.logo ?? '';
@@ -149,124 +241,159 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () => context.pop(),
-                      child: const SizedBox(
-                        width: 40.0,
-                        height: 40.0,
-                        child: Icon(Icons.arrow_back_ios_outlined,
-                            color: Colors.white, size: 24.0),
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    if (isCheckedIn)
-                      Row(children: [
-                        Container(
-                          width: 38.0,
-                          height: 38.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: const Color(0xFF1D1D1D),
-                            border: Border.all(
-                                color: const Color(0xFF333333), width: 1.5),
-                            image: storeLogo.isNotEmpty
-                                ? DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(storeLogo))
-                                : null,
+                  Row(
+                    children: [
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () => context.pop(),
+                        child: const SizedBox(
+                          width: 40.0,
+                          height: 40.0,
+                          child: Icon(
+                            Icons.arrow_back_ios_outlined,
+                            color: Colors.white,
+                            size: 24.0,
                           ),
                         ),
-                        const SizedBox(width: 10.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      const SizedBox(width: 10.0),
+                      if (isCheckedIn)
+                        Row(
                           children: [
-                            Text(storeName,
-                                style: const TextStyle(
+                            Container(
+                              width: 38.0,
+                              height: 38.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(0xFF1D1D1D),
+                                border: Border.all(
+                                  color: const Color(0xFF333333),
+                                  width: 1.5,
+                                ),
+                                image: storeLogo.isNotEmpty
+                                    ? DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(storeLogo),
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(width: 10.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  storeName,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700)),
-                            const SizedBox(height: 2.0),
-                            Row(mainAxisSize: MainAxisSize.min, children: [
-                              Container(
-                                  width: 7.0,
-                                  height: 7.0,
-                                  decoration: const BoxDecoration(
-                                      color: Color(0xFF00D333),
-                                      shape: BoxShape.circle)),
-                              const SizedBox(width: 4.0),
-                              const Text('Checked In',
-                                  style: TextStyle(
-                                      color: Color(0xFF00D333),
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.w500)),
-                            ]),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 2.0),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 7.0,
+                                      height: 7.0,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF00D333),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4.0),
+                                    const Text(
+                                      'Checked In',
+                                      style: TextStyle(
+                                        color: Color(0xFF00D333),
+                                        fontSize: 11.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ],
-                        ),
-                      ])
-                    else
-                      const Text(
-                        'Messages',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                  ]),
-                  Row(children: [
-                    GestureDetector(
-                      onTap: () => _showSearchModal(context),
-                      child: Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: const BoxDecoration(
-                            color: Colors.black, shape: BoxShape.circle),
-                        child: Center(
-                          child: Image.asset('assets/images/icon_search.png',
-                              width: 19.0, height: 19.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 6.0),
-                    AuthUserStreamWidget(
-                      builder: (context) => NotificationBadgeButton(
-                        onTap: () =>
-                            context.pushNamed(NotificationPage.routeName),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () => context.pushNamed(ProfilePage.routeName,
-                          queryParameters: {
-                            'fromSeting': serializeParam(false, ParamType.bool)
-                          }.withoutNulls),
-                      child: Container(
-                        width: 48.0,
-                        height: 48.0,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1D1D1D),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(valueOrDefault<String>(
-                                currentUserPhoto,
-                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png')),
+                        )
+                      else
+                        const Text(
+                          'Messages',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ).animateOnPageLoad(
-                          animationsMap['containerOnPageLoadAnimation']!),
-                    ),
-                  ]),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => _showSearchModal(context),
+                        child: Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/images/icon_search.png',
+                              width: 19.0,
+                              height: 19.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6.0),
+                      AuthUserStreamWidget(
+                        builder: (context) => NotificationBadgeButton(
+                          onTap: () =>
+                              context.pushNamed(NotificationPage.routeName),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () => context.pushNamed(
+                          ProfilePage.routeName,
+                          queryParameters: {
+                            'fromSeting': serializeParam(false, ParamType.bool),
+                          }.withoutNulls,
+                        ),
+                        child:
+                            Container(
+                              width: 48.0,
+                              height: 48.0,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF1D1D1D),
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    valueOrDefault<String>(
+                                      currentUserPhoto,
+                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ).animateOnPageLoad(
+                              animationsMap['containerOnPageLoadAnimation']!,
+                            ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -280,39 +407,49 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     if (_selectedTab != 2) ...[
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 8.0, 20.0, 10.0),
+                          20.0,
+                          8.0,
+                          20.0,
+                          10.0,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(children: [
-                              Text('friends ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                            Row(
+                              children: [
+                                Text(
+                                  'friends ',
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
-                                          font: GoogleFonts.openSans(
-                                              fontWeight: FontWeight.w600),
-                                          color: Theme.of(context)
-                                              .extension<CustomColors>()!
-                                              .primaryText,
-                                          fontSize: 16.0)),
-                              Text('(${dmData.length})',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                                        font: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
+                                            .primaryText,
+                                        fontSize: 16.0,
+                                      ),
+                                ),
+                                Text(
+                                  '(${dmData.length})',
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
-                                          font: GoogleFonts.openSans(),
-                                          color: const Color(0xFF9E9E9E),
-                                          fontSize: 14.0)),
-                            ]),
-                            Text('See All',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .override(
                                         font: GoogleFonts.openSans(),
-                                        color: Colors.white,
-                                        fontSize: 13.0)),
+                                        color: const Color(0xFF9E9E9E),
+                                        fontSize: 14.0,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'See All',
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .override(
+                                    font: GoogleFonts.openSans(),
+                                    color: Colors.white,
+                                    fontSize: 13.0,
+                                  ),
+                            ),
                           ],
                         ),
                       ),
@@ -337,110 +474,248 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       child: const AddFriendWidget(),
                                     ),
                                   ),
-                                  child: Column(children: [
-                                    Container(
-                                      width: 60.0,
-                                      height: 60.0,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 60.0,
+                                        height: 60.0,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                          size: 28.0,
+                                        ),
                                       ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 28.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5.0),
-                                    const Text('Add friend',
+                                      const SizedBox(height: 5.0),
+                                      const Text(
+                                        'Add friend',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w500)),
-                                  ]),
+                                          color: Colors.white,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             }
                             final parsed = DatainstoreStruct.maybeFromMap(
-                                dmData[index - 1]);
+                              dmData[index - 1],
+                            );
                             if (parsed == null) return const SizedBox.shrink();
                             final uid = parsed.userRef?.id;
                             final hasUnread =
                                 uid != null && unreadSet.contains(uid);
                             final photo = valueOrDefault<String>(
-                                parsed.photoprofile,
-                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png');
-                            final name =
-                                valueOrDefault<String>(parsed.name, '?');
+                              parsed.photoprofile,
+                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                            );
+                            final name = valueOrDefault<String>(
+                              parsed.name,
+                              '?',
+                            );
                             return GestureDetector(
-                              onTap: () => context.pushNamed(
-                                  ChatsPage.routeName,
-                                  queryParameters: {
-                                    'userProfile':
-                                        serializeParam(photo, ParamType.String),
-                                    'roomref': serializeParam(parsed.roomRef,
-                                        ParamType.SupabaseDocRef),
-                                    'name':
-                                        serializeParam(name, ParamType.String),
-                                    'online': serializeParam(
-                                        parsed.online, ParamType.bool),
-                                    'openchat':
-                                        serializeParam(false, ParamType.bool),
-                                  }.withoutNulls),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
-                                child: Column(children: [
-                                  Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        width: 60.0,
-                                        height: 60.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(photo)),
+                              onLongPress: () {
+                                if (uid != null) {
+                                  setState(() {
+                                    _showDeleteId = uid;
+                                  });
+                                }
+                              },
+                              onTap: () async {
+                                if (_showDeleteId == uid) {
+                                  setState(() {
+                                    _showDeleteId = null;
+                                  });
+                                  return;
+                                }
+
+                                SupabaseDocRef? roomRef = parsed.roomRef;
+                                if (roomRef == null) {
+                                  try {
+                                    final res = await Supabase.instance.client
+                                        .from('chat_rooms')
+                                        .insert({
+                                          'user_ids': [
+                                            currentUserReference!.id,
+                                            uid,
+                                          ],
+                                          'created_time': DateTime.now()
+                                              .toIso8601String(),
+                                          'last_message_time': DateTime.now()
+                                              .toIso8601String(),
+                                          'group_chat': false,
+                                        })
+                                        .select()
+                                        .single();
+                                    roomRef = SupabaseDocRef(
+                                      'chat_rooms',
+                                      res['id'].toString(),
+                                    );
+                                  } catch (e) {
+                                    debugPrint('Error creating chat room: $e');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Failed to open chat. Please try again.',
                                         ),
                                       ),
-                                      if (hasUnread)
-                                        Positioned(
-                                          top: -2,
-                                          right: -2,
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5.0, vertical: 2.0),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFFF0000),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 2.5),
-                                            ),
-                                            constraints: const BoxConstraints(
-                                                minWidth: 20.0,
-                                                minHeight: 20.0),
-                                            child: const Center(
-                                              child: Text('1',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 10.0,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  textAlign: TextAlign.center),
+                                    );
+                                    return;
+                                  }
+                                }
+
+                                context.pushNamed(
+                                  ChatsPage.routeName,
+                                  queryParameters: {
+                                    'userProfile': serializeParam(
+                                      photo,
+                                      ParamType.String,
+                                    ),
+                                    'roomref': serializeParam(
+                                      roomRef,
+                                      ParamType.SupabaseDocRef,
+                                    ),
+                                    'name': serializeParam(
+                                      name,
+                                      ParamType.String,
+                                    ),
+                                    'online': serializeParam(
+                                      parsed.online,
+                                      ParamType.bool,
+                                    ),
+                                    'openchat': serializeParam(
+                                      false,
+                                      ParamType.bool,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: Column(
+                                  children: [
+                                    Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        Container(
+                                          width: 60.0,
+                                          height: 60.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(photo),
                                             ),
                                           ),
                                         ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  Text(name,
+                                        if (hasUnread)
+                                          Positioned(
+                                            top: -2,
+                                            right: -2,
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 5.0,
+                                                    vertical: 2.0,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFFF0000),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 2.5,
+                                                ),
+                                              ),
+                                              constraints: const BoxConstraints(
+                                                minWidth: 20.0,
+                                                minHeight: 20.0,
+                                              ),
+                                              child: const Center(
+                                                child: Text(
+                                                  '1',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        if (_showDeleteId == uid)
+                                          Positioned(
+                                            top: -5,
+                                            right: -5,
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                // 1. Delete chat room
+                                                if (parsed.roomRef != null) {
+                                                  await parsed.roomRef!
+                                                      .delete();
+                                                }
+                                                // 2. Delete friend record
+                                                try {
+                                                  final String lowId =
+                                                      currentUserReference!.id
+                                                              .compareTo(uid!) <
+                                                          0
+                                                      ? currentUserReference!.id
+                                                      : uid;
+                                                  final String highId =
+                                                      currentUserReference!.id
+                                                              .compareTo(uid) >
+                                                          0
+                                                      ? currentUserReference!.id
+                                                      : uid;
+
+                                                  await Supabase.instance.client
+                                                      .from('friend')
+                                                      .delete()
+                                                      .match({
+                                                        'user_low_id': lowId,
+                                                        'user_high_id': highId,
+                                                      });
+                                                } catch (_) {}
+                                                setState(() {
+                                                  _showDeleteId = null;
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.all(
+                                                  2.0,
+                                                ),
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.black,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.cancel,
+                                                  color: Colors.red,
+                                                  size: 20.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    Text(
+                                      name,
                                       style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w500)),
-                                ]),
+                                        color: Colors.white,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -452,32 +727,40 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     if (_selectedTab != 2) ...[
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 15.0, 20.0, 0.0),
+                          20.0,
+                          15.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Groups',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .override(
-                                        font: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.w600),
-                                        color: Theme.of(context)
-                                            .extension<CustomColors>()!
-                                            .primaryText,
-                                        fontSize: 16.0)),
+                            Text(
+                              'Groups',
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .override(
+                                    font: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    color: Theme.of(
+                                      context,
+                                    ).extension<CustomColors>()!.primaryText,
+                                    fontSize: 16.0,
+                                  ),
+                            ),
                             GestureDetector(
                               onTap: () {},
-                              child: Text('+ New',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .override(
-                                          font: GoogleFonts.openSans(
-                                              fontWeight: FontWeight.w500),
-                                          color: const Color(0xFFFF0000),
-                                          fontSize: 13.0)),
+                              child: Text(
+                                '+ New',
+                                style: Theme.of(context).textTheme.bodyMedium!
+                                    .override(
+                                      font: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      color: const Color(0xFFFF0000),
+                                      fontSize: 13.0,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
@@ -487,10 +770,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                         child: groupChats.isEmpty
                             ? Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 20.0,
-                                    right: 20.0,
-                                    top: 10.0,
-                                    bottom: 6.0),
+                                  left: 20.0,
+                                  right: 20.0,
+                                  top: 10.0,
+                                  bottom: 6.0,
+                                ),
                                 child: GestureDetector(
                                   onTap: () {
                                     // TODO: Navigate to group creation
@@ -501,7 +785,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       gradient: const LinearGradient(
                                         colors: [
                                           Color(0xFFE52020),
-                                          Color(0xFF990000)
+                                          Color(0xFF990000),
                                         ],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
@@ -509,11 +793,12 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       borderRadius: BorderRadius.circular(24.0),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: const Color(0xFF990000)
-                                              .withOpacity(0.4),
+                                          color: const Color(
+                                            0xFF990000,
+                                          ).withOpacity(0.4),
                                           blurRadius: 16.0,
                                           offset: const Offset(0, 8),
-                                        )
+                                        ),
                                       ],
                                     ),
                                     child: Stack(
@@ -527,8 +812,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                             width: 140,
                                             height: 140,
                                             decoration: BoxDecoration(
-                                              color: Colors.white
-                                                  .withOpacity(0.06),
+                                              color: Colors.white.withOpacity(
+                                                0.06,
+                                              ),
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -540,8 +826,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                             width: 150,
                                             height: 150,
                                             decoration: BoxDecoration(
-                                              color: Colors.white
-                                                  .withOpacity(0.04),
+                                              color: Colors.white.withOpacity(
+                                                0.04,
+                                              ),
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -549,7 +836,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                         // Content
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 24.0, vertical: 28.0),
+                                            horizontal: 24.0,
+                                            vertical: 28.0,
+                                          ),
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -557,8 +846,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Container(
-                                                padding:
-                                                    const EdgeInsets.all(12),
+                                                padding: const EdgeInsets.all(
+                                                  12,
+                                                ),
                                                 decoration: BoxDecoration(
                                                   color: Colors.white
                                                       .withOpacity(0.15),
@@ -606,13 +896,14 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                       .withOpacity(0.1),
                                                   blurRadius: 8.0,
                                                   offset: const Offset(0, 2),
-                                                )
+                                                ),
                                               ],
                                             ),
                                             child: const Icon(
-                                                Icons.arrow_forward_rounded,
-                                                color: Color(0xFFE52020),
-                                                size: 16),
+                                              Icons.arrow_forward_rounded,
+                                              color: Color(0xFFE52020),
+                                              size: 16,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -623,39 +914,57 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                             : ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.only(
-                                    left: 20.0, top: 10.0, bottom: 6.0),
+                                  left: 20.0,
+                                  top: 10.0,
+                                  bottom: 6.0,
+                                ),
                                 itemCount: groupChats.length,
                                 itemBuilder: (context, index) {
                                   final group = groupChats[index];
                                   final cardColor =
                                       cardColors[index % cardColors.length];
-                                  final isMyGroup = group.userIds
-                                      .contains(currentUserReference?.id);
+                                  final isMyGroup = group.userIds.contains(
+                                    currentUserReference?.id,
+                                  );
                                   return GestureDetector(
                                     onTap: () => context.pushNamed(
-                                        ChatsPage.routeName,
-                                        queryParameters: {
-                                          'userProfile': serializeParam(
-                                              group.imageUrl, ParamType.String),
-                                          'roomref': serializeParam(
-                                              group.reference,
-                                              ParamType.SupabaseDocRef),
-                                          'name': serializeParam(
-                                              group.name, ParamType.String),
-                                          'online': serializeParam(
-                                              true, ParamType.bool),
-                                          'openchat': serializeParam(
-                                              true, ParamType.bool),
-                                        }.withoutNulls),
+                                      ChatsPage.routeName,
+                                      queryParameters: {
+                                        'userProfile': serializeParam(
+                                          group.imageUrl,
+                                          ParamType.String,
+                                        ),
+                                        'roomref': serializeParam(
+                                          group.reference,
+                                          ParamType.SupabaseDocRef,
+                                        ),
+                                        'name': serializeParam(
+                                          group.name,
+                                          ParamType.String,
+                                        ),
+                                        'online': serializeParam(
+                                          true,
+                                          ParamType.bool,
+                                        ),
+                                        'openchat': serializeParam(
+                                          true,
+                                          ParamType.bool,
+                                        ),
+                                      }.withoutNulls,
+                                    ),
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width *
+                                      width:
+                                          MediaQuery.of(context).size.width *
                                           0.85,
-                                      margin:
-                                          const EdgeInsets.only(right: 12.0),
+                                      margin: const EdgeInsets.only(
+                                        right: 12.0,
+                                      ),
                                       decoration: BoxDecoration(
-                                          color: cardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(20.0)),
+                                        color: cardColor,
+                                        borderRadius: BorderRadius.circular(
+                                          20.0,
+                                        ),
+                                      ),
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
                                         crossAxisAlignment:
@@ -673,10 +982,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                       ? group.name
                                                       : 'Group Chat',
                                                   style: const TextStyle(
-                                                      color: Color(0xFF1A1A1A),
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                    color: Color(0xFF1A1A1A),
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -686,61 +995,71 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 4.0),
+                                                      horizontal: 10.0,
+                                                      vertical: 4.0,
+                                                    ),
                                                 decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0x1F000000),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.0)),
+                                                  color: const Color(
+                                                    0x1F000000,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        20.0,
+                                                      ),
+                                                ),
                                                 child: Text(
-                                                    group.imageUrl.isNotEmpty
-                                                        ? 'Venue'
-                                                        : 'Normal',
-                                                    style: const TextStyle(
-                                                        color:
-                                                            Color(0xFF1A1A1A),
-                                                        fontSize: 11.0,
-                                                        fontWeight:
-                                                            FontWeight.w600)),
+                                                  group.imageUrl.isNotEmpty
+                                                      ? 'Venue'
+                                                      : 'Normal',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF1A1A1A),
+                                                    fontSize: 11.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
                                           const SizedBox(height: 12.0),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 8.0),
+                                              horizontal: 10.0,
+                                              vertical: 8.0,
+                                            ),
                                             decoration: BoxDecoration(
                                               color: const Color(0x1A000000),
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
                                             ),
-                                            child: Row(children: [
-                                              const Icon(
+                                            child: Row(
+                                              children: [
+                                                const Icon(
                                                   Icons.chat_bubble_outline,
                                                   color: Color(0x881A1A1A),
-                                                  size: 20.0),
-                                              const SizedBox(width: 8.0),
-                                              Expanded(
-                                                child: Text(
-                                                  group.lastMessage.isNotEmpty
-                                                      ? (group.lastMessageSenderId ==
-                                                              currentUserReference
-                                                                  ?.id
-                                                          ? 'You: ${group.lastMessage}'
-                                                          : group.lastMessage)
-                                                      : 'No messages yet',
-                                                  style: const TextStyle(
-                                                      color: Color(0x881A1A1A),
-                                                      fontSize: 13.0),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                  size: 20.0,
                                                 ),
-                                              ),
-                                            ]),
+                                                const SizedBox(width: 8.0),
+                                                Expanded(
+                                                  child: Text(
+                                                    group.lastMessage.isNotEmpty
+                                                        ? (group.lastMessageSenderId ==
+                                                                  currentUserReference
+                                                                      ?.id
+                                                              ? 'You: ${group.lastMessage}'
+                                                              : group
+                                                                    .lastMessage)
+                                                        : 'No messages yet',
+                                                    style: const TextStyle(
+                                                      color: Color(0x881A1A1A),
+                                                      fontSize: 13.0,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           const SizedBox(height: 12.0),
                                           Row(
@@ -748,32 +1067,36 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                  '${group.userIds.length} members',
-                                                  style: const TextStyle(
-                                                      color: Color(0x991A1A1A),
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
+                                                '${group.userIds.length} members',
+                                                style: const TextStyle(
+                                                  color: Color(0x991A1A1A),
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 16.0,
-                                                        vertical: 7.0),
+                                                      horizontal: 16.0,
+                                                      vertical: 7.0,
+                                                    ),
                                                 decoration: BoxDecoration(
                                                   color: isMyGroup
                                                       ? Colors.black
                                                       : const Color(0xFFFF0000),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          20.0),
+                                                        20.0,
+                                                      ),
                                                 ),
                                                 child: Text(
-                                                    isMyGroup ? 'Open' : 'Join',
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 13.0,
-                                                        fontWeight:
-                                                            FontWeight.w700)),
+                                                  isMyGroup ? 'Open' : 'Join',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -789,18 +1112,23 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     // --- TIER 3: MESSAGES ---
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 15.0, 20.0, 4.0),
-                      child: Text('Messages',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .override(
-                                  font: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w600),
-                                  color: Theme.of(context)
-                                      .extension<CustomColors>()!
-                                      .primaryText,
-                                  fontSize: 16.0)),
+                        20.0,
+                        15.0,
+                        20.0,
+                        4.0,
+                      ),
+                      child: Text(
+                        'Messages',
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                          font: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          color: Theme.of(
+                            context,
+                          ).extension<CustomColors>()!.primaryText,
+                          fontSize: 16.0,
+                        ),
+                      ),
                     ),
 
                     // Venue chat pinned at top
@@ -809,372 +1137,476 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                         containerChatRoomsRecord != null)
                       GestureDetector(
                         onTap: () async {
-                          context.pushNamed(ChatsPage.routeName,
-                              queryParameters: {
-                                'userProfile': serializeParam(
-                                    stackStoreRecord.logo, ParamType.String),
-                                'roomref': serializeParam(
-                                    stackStoreRecord.iDroom,
-                                    ParamType.SupabaseDocRef),
-                                'name': serializeParam(
-                                    stackStoreRecord.namestore,
-                                    ParamType.String),
-                                'online': serializeParam(false, ParamType.bool),
-                                'openchat':
-                                    serializeParam(true, ParamType.bool),
-                              }.withoutNulls);
+                          context.pushNamed(
+                            ChatsPage.routeName,
+                            queryParameters: {
+                              'userProfile': serializeParam(
+                                stackStoreRecord.logo,
+                                ParamType.String,
+                              ),
+                              'roomref': serializeParam(
+                                stackStoreRecord.iDroom,
+                                ParamType.SupabaseDocRef,
+                              ),
+                              'name': serializeParam(
+                                stackStoreRecord.namestore,
+                                ParamType.String,
+                              ),
+                              'online': serializeParam(false, ParamType.bool),
+                              'openchat': serializeParam(true, ParamType.bool),
+                            }.withoutNulls,
+                          );
                           if (stackStoreRecord.iDroom != null) {
                             await stackStoreRecord.iDroom!.update(
-                                createChatRoomsRecordData(
-                                    lastMessageTime: getCurrentTimestamp));
+                              createChatRoomsRecordData(
+                                lastMessageTime: getCurrentTimestamp,
+                              ),
+                            );
                           }
                         },
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              20.0, 14.0, 20.0, 14.0),
-                          child: Row(children: [
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: const Color(0xFF1D1D1D),
-                                image: storeLogo.isNotEmpty
-                                    ? DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(storeLogo))
-                                    : null,
+                            20.0,
+                            14.0,
+                            20.0,
+                            14.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: const Color(0xFF1D1D1D),
+                                  image: storeLogo.isNotEmpty
+                                      ? DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(storeLogo),
+                                        )
+                                      : null,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 12.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 6.0, vertical: 2.0),
-                                      margin: const EdgeInsets.only(right: 6.0),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0x26FF0000),
-                                          borderRadius:
-                                              BorderRadius.circular(4.0)),
-                                      child: const Text('Venue',
-                                          style: TextStyle(
+                              const SizedBox(width: 12.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 6.0,
+                                            vertical: 2.0,
+                                          ),
+                                          margin: const EdgeInsets.only(
+                                            right: 6.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0x26FF0000),
+                                            borderRadius: BorderRadius.circular(
+                                              4.0,
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Venue',
+                                            style: TextStyle(
                                               color: Color(0xFFFF0000),
                                               fontSize: 10.0,
-                                              fontWeight: FontWeight.w600)),
-                                    ),
-                                    Flexible(
-                                      child: Text(storeName,
-                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            storeName,
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14.0,
-                                              fontWeight: FontWeight.w600),
-                                          overflow: TextOverflow.ellipsis),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ]),
-                                  const SizedBox(height: 3.0),
-                                  Text(
-                                    containerChatRoomsRecord
-                                            .lastMessage.isNotEmpty
-                                        ? (containerChatRoomsRecord
-                                                    .lastMessageSenderId ==
-                                                currentUserReference?.id
-                                            ? 'You: ${containerChatRoomsRecord.lastMessage}'
-                                            : containerChatRoomsRecord
-                                                .lastMessage)
-                                        : 'Say hello! 👋',
-                                    style: const TextStyle(
+                                    const SizedBox(height: 3.0),
+                                    Text(
+                                      containerChatRoomsRecord
+                                              .lastMessage
+                                              .isNotEmpty
+                                          ? (containerChatRoomsRecord
+                                                        .lastMessageSenderId ==
+                                                    currentUserReference?.id
+                                                ? 'You: ${containerChatRoomsRecord.lastMessage}'
+                                                : containerChatRoomsRecord
+                                                      .lastMessage)
+                                          : 'Say hello! 👋',
+                                      style: const TextStyle(
                                         color: Color(0xFF9E9E9E),
-                                        fontSize: 13.0),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                        fontSize: 13.0,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    containerChatRoomsRecord.lastMessageTime !=
+                                            null
+                                        ? dateTimeFormat(
+                                            'Hm',
+                                            containerChatRoomsRecord
+                                                .lastMessageTime!,
+                                            locale: Localizations.localeOf(
+                                              context,
+                                            ).languageCode,
+                                          )
+                                        : '',
+                                    style: const TextStyle(
+                                      color: Color(0xFF9E9E9E),
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  const Icon(
+                                    Icons.done_all,
+                                    size: 16.0,
+                                    color: Color(0xFF4FC3F7),
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(width: 8.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  containerChatRoomsRecord.lastMessageTime !=
-                                          null
-                                      ? dateTimeFormat(
-                                          'Hm',
-                                          containerChatRoomsRecord
-                                              .lastMessageTime!,
-                                          locale:
-                                              Localizations.localeOf(context)
-                                                  .languageCode)
-                                      : '',
-                                  style: const TextStyle(
-                                      color: Color(0xFF9E9E9E), fontSize: 12.0),
-                                ),
-                                const SizedBox(height: 5.0),
-                                const Icon(Icons.done_all,
-                                    size: 16.0, color: Color(0xFF4FC3F7)),
-                              ],
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
                       ),
 
                     // DM list (filtered by tab)
-                    Builder(builder: (context) {
-                      final filteredDms = dmData.where((d) {
-                        final p = DatainstoreStruct.maybeFromMap(d);
-                        if (p == null) return false;
-                        final uid = p.userRef?.id;
-                        final isCheers =
-                            uid != null && cheersEndSet.contains(uid);
-                        if (_selectedTab == 1) return !isCheers;
-                        if (_selectedTab == 2) return isCheers;
-                        return true;
-                      }).toList();
-
-                      if (filteredDms.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 32.0, horizontal: 20.0),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 80,
-                                  height: 80,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF1A1A1A),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                        Icons.chat_bubble_outline_rounded,
-                                        size: 36.0,
-                                        color: Color(0xFF444444)),
-                                  ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                Text(
-                                  'ยังไม่มีข้อความ',
-                                  style: GoogleFonts.openSans(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 6.0),
-                                Text(
-                                  'ข้อความหรือการทักทายของคุณจะปรากฏที่นี่\nเมื่อคุณเริ่มพูดคุยกับเพื่อน',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.openSans(
-                                    color: const Color(0xFF9E9E9E),
-                                    fontSize: 13.0,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: filteredDms.length,
-                        itemBuilder: (context, index) {
-                          final parsed = DatainstoreStruct.maybeFromMap(
-                              filteredDms[index]);
-                          if (parsed == null) return const SizedBox.shrink();
-                          final searchText = _model.textController?.text ?? '';
-                          if (searchText.isNotEmpty &&
-                              !(functions.showsearch(searchText, parsed.name) ??
-                                  true)) {
-                            return const SizedBox.shrink();
-                          }
-                          final uid = parsed.userRef?.id;
-                          final hasUnread =
-                              uid != null && unreadSet.contains(uid);
+                    Builder(
+                      builder: (context) {
+                        final filteredDms = dmData.where((d) {
+                          final p = DatainstoreStruct.maybeFromMap(d);
+                          if (p == null) return false;
+                          final uid = p.userRef?.id;
                           final isCheers =
                               uid != null && cheersEndSet.contains(uid);
-                          final photo = valueOrDefault<String>(
-                              parsed.photoprofile,
-                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png');
-                          final name =
-                              valueOrDefault<String>(parsed.name, 'ไม่ระบุ');
+                          if (_selectedTab == 1) return !isCheers;
+                          if (_selectedTab == 2) return isCheers;
+                          return true;
+                        }).toList();
 
-                          return GestureDetector(
-                            onTap: () async {
-                              context.pushNamed(ChatsPage.routeName,
-                                  queryParameters: {
-                                    'userProfile':
-                                        serializeParam(photo, ParamType.String),
-                                    'roomref': serializeParam(parsed.roomRef,
-                                        ParamType.SupabaseDocRef),
-                                    'name':
-                                        serializeParam(name, ParamType.String),
-                                    'online': serializeParam(
-                                        parsed.online, ParamType.bool),
-                                    'openchat':
-                                        serializeParam(false, ParamType.bool),
-                                  }.withoutNulls);
-                              if (parsed.roomRef != null) {
-                                await parsed.roomRef!.update(
-                                    createChatRoomsRecordData(
-                                        lastMessageTime: getCurrentTimestamp));
-                              }
-                              if (parsed.userRef != null) {
-                                await currentUserReference!.update({
-                                  ...mapToSupabase({
-                                    'usermassageRead':
-                                        FieldValue.arrayUnion([parsed.userRef])
-                                  })
-                                });
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 14.0, 20.0, 14.0),
-                              child: Row(children: [
-                                Stack(children: [
+                        if (filteredDms.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 32.0,
+                              horizontal: 20.0,
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                                   Container(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    decoration: BoxDecoration(
+                                    width: 80,
+                                    height: 80,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF1A1A1A),
                                       shape: BoxShape.circle,
-                                      color: const Color(0xFF1D1D1D),
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(photo)),
                                     ),
-                                  ),
-                                  if (parsed.online)
-                                    Positioned(
-                                      bottom: 1.0,
-                                      right: 1.0,
-                                      child: Container(
-                                        width: 13.0,
-                                        height: 13.0,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFF00D333),
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0)),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.chat_bubble_outline_rounded,
+                                        size: 36.0,
+                                        color: Color(0xFF444444),
                                       ),
                                     ),
-                                ]),
-                                const SizedBox(width: 12.0),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        if (isCheers)
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 6.0, vertical: 2.0),
-                                            margin: const EdgeInsets.only(
-                                                right: 6.0),
-                                            decoration: BoxDecoration(
-                                                color: const Color(0x33FF0000),
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0)),
-                                            child: const Icon(Icons.favorite,
-                                                size: 10.0,
-                                                color: Color(0xFFFF0000)),
-                                          ),
-                                        Flexible(
-                                          child: Text(name,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .override(
-                                                      font:
-                                                          GoogleFonts.openSans(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                      color: Colors.white,
-                                                      fontSize: 14.0)),
-                                        ),
-                                      ]),
-                                      const SizedBox(height: 3.0),
-                                      Text(
-                                        parsed.lastmassage.isNotEmpty
-                                            ? (parsed.lastpersonUpdate ==
-                                                    currentUserReference
-                                                ? 'You: ${parsed.lastmassage}'
-                                                : parsed.lastmassage)
-                                            : '',
-                                        style: TextStyle(
-                                          color: hasUnread
-                                              ? Colors.white
-                                              : const Color(0xFF9E9E9E),
-                                          fontSize: 13.0,
-                                          fontWeight: hasUnread
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
                                   ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      parsed.timeupdate != null
-                                          ? dateTimeFormat(
-                                              'Hm', parsed.timeupdate!,
-                                              locale: Localizations.localeOf(
-                                                      context)
-                                                  .languageCode)
-                                          : '',
-                                      style: const TextStyle(
-                                          color: Color(0xFF9E9E9E),
-                                          fontSize: 12.0),
+                                  const SizedBox(height: 16.0),
+                                  Text(
+                                    'ยังไม่มีข้อความ',
+                                    style: GoogleFonts.openSans(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    const SizedBox(height: 5.0),
-                                    if (hasUnread)
-                                      Container(
-                                        width: 20.0,
-                                        height: 20.0,
-                                        decoration: const BoxDecoration(
-                                            color: Color(0xFFFF0000),
-                                            shape: BoxShape.circle),
-                                        child: const Center(
-                                            child: Text('1',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 11.0,
-                                                    fontWeight:
-                                                        FontWeight.bold))),
-                                      )
-                                    else
-                                      const Icon(Icons.done_all,
-                                          size: 16.0, color: Color(0xFF4FC3F7)),
-                                  ],
-                                ),
-                              ]),
+                                  ),
+                                  const SizedBox(height: 6.0),
+                                  Text(
+                                    'ข้อความหรือการทักทายของคุณจะปรากฏที่นี่\nเมื่อคุณเริ่มพูดคุยกับเพื่อน',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.openSans(
+                                      color: const Color(0xFF9E9E9E),
+                                      fontSize: 13.0,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
-                        },
-                      );
-                    }),
+                        }
+
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: filteredDms.length,
+                          itemBuilder: (context, index) {
+                            final parsed = DatainstoreStruct.maybeFromMap(
+                              filteredDms[index],
+                            );
+                            if (parsed == null) return const SizedBox.shrink();
+                            final searchText =
+                                _model.textController?.text ?? '';
+                            if (searchText.isNotEmpty &&
+                                !(functions.showsearch(
+                                      searchText,
+                                      parsed.name,
+                                    ) ??
+                                    true)) {
+                              return const SizedBox.shrink();
+                            }
+                            final uid = parsed.userRef?.id;
+                            final hasUnread =
+                                uid != null && unreadSet.contains(uid);
+                            final isCheers =
+                                uid != null && cheersEndSet.contains(uid);
+                            final photo = valueOrDefault<String>(
+                              parsed.photoprofile,
+                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
+                            );
+                            final name = valueOrDefault<String>(
+                              parsed.name,
+                              'ไม่ระบุ',
+                            );
+
+                            return GestureDetector(
+                              onTap: () async {
+                                context.pushNamed(
+                                  ChatsPage.routeName,
+                                  queryParameters: {
+                                    'userProfile': serializeParam(
+                                      photo,
+                                      ParamType.String,
+                                    ),
+                                    'roomref': serializeParam(
+                                      parsed.roomRef,
+                                      ParamType.SupabaseDocRef,
+                                    ),
+                                    'name': serializeParam(
+                                      name,
+                                      ParamType.String,
+                                    ),
+                                    'online': serializeParam(
+                                      parsed.online,
+                                      ParamType.bool,
+                                    ),
+                                    'openchat': serializeParam(
+                                      false,
+                                      ParamType.bool,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                                if (parsed.roomRef != null) {
+                                  await parsed.roomRef!.update(
+                                    createChatRoomsRecordData(
+                                      lastMessageTime: getCurrentTimestamp,
+                                    ),
+                                  );
+                                }
+                                if (parsed.userRef != null) {
+                                  await currentUserReference!.update({
+                                    ...mapToSupabase({
+                                      'usermassageRead': FieldValue.arrayUnion([
+                                        parsed.userRef,
+                                      ]),
+                                    }),
+                                  });
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20.0,
+                                  14.0,
+                                  20.0,
+                                  14.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: const Color(0xFF1D1D1D),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(photo),
+                                            ),
+                                          ),
+                                        ),
+                                        if (parsed.online)
+                                          Positioned(
+                                            bottom: 1.0,
+                                            right: 1.0,
+                                            child: Container(
+                                              width: 13.0,
+                                              height: 13.0,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFF00D333),
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 2.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 12.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              if (isCheers)
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 6.0,
+                                                        vertical: 2.0,
+                                                      ),
+                                                  margin: const EdgeInsets.only(
+                                                    right: 6.0,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(
+                                                      0x33FF0000,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          4.0,
+                                                        ),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.favorite,
+                                                    size: 10.0,
+                                                    color: Color(0xFFFF0000),
+                                                  ),
+                                                ),
+                                              Flexible(
+                                                child: Text(
+                                                  name,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .override(
+                                                        font:
+                                                            GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                        color: Colors.white,
+                                                        fontSize: 14.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 3.0),
+                                          Text(
+                                            parsed.lastmassage.isNotEmpty
+                                                ? (parsed.lastpersonUpdate ==
+                                                          currentUserReference
+                                                      ? 'You: ${parsed.lastmassage}'
+                                                      : parsed.lastmassage)
+                                                : '',
+                                            style: TextStyle(
+                                              color: hasUnread
+                                                  ? Colors.white
+                                                  : const Color(0xFF9E9E9E),
+                                              fontSize: 13.0,
+                                              fontWeight: hasUnread
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8.0),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          parsed.timeupdate != null
+                                              ? dateTimeFormat(
+                                                  'Hm',
+                                                  parsed.timeupdate!,
+                                                  locale:
+                                                      Localizations.localeOf(
+                                                        context,
+                                                      ).languageCode,
+                                                )
+                                              : '',
+                                          style: const TextStyle(
+                                            color: Color(0xFF9E9E9E),
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5.0),
+                                        if (hasUnread)
+                                          Container(
+                                            width: 20.0,
+                                            height: 20.0,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFFF0000),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                '1',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 11.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        else
+                                          const Icon(
+                                            Icons.done_all,
+                                            size: 16.0,
+                                            color: Color(0xFF4FC3F7),
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
 
                     const SizedBox(height: 80.0),
                   ],
@@ -1191,9 +1623,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
             ((currentUserDocument?.cheersEnd.toList() ?? []).length != 0))
           StreamBuilder<UsersRecord>(
             stream: UsersRecord.getDocument(
-                (currentUserDocument?.cheersEnd.toList() ?? []).elementAtOrNull(
-                    (currentUserDocument?.showprofilecheers.toList() ?? [])
-                        .length)!),
+              (currentUserDocument?.cheersEnd.toList() ?? []).elementAtOrNull(
+                (currentUserDocument?.showprofilecheers.toList() ?? []).length,
+              )!,
+            ),
             builder: (context, snapshot) {
               if (!snapshot.hasData) return const SizedBox.shrink();
               final card33UserGridUsersRecord = snapshot.data!;
@@ -1206,21 +1639,26 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                   context.pushNamed(MainChatPage.routeName);
                   await currentUserReference!.update({
                     ...mapToSupabase({
-                      'showprofilecheers': FieldValue.arrayUnion(
-                          [card33UserGridUsersRecord.reference]),
+                      'showprofilecheers': FieldValue.arrayUnion([
+                        card33UserGridUsersRecord.reference,
+                      ]),
                     }),
                   });
                 },
                 child: ChangeNotifierProvider.value(
                   value: _model.card33UserGridModel.setOnUpdate(
-                      onUpdate: () => safeSetState(() {}),
-                      updateOnChange: true),
+                    onUpdate: () => safeSetState(() {}),
+                    updateOnChange: true,
+                  ),
                   child: Card33UserGridWidget(
                     name: valueOrDefault<String>(
-                        card33UserGridUsersRecord.displayName, 'ไม่ระบุ'),
+                      card33UserGridUsersRecord.displayName,
+                      'ไม่ระบุ',
+                    ),
                     image: valueOrDefault<String>(
-                        card33UserGridUsersRecord.photoUrl,
-                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png'),
+                      card33UserGridUsersRecord.photoUrl,
+                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/wxo4ctrb4v72/profile.png',
+                    ),
                     uid: card33UserGridUsersRecord.reference,
                   ),
                 ),
@@ -1261,31 +1699,31 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       'name': 'Anna',
       'photo': 'https://i.pravatar.cc/150?img=5',
       'online': true,
-      'unreadCount': 3
+      'unreadCount': 3,
     },
     {
       'name': 'Lisa',
       'photo': 'https://i.pravatar.cc/150?img=9',
       'online': true,
-      'unreadCount': 0
+      'unreadCount': 0,
     },
     {
       'name': 'Mark',
       'photo': 'https://i.pravatar.cc/150?img=11',
       'online': false,
-      'unreadCount': 12
+      'unreadCount': 12,
     },
     {
       'name': 'Sara',
       'photo': 'https://i.pravatar.cc/150?img=12',
       'online': true,
-      'unreadCount': 0
+      'unreadCount': 0,
     },
     {
       'name': 'John',
       'photo': 'https://i.pravatar.cc/150?img=13',
       'online': false,
-      'unreadCount': 1
+      'unreadCount': 1,
     },
   ];
 
@@ -1331,7 +1769,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       'me': false,
       'online': true,
       'type': 'friend',
-      'photo': 'https://i.pravatar.cc/150?img=1'
+      'photo': 'https://i.pravatar.cc/150?img=1',
     },
     {
       'name': 'SLP',
@@ -1341,7 +1779,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       'me': false,
       'online': false,
       'type': 'friend',
-      'photo': 'https://i.pravatar.cc/150?img=2'
+      'photo': 'https://i.pravatar.cc/150?img=2',
     },
     {
       'name': 'Rose',
@@ -1351,7 +1789,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       'me': true,
       'online': true,
       'type': 'cheers',
-      'photo': 'https://i.pravatar.cc/150?img=3'
+      'photo': 'https://i.pravatar.cc/150?img=3',
     },
   ];
 
@@ -1367,57 +1805,78 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(children: [
-                    const SizedBox(
-                      width: 40.0,
-                      height: 40.0,
-                      child: Icon(Icons.arrow_back_ios_outlined,
-                          color: Colors.white, size: 24.0),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Row(children: [
-                      Container(
-                        width: 38.0,
-                        height: 38.0,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: const Color(0xFF1D1D1D),
-                          border: Border.all(
-                              color: const Color(0xFF333333), width: 1.5),
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(_mockStoreLogo)),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 40.0,
+                        height: 40.0,
+                        child: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                          size: 24.0,
                         ),
                       ),
                       const SizedBox(width: 10.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+                      Row(
                         children: [
-                          const Text(_mockStore,
-                              style: TextStyle(
+                          Container(
+                            width: 38.0,
+                            height: 38.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xFF1D1D1D),
+                              border: Border.all(
+                                color: const Color(0xFF333333),
+                                width: 1.5,
+                              ),
+                              image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(_mockStoreLogo),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                _mockStore,
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
-                                  fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 2.0),
-                          Row(mainAxisSize: MainAxisSize.min, children: [
-                            Container(
-                                width: 7.0,
-                                height: 7.0,
-                                decoration: const BoxDecoration(
-                                    color: Color(0xFF00D333),
-                                    shape: BoxShape.circle)),
-                            const SizedBox(width: 4.0),
-                            const Text('Checked In',
-                                style: TextStyle(
-                                    color: Color(0xFF00D333),
-                                    fontSize: 11.0,
-                                    fontWeight: FontWeight.w500)),
-                          ]),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 2.0),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: 7.0,
+                                    height: 7.0,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF00D333),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4.0),
+                                  const Text(
+                                    'Checked In',
+                                    style: TextStyle(
+                                      color: Color(0xFF00D333),
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                    ]),
-                  ]),
+                    ],
+                  ),
                   Row(
                     children: [
                       GestureDetector(
@@ -1444,9 +1903,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                           color: Color(0xFF1D1D1D),
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://i.pravatar.cc/150?img=10')),
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://i.pravatar.cc/150?img=10',
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -1464,43 +1925,53 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     if (_selectedTab != 2) ...[
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 8.0, 20.0, 10.0),
+                          20.0,
+                          8.0,
+                          20.0,
+                          10.0,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Text('friends ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .override(
-                                            font: GoogleFonts.openSans(
-                                                fontWeight: FontWeight.w600),
-                                            color: Theme.of(context)
-                                                .extension<CustomColors>()!
-                                                .primaryText,
-                                            fontSize: 16.0)),
-                                Text('(20)',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .override(
-                                            font: GoogleFonts.openSans(
-                                                fontWeight: FontWeight.normal),
-                                            color: const Color(0xFF9E9E9E),
-                                            fontSize: 14.0)),
+                                Text(
+                                  'friends ',
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .override(
+                                        font: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        color: Theme.of(context)
+                                            .extension<CustomColors>()!
+                                            .primaryText,
+                                        fontSize: 16.0,
+                                      ),
+                                ),
+                                Text(
+                                  '(20)',
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .override(
+                                        font: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        color: const Color(0xFF9E9E9E),
+                                        fontSize: 14.0,
+                                      ),
+                                ),
                               ],
                             ),
-                            Text('See All',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .override(
-                                        font: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.normal),
-                                        color: Colors.white,
-                                        fontSize: 13.0)),
+                            Text(
+                              'See All',
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .override(
+                                    font: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    color: Colors.white,
+                                    fontSize: 13.0,
+                                  ),
+                            ),
                           ],
                         ),
                       ),
@@ -1523,8 +1994,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       context: context,
                                       builder: (context) {
                                         return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
+                                          padding: MediaQuery.viewInsetsOf(
+                                            context,
+                                          ),
                                           child: const AddFriendWidget(),
                                         );
                                       },
@@ -1549,10 +2021,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       const Text(
                                         'Add friend',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w500),
-                                      )
+                                          color: Colors.white,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -1562,20 +2035,26 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                             final cheer = _mockCheers[index - 1];
                             return GestureDetector(
                               onTap: () => context.pushNamed(
-                                  ChatsPage.routeName,
-                                  queryParameters: {
-                                    'userProfile': serializeParam(
-                                        cheer['photo'] as String,
-                                        ParamType.String),
-                                    'name': serializeParam(
-                                        cheer['name'] as String,
-                                        ParamType.String),
-                                    'online': serializeParam(
-                                        cheer['online'] as bool,
-                                        ParamType.bool),
-                                    'openchat':
-                                        serializeParam(false, ParamType.bool),
-                                  }.withoutNulls),
+                                ChatsPage.routeName,
+                                queryParameters: {
+                                  'userProfile': serializeParam(
+                                    cheer['photo'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'name': serializeParam(
+                                    cheer['name'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'online': serializeParam(
+                                    cheer['online'] as bool,
+                                    ParamType.bool,
+                                  ),
+                                  'openchat': serializeParam(
+                                    false,
+                                    ParamType.bool,
+                                  ),
+                                }.withoutNulls,
+                              ),
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
                                 child: Column(
@@ -1591,7 +2070,8 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                  cheer['photo'] as String),
+                                                cheer['photo'] as String,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1604,15 +2084,17 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                             child: Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 5.0,
-                                                      vertical: 2.0),
+                                                    horizontal: 5.0,
+                                                    vertical: 2.0,
+                                                  ),
                                               decoration: BoxDecoration(
                                                 color: const Color(0xFFFF0000),
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
                                                 border: Border.all(
-                                                  color:
-                                                      const Color(0xFF000000),
+                                                  color: const Color(
+                                                    0xFF000000,
+                                                  ),
                                                   width: 2.5,
                                                 ),
                                               ),
@@ -1640,10 +2122,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                     Text(
                                       cheer['name'] as String,
                                       style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w500),
-                                    )
+                                        color: Colors.white,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1657,30 +2140,38 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     if (_selectedTab != 2) ...[
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 15.0, 20.0, 0.0),
+                          20.0,
+                          15.0,
+                          20.0,
+                          0.0,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Groups',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .override(
-                                        font: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.w600),
-                                        color: Theme.of(context)
-                                            .extension<CustomColors>()!
-                                            .primaryText,
-                                        fontSize: 16.0)),
-                            Text('+ New',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .override(
-                                        font: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.w500),
-                                        color: const Color(0xFFFF0000),
-                                        fontSize: 13.0)),
+                            Text(
+                              'Groups',
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .override(
+                                    font: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    color: Theme.of(
+                                      context,
+                                    ).extension<CustomColors>()!.primaryText,
+                                    fontSize: 16.0,
+                                  ),
+                            ),
+                            Text(
+                              '+ New',
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .override(
+                                    font: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    color: const Color(0xFFFF0000),
+                                    fontSize: 13.0,
+                                  ),
+                            ),
                           ],
                         ),
                       ),
@@ -1689,7 +2180,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.only(
-                              left: 20.0, top: 10.0, bottom: 6.0),
+                            left: 20.0,
+                            top: 10.0,
+                            bottom: 6.0,
+                          ),
                           itemCount: _mockGroups.length,
                           itemBuilder: (context, index) {
                             final group = _mockGroups[index];
@@ -1703,25 +2197,33 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                 (avatars.length - 1) * 20.0 + 36.0;
                             return GestureDetector(
                               onTap: () => context.pushNamed(
-                                  ChatsPage.routeName,
-                                  queryParameters: {
-                                    'userProfile': serializeParam(
-                                        group['senderPhoto'] as String,
-                                        ParamType.String),
-                                    'name': serializeParam(
-                                        group['name'] as String,
-                                        ParamType.String),
-                                    'online':
-                                        serializeParam(true, ParamType.bool),
-                                    'openchat':
-                                        serializeParam(true, ParamType.bool),
-                                  }.withoutNulls),
+                                ChatsPage.routeName,
+                                queryParameters: {
+                                  'userProfile': serializeParam(
+                                    group['senderPhoto'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'name': serializeParam(
+                                    group['name'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'online': serializeParam(
+                                    true,
+                                    ParamType.bool,
+                                  ),
+                                  'openchat': serializeParam(
+                                    true,
+                                    ParamType.bool,
+                                  ),
+                                }.withoutNulls,
+                              ),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.85,
                                 margin: const EdgeInsets.only(right: 12.0),
                                 decoration: BoxDecoration(
-                                    color: cardColor,
-                                    borderRadius: BorderRadius.circular(20.0)),
+                                  color: cardColor,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1736,9 +2238,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                           child: Text(
                                             group['name'] as String,
                                             style: const TextStyle(
-                                                color: Color(0xFF1A1A1A),
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
+                                              color: Color(0xFF1A1A1A),
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -1752,38 +2255,46 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                               shape: BoxShape.circle,
                                               color: Color(0x1F000000),
                                               image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                      _mockStoreLogo)),
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                  _mockStoreLogo,
+                                                ),
+                                              ),
                                             ),
                                           )
                                         else
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 4.0),
+                                              horizontal: 10.0,
+                                              vertical: 4.0,
+                                            ),
                                             decoration: BoxDecoration(
-                                                color: const Color(0x1F000000),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        20.0)),
-                                            child: const Text('Normal',
-                                                style: TextStyle(
-                                                    color: Color(0xFF1A1A1A),
-                                                    fontSize: 11.0,
-                                                    fontWeight:
-                                                        FontWeight.w600)),
+                                              color: const Color(0x1F000000),
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            child: const Text(
+                                              'Normal',
+                                              style: TextStyle(
+                                                color: Color(0xFF1A1A1A),
+                                                fontSize: 11.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
                                       ],
                                     ),
                                     const SizedBox(height: 12.0),
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0, vertical: 8.0),
+                                        horizontal: 10.0,
+                                        vertical: 8.0,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: const Color(0x1A000000),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
+                                        borderRadius: BorderRadius.circular(
+                                          12.0,
+                                        ),
                                       ),
                                       child: Row(
                                         children: [
@@ -1793,10 +2304,12 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                      group['senderPhoto']
-                                                          as String)),
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                  group['senderPhoto']
+                                                      as String,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 10.0),
@@ -1808,10 +2321,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                 Text(
                                                   group['senderName'] as String,
                                                   style: const TextStyle(
-                                                      color: Color(0xFF1A1A1A),
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w600),
+                                                    color: Color(0xFF1A1A1A),
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
@@ -1819,8 +2332,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                                 Text(
                                                   group['lastMsg'] as String,
                                                   style: const TextStyle(
-                                                      color: Color(0x881A1A1A),
-                                                      fontSize: 13.0),
+                                                    color: Color(0x881A1A1A),
+                                                    fontSize: 13.0,
+                                                  ),
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -1843,56 +2357,62 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                               height: 36.0,
                                               child: Stack(
                                                 children: List.generate(
-                                                    avatars.length,
-                                                    (i) => Positioned(
-                                                          left: i * 20.0,
-                                                          child: Container(
-                                                            width: 36.0,
-                                                            height: 36.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              border: Border.all(
-                                                                  color:
-                                                                      cardColor,
-                                                                  width: 2.0),
-                                                              image: DecorationImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  image: NetworkImage(
-                                                                      avatars[i]
-                                                                          as String)),
-                                                            ),
+                                                  avatars.length,
+                                                  (i) => Positioned(
+                                                    left: i * 20.0,
+                                                    child: Container(
+                                                      width: 36.0,
+                                                      height: 36.0,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color: cardColor,
+                                                          width: 2.0,
+                                                        ),
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: NetworkImage(
+                                                            avatars[i]
+                                                                as String,
                                                           ),
-                                                        )),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                             if (extraMembers > 0) ...[
                                               const SizedBox(width: 8.0),
-                                              Text('+$extraMembers',
-                                                  style: const TextStyle(
-                                                      color: Color(0x991A1A1A),
-                                                      fontSize: 13.0,
-                                                      fontWeight:
-                                                          FontWeight.w600)),
+                                              Text(
+                                                '+$extraMembers',
+                                                style: const TextStyle(
+                                                  color: Color(0x991A1A1A),
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
                                             ],
                                           ],
                                         ),
                                         Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0, vertical: 7.0),
+                                            horizontal: 16.0,
+                                            vertical: 7.0,
+                                          ),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFF0000),
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
+                                            borderRadius: BorderRadius.circular(
+                                              20.0,
+                                            ),
                                           ),
                                           child: Text(
                                             canJoin ? 'Join' : '+ Add',
                                             style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13.0,
-                                                fontWeight: FontWeight.w700),
+                                              color: Colors.white,
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -1909,95 +2429,138 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     // --- TIER 3: MESSAGES (Direct Messages) ---
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 15.0, 20.0, 4.0),
-                      child: Text('Messages',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .override(
-                                  font: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w600),
-                                  color: Theme.of(context)
-                                      .extension<CustomColors>()!
-                                      .primaryText,
-                                  fontSize: 16.0)),
+                        20.0,
+                        15.0,
+                        20.0,
+                        4.0,
+                      ),
+                      child: Text(
+                        'Messages',
+                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                          font: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          color: Theme.of(
+                            context,
+                          ).extension<CustomColors>()!.primaryText,
+                          fontSize: 16.0,
+                        ),
+                      ),
                     ),
                     // Venue chat pinned at the top
                     if (_selectedTab != 2)
                       GestureDetector(
-                        onTap: () => context.pushNamed(ChatsPage.routeName,
-                            queryParameters: {
-                              'userProfile': serializeParam(
-                                  _mockStoreLogo, ParamType.String),
-                              'name':
-                                  serializeParam(_mockStore, ParamType.String),
-                              'online': serializeParam(true, ParamType.bool),
-                              'openchat': serializeParam(true, ParamType.bool),
-                            }.withoutNulls),
+                        onTap: () => context.pushNamed(
+                          ChatsPage.routeName,
+                          queryParameters: {
+                            'userProfile': serializeParam(
+                              _mockStoreLogo,
+                              ParamType.String,
+                            ),
+                            'name': serializeParam(
+                              _mockStore,
+                              ParamType.String,
+                            ),
+                            'online': serializeParam(true, ParamType.bool),
+                            'openchat': serializeParam(true, ParamType.bool),
+                          }.withoutNulls,
+                        ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              20.0, 14.0, 20.0, 14.0),
-                          child: Row(children: [
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: const BoxDecoration(
+                            20.0,
+                            14.0,
+                            20.0,
+                            14.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Color(0xFF1D1D1D),
                                   image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(_mockStoreLogo))),
-                            ),
-                            const SizedBox(width: 12.0),
-                            Expanded(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(_mockStoreLogo),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12.0),
+                              Expanded(
                                 child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                  Row(children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 6.0, vertical: 2.0),
-                                      margin: const EdgeInsets.only(right: 6.0),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0x26FF0000),
-                                          borderRadius:
-                                              BorderRadius.circular(4.0)),
-                                      child: const Text('Venue',
-                                          style: TextStyle(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 6.0,
+                                            vertical: 2.0,
+                                          ),
+                                          margin: const EdgeInsets.only(
+                                            right: 6.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0x26FF0000),
+                                            borderRadius: BorderRadius.circular(
+                                              4.0,
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Venue',
+                                            style: TextStyle(
                                               color: Color(0xFFFF0000),
                                               fontSize: 10.0,
-                                              fontWeight: FontWeight.w600)),
-                                    ),
-                                    const Text(_mockStore,
-                                        style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        const Text(
+                                          _mockStore,
+                                          style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14.0,
-                                            fontWeight: FontWeight.w600)),
-                                  ]),
-                                  const SizedBox(height: 3.0),
-                                  const Text(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 3.0),
+                                    const Text(
                                       'You: Welcome everyone to Levels! 🎉',
                                       style: TextStyle(
-                                          color: Color(0xFF9E9E9E),
-                                          fontSize: 13.0),
+                                        color: Color(0xFF9E9E9E),
+                                        fontSize: 13.0,
+                                      ),
                                       maxLines: 1,
-                                      overflow: TextOverflow.ellipsis),
-                                ])),
-                            const SizedBox(width: 8.0),
-                            const Column(
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              const Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('09:00',
-                                      style: TextStyle(
-                                          color: Color(0xFF9E9E9E),
-                                          fontSize: 12.0)),
+                                  Text(
+                                    '09:00',
+                                    style: TextStyle(
+                                      color: Color(0xFF9E9E9E),
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
                                   SizedBox(height: 5.0),
-                                  Icon(Icons.done_all,
-                                      size: 16.0, color: Color(0xFF4FC3F7)),
-                                ]),
-                          ]),
+                                  Icon(
+                                    Icons.done_all,
+                                    size: 16.0,
+                                    color: Color(0xFF4FC3F7),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
 
@@ -2029,133 +2592,181 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                             final isCheers = chat['type'] == 'cheers';
                             return GestureDetector(
                               onTap: () => context.pushNamed(
-                                  ChatsPage.routeName,
-                                  queryParameters: {
-                                    'userProfile': serializeParam(
-                                        chat['photo'] as String,
-                                        ParamType.String),
-                                    'name': serializeParam(
-                                        chat['name'] as String,
-                                        ParamType.String),
-                                    'online': serializeParam(
-                                        chat['online'] as bool, ParamType.bool),
-                                    'openchat':
-                                        serializeParam(false, ParamType.bool),
-                                  }.withoutNulls),
+                                ChatsPage.routeName,
+                                queryParameters: {
+                                  'userProfile': serializeParam(
+                                    chat['photo'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'name': serializeParam(
+                                    chat['name'] as String,
+                                    ParamType.String,
+                                  ),
+                                  'online': serializeParam(
+                                    chat['online'] as bool,
+                                    ParamType.bool,
+                                  ),
+                                  'openchat': serializeParam(
+                                    false,
+                                    ParamType.bool,
+                                  ),
+                                }.withoutNulls,
+                              ),
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 14.0, 20.0, 14.0),
-                                child: Row(children: [
-                                  Stack(children: [
-                                    Container(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: const Color(0xFF1D1D1D),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                chat['photo'] as String)),
-                                      ),
-                                    ),
-                                    if (isOnline)
-                                      Positioned(
-                                          bottom: 1.0,
-                                          right: 1.0,
-                                          child: Container(
-                                            width: 13.0,
-                                            height: 13.0,
-                                            decoration: BoxDecoration(
+                                  20.0,
+                                  14.0,
+                                  20.0,
+                                  14.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: const Color(0xFF1D1D1D),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                chat['photo'] as String,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        if (isOnline)
+                                          Positioned(
+                                            bottom: 1.0,
+                                            right: 1.0,
+                                            child: Container(
+                                              width: 13.0,
+                                              height: 13.0,
+                                              decoration: BoxDecoration(
                                                 color: const Color(0xFF00D333),
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                    color: Colors.black,
-                                                    width: 2.0)),
-                                          )),
-                                  ]),
-                                  const SizedBox(width: 12.0),
-                                  Expanded(
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                        Row(children: [
-                                          if (isCheers)
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 6.0,
-                                                      vertical: 2.0),
-                                              margin: const EdgeInsets.only(
-                                                  right: 6.0),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0x33FF0000),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0)),
-                                              child: const Icon(Icons.favorite,
-                                                  size: 10.0,
-                                                  color: Color(0xFFFF0000)),
+                                                  color: Colors.black,
+                                                  width: 2.0,
+                                                ),
+                                              ),
                                             ),
-                                          Text(chat['name'] as String,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .override(
+                                          ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 12.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              if (isCheers)
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 6.0,
+                                                        vertical: 2.0,
+                                                      ),
+                                                  margin: const EdgeInsets.only(
+                                                    right: 6.0,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(
+                                                      0x33FF0000,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          4.0,
+                                                        ),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.favorite,
+                                                    size: 10.0,
+                                                    color: Color(0xFFFF0000),
+                                                  ),
+                                                ),
+                                              Text(
+                                                chat['name'] as String,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .override(
                                                       font:
                                                           GoogleFonts.openSans(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                       color: Colors.white,
-                                                      fontSize: 14.0)),
-                                        ]),
-                                        const SizedBox(height: 3.0),
-                                        Text(chat['msg'] as String,
+                                                      fontSize: 14.0,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 3.0),
+                                          Text(
+                                            chat['msg'] as String,
                                             style: TextStyle(
-                                                color: hasUnread
-                                                    ? Colors.white
-                                                    : const Color(0xFF9E9E9E),
-                                                fontSize: 13.0,
-                                                fontWeight: hasUnread
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal),
+                                              color: hasUnread
+                                                  ? Colors.white
+                                                  : const Color(0xFF9E9E9E),
+                                              fontSize: 13.0,
+                                              fontWeight: hasUnread
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
+                                            ),
                                             maxLines: 1,
-                                            overflow: TextOverflow.ellipsis),
-                                      ])),
-                                  const SizedBox(width: 8.0),
-                                  Column(
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8.0),
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(chat['time'] as String,
-                                            style: const TextStyle(
-                                                color: Color(0xFF9E9E9E),
-                                                fontSize: 12.0)),
+                                        Text(
+                                          chat['time'] as String,
+                                          style: const TextStyle(
+                                            color: Color(0xFF9E9E9E),
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
                                         const SizedBox(height: 5.0),
                                         if (hasUnread)
                                           Container(
-                                              width: 20.0,
-                                              height: 20.0,
-                                              decoration: const BoxDecoration(
-                                                  color: Color(0xFFFF0000),
-                                                  shape: BoxShape.circle),
-                                              child: const Center(
-                                                  child: Text('1',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 11.0,
-                                                          fontWeight: FontWeight
-                                                              .bold))))
+                                            width: 20.0,
+                                            height: 20.0,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFFF0000),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                '1',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 11.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          )
                                         else
-                                          const Icon(Icons.done_all,
-                                              size: 16.0,
-                                              color: Color(0xFF4FC3F7)),
-                                      ]),
-                                ]),
+                                          const Icon(
+                                            Icons.done_all,
+                                            size: 16.0,
+                                            color: Color(0xFF4FC3F7),
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -2178,10 +2789,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
             height: 100.0,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Colors.transparent,
-                  Colors.black,
-                ],
+                colors: [Colors.transparent, Colors.black],
                 stops: [0.0, 1.0],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -2202,10 +2810,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
       return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
-        body: SafeArea(
-          top: true,
-          child: _buildMockBody(context),
-        ),
+        body: SafeArea(top: true, child: _buildMockBody(context)),
       );
     }
 
@@ -2234,10 +2839,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                   builder: (context, roomListSnapshot) {
                     if (roomListSnapshot.hasError) {
                       return Center(
-                          child: Text(
-                              'Error RoomList: ${roomListSnapshot.error}',
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 16)));
+                        child: Text(
+                          'Error RoomList: ${roomListSnapshot.error}',
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      );
                     }
                     if (!roomListSnapshot.hasData) {
                       return Center(
@@ -2245,8 +2851,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                           width: 50.0,
                           height: 50.0,
                           child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         ),
                       );
@@ -2259,10 +2866,14 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                         builder: (context, storeSnapshot) {
                           if (storeSnapshot.hasError) {
                             return Center(
-                                child: Text(
-                                    'Error Store: ${storeSnapshot.error}',
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 16)));
+                              child: Text(
+                                'Error Store: ${storeSnapshot.error}',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            );
                           }
                           if (!storeSnapshot.hasData) {
                             return Center(
@@ -2271,7 +2882,8 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                 height: 50.0,
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
+                                    Colors.white,
+                                  ),
                                 ),
                               ),
                             );
@@ -2281,15 +2893,19 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                           if (stackStoreRecord.iDroom != null) {
                             return StreamBuilder<ChatRoomsRecord>(
                               stream: ChatRoomsRecord.getDocument(
-                                  stackStoreRecord.iDroom!),
+                                stackStoreRecord.iDroom!,
+                              ),
                               builder: (context, storeRoomSnapshot) {
                                 if (storeRoomSnapshot.hasError) {
                                   return Center(
-                                      child: Text(
-                                          'Error StoreRoom: ${storeRoomSnapshot.error}',
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 16)));
+                                    child: Text(
+                                      'Error StoreRoom: ${storeRoomSnapshot.error}',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  );
                                 }
                                 if (!storeRoomSnapshot.hasData) {
                                   return Center(
@@ -2299,7 +2915,8 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                       child: CircularProgressIndicator(
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                                Colors.white),
+                                              Colors.white,
+                                            ),
                                       ),
                                     ),
                                   );
@@ -2307,26 +2924,33 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                 final containerChatRoomsRecord =
                                     storeRoomSnapshot.data!;
                                 return _buildMainBody(
-                                    context,
-                                    containerChatRoomsRecordList,
-                                    checkinRef,
-                                    stackStoreRecord,
-                                    containerChatRoomsRecord);
+                                  context,
+                                  containerChatRoomsRecordList,
+                                  checkinRef,
+                                  stackStoreRecord,
+                                  containerChatRoomsRecord,
+                                );
                               },
                             );
                           } else {
                             return _buildMainBody(
-                                context,
-                                containerChatRoomsRecordList,
-                                checkinRef,
-                                stackStoreRecord,
-                                null);
+                              context,
+                              containerChatRoomsRecordList,
+                              checkinRef,
+                              stackStoreRecord,
+                              null,
+                            );
                           }
                         },
                       );
                     } else {
-                      return _buildMainBody(context,
-                          containerChatRoomsRecordList, null, null, null);
+                      return _buildMainBody(
+                        context,
+                        containerChatRoomsRecordList,
+                        null,
+                        null,
+                        null,
+                      );
                     }
                   },
                 );
@@ -2383,8 +3007,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                         child: Row(
                           children: [
                             const SizedBox(width: 12.0),
-                            const Icon(Icons.search_sharp,
-                                color: Color(0xFF9E9E9E)),
+                            const Icon(
+                              Icons.search_sharp,
+                              color: Color(0xFF9E9E9E),
+                            ),
                             const SizedBox(width: 8.0),
                             Expanded(
                               child: TextField(
@@ -2392,8 +3018,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   hintText: 'Search for user or group...',
-                                  hintStyle:
-                                      TextStyle(color: Color(0xFF9E9E9E)),
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF9E9E9E),
+                                  ),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -2405,9 +3032,13 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                     const SizedBox(width: 12.0),
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: const Text('Cancel',
-                          style: TextStyle(
-                              color: Color(0xFFFF0000), fontSize: 15.0)),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Color(0xFFFF0000),
+                          fontSize: 15.0,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -2416,11 +3047,14 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
               // Recent & Popular
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Recent and Popular',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Recent and Popular',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const SizedBox(height: 16.0),
               Padding(
@@ -2458,8 +3092,10 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
             const Icon(Icons.trending_up, color: Color(0xFFFF9800), size: 16.0),
             const SizedBox(width: 6.0),
           ],
-          Text(text,
-              style: const TextStyle(color: Color(0xFFE0E0E0), fontSize: 13.0)),
+          Text(
+            text,
+            style: const TextStyle(color: Color(0xFFE0E0E0), fontSize: 13.0),
+          ),
         ],
       ),
     );
@@ -2511,8 +3147,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular((height - padding * 2) / 2),
+                      borderRadius: BorderRadius.circular(
+                        (height - padding * 2) / 2,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.1),
@@ -2579,8 +3216,9 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular((height - padding * 2) / 2),
+                      borderRadius: BorderRadius.circular(
+                        (height - padding * 2) / 2,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.1),
@@ -2609,7 +3247,11 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
   }
 
   Widget _buildFloatingTabItem(
-      String title, int index, int unreadCount, double width) {
+    String title,
+    int index,
+    int unreadCount,
+    double width,
+  ) {
     final isSelected = _selectedTab == index;
     return GestureDetector(
       onTap: () {
@@ -2646,14 +3288,15 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
                   child: Text(
                     unreadCount.toString(),
                     style: TextStyle(
-                      color:
-                          isSelected ? Colors.white : const Color(0xFFE52020),
+                      color: isSelected
+                          ? Colors.white
+                          : const Color(0xFFE52020),
                       fontSize: 10.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ]
+              ],
             ],
           ),
         ),

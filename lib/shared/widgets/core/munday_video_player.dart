@@ -10,10 +10,7 @@ import '/core/utils/app_util.dart' show routeObserver;
 
 const kDefaultAspectRatio = 16 / 9;
 
-enum VideoType {
-  asset,
-  network,
-}
+enum VideoType { asset, network }
 
 Set<VideoPlayerController> _videoPlayers = Set();
 
@@ -112,8 +109,8 @@ class _MundayVideoPlayerState extends ConsumerState<MundayVideoPlayer>
 
   double get height =>
       widget.height == null || widget.height! >= double.infinity
-          ? width / aspectRatio
-          : widget.height!;
+      ? width / aspectRatio
+      : widget.height!;
 
   double get aspectRatio =>
       _chewieController?.videoPlayerController.value.aspectRatio ??
@@ -160,7 +157,8 @@ class _MundayVideoPlayerState extends ConsumerState<MundayVideoPlayer>
     _videoPlayerController!.addListener(() {
       if (_videoPlayerController!.value.hasError && !_loggedError) {
         print(
-            'Error playing video: ${_videoPlayerController!.value.errorDescription}');
+          'Error playing video: ${_videoPlayerController!.value.errorDescription}',
+        );
         _loggedError = true;
       }
       if (!_videoPlayerController!.value.isPlaying &&
@@ -210,62 +208,80 @@ class _MundayVideoPlayerState extends ConsumerState<MundayVideoPlayer>
 
   @override
   Widget build(BuildContext context) => ClipRect(
-        child: FittedBox(
-          fit: BoxFit.cover,
-          clipBehavior: Clip.hardEdge,
-          child: Container(
-            height: height,
-            width: width,
-            child: _chewieController != null &&
-                    (widget.lazyLoad ||
-                        _chewieController!
-                            .videoPlayerController.value.isInitialized)
-                ? (widget.showControls
-                    ? Chewie(controller: _chewieController!)
-                    : ClipRect(
-                        child: SizedBox.expand(
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            clipBehavior: Clip.hardEdge,
-                            child: SizedBox(
-                              width: _chewieController!.videoPlayerController
-                                          .value.size.width >
-                                      0
-                                  ? _chewieController!
-                                      .videoPlayerController.value.size.width
-                                  : 100,
-                              height: _chewieController!.videoPlayerController
-                                          .value.size.height >
-                                      0
-                                  ? _chewieController!
-                                      .videoPlayerController.value.size.height
-                                  : 100,
-                              child: VideoPlayer(
-                                  _chewieController!.videoPlayerController),
+    child: FittedBox(
+      fit: BoxFit.cover,
+      clipBehavior: Clip.hardEdge,
+      child: Container(
+        height: height,
+        width: width,
+        child:
+            _chewieController != null &&
+                (widget.lazyLoad ||
+                    _chewieController!
+                        .videoPlayerController
+                        .value
+                        .isInitialized)
+            ? (widget.showControls
+                  ? Chewie(controller: _chewieController!)
+                  : ClipRect(
+                      child: SizedBox.expand(
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          clipBehavior: Clip.hardEdge,
+                          child: SizedBox(
+                            width:
+                                _chewieController!
+                                        .videoPlayerController
+                                        .value
+                                        .size
+                                        .width >
+                                    0
+                                ? _chewieController!
+                                      .videoPlayerController
+                                      .value
+                                      .size
+                                      .width
+                                : 100,
+                            height:
+                                _chewieController!
+                                        .videoPlayerController
+                                        .value
+                                        .size
+                                        .height >
+                                    0
+                                ? _chewieController!
+                                      .videoPlayerController
+                                      .value
+                                      .size
+                                      .height
+                                : 100,
+                            child: VideoPlayer(
+                              _chewieController!.videoPlayerController,
                             ),
                           ),
                         ),
-                      ))
-                : (_chewieController != null &&
-                        _chewieController!.videoPlayerController.value.hasError)
-                    ? Text('Error playing video')
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.transparent,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          const Text('Loading'),
-                        ],
                       ),
-          ),
-        ),
-      );
+                    ))
+            : (_chewieController != null &&
+                  _chewieController!.videoPlayerController.value.hasError)
+            ? Text('Error playing video')
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('Loading'),
+                ],
+              ),
+      ),
+    ),
+  );
 }

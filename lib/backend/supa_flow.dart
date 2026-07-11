@@ -10,8 +10,10 @@ class SupaFlow {
   SupabaseClient get client => Supabase.instance.client;
 
   /// Execute a stored procedure (RPC).
-  Future<dynamic> rpc(String functionName,
-      {Map<String, dynamic>? params}) async {
+  Future<dynamic> rpc(
+    String functionName, {
+    Map<String, dynamic>? params,
+  }) async {
     try {
       return await client.rpc(functionName, params: params);
     } catch (e) {
@@ -28,7 +30,9 @@ class SupaFlow {
     String? contentType,
   }) async {
     try {
-      await client.storage.from(bucket).uploadBinary(
+      await client.storage
+          .from(bucket)
+          .uploadBinary(
             path,
             Uint8List.fromList(fileBytes),
             fileOptions: FileOptions(contentType: contentType, upsert: true),

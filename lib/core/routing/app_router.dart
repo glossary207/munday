@@ -18,6 +18,10 @@ import '/core/utils/app_util.dart';
 
 import '/index.dart';
 import '/features/auth/presentation/welcome/welcome_new_account_page.dart';
+import '/features/search/presentation/search_page.dart';
+import 'package:munday/shared/widgets/layout/nav_bar_widget.dart';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
+import 'package:munday/core/state/app_state.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -26,12 +30,10 @@ const kTransitionInfoKey = '__transition_info__';
 
 GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
-
 GoRouter? _router;
 GoRouter get appRouter => _router ??= createRouter(AppStateNotifier.instance);
 
 class AppStateNotifier extends ChangeNotifier {
-
   AppStateNotifier._();
 
   static AppStateNotifier? _instance;
@@ -39,7 +41,7 @@ class AppStateNotifier extends ChangeNotifier {
 
   BaseAuthUser? initialUser;
   BaseAuthUser? user;
-  bool showSplashImage = false;
+  bool showSplashImage = true;
   String? _redirectLocation;
 
   /// Determines whether the app will refresh and build again when a sign
@@ -51,9 +53,12 @@ class AppStateNotifier extends ChangeNotifier {
 
   bool get loading {
     final result = showSplashImage;
-    debugPrint('AppStateNotifier.loading called -> $result (user: ${user?.uid}, showSplashImage: $showSplashImage)');
+    debugPrint(
+      'AppStateNotifier.loading called -> $result (user: ${user?.uid}, showSplashImage: $showSplashImage)',
+    );
     return result;
   }
+
   bool get loggedIn => user?.loggedIn ?? false;
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
   bool get shouldRedirect => loggedIn && _redirectLocation != null;
@@ -90,23 +95,18 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) {
-
-
   return GoRouter(
     initialLocation: '/',
     debugLogDiagnostics: true,
     refreshListenable: appStateNotifier,
     navigatorKey: appNavigatorKey,
-    errorBuilder: (context, state) => Scaffold(
-      body: Center(
-        child: Text('Router Error: ${state.error}'),
-      ),
-    ),
+    errorBuilder: (context, state) =>
+        Scaffold(body: Center(child: Text('Router Error: ${state.error}'))),
     redirect: (context, state) {
       if (appStateNotifier.loading) return null;
 
       final loggedIn = appStateNotifier.loggedIn;
-      final uri = Uri().toString();
+      final uri = state.uri.toString();
       final isAuthPage = uri == '/phone-login' || uri.startsWith('/otp-verify');
 
       if (!loggedIn && !isAuthPage) {
@@ -123,268 +123,250 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
       return null;
     },
     routes: [
-      MundayRoute(
-        name: '_initialize',
-        path: '/',
-        builder: (context, _) => MainPage(),
+      ShellRoute(
+        navigatorKey: GlobalKey<NavigatorState>(),
+        builder: (context, state, child) {
+          final uri = state.uri.toString();
+          final showNav =
+              uri == '/' ||
+              (uri.startsWith('/main') && !uri.startsWith('/mainChat')) ||
+              uri.startsWith('/events') ||
+              uri.startsWith('/venues') ||
+              uri.startsWith('/promotion') ||
+              uri.startsWith('/search');
+
+          if (!showNav) return child;
+
+          return AdaptiveScaffold(
+            minimizeBehavior: TabBarMinimizeBehavior.never,
+            resizeToAvoidBottomInset: false,
+            bottomNavigationBar: buildAdaptiveNavBar(context),
+            body: child,
+          );
+        },
         routes: [
           MundayRoute(
-            name: MainChatPage.routeName,
-            path: MainChatPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => MainChatPage(),
-          ),
-          MundayRoute(
-            name: ChatsPage.routeName,
-            path: ChatsPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => ChatsPage(
-              userProfile: params.getParam(
-                'userProfile',
-                ParamType.String,
+            name: '_initialize',
+            path: '/',
+            builder: (context, _) => MainPage(),
+            routes: [
+              MundayRoute(
+                name: MainChatPage.routeName,
+                path: MainChatPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => MainChatPage(),
               ),
-              roomref: params.getParam(
-                'roomref',
-                ParamType.SupabaseDocRef,
-                isList: false,
-                collectionNamePath: ['room'],
+              MundayRoute(
+                name: ChatsPage.routeName,
+                path: ChatsPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => ChatsPage(
+                  userProfile: params.getParam('userProfile', ParamType.String),
+                  roomref: params.getParam(
+                    'roomref',
+                    ParamType.SupabaseDocRef,
+                    isList: false,
+                    collectionNamePath: ['room'],
+                  ),
+                  name: params.getParam('name', ParamType.String),
+                  online: params.getParam('online', ParamType.bool),
+                  openchat: params.getParam('openchat', ParamType.bool),
+                ),
               ),
-              name: params.getParam(
-                'name',
-                ParamType.String,
+              MundayRoute(
+                name: ProfilePage.routeName,
+                path: ProfilePage.routePath,
+                requireAuth: true,
+                builder: (context, params) => ProfilePage(
+                  fromSeting: params.getParam('fromSeting', ParamType.bool),
+                ),
               ),
-              online: params.getParam(
-                'online',
-                ParamType.bool,
+              MundayRoute(
+                name: PhoneLoginPage.routeName,
+                path: PhoneLoginPage.routePath,
+                builder: (context, params) => const PhoneLoginPage(),
               ),
-              openchat: params.getParam(
-                'openchat',
-                ParamType.bool,
+              MundayRoute(
+                name: OtpVerifyPage.routeName,
+                path: OtpVerifyPage.routePath,
+                builder: (context, params) => OtpVerifyPage(
+                  phone: params.getParam('phone', ParamType.String) ?? '',
+                  loginType:
+                      params.getParam('loginType', ParamType.String) ?? 'user',
+                  isTestPhone:
+                      params.getParam('isTestPhone', ParamType.bool) ?? false,
+                ),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: ProfilePage.routeName,
-            path: ProfilePage.routePath,
-            requireAuth: true,
-            builder: (context, params) => ProfilePage(
-              fromSeting: params.getParam(
-                'fromSeting',
-                ParamType.bool,
+              MundayRoute(
+                name: WelcomeNewAccountPage.routeName,
+                path: WelcomeNewAccountPage.routePath,
+                builder: (context, params) => const WelcomeNewAccountPage(),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: PhoneLoginPage.routeName,
-            path: PhoneLoginPage.routePath,
-            builder: (context, params) => const PhoneLoginPage(),
-          ),
-          MundayRoute(
-            name: OtpVerifyPage.routeName,
-            path: OtpVerifyPage.routePath,
-            builder: (context, params) => OtpVerifyPage(
-              phone: params.getParam('phone', ParamType.String) ?? '',
-              loginType:
-                  params.getParam('loginType', ParamType.String) ?? 'user',
-              isTestPhone:
-                  params.getParam('isTestPhone', ParamType.bool) ?? false,
-            ),
-          ),
-          MundayRoute(
-            name: WelcomeNewAccountPage.routeName,
-            path: WelcomeNewAccountPage.routePath,
-            builder: (context, params) => const WelcomeNewAccountPage(),
-          ),
-          MundayRoute(
-            name: SocialInVenusePage.routeName,
-            path: SocialInVenusePage.routePath,
-            requireAuth: true,
-            builder: (context, params) => SocialInVenusePage(),
-          ),
-          MundayRoute(
-            name: AccountSettingsPage.routeName,
-            path: AccountSettingsPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => const AccountSettingsPage(),
-          ),
-          MundayRoute(
-            name: 'Profile06',
-            path: 'profile06',
-            requireAuth: true,
-            builder: (context, params) => const AccountSettingsPage(),
-          ),
-          MundayRoute(
-            name: PrivacyPolicyPage.routeName,
-            path: PrivacyPolicyPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => PrivacyPolicyPage(),
-          ),
-          MundayRoute(
-            name: SupportPage.routeName,
-            path: SupportPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => SupportPage(),
-          ),
-          MundayRoute(
-            name: BlocklistPage.routeName,
-            path: BlocklistPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => BlocklistPage(),
-          ),
-          MundayRoute(
-            name: MainPage.routeName,
-            path: MainPage.routePath,
-            requireAuth: false,
-            builder: (context, params) => MainPage(),
-          ),
-          MundayRoute(
-            name: EventsPage.routeName,
-            path: EventsPage.routePath,
-            requireAuth: false,
-            builder: (context, params) => EventsPage(),
-          ),
-          MundayRoute(
-            name: VenuesPage.routeName,
-            path: VenuesPage.routePath,
-            requireAuth: false,
-            builder: (context, params) => VenuesPage(),
-          ),
-          MundayRoute(
-            name: PromotionPage.routeName,
-            path: PromotionPage.routePath,
-            requireAuth: false,
-            builder: (context, params) => PromotionPage(),
-          ),
-          MundayRoute(
-            name: InVenusePage.routeName,
-            path: InVenusePage.routePath,
-            requireAuth: false,
-            builder: (context, params) => InVenusePage(
-              idVenues: params.getParam(
-                'idVenues',
-                ParamType.SupabaseDocRef,
-                isList: false,
-                collectionNamePath: ['venues'],
+              MundayRoute(
+                name: SocialInVenusePage.routeName,
+                path: SocialInVenusePage.routePath,
+                requireAuth: true,
+                builder: (context, params) => SocialInVenusePage(),
               ),
-              distance: params.getParam(
-                'distance',
-                ParamType.String,
+              MundayRoute(
+                name: AccountSettingsPage.routeName,
+                path: AccountSettingsPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => const AccountSettingsPage(),
               ),
-              dateclick: params.getParam(
-                'dateclick',
-                ParamType.DateTime,
+              MundayRoute(
+                name: 'Profile06',
+                path: 'profile06',
+                requireAuth: true,
+                builder: (context, params) => const AccountSettingsPage(),
               ),
-              index: params.getParam(
-                'index',
-                ParamType.int,
+              MundayRoute(
+                name: PrivacyPolicyPage.routeName,
+                path: PrivacyPolicyPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => PrivacyPolicyPage(),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: VeerPage.routeName,
-            path: VeerPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => VeerPage(),
-          ),
-          MundayRoute(
-            name: TicketPage.routeName,
-            path: TicketPage.routePath,
-            requireAuth: true,
-            // TODO: swap back to TicketWidget() when backend is ready
-            builder: (context, params) => const TicketMockPage(),
-          ),
-          MundayRoute(
-            name: BookingPage.routeName,
-            path: BookingPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => BookingPage(
-              id: params.getParam(
-                'id',
-                ParamType.SupabaseDocRef,
-                isList: false,
-                collectionNamePath: ['venues'],
+              MundayRoute(
+                name: SupportPage.routeName,
+                path: SupportPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => SupportPage(),
               ),
-              location: params.getParam(
-                'location',
-                ParamType.LatLng,
+              MundayRoute(
+                name: BlocklistPage.routeName,
+                path: BlocklistPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => BlocklistPage(),
               ),
-              date: params.getParam(
-                'date',
-                ParamType.DateTime,
+              MundayRoute(
+                name: MainPage.routeName,
+                path: MainPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => MainPage(),
               ),
-              currentuid: params.getParam(
-                'currentuid',
-                ParamType.String,
+              MundayRoute(
+                name: EventsPage.routeName,
+                path: EventsPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => EventsPage(),
               ),
-              floorId: params.getParam(
-                'floorId',
-                ParamType.String,
+              MundayRoute(
+                name: VenuesPage.routeName,
+                path: VenuesPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => VenuesPage(),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: ShowallphotoPage.routeName,
-            path: ShowallphotoPage.routePath,
-            requireAuth: false,
-            builder: (context, params) => ShowallphotoPage(
-              dataphoto: params.getParam<String>(
-                'dataphoto',
-                ParamType.String,
-                isList: true,
+              MundayRoute(
+                name: PromotionPage.routeName,
+                path: PromotionPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => PromotionPage(),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: SharePage.routeName,
-            path: SharePage.routePath,
-            requireAuth: true,
-            builder: (context, params) => SharePage(
-              idVenues: params.getParam(
-                'idVenues',
-                ParamType.SupabaseDocRef,
-                isList: false,
-                collectionNamePath: ['venues'],
+              MundayRoute(
+                name: InVenusePage.routeName,
+                path: InVenusePage.routePath,
+                requireAuth: false,
+                builder: (context, params) => InVenusePage(
+                  idVenues: params.getParam(
+                    'idVenues',
+                    ParamType.SupabaseDocRef,
+                    isList: false,
+                    collectionNamePath: ['venues'],
+                  ),
+                  distance: params.getParam('distance', ParamType.String),
+                  dateclick: params.getParam('dateclick', ParamType.DateTime),
+                  index: params.getParam('index', ParamType.int),
+                ),
               ),
-              distance: params.getParam(
-                'distance',
-                ParamType.String,
+              MundayRoute(
+                name: VeerPage.routeName,
+                path: VeerPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => VeerPage(),
               ),
-              dateclick: params.getParam(
-                'dateclick',
-                ParamType.DateTime,
+              MundayRoute(
+                name: TicketPage.routeName,
+                path: TicketPage.routePath,
+                requireAuth: true,
+                // TODO: swap back to TicketWidget() when backend is ready
+                builder: (context, params) => const TicketMockPage(),
               ),
-              index: params.getParam(
-                'index',
-                ParamType.int,
+              MundayRoute(
+                name: BookingPage.routeName,
+                path: BookingPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => BookingPage(
+                  id: params.getParam(
+                    'id',
+                    ParamType.SupabaseDocRef,
+                    isList: false,
+                    collectionNamePath: ['venues'],
+                  ),
+                  location: params.getParam('location', ParamType.LatLng),
+                  date: params.getParam('date', ParamType.DateTime),
+                  currentuid: params.getParam('currentuid', ParamType.String),
+                  floorId: params.getParam('floorId', ParamType.String),
+                ),
               ),
-            ),
-          ),
-          MundayRoute(
-            name: PayreservenormdayPage.routeName,
-            path: PayreservenormdayPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => PayreservenormdayPage(),
-          ),
-          MundayRoute(
-            name: NotificationPage.routeName,
-            path: NotificationPage.routePath,
-            requireAuth: true,
-            builder: (context, params) => const NotificationPage(),
-          ),
-
-        ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      ),
-    ].map((r) => r.toRoute(appStateNotifier)).toList(),
+              MundayRoute(
+                name: ShowallphotoPage.routeName,
+                path: ShowallphotoPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => ShowallphotoPage(
+                  dataphoto: params.getParam<String>(
+                    'dataphoto',
+                    ParamType.String,
+                    isList: true,
+                  ),
+                ),
+              ),
+              MundayRoute(
+                name: SharePage.routeName,
+                path: SharePage.routePath,
+                requireAuth: true,
+                builder: (context, params) => SharePage(
+                  idVenues: params.getParam(
+                    'idVenues',
+                    ParamType.SupabaseDocRef,
+                    isList: false,
+                    collectionNamePath: ['venues'],
+                  ),
+                  distance: params.getParam('distance', ParamType.String),
+                  dateclick: params.getParam('dateclick', ParamType.DateTime),
+                  index: params.getParam('index', ParamType.int),
+                ),
+              ),
+              MundayRoute(
+                name: PayreservenormdayPage.routeName,
+                path: PayreservenormdayPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => PayreservenormdayPage(),
+              ),
+              MundayRoute(
+                name: NotificationPage.routeName,
+                path: NotificationPage.routePath,
+                requireAuth: true,
+                builder: (context, params) => const NotificationPage(),
+              ),
+              MundayRoute(
+                name: SearchPage.routeName,
+                path: SearchPage.routePath,
+                requireAuth: false,
+                builder: (context, params) => const SearchPage(),
+              ),
+            ].map((r) => r.toRoute(appStateNotifier)).toList(),
+          ).toRoute(appStateNotifier),
+        ], // Closes routes array for ShellRoute
+      ), // Closes ShellRoute
+    ], // Closes routes array for GoRouter
     observers: [routeObserver],
   );
 }
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
-      );
+    entries.where((e) => e.value != null).map((e) => MapEntry(e.key, e.value!)),
+  );
 }
 
 extension NavigationExtensions on BuildContext {
@@ -395,15 +377,14 @@ extension NavigationExtensions on BuildContext {
     Map<String, String> queryParameters = const <String, String>{},
     Object? extra,
     bool ignoreRedirect = false,
-  }) =>
-      !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
-          ? null
-          : goNamed(
-              name,
-              pathParameters: {},
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+  }) => !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
+      ? null
+      : goNamed(
+          name,
+          pathParameters: {},
+          queryParameters: queryParameters,
+          extra: extra,
+        );
 
   void pushNamedAuth(
     String name,
@@ -412,15 +393,14 @@ extension NavigationExtensions on BuildContext {
     Map<String, String> queryParameters = const <String, String>{},
     Object? extra,
     bool ignoreRedirect = false,
-  }) =>
-      !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
-          ? null
-          : pushNamed(
-              name,
-              pathParameters: {},
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+  }) => !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
+      ? null
+      : pushNamed(
+          name,
+          pathParameters: {},
+          queryParameters: queryParameters,
+          extra: extra,
+        );
 
   void safePop() {
     // If there is only one route on the stack, navigate to the initial
@@ -437,8 +417,8 @@ extension GoRouterExtensions on GoRouter {
   AppStateNotifier get appState => AppStateNotifier.instance;
   void prepareAuthEvent([bool ignoreRedirect = false]) =>
       appState.hasRedirect() && !ignoreRedirect
-          ? null
-          : appState.updateNotifyOnAuthChange(false);
+      ? null
+      : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
   void clearRedirectLocation() => appState.clearRedirectLocation();
@@ -476,18 +456,17 @@ class MundayParameters {
       asyncParams.containsKey(param.key) && param.value is String;
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
   Future<bool> completeFutures() => Future.wait(
-        state.allParams.entries.where(isAsyncParam).map(
-          (param) async {
-            final doc = await asyncParams[param.key]!(param.value)
-                .onError((_, __) => null);
-            if (doc != null) {
-              futureParamValues[param.key] = doc;
-              return true;
-            }
-            return false;
-          },
-        ),
-      ).onError((_, __) => [false]).then((v) => v.every((e) => e));
+    state.allParams.entries.where(isAsyncParam).map((param) async {
+      final doc = await asyncParams[param.key]!(
+        param.value,
+      ).onError((_, __) => null);
+      if (doc != null) {
+        futureParamValues[param.key] = doc;
+        return true;
+      }
+      return false;
+    }),
+  ).onError((_, __) => [false]).then((v) => v.every((e) => e));
 
   dynamic getParam<T>(
     String paramName,
@@ -536,68 +515,71 @@ class MundayRoute {
   final List<GoRoute> routes;
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
-        name: name,
-        path: path,
-        redirect: (context, state) {
-          if (appStateNotifier.shouldRedirect) {
-            final redirectLocation = appStateNotifier.getRedirectLocation();
-            appStateNotifier.clearRedirectLocation();
-            return redirectLocation;
-          }
+    name: name,
+    path: path,
+    redirect: (context, state) {
+      if (appStateNotifier.shouldRedirect) {
+        final redirectLocation = appStateNotifier.getRedirectLocation();
+        appStateNotifier.clearRedirectLocation();
+        return redirectLocation;
+      }
 
-          if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(Uri().toString());
-            return '/phone-login';
-          }
-          return null;
-        },
-        pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
-          final ffParams = MundayParameters(state, asyncParams);
-          final page = ffParams.hasFutures
-              ? FutureBuilder(
-                  future: ffParams.completeFutures(),
-                  builder: (context, _) => builder(context, ffParams),
-                )
-              : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Container(
-                  color: Colors.black,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/Munday-logo.png',
-                      width: 250.0,
-                      fit: BoxFit.cover,
-                    ),
+      if (requireAuth && !appStateNotifier.loggedIn) {
+        appStateNotifier.setRedirectLocationIfUnset(Uri().toString());
+        return '/phone-login';
+      }
+      return null;
+    },
+    pageBuilder: (context, state) {
+      fixStatusBarOniOS16AndBelow(context);
+      final ffParams = MundayParameters(state, asyncParams);
+      final page = ffParams.hasFutures
+          ? FutureBuilder(
+              future: ffParams.completeFutures(),
+              builder: (context, _) => builder(context, ffParams),
+            )
+          : builder(context, ffParams);
+      final child = AnimatedBuilder(
+        animation: appStateNotifier,
+        builder: (context, _) => appStateNotifier.loading
+            ? Container(
+                color: Colors.black,
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/Munday-logo.png',
+                    width: 250.0,
+                    fit: BoxFit.cover,
                   ),
-                )
-              : PushNotificationsHandler(child: page);
-
-          final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).buildTransitions(
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child,
-                  ),
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-        },
-        routes: routes,
+                ),
+              )
+            : PushNotificationsHandler(child: page),
       );
+
+      final transitionInfo = state.transitionInfo;
+      return transitionInfo.hasTransition
+          ? CustomTransitionPage(
+              key: state.pageKey,
+              child: child,
+              transitionDuration: transitionInfo.duration,
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      PageTransition(
+                        type: transitionInfo.transitionType,
+                        duration: transitionInfo.duration,
+                        reverseDuration: transitionInfo.duration,
+                        alignment: transitionInfo.alignment,
+                        child: child,
+                      ).buildTransitions(
+                        context,
+                        animation,
+                        secondaryAnimation,
+                        child,
+                      ),
+            )
+          : MaterialPage(key: state.pageKey, child: child);
+    },
+    routes: routes,
+  );
 }
 
 class TransitionInfo {
@@ -614,10 +596,10 @@ class TransitionInfo {
   final Alignment? alignment;
 
   static TransitionInfo appDefault() => TransitionInfo(
-        hasTransition: true,
-        transitionType: PageTransitionType.fade,
-        duration: Duration(milliseconds: 300),
-      );
+    hasTransition: true,
+    transitionType: PageTransitionType.fade,
+    duration: Duration(milliseconds: 300),
+  );
 }
 
 class RootPageContext extends InheritedWidget {
@@ -644,15 +626,13 @@ class RootPageContext extends InheritedWidget {
         location != rootPageContext?.errorRoute;
   }
 
-  static Widget wrap(Widget child, {String? errorRoute}) => RootPageContext(
-        isRootPage: true,
-        errorRoute: errorRoute,
-        child: child,
-      );
+  static Widget wrap(Widget child, {String? errorRoute}) =>
+      RootPageContext(isRootPage: true, errorRoute: errorRoute, child: child);
 
   @override
   bool updateShouldNotify(RootPageContext oldWidget) {
-    return isRootPage != oldWidget.isRootPage || errorRoute != oldWidget.errorRoute;
+    return isRootPage != oldWidget.isRootPage ||
+        errorRoute != oldWidget.errorRoute;
   }
 }
 

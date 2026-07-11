@@ -10,10 +10,7 @@ import 'allphoto_model.dart';
 export 'allphoto_model.dart';
 
 class AllphotoWidget extends ConsumerStatefulWidget {
-  const AllphotoWidget({
-    super.key,
-    required this.dataphoto,
-  });
+  const AllphotoWidget({super.key, required this.dataphoto});
 
   final List<String>? dataphoto;
 
@@ -85,16 +82,17 @@ class _AllphotoWidgetState extends ConsumerState<AllphotoWidget> {
                     topRight: Radius.circular(20.0),
                   ),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 5.0,
-                      sigmaY: 5.0,
-                    ),
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                            0.0,
+                            20.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             height: 2.0,
@@ -107,7 +105,11 @@ class _AllphotoWidgetState extends ConsumerState<AllphotoWidget> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 20.0, 10.0, 0.0),
+                              10.0,
+                              20.0,
+                              10.0,
+                              0.0,
+                            ),
                             child: Builder(
                               builder: (context) {
                                 final data = widget.dataphoto!.toList();
@@ -115,8 +117,8 @@ class _AllphotoWidgetState extends ConsumerState<AllphotoWidget> {
                                 return MasonryGridView.builder(
                                   gridDelegate:
                                       SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
+                                        crossAxisCount: 2,
+                                      ),
                                   crossAxisSpacing: 10.0,
                                   mainAxisSpacing: 10.0,
                                   itemCount: data.length,
@@ -148,8 +150,9 @@ class _AllphotoWidgetState extends ConsumerState<AllphotoWidget> {
                                         tag: dataItem,
                                         transitionOnUserGestures: true,
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
+                                          borderRadius: BorderRadius.circular(
+                                            4.0,
+                                          ),
                                           child: Image.network(
                                             dataItem,
                                             fit: BoxFit.cover,

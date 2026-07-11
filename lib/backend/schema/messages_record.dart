@@ -6,10 +6,8 @@ import 'index.dart';
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class MessagesRecord extends SupabaseRecord {
-  MessagesRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  MessagesRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -82,8 +80,7 @@ class MessagesRecord extends SupabaseRecord {
   static MessagesRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      MessagesRecord._(reference, mapFromSupabase(data));
+  ) => MessagesRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -140,15 +137,15 @@ class MessagesRecordDocumentEquality implements Equality<MessagesRecord> {
 
   @override
   int hash(MessagesRecord? e) => const ListEquality().hash([
-        e?.chatRoomId,
-        e?.text,
-        e?.senderId,
-        e?.senderName,
-        e?.senderPhoto,
-        e?.timestamp,
-        e?.imageUrl,
-        e?.readByIds,
-      ]);
+    e?.chatRoomId,
+    e?.text,
+    e?.senderId,
+    e?.senderName,
+    e?.senderPhoto,
+    e?.timestamp,
+    e?.imageUrl,
+    e?.readByIds,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is MessagesRecord;

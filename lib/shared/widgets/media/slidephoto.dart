@@ -14,12 +14,7 @@ import 'package:munday/core/theme/theme.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 class Slidephoto extends ConsumerStatefulWidget {
-  const Slidephoto({
-    super.key,
-    this.width,
-    this.height,
-    this.dataphoto,
-  });
+  const Slidephoto({super.key, this.width, this.height, this.dataphoto});
 
   final double? width;
   final double? height;
@@ -103,28 +98,27 @@ class _SlidephotoState extends ConsumerState<Slidephoto> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                widget.dataphoto?.length ?? 0,
-                (int index) {
-                  Color dotColor;
-                  if (index == currentIndex) {
-                    dotColor = Colors.red; // Current image
-                  } else if (viewedImages != null && viewedImages![index]) {
-                    dotColor = Colors.grey; // Viewed images
-                  } else {
-                    dotColor = Colors.grey[700]!; // Not yet viewed images
-                  }
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 4.0),
-                    width: 10,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: dotColor,
-                      shape: BoxShape.circle,
-                    ),
-                  );
-                },
-              ),
+              children: List.generate(widget.dataphoto?.length ?? 0, (
+                int index,
+              ) {
+                Color dotColor;
+                if (index == currentIndex) {
+                  dotColor = Colors.red; // Current image
+                } else if (viewedImages != null && viewedImages![index]) {
+                  dotColor = Colors.grey; // Viewed images
+                } else {
+                  dotColor = Colors.grey[700]!; // Not yet viewed images
+                }
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4.0),
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: dotColor,
+                    shape: BoxShape.circle,
+                  ),
+                );
+              }),
             ),
           ),
         ],

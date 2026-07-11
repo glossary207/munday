@@ -40,7 +40,8 @@ class ShareToLineWidget extends StatelessWidget {
 
   Future<void> _shareToLine(BuildContext context) async {
     // สร้างข้อความที่แชร์ไป LINE
-    final message = '''
+    final message =
+        '''
 $title
 $description
 ดูเพิ่มเติม: $buttonLink
@@ -57,9 +58,9 @@ $description
       if (await canLaunch(fallbackUrl)) {
         await launch(fallbackUrl);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("ไม่สามารถเปิดลิงก์ได้")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("ไม่สามารถเปิดลิงก์ได้")));
       }
     }
   }
@@ -73,9 +74,7 @@ $description
         onPressed: () => _shareToLine(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green, // สีปุ่ม
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
         child: Row(

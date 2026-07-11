@@ -83,11 +83,8 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => OtpVerifyPage(
-            phone: phone,
-            loginType: 'user',
-            isTestPhone: true,
-          ),
+          builder: (_) =>
+              OtpVerifyPage(phone: phone, loginType: 'user', isTestPhone: true),
         ),
       );
       return;
@@ -109,8 +106,10 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
         ),
       );
     } else {
-      setState(() =>
-          _errorMessage = result.error ?? 'ไม่สามารถส่ง OTP ได้ กรุณาลองใหม่');
+      setState(
+        () =>
+            _errorMessage = result.error ?? 'ไม่สามารถส่ง OTP ได้ กรุณาลองใหม่',
+      );
     }
   }
 
@@ -129,8 +128,9 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeOut,
-              height:
-                  bottomPadding > 0 ? screenHeight * 0.28 : screenHeight * 0.58,
+              height: bottomPadding > 0
+                  ? screenHeight * 0.28
+                  : screenHeight * 0.58,
               child: Stack(
                 children: [
                   PageView.builder(
@@ -233,8 +233,10 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -261,7 +263,9 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 16),
+                              horizontal: 14,
+                              vertical: 16,
+                            ),
                             decoration: const BoxDecoration(
                               border: Border(
                                 right: BorderSide(color: _authBorder),
@@ -293,8 +297,9 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
                                 hintText: '0812345678',
                                 hintStyle: TextStyle(color: Color(0xFF555555)),
                                 border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 14),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                ),
                               ),
                               onChanged: (_) {
                                 if (_errorMessage != null) {
@@ -311,8 +316,11 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.error_outline,
-                              color: Colors.redAccent, size: 16),
+                          const Icon(
+                            Icons.error_outline,
+                            color: Colors.redAccent,
+                            size: 16,
+                          ),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
@@ -391,8 +399,11 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) => Container(
             color: const Color(0xFF1A1A1A),
-            child:
-                const Icon(Icons.nightlife, color: Color(0xFF444444), size: 80),
+            child: const Icon(
+              Icons.nightlife,
+              color: Color(0xFF444444),
+              size: 80,
+            ),
           ),
         ),
         Container(
@@ -400,10 +411,7 @@ class _PhoneLoginWidgetState extends ConsumerState<PhoneLoginPage> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                Color(0x66000000),
-                Color(0xCC120607),
-              ],
+              colors: [Color(0x66000000), Color(0xCC120607)],
             ),
           ),
         ),
@@ -416,6 +424,9 @@ class _SlideData {
   final String image;
   final String title;
   final String subtitle;
-  const _SlideData(
-      {required this.image, required this.title, required this.subtitle});
+  const _SlideData({
+    required this.image,
+    required this.title,
+    required this.subtitle,
+  });
 }

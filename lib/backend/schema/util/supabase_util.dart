@@ -33,9 +33,10 @@ class SupabaseUtilData {
 }
 
 Map<String, dynamic> mapFromSupabase(Map<String, dynamic> data) =>
-    mergeNestedFields(data)
-        .where((k, _) => k != SupabaseUtilData.name)
-        .map((key, value) {
+    mergeNestedFields(data).where((k, _) => k != SupabaseUtilData.name).map((
+      key,
+      value,
+    ) {
       // Handle Timestamp
       if (value is Timestamp) {
         value = value.toDate();
@@ -69,10 +70,7 @@ Map<String, dynamic> mapFromSupabase(Map<String, dynamic> data) =>
       return MapEntry(key, value);
     });
 
-SupabaseDocRef? getSupabaseDocRef(
-  dynamic value,
-  String collectionPath,
-) {
+SupabaseDocRef? getSupabaseDocRef(dynamic value, String collectionPath) {
   if (value is SupabaseDocRef) {
     return value;
   }
@@ -179,10 +177,7 @@ Map<String, dynamic> mergeNestedFields(Map<String, dynamic> data) {
           .map((k, v) => MapEntry(k.split('.').skip(1).join('.'), v)),
     );
     final existingValue = getDataMap(data[name]);
-    data[name] = {
-      if (existingValue != null) ...existingValue,
-      ...mergedValues,
-    };
+    data[name] = {if (existingValue != null) ...existingValue, ...mergedValues};
   });
   // Merge any nested maps inside any of the fields as well.
   data.where((_, v) => v is Map).forEach((k, v) {

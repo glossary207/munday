@@ -57,9 +57,13 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
 
     return Builder(
       builder: (context) {
-        final dd = functions
-                .sourcedatadatepromotion(widget.dataPro?.toList(),
-                    context.appState.dateclick, !widget.todaycheck!)
+        final dd =
+            functions
+                .sourcedatadatepromotion(
+                  widget.dataPro?.toList(),
+                  context.appState.dateclick,
+                  !widget.todaycheck!,
+                )
                 ?.toList() ??
             [];
 
@@ -85,15 +89,17 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
                           padding: MediaQuery.viewInsetsOf(context),
                           child: ShowpromotionWidget(
                             photo: functions.selectpicture(
-                                ddIndex,
-                                functions
-                                    .sourcedatadatepromotion(
-                                        widget.dataPro?.toList(),
-                                        context.appState.dateclick,
-                                        !widget.todaycheck!)
-                                    ?.map((e) => e.photo)
-                                    .toList()
-                                    .toList())!,
+                              ddIndex,
+                              functions
+                                  .sourcedatadatepromotion(
+                                    widget.dataPro?.toList(),
+                                    context.appState.dateclick,
+                                    !widget.todaycheck!,
+                                  )
+                                  ?.map((e) => e.photo)
+                                  .toList()
+                                  .toList(),
+                            )!,
                           ),
                         );
                       },
@@ -102,31 +108,37 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0.0,
+                          0.0,
+                          10.0,
+                          0.0,
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            ddItem.photo,
-                            fit: BoxFit.cover,
-                          ),
+                          child: Image.network(ddItem.photo, fit: BoxFit.cover),
                         ),
                       ),
                       if (functions.checkdayactivepromotion(
-                              ddItem.mon,
-                              ddItem.tue,
-                              ddItem.wed,
-                              ddItem.thu,
-                              ddItem.fri,
-                              ddItem.sat,
-                              ddItem.sun,
-                              context.appState.dateclick) ??
+                            ddItem.mon,
+                            ddItem.tue,
+                            ddItem.wed,
+                            ddItem.thu,
+                            ddItem.fri,
+                            ddItem.sat,
+                            ddItem.sun,
+                            context.appState.dateclick,
+                          ) ??
                           true)
                         Align(
                           alignment: AlignmentDirectional(-1.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                              8.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFFFF0000),
@@ -134,11 +146,8 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
                                   BoxShadow(
                                     blurRadius: 4.0,
                                     color: Color(0x34000000),
-                                    offset: Offset(
-                                      0.0,
-                                      2.0,
-                                    ),
-                                  )
+                                    offset: Offset(0.0, 2.0),
+                                  ),
                                 ],
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10.0),
@@ -150,17 +159,26 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 1.0),
+                                  8.0,
+                                  0.0,
+                                  8.0,
+                                  1.0,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 2.0, 0.0, 2.0),
+                                        0.0,
+                                        2.0,
+                                        0.0,
+                                        2.0,
+                                      ),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .k_kzrbch3h,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.k_kzrbch3h,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -176,10 +194,9 @@ class _RowpromotionWidgetState extends ConsumerState<RowpromotionWidget> {
                                               fontSize: 12.0,
                                               letterSpacing: 0.3,
                                               fontWeight: FontWeight.w500,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                       ),
                                     ),

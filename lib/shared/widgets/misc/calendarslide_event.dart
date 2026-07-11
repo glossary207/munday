@@ -72,12 +72,14 @@ class _CalendarslideEventState extends ConsumerState<CalendarslideEvent> {
           );
 
           bool isSelected = selectedDate == currentDate;
-          bool isDateClickWidget = widget.dateclickwidget != null &&
+          bool isDateClickWidget =
+              widget.dateclickwidget != null &&
               widget.dateclickwidget!.year == currentDate.year &&
               widget.dateclickwidget!.month == currentDate.month &&
               widget.dateclickwidget!.day == currentDate.day;
 
-          bool isWeekend = currentDate.weekday == DateTime.saturday ||
+          bool isWeekend =
+              currentDate.weekday == DateTime.saturday ||
               currentDate.weekday == DateTime.sunday;
 
           return GestureDetector(
@@ -99,7 +101,7 @@ class _CalendarslideEventState extends ConsumerState<CalendarslideEvent> {
               decoration: BoxDecoration(
                 color: isDateClickWidget
                     ? (widget.colorPicker ??
-                        Theme.of(context).colorScheme.primary)
+                          Theme.of(context).colorScheme.primary)
                     : const Color.fromARGB(255, 13, 13, 13),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -112,24 +114,24 @@ class _CalendarslideEventState extends ConsumerState<CalendarslideEvent> {
                     Text(
                       _getDayName(currentDate),
                       style: Theme.of(context).textTheme.bodyMedium!.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 11,
-                            fontWeight: FontWeight.normal,
-                            color: isWeekend
-                                ? (isSelected ? Colors.white : Colors.red)
-                                : Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
+                        fontFamily: 'Poppins',
+                        fontSize: 11,
+                        fontWeight: FontWeight.normal,
+                        color: isWeekend
+                            ? (isSelected ? Colors.white : Colors.red)
+                            : Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         currentDate.day.toString(),
                         style: Theme.of(context).textTheme.bodyMedium!.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

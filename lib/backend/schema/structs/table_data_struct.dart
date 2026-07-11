@@ -23,17 +23,17 @@ class TableDataStruct extends FFSupabaseStruct {
     TableStatusStruct? status,
     List<ReservedUserDataStruct>? userData,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _color = color,
-        _maxSeat = maxSeat,
-        _minSeat = minSeat,
-        _tableName = tableName,
-        _price = price,
-        _xi = xi,
-        _yi = yi,
-        _type = type,
-        _status = status,
-        _userData = userData,
-        super(supabaseUtilData);
+  }) : _color = color,
+       _maxSeat = maxSeat,
+       _minSeat = minSeat,
+       _tableName = tableName,
+       _price = price,
+       _xi = xi,
+       _yi = yi,
+       _type = type,
+       _status = status,
+       _userData = userData,
+       super(supabaseUtilData);
 
   // "color" field.
   Color? _color;
@@ -128,129 +128,65 @@ class TableDataStruct extends FFSupabaseStruct {
   bool hasUserData() => _userData != null;
 
   static TableDataStruct fromMap(Map<String, dynamic> data) => TableDataStruct(
-        color: getSchemaColor(data['color']),
-        maxSeat: castToType<int>(data['max_seat']),
-        minSeat: castToType<int>(data['min_seat']),
-        tableName: data['table_name'] as String?,
-        price: castToType<double>(data['price']),
-        xi: getDataList(data['xi']),
-        yi: getDataList(data['yi']),
-        type: data['type'] as String?,
-        status: data['status'] is TableStatusStruct
-            ? data['status']
-            : TableStatusStruct.maybeFromMap(data['status']),
-        userData: getStructList(
-          data['user_data'],
-          ReservedUserDataStruct.fromMap,
-        ),
-      );
+    color: getSchemaColor(data['color']),
+    maxSeat: castToType<int>(data['max_seat']),
+    minSeat: castToType<int>(data['min_seat']),
+    tableName: data['table_name'] as String?,
+    price: castToType<double>(data['price']),
+    xi: getDataList(data['xi']),
+    yi: getDataList(data['yi']),
+    type: data['type'] as String?,
+    status: data['status'] is TableStatusStruct
+        ? data['status']
+        : TableStatusStruct.maybeFromMap(data['status']),
+    userData: getStructList(data['user_data'], ReservedUserDataStruct.fromMap),
+  );
 
   static TableDataStruct? maybeFromMap(dynamic data) => data is Map
       ? TableDataStruct.fromMap(data.cast<String, dynamic>())
       : null;
 
   Map<String, dynamic> toMap() => {
-        'color': _color,
-        'max_seat': _maxSeat,
-        'min_seat': _minSeat,
-        'table_name': _tableName,
-        'price': _price,
-        'xi': _xi,
-        'yi': _yi,
-        'type': _type,
-        'status': _status?.toMap(),
-        'user_data': _userData?.map((e) => e.toMap()).toList(),
-      }.withoutNulls;
+    'color': _color,
+    'max_seat': _maxSeat,
+    'min_seat': _minSeat,
+    'table_name': _tableName,
+    'price': _price,
+    'xi': _xi,
+    'yi': _yi,
+    'type': _type,
+    'status': _status?.toMap(),
+    'user_data': _userData?.map((e) => e.toMap()).toList(),
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'color': serializeParam(
-          _color,
-          ParamType.Color,
-        ),
-        'max_seat': serializeParam(
-          _maxSeat,
-          ParamType.int,
-        ),
-        'min_seat': serializeParam(
-          _minSeat,
-          ParamType.int,
-        ),
-        'table_name': serializeParam(
-          _tableName,
-          ParamType.String,
-        ),
-        'price': serializeParam(
-          _price,
-          ParamType.double,
-        ),
-        'xi': serializeParam(
-          _xi,
-          ParamType.double,
-          isList: true,
-        ),
-        'yi': serializeParam(
-          _yi,
-          ParamType.double,
-          isList: true,
-        ),
-        'type': serializeParam(
-          _type,
-          ParamType.String,
-        ),
-        'status': serializeParam(
-          _status,
-          ParamType.DataStruct,
-        ),
-        'user_data': serializeParam(
-          _userData,
-          ParamType.DataStruct,
-          isList: true,
-        ),
-      }.withoutNulls;
+    'color': serializeParam(_color, ParamType.Color),
+    'max_seat': serializeParam(_maxSeat, ParamType.int),
+    'min_seat': serializeParam(_minSeat, ParamType.int),
+    'table_name': serializeParam(_tableName, ParamType.String),
+    'price': serializeParam(_price, ParamType.double),
+    'xi': serializeParam(_xi, ParamType.double, isList: true),
+    'yi': serializeParam(_yi, ParamType.double, isList: true),
+    'type': serializeParam(_type, ParamType.String),
+    'status': serializeParam(_status, ParamType.DataStruct),
+    'user_data': serializeParam(_userData, ParamType.DataStruct, isList: true),
+  }.withoutNulls;
 
   static TableDataStruct fromSerializableMap(Map<String, dynamic> data) =>
       TableDataStruct(
-        color: deserializeParam(
-          data['color'],
-          ParamType.Color,
-          false,
-        ),
-        maxSeat: deserializeParam(
-          data['max_seat'],
-          ParamType.int,
-          false,
-        ),
-        minSeat: deserializeParam(
-          data['min_seat'],
-          ParamType.int,
-          false,
-        ),
+        color: deserializeParam(data['color'], ParamType.Color, false),
+        maxSeat: deserializeParam(data['max_seat'], ParamType.int, false),
+        minSeat: deserializeParam(data['min_seat'], ParamType.int, false),
         tableName: deserializeParam(
           data['table_name'],
           ParamType.String,
           false,
         ),
-        price: deserializeParam(
-          data['price'],
-          ParamType.double,
-          false,
-        ),
-        xi: deserializeParam<double>(
-          data['xi'],
-          ParamType.double,
-          true,
-        ),
-        yi: deserializeParam<double>(
-          data['yi'],
-          ParamType.double,
-          true,
-        ),
-        type: deserializeParam(
-          data['type'],
-          ParamType.String,
-          false,
-        ),
+        price: deserializeParam(data['price'], ParamType.double, false),
+        xi: deserializeParam<double>(data['xi'], ParamType.double, true),
+        yi: deserializeParam<double>(data['yi'], ParamType.double, true),
+        type: deserializeParam(data['type'], ParamType.String, false),
         status: deserializeStructParam(
           data['status'],
           ParamType.DataStruct,
@@ -286,17 +222,17 @@ class TableDataStruct extends FFSupabaseStruct {
 
   @override
   int get hashCode => ListEquality().hash([
-        color,
-        maxSeat,
-        minSeat,
-        tableName,
-        price,
-        xi,
-        yi,
-        type,
-        status,
-        userData
-      ]);
+    color,
+    maxSeat,
+    minSeat,
+    tableName,
+    price,
+    xi,
+    yi,
+    type,
+    status,
+    userData,
+  ]);
 }
 
 TableDataStruct createTableDataStruct({
@@ -311,33 +247,31 @@ TableDataStruct createTableDataStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    TableDataStruct(
-      color: color,
-      maxSeat: maxSeat,
-      minSeat: minSeat,
-      tableName: tableName,
-      price: price,
-      type: type,
-      status: status ?? (clearUnsetFields ? TableStatusStruct() : null),
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => TableDataStruct(
+  color: color,
+  maxSeat: maxSeat,
+  minSeat: minSeat,
+  tableName: tableName,
+  price: price,
+  type: type,
+  status: status ?? (clearUnsetFields ? TableStatusStruct() : null),
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 TableDataStruct? updateTableDataStruct(
   TableDataStruct? tableData, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    tableData
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => tableData
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addTableDataStructData(
   Map<String, dynamic> supabaseData,
@@ -390,5 +324,4 @@ Map<String, dynamic> getTableDataFirestoreData(
 
 List<Map<String, dynamic>> getTableDataListFirestoreData(
   List<TableDataStruct>? tableDatas,
-) =>
-    tableDatas?.map((e) => getTableDataFirestoreData(e, true)).toList() ?? [];
+) => tableDatas?.map((e) => getTableDataFirestoreData(e, true)).toList() ?? [];

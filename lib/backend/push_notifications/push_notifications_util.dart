@@ -8,7 +8,8 @@ import '../cloud_functions/cloud_functions.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:stream_transform/stream_transform.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 export 'push_notifications_handler.dart';
 export 'serialization_util.dart';
@@ -21,30 +22,39 @@ class UserTokenInfo {
   final String fcmToken;
 }
 
-Stream<UserTokenInfo> getFcmTokenStream(String userPath) => Stream.value(
-        !kIsWeb && (Platform.isIOS || Platform.isAndroid))
-    .where((shouldGetToken) => shouldGetToken)
-    .asyncMap<String?>((_) => Future.value(
-            null) // Stubbed for Supabase Migration: FirebaseMessaging.instance.requestPermission()
-        )
-    .where((fcmToken) => fcmToken != null && fcmToken.isNotEmpty)
-    .map((token) => UserTokenInfo(userPath, token!));
+Stream<UserTokenInfo> getFcmTokenStream(String userPath) =>
+    Stream.value(!kIsWeb && (Platform.isIOS || Platform.isAndroid))
+        .where((shouldGetToken) => shouldGetToken)
+        .asyncMap<String?>((_) async {
+          final messaging = FirebaseMessaging.instance;
+          NotificationSettings settings = await messaging.requestPermission();
+          if (settings.authorizationStatus == AuthorizationStatus.authorized ||
+              settings.authorizationStatus == AuthorizationStatus.provisional) {
+            return await messaging.getToken();
+          }
+          return null;
+        })
+        .where((fcmToken) => fcmToken != null && fcmToken.isNotEmpty)
+        .map((token) => UserTokenInfo(userPath, token!));
 
 final fcmTokenUserStream = authenticatedUserStream
     .where((user) => user != null)
     .map((user) => user!.reference.path)
     .distinct()
     .switchMap(getFcmTokenStream)
-    .map(
-      (userTokenInfo) => makeCloudCall(
-        'addFcmToken',
-        {
-          'userDocPath': userTokenInfo.userPath,
-          'fcmToken': userTokenInfo.fcmToken,
-          'deviceType': Platform.isIOS ? 'iOS' : 'Android',
-        },
-      ),
-    );
+    .map((userTokenInfo) async {
+      final uid = currentUserReference?.id;
+      if (uid != null) {
+        try {
+          await Supabase.instance.client
+              .from('users')
+              .update({'FCMtoken': userTokenInfo.fcmToken})
+              .eq('id', uid);
+        } catch (e) {
+          debugPrint('Failed to save FCM token: $e');
+        }
+      }
+    });
 
 void triggerPushNotification({
   required String? notificationTitle,

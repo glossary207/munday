@@ -22,16 +22,16 @@ class DatainstoreStruct extends FFSupabaseStruct {
     bool? startchat,
     SupabaseDocRef? lastpersonUpdate,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _roomRef = roomRef,
-        _userRef = userRef,
-        _photoprofile = photoprofile,
-        _timeupdate = timeupdate,
-        _lastmassage = lastmassage,
-        _online = online,
-        _name = name,
-        _startchat = startchat,
-        _lastpersonUpdate = lastpersonUpdate,
-        super(supabaseUtilData);
+  }) : _roomRef = roomRef,
+       _userRef = userRef,
+       _photoprofile = photoprofile,
+       _timeupdate = timeupdate,
+       _lastmassage = lastmassage,
+       _online = online,
+       _name = name,
+       _startchat = startchat,
+       _lastpersonUpdate = lastpersonUpdate,
+       super(supabaseUtilData);
 
   // "room_ref" field.
   SupabaseDocRef? _roomRef;
@@ -114,108 +114,65 @@ class DatainstoreStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'room_ref': _roomRef,
-        'user_ref': _userRef,
-        'photoprofile': _photoprofile,
-        'timeupdate': _timeupdate,
-        'lastmassage': _lastmassage,
-        'online': _online,
-        'name': _name,
-        'startchat': _startchat,
-        'LastpersonUpdate': _lastpersonUpdate,
-      }.withoutNulls;
+    'room_ref': _roomRef,
+    'user_ref': _userRef,
+    'photoprofile': _photoprofile,
+    'timeupdate': _timeupdate,
+    'lastmassage': _lastmassage,
+    'online': _online,
+    'name': _name,
+    'startchat': _startchat,
+    'LastpersonUpdate': _lastpersonUpdate,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'room_ref': serializeParam(
-          _roomRef,
-          ParamType.SupabaseDocRef,
-        ),
-        'user_ref': serializeParam(
-          _userRef,
-          ParamType.SupabaseDocRef,
-        ),
-        'photoprofile': serializeParam(
-          _photoprofile,
-          ParamType.String,
-        ),
-        'timeupdate': serializeParam(
-          _timeupdate,
-          ParamType.DateTime,
-        ),
-        'lastmassage': serializeParam(
-          _lastmassage,
-          ParamType.String,
-        ),
-        'online': serializeParam(
-          _online,
-          ParamType.bool,
-        ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-        'startchat': serializeParam(
-          _startchat,
-          ParamType.bool,
-        ),
-        'LastpersonUpdate': serializeParam(
-          _lastpersonUpdate,
-          ParamType.SupabaseDocRef,
-        ),
-      }.withoutNulls;
+    'room_ref': serializeParam(_roomRef, ParamType.SupabaseDocRef),
+    'user_ref': serializeParam(_userRef, ParamType.SupabaseDocRef),
+    'photoprofile': serializeParam(_photoprofile, ParamType.String),
+    'timeupdate': serializeParam(_timeupdate, ParamType.DateTime),
+    'lastmassage': serializeParam(_lastmassage, ParamType.String),
+    'online': serializeParam(_online, ParamType.bool),
+    'name': serializeParam(_name, ParamType.String),
+    'startchat': serializeParam(_startchat, ParamType.bool),
+    'LastpersonUpdate': serializeParam(
+      _lastpersonUpdate,
+      ParamType.SupabaseDocRef,
+    ),
+  }.withoutNulls;
 
-  static DatainstoreStruct fromSerializableMap(Map<String, dynamic> data) =>
-      DatainstoreStruct(
-        roomRef: deserializeParam(
-          data['room_ref'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['room'],
-        ),
-        userRef: deserializeParam(
-          data['user_ref'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['users'],
-        ),
-        photoprofile: deserializeParam(
-          data['photoprofile'],
-          ParamType.String,
-          false,
-        ),
-        timeupdate: deserializeParam(
-          data['timeupdate'],
-          ParamType.DateTime,
-          false,
-        ),
-        lastmassage: deserializeParam(
-          data['lastmassage'],
-          ParamType.String,
-          false,
-        ),
-        online: deserializeParam(
-          data['online'],
-          ParamType.bool,
-          false,
-        ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
-        startchat: deserializeParam(
-          data['startchat'],
-          ParamType.bool,
-          false,
-        ),
-        lastpersonUpdate: deserializeParam(
-          data['LastpersonUpdate'],
-          ParamType.SupabaseDocRef,
-          false,
-          collectionNamePath: ['users'],
-        ),
-      );
+  static DatainstoreStruct fromSerializableMap(
+    Map<String, dynamic> data,
+  ) => DatainstoreStruct(
+    roomRef: deserializeParam(
+      data['room_ref'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['room'],
+    ),
+    userRef: deserializeParam(
+      data['user_ref'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['users'],
+    ),
+    photoprofile: deserializeParam(
+      data['photoprofile'],
+      ParamType.String,
+      false,
+    ),
+    timeupdate: deserializeParam(data['timeupdate'], ParamType.DateTime, false),
+    lastmassage: deserializeParam(data['lastmassage'], ParamType.String, false),
+    online: deserializeParam(data['online'], ParamType.bool, false),
+    name: deserializeParam(data['name'], ParamType.String, false),
+    startchat: deserializeParam(data['startchat'], ParamType.bool, false),
+    lastpersonUpdate: deserializeParam(
+      data['LastpersonUpdate'],
+      ParamType.SupabaseDocRef,
+      false,
+      collectionNamePath: ['users'],
+    ),
+  );
 
   @override
   String toString() => 'DatainstoreStruct(${toMap()})';
@@ -236,16 +193,16 @@ class DatainstoreStruct extends FFSupabaseStruct {
 
   @override
   int get hashCode => ListEquality().hash([
-        roomRef,
-        userRef,
-        photoprofile,
-        timeupdate,
-        lastmassage,
-        online,
-        name,
-        startchat,
-        lastpersonUpdate
-      ]);
+    roomRef,
+    userRef,
+    photoprofile,
+    timeupdate,
+    lastmassage,
+    online,
+    name,
+    startchat,
+    lastpersonUpdate,
+  ]);
 }
 
 DatainstoreStruct createDatainstoreStruct({
@@ -262,35 +219,33 @@ DatainstoreStruct createDatainstoreStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DatainstoreStruct(
-      roomRef: roomRef,
-      userRef: userRef,
-      photoprofile: photoprofile,
-      timeupdate: timeupdate,
-      lastmassage: lastmassage,
-      online: online,
-      name: name,
-      startchat: startchat,
-      lastpersonUpdate: lastpersonUpdate,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DatainstoreStruct(
+  roomRef: roomRef,
+  userRef: userRef,
+  photoprofile: photoprofile,
+  timeupdate: timeupdate,
+  lastmassage: lastmassage,
+  online: online,
+  name: name,
+  startchat: startchat,
+  lastpersonUpdate: lastpersonUpdate,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DatainstoreStruct? updateDatainstoreStruct(
   DatainstoreStruct? datainstore, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    datainstore
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => datainstore
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDatainstoreStructData(
   Map<String, dynamic> supabaseData,
@@ -311,10 +266,13 @@ void addDatainstoreStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final datainstoreData =
-      getDatainstoreFirestoreData(datainstore, forFieldValue);
-  final nestedData =
-      datainstoreData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final datainstoreData = getDatainstoreFirestoreData(
+    datainstore,
+    forFieldValue,
+  );
+  final nestedData = datainstoreData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = datainstore.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -330,8 +288,9 @@ Map<String, dynamic> getDatainstoreFirestoreData(
   final supabaseData = mapToSupabase(datainstore.toMap());
 
   // Add any Firestore field values
-  datainstore.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  datainstore.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

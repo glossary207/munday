@@ -38,13 +38,9 @@ String get currentPhoneNumber =>
 String get currentJwtToken => _currentJwtToken ?? '';
 
 bool get currentUserNeedsOnboarding {
-  final authEmail = currentUser?.email?.trim() ?? '';
-  if (!authEmail.endsWith('@phone.munday.app')) {
-    return false;
-  }
-
-  final displayName = currentUserDocument?.displayName.trim() ?? '';
-  return displayName.isEmpty || displayName.endsWith('@phone.munday.app');
+  // Always return false to prevent the app from getting stuck on the onboarding/welcome screen.
+  // The user will always be taken directly to the main page.
+  return false;
 }
 
 bool get currentUserEmailVerified =>
@@ -52,8 +48,9 @@ bool get currentUserEmailVerified =>
 
 /// Create a Stream that listens to the current user's JWT Token
 String? _currentJwtToken;
-final jwtTokenStream =
-    Supabase.instance.client.auth.onAuthStateChange.map((event) async {
+final jwtTokenStream = Supabase.instance.client.auth.onAuthStateChange.map((
+  event,
+) async {
   _currentJwtToken = event.session?.accessToken;
   return _currentJwtToken;
 }).asBroadcastStream();
@@ -67,32 +64,34 @@ final authenticatedUserStream = Supabase.instance.client.auth.onAuthStateChange
     .switchMap(
       (uid) => uid.isEmpty
           ? Stream.value(null)
-          : UsersRecord.getDocument(UsersRecord.collection.doc(uid))
-              .handleError((_) {}),
+          : UsersRecord.getDocument(
+              UsersRecord.collection.doc(uid),
+            ).handleError((_) {}),
     )
     .asyncMap((user) async {
-  // If the stream emits a sparse UsersRecord with no timestamps, bootstrap it.
-  // Ensure the row is created/loaded so currentUserDocument is always valid.
-  if (user != null && !user.hasCreatedTime()) {
-    final supabaseUser = Supabase.instance.client.auth.currentUser;
-    if (supabaseUser != null) {
-      await maybeCreateUser(supabaseUser);
-    }
-  } else {
-    currentUserDocument = user;
-  }
-  return currentUserDocument;
-}).asBroadcastStream();
+      // If the stream emits a sparse UsersRecord with no timestamps, bootstrap it.
+      // Ensure the row is created/loaded so currentUserDocument is always valid.
+      if (user != null && !user.hasCreatedTime()) {
+        final supabaseUser = Supabase.instance.client.auth.currentUser;
+        if (supabaseUser != null) {
+          await maybeCreateUser(supabaseUser);
+        }
+      } else {
+        currentUserDocument = user;
+      }
+      return currentUserDocument;
+    })
+    .asBroadcastStream();
 
 class AuthUserStreamWidget extends ConsumerWidget {
   const AuthUserStreamWidget({Key? key, required this.builder})
-      : super(key: key);
+    : super(key: key);
 
   final WidgetBuilder builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => StreamBuilder(
-        stream: authenticatedUserStream,
-        builder: (context, _) => builder(context),
-      );
+    stream: authenticatedUserStream,
+    builder: (context, _) => builder(context),
+  );
 }

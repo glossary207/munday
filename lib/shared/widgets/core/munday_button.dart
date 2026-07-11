@@ -118,8 +118,9 @@ class _MundayButtonState extends ConsumerState<MundayButton> {
           )
         : AutoSizeText(
             text ?? '',
-            style:
-                text == null ? null : widget.options.textStyle?.withoutColor(),
+            style: text == null
+                ? null
+                : widget.options.textStyle?.withoutColor(),
             textAlign: widget.options.textAlign,
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
@@ -127,20 +128,20 @@ class _MundayButtonState extends ConsumerState<MundayButton> {
 
     final onPressed = widget.onPressed != null
         ? (widget.showLoadingIndicator
-            ? () async {
-                if (loading) {
-                  return;
-                }
-                setState(() => loading = true);
-                try {
-                  await widget.onPressed!();
-                } finally {
-                  if (mounted) {
-                    setState(() => loading = false);
+              ? () async {
+                  if (loading) {
+                    return;
+                  }
+                  setState(() => loading = true);
+                  try {
+                    await widget.onPressed!();
+                  } finally {
+                    if (mounted) {
+                      setState(() => loading = false);
+                    }
                   }
                 }
-              }
-            : () => widget.onPressed!())
+              : () => widget.onPressed!())
         : null;
 
     ButtonStyle style = ButtonStyle(
@@ -211,7 +212,8 @@ class _MundayButtonState extends ConsumerState<MundayButton> {
     );
 
     if ((widget.icon != null || widget.iconData != null) && !loading) {
-      Widget icon = widget.icon ??
+      Widget icon =
+          widget.icon ??
           FaIcon(
             widget.iconData!,
             size: widget.options.iconSize,
@@ -273,47 +275,45 @@ class _MundayButtonState extends ConsumerState<MundayButton> {
 
 extension _WithoutColorExtension on TextStyle {
   TextStyle withoutColor() => TextStyle(
-        inherit: inherit,
-        color: null,
-        backgroundColor: backgroundColor,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        letterSpacing: letterSpacing,
-        wordSpacing: wordSpacing,
-        textBaseline: textBaseline,
-        height: height,
-        leadingDistribution: leadingDistribution,
-        locale: locale,
-        foreground: foreground,
-        background: background,
-        shadows: shadows,
-        fontFeatures: fontFeatures,
-        decoration: decoration,
-        decorationColor: decorationColor,
-        decorationStyle: decorationStyle,
-        decorationThickness: decorationThickness,
-        debugLabel: debugLabel,
-        fontFamily: fontFamily,
-        fontFamilyFallback: fontFamilyFallback,
-        // The _package field is private so unfortunately we can't set it here,
-        // but it's almost always unset anyway.
-        // package: _package,
-        overflow: overflow,
-      );
+    inherit: inherit,
+    color: null,
+    backgroundColor: backgroundColor,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    fontStyle: fontStyle,
+    letterSpacing: letterSpacing,
+    wordSpacing: wordSpacing,
+    textBaseline: textBaseline,
+    height: height,
+    leadingDistribution: leadingDistribution,
+    locale: locale,
+    foreground: foreground,
+    background: background,
+    shadows: shadows,
+    fontFeatures: fontFeatures,
+    decoration: decoration,
+    decorationColor: decorationColor,
+    decorationStyle: decorationStyle,
+    decorationThickness: decorationThickness,
+    debugLabel: debugLabel,
+    fontFamily: fontFamily,
+    fontFamilyFallback: fontFamilyFallback,
+    // The _package field is private so unfortunately we can't set it here,
+    // but it's almost always unset anyway.
+    // package: _package,
+    overflow: overflow,
+  );
 }
 
 // Slightly hacky method of getting the layout width of the provided text.
 double? _getTextWidth(String? text, TextStyle? style, int maxLines) =>
     text != null
-        ? (TextPainter(
-            text: TextSpan(text: text, style: style),
-            textDirection: TextDirection.ltr,
-            maxLines: maxLines,
-          )..layout())
-            .size
-            .width
-        : null;
+    ? (TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: TextDirection.ltr,
+        maxLines: maxLines,
+      )..layout()).size.width
+    : null;
 
 class FFFocusIndicator extends ConsumerStatefulWidget {
   final Widget Function(FocusNode focusNode)? builder;
@@ -336,9 +336,9 @@ class FFFocusIndicator extends ConsumerStatefulWidget {
     this.onLongPress,
     this.onDoubleTap,
   }) : assert(
-          builder != null || child != null,
-          'Either builder or child must be provided',
-        );
+         builder != null || child != null,
+         'Either builder or child must be provided',
+       );
 
   @override
   ConsumerState<FFFocusIndicator> createState() => _FFFocusIndicatorState();
@@ -372,7 +372,8 @@ class _FFFocusIndicatorState extends ConsumerState<FFFocusIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    final bool hasInteractions = widget.onTap != null ||
+    final bool hasInteractions =
+        widget.onTap != null ||
         widget.onLongPress != null ||
         widget.onDoubleTap != null;
 

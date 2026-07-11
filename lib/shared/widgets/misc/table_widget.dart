@@ -90,26 +90,21 @@ class _TableWidgetState extends ConsumerState<TableWidget> {
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          valueOrDefault<String>(
-                            widget.codename,
-                            '-',
-                          ),
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontStyle,
-                                  ),
+                          valueOrDefault<String>(widget.codename, '-'),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .override(
+                                font: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.fontStyle,
+                                ),
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium!.fontStyle,
+                              ),
                         ),
                       ),
                     ],
@@ -186,9 +181,7 @@ class _TableWidgetState extends ConsumerState<TableWidget> {
             Container(
               width: 60.0,
               height: 60.0,
-              decoration: BoxDecoration(
-                color: Color(0x58000000),
-              ),
+              decoration: BoxDecoration(color: Color(0x58000000)),
             ),
         ],
       ),

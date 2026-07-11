@@ -5,8 +5,10 @@ Future<Map<String, dynamic>> makeCloudCall(
   Map<String, dynamic> input,
 ) async {
   try {
-    final response =
-        await Supabase.instance.client.functions.invoke(callName, body: input);
+    final response = await Supabase.instance.client.functions.invoke(
+      callName,
+      body: input,
+    );
     // Response data is dynamic. Supabase Functions return data directly.
     return response.data is Map
         ? Map<String, dynamic>.from(response.data as Map)

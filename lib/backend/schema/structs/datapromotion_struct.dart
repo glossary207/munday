@@ -3,14 +3,11 @@
 import '/backend/supabase/supabase_shim.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import '/backend/schema/util/supabase_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
 
-
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 import 'package:munday/core/routing/serialization_util.dart';
-
 
 class DatapromotionStruct extends FFSupabaseStruct {
   DatapromotionStruct({
@@ -19,11 +16,11 @@ class DatapromotionStruct extends FFSupabaseStruct {
     SupabaseDocRef? iDvenuse,
     String? logo,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _namevenuse = namevenuse,
-        _distance = distance,
-        _iDvenuse = iDvenuse,
-        _logo = logo,
-        super(supabaseUtilData);
+  }) : _namevenuse = namevenuse,
+       _distance = distance,
+       _iDvenuse = iDvenuse,
+       _logo = logo,
+       super(supabaseUtilData);
 
   // "namevenuse" field.
   String? _namevenuse;
@@ -68,31 +65,19 @@ class DatapromotionStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'namevenuse': _namevenuse,
-        'distance': _distance,
-        'IDvenuse': _iDvenuse,
-        'logo': _logo,
-      }.withoutNulls;
+    'namevenuse': _namevenuse,
+    'distance': _distance,
+    'IDvenuse': _iDvenuse,
+    'logo': _logo,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'namevenuse': serializeParam(
-          _namevenuse,
-          ParamType.String,
-        ),
-        'distance': serializeParam(
-          _distance,
-          ParamType.double,
-        ),
-        'IDvenuse': serializeParam(
-          _iDvenuse,
-          ParamType.SupabaseDocRef,
-        ),
-        'logo': serializeParam(
-          _logo,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'namevenuse': serializeParam(_namevenuse, ParamType.String),
+    'distance': serializeParam(_distance, ParamType.double),
+    'IDvenuse': serializeParam(_iDvenuse, ParamType.SupabaseDocRef),
+    'logo': serializeParam(_logo, ParamType.String),
+  }.withoutNulls;
 
   static DatapromotionStruct fromSerializableMap(Map<String, dynamic> data) =>
       DatapromotionStruct(
@@ -101,22 +86,14 @@ class DatapromotionStruct extends FFSupabaseStruct {
           ParamType.String,
           false,
         ),
-        distance: deserializeParam(
-          data['distance'],
-          ParamType.double,
-          false,
-        ),
+        distance: deserializeParam(data['distance'], ParamType.double, false),
         iDvenuse: deserializeParam(
           data['IDvenuse'],
           ParamType.SupabaseDocRef,
           false,
           collectionNamePath: ['venues'],
         ),
-        logo: deserializeParam(
-          data['logo'],
-          ParamType.String,
-          false,
-        ),
+        logo: deserializeParam(data['logo'], ParamType.String, false),
       );
 
   @override
@@ -145,30 +122,28 @@ DatapromotionStruct createDatapromotionStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DatapromotionStruct(
-      namevenuse: namevenuse,
-      distance: distance,
-      iDvenuse: iDvenuse,
-      logo: logo,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DatapromotionStruct(
+  namevenuse: namevenuse,
+  distance: distance,
+  iDvenuse: iDvenuse,
+  logo: logo,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DatapromotionStruct? updateDatapromotionStruct(
   DatapromotionStruct? datapromotion, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    datapromotion
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => datapromotion
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDatapromotionStructData(
   Map<String, dynamic> supabaseData,
@@ -189,10 +164,13 @@ void addDatapromotionStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final datapromotionData =
-      getDatapromotionFirestoreData(datapromotion, forFieldValue);
-  final nestedData =
-      datapromotionData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final datapromotionData = getDatapromotionFirestoreData(
+    datapromotion,
+    forFieldValue,
+  );
+  final nestedData = datapromotionData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = datapromotion.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -208,8 +186,9 @@ Map<String, dynamic> getDatapromotionFirestoreData(
   final supabaseData = mapToSupabase(datapromotion.toMap());
 
   // Add any Firestore field values
-  datapromotion.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  datapromotion.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

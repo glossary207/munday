@@ -8,10 +8,8 @@ import 'index.dart';
 import 'package:ff_commons/flutter_flow/flutter_flow_util.dart';
 
 class VenuesRecord extends SupabaseRecord {
-  VenuesRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  VenuesRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -138,27 +136,33 @@ class VenuesRecord extends SupabaseRecord {
     _bg = (snapshotData['bg'] ?? snapshotData['BG']) as String?;
     _capacity = castToType<int>(snapshotData['capacity']);
     _maxCapacity = castToType<int>(snapshotData['max_capacity']);
-    _position =
-        _parseLatLng(snapshotData['position'] ?? snapshotData['Position']);
-    _openCloseTime = (snapshotData['open_close_time'] ??
-        snapshotData['Open_Close_time']) as String?;
-    _styleVenuse =
-        getDataList(snapshotData['stylevenuse'] ?? snapshotData['styleVenuse']);
-    _styleMusic =
-        getDataList(snapshotData['stylemusic'] ?? snapshotData['StyleMusic']);
+    _position = _parseLatLng(
+      snapshotData['position'] ?? snapshotData['Position'],
+    );
+    _openCloseTime =
+        (snapshotData['open_close_time'] ?? snapshotData['Open_Close_time'])
+            as String?;
+    _styleVenuse = getDataList(
+      snapshotData['stylevenuse'] ?? snapshotData['styleVenuse'],
+    );
+    _styleMusic = getDataList(
+      snapshotData['stylemusic'] ?? snapshotData['StyleMusic'],
+    );
     _logo = (snapshotData['logo'] ?? snapshotData['Logo']) as String?;
     _events = getSupabaseDocRefList(
       snapshotData['events'] ?? snapshotData['Events'],
       'events',
     );
-    _dateEvents =
-        getDataList(snapshotData['dateevents'] ?? snapshotData['DateEvents']);
+    _dateEvents = getDataList(
+      snapshotData['dateevents'] ?? snapshotData['DateEvents'],
+    );
     _promotion = getDataList(snapshotData['promotion']);
     _photos = getDataList(snapshotData['photos']);
     _linkContact = snapshotData['linkcontact'] is ContactStruct
         ? snapshotData['linkcontact']
         : ContactStruct.maybeFromMap(
-            snapshotData['linkcontact'] ?? snapshotData['LinkContact']);
+            snapshotData['linkcontact'] ?? snapshotData['LinkContact'],
+          );
     _userReview = getStructList(
       snapshotData['user_review'],
       ReviewStruct.fromMap,
@@ -170,26 +174,34 @@ class VenuesRecord extends SupabaseRecord {
     );
     _video = getDataList(snapshotData['video'] ?? snapshotData['Video']);
     _listpromotion = getStructList(
-      snapshotData['listpromotion'] ?? snapshotData['ListPromotion'] ?? snapshotData['listPromotion'],
+      snapshotData['listpromotion'] ??
+          snapshotData['ListPromotion'] ??
+          snapshotData['listPromotion'],
       PromotionDataSubStruct.fromMap,
     );
-    
+
     // Fallback: If listpromotion is empty but promotion has images, auto-generate structs
-    if ((_listpromotion == null || _listpromotion!.isEmpty) && _promotion != null && _promotion!.isNotEmpty) {
-      _listpromotion = _promotion!.map((photoUrl) => PromotionDataSubStruct(
-        photo: photoUrl,
-        mon: true,
-        tue: true,
-        wed: true,
-        thu: true,
-        fri: true,
-        sat: true,
-        sun: true,
-        dateStart: DateTime(2000),
-        dateEnd: DateTime(2100),
-      )).toList();
+    if ((_listpromotion == null || _listpromotion!.isEmpty) &&
+        _promotion != null &&
+        _promotion!.isNotEmpty) {
+      _listpromotion = _promotion!
+          .map(
+            (photoUrl) => PromotionDataSubStruct(
+              photo: photoUrl,
+              mon: true,
+              tue: true,
+              wed: true,
+              thu: true,
+              fri: true,
+              sat: true,
+              sun: true,
+              dateStart: DateTime(2000),
+              dateEnd: DateTime(2100),
+            ),
+          )
+          .toList();
     }
-    
+
     _tableId = getDataList(snapshotData['table_id']);
     _idLiveChat = getSupabaseDocRef(
       snapshotData['id_liveChat'],
@@ -215,8 +227,7 @@ class VenuesRecord extends SupabaseRecord {
   static VenuesRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      VenuesRecord._(reference, mapFromSupabase(data));
+  ) => VenuesRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -297,28 +308,28 @@ class VenuesRecordDocumentEquality implements Equality<VenuesRecord> {
 
   @override
   int hash(VenuesRecord? e) => const ListEquality().hash([
-        e?.nameVenuse,
-        e?.bg,
-        e?.capacity,
-        e?.maxCapacity,
-        e?.position,
-        e?.openCloseTime,
-        e?.styleVenuse,
-        e?.styleMusic,
-        e?.logo,
-        e?.events,
-        e?.dateEvents,
-        e?.promotion,
-        e?.photos,
-        e?.linkContact,
-        e?.userReview,
-        e?.rating,
-        e?.refUserInVenues,
-        e?.video,
-        e?.listpromotion,
-        e?.tableId,
-        e?.idLiveChat
-      ]);
+    e?.nameVenuse,
+    e?.bg,
+    e?.capacity,
+    e?.maxCapacity,
+    e?.position,
+    e?.openCloseTime,
+    e?.styleVenuse,
+    e?.styleMusic,
+    e?.logo,
+    e?.events,
+    e?.dateEvents,
+    e?.promotion,
+    e?.photos,
+    e?.linkContact,
+    e?.userReview,
+    e?.rating,
+    e?.refUserInVenues,
+    e?.video,
+    e?.listpromotion,
+    e?.tableId,
+    e?.idLiveChat,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is VenuesRecord;

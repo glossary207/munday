@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class UsersRecord extends SupabaseRecord {
-  UsersRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  UsersRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -271,20 +269,26 @@ class UsersRecord extends SupabaseRecord {
         : UserphotoshowStruct.maybeFromMap(snapshotData['photoshow']);
     _checkin = snapshotData['chekin'] as String?;
     _unread = castToType<int>(snapshotData['unread']);
-    _cheers = getDataList(snapshotData['cheers']);
-    _usermassage = getDataList(snapshotData['usermassage']);
-    _cheersEnd = getDataList(snapshotData['cheers_end']);
-    _usermassageRead = getDataList(snapshotData['usermassage_read']);
+    _cheers = getSupabaseDocRefList(snapshotData['cheers'], 'users');
+    _usermassage = getSupabaseDocRefList(snapshotData['usermassage'], 'users');
+    _cheersEnd = getSupabaseDocRefList(snapshotData['cheers_end'], 'users');
+    _usermassageRead = getSupabaseDocRefList(
+      snapshotData['usermassage_read'],
+      'users',
+    );
     _seeusercheers = snapshotData['seeusercheers'] as bool?;
-    _usercheerme = getDataList(snapshotData['usercheerme']);
-    _showprofilecheers = getDataList(snapshotData['showprofilecheers']);
+    _usercheerme = getSupabaseDocRefList(snapshotData['usercheerme'], 'users');
+    _showprofilecheers = getSupabaseDocRefList(
+      snapshotData['showprofilecheers'],
+      'users',
+    );
     _listStore = getDataList(snapshotData['list_store']);
     _unlimitcheers = snapshotData['unlimitcheers'] as bool?;
     _idTransactionList = getDataList(snapshotData['id_transaction_list']);
     _payList = getDataList(snapshotData['pay_list']);
     _newuser = snapshotData['newuser'] as bool?;
-    _blockuser = getDataList(snapshotData['Blockuser']);
-    _blockEDuser = getDataList(snapshotData['BlockEDuser']);
+    _blockuser = getSupabaseDocRefList(snapshotData['Blockuser'], 'users');
+    _blockEDuser = getSupabaseDocRefList(snapshotData['BlockEDuser'], 'users');
     _online = snapshotData['online'] as bool?;
     _idig = snapshotData['IDIG'] as String?;
     _iDFacebook = snapshotData['IDFacebook'] as String?;
@@ -292,24 +296,28 @@ class UsersRecord extends SupabaseRecord {
     _view = castToType<int>(snapshotData['view']);
     _checkinID = getSupabaseDocRef(snapshotData['checkinID'], 'store');
     _readcheers = castToType<int>(snapshotData['readcheers']);
-    _openseeuser = getDataList(snapshotData['openseeuser']);
+    _openseeuser = getSupabaseDocRefList(snapshotData['openseeuser'], 'users');
     _freeseeuser = castToType<int>(snapshotData['freeseeuser']);
-    _roomsend = getDataList(snapshotData['roomsend']);
-    _roomrecive = getDataList(snapshotData['roomrecive']);
+    _roomsend = getSupabaseDocRefList(snapshotData['roomsend'], 'room');
+    _roomrecive = getSupabaseDocRefList(snapshotData['roomrecive'], 'room');
     _popupEditProfile = snapshotData['PopupEditProfile'] as bool?;
     _fCMtoken = snapshotData['FCMtoken'] as String?;
     _loveEvent = getSupabaseDocRefList(snapshotData['loveEvent'], 'events');
     _loveVenuse = getSupabaseDocRefList(snapshotData['loveVenuse'], 'venues');
-    _tickets = getDataList(snapshotData['tickets']);
-    _iDROOMVenues = getDataList(snapshotData['IDROOMVenues']);
-    _loginVenuesRoom =
-        getSupabaseDocRef(snapshotData['loginVenuesRoom'], 'room');
+    _tickets = getSupabaseDocRefList(snapshotData['tickets'], 'Ticket');
+    _iDROOMVenues = getSupabaseDocRefList(snapshotData['IDROOMVenues'], 'room');
+    _loginVenuesRoom = getSupabaseDocRef(
+      snapshotData['loginVenuesRoom'],
+      'room',
+    );
     _nameLoginVenues = snapshotData['nameLoginVenues'] as String?;
     _cheersLimit = castToType<int>(snapshotData['cheers_limit']);
     _setCheers = snapshotData['set_cheers'] as bool?;
     _logoRoom = snapshotData['logo_room'] as String?;
-    _groupInviteID =
-        getSupabaseDocRef(snapshotData['Group_invite_ID'], 'Group_invite');
+    _groupInviteID = getSupabaseDocRef(
+      snapshotData['Group_invite_ID'],
+      'Group_invite',
+    );
   }
 
   static SupabaseCollectionRef get collection =>
@@ -330,8 +338,7 @@ class UsersRecord extends SupabaseRecord {
   static UsersRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      UsersRecord._(reference, mapFromSupabase(data));
+  ) => UsersRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -397,10 +404,12 @@ Map<String, dynamic> createUsersRecordData({
       supabaseData['photoshow'] = FieldValue.delete();
     } else {
       final photoshowData = getUserphotoshowFirestoreData(photoshow);
-      final replacePhotoshow = photoshow.supabaseUtilData.create ||
+      final replacePhotoshow =
+          photoshow.supabaseUtilData.create ||
           photoshow.supabaseUtilData.clearUnsetFields;
-      supabaseData['photoshow'] =
-          replacePhotoshow ? photoshowData : FieldValue.mapMerge(photoshowData);
+      supabaseData['photoshow'] = replacePhotoshow
+          ? photoshowData
+          : FieldValue.mapMerge(photoshowData);
     }
   }
 
@@ -464,54 +473,54 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   int hash(UsersRecord? e) => const ListEquality().hash([
-        e?.email,
-        e?.displayName,
-        e?.photoUrl,
-        e?.uid,
-        e?.createdTime,
-        e?.phoneNumber,
-        e?.caption,
-        e?.photoshow,
-        e?.checkin,
-        e?.unread,
-        e?.cheers,
-        e?.usermassage,
-        e?.cheersEnd,
-        e?.usermassageRead,
-        e?.seeusercheers,
-        e?.usercheerme,
-        e?.showprofilecheers,
-        e?.listStore,
-        e?.unlimitcheers,
-        e?.idTransactionList,
-        e?.payList,
-        e?.newuser,
-        e?.blockuser,
-        e?.blockEDuser,
-        e?.online,
-        e?.idig,
-        e?.iDFacebook,
-        e?.report,
-        e?.view,
-        e?.checkinID,
-        e?.readcheers,
-        e?.openseeuser,
-        e?.freeseeuser,
-        e?.roomsend,
-        e?.roomrecive,
-        e?.popupEditProfile,
-        e?.fCMtoken,
-        e?.loveEvent,
-        e?.loveVenuse,
-        e?.tickets,
-        e?.iDROOMVenues,
-        e?.loginVenuesRoom,
-        e?.nameLoginVenues,
-        e?.cheersLimit,
-        e?.setCheers,
-        e?.logoRoom,
-        e?.groupInviteID
-      ]);
+    e?.email,
+    e?.displayName,
+    e?.photoUrl,
+    e?.uid,
+    e?.createdTime,
+    e?.phoneNumber,
+    e?.caption,
+    e?.photoshow,
+    e?.checkin,
+    e?.unread,
+    e?.cheers,
+    e?.usermassage,
+    e?.cheersEnd,
+    e?.usermassageRead,
+    e?.seeusercheers,
+    e?.usercheerme,
+    e?.showprofilecheers,
+    e?.listStore,
+    e?.unlimitcheers,
+    e?.idTransactionList,
+    e?.payList,
+    e?.newuser,
+    e?.blockuser,
+    e?.blockEDuser,
+    e?.online,
+    e?.idig,
+    e?.iDFacebook,
+    e?.report,
+    e?.view,
+    e?.checkinID,
+    e?.readcheers,
+    e?.openseeuser,
+    e?.freeseeuser,
+    e?.roomsend,
+    e?.roomrecive,
+    e?.popupEditProfile,
+    e?.fCMtoken,
+    e?.loveEvent,
+    e?.loveVenuse,
+    e?.tickets,
+    e?.iDROOMVenues,
+    e?.loginVenuesRoom,
+    e?.nameLoginVenues,
+    e?.cheersLimit,
+    e?.setCheers,
+    e?.logoRoom,
+    e?.groupInviteID,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is UsersRecord;

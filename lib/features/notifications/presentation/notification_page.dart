@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 
@@ -287,6 +288,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   bool _loadingRequests = true;
   bool _mockupMode = false;
 
+  RealtimeChannel? _friendRequestChannel;
+
   final Set<int> _dismissedMockRequests = {};
   final Set<int> _dismissedMockTickets = {};
 
@@ -295,7 +298,35 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _fetchFriendRequests();
+      _setupRealtime();
     });
+  }
+
+  void _setupRealtime() {
+    _friendRequestChannel = Supabase.instance.client.channel(
+      'public:friend_request',
+    );
+    _friendRequestChannel
+        ?.onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'friend_request',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'receiver_id',
+            value: currentUserUid,
+          ),
+          callback: (payload) {
+            _fetchFriendRequests();
+          },
+        )
+        .subscribe();
+  }
+
+  @override
+  void dispose() {
+    _friendRequestChannel?.unsubscribe();
+    super.dispose();
   }
 
   Future<void> _fetchFriendRequests() async {
@@ -349,12 +380,16 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   }
 
   Future<void> _respondToRequest(
-      String requestId, String senderId, bool accept) async {
+    String requestId,
+    String senderId,
+    bool accept,
+  ) async {
     try {
       if (accept) {
         await Supabase.instance.client
             .from('friend_request')
-            .update({'status': 'accepted'}).eq('id', requestId);
+            .update({'status': 'accepted'})
+            .eq('id', requestId);
       } else {
         await Supabase.instance.client
             .from('friend_request')
@@ -363,10 +398,12 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       }
 
       if (accept) {
-        final String lowId =
-            currentUserUid.compareTo(senderId) < 0 ? currentUserUid : senderId;
-        final String highId =
-            currentUserUid.compareTo(senderId) > 0 ? currentUserUid : senderId;
+        final String lowId = currentUserUid.compareTo(senderId) < 0
+            ? currentUserUid
+            : senderId;
+        final String highId = currentUserUid.compareTo(senderId) > 0
+            ? currentUserUid
+            : senderId;
 
         try {
           await Supabase.instance.client.from('friend').insert({
@@ -378,35 +415,45 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           debugPrint('Error inserting friend record: $e');
         }
 
-        await currentUserReference!.update({
-          ...mapToSupabase({
-            'cheers': FieldValue.arrayUnion(
-                [SupabaseFirestore.instance.doc('users/$senderId')]),
-            'cheersEnd': FieldValue.arrayUnion(
-                [SupabaseFirestore.instance.doc('users/$senderId')]),
-          })
-        });
-        await SupabaseFirestore.instance.doc('users/$senderId').update({
-          ...mapToSupabase({
-            'cheers': FieldValue.arrayUnion([currentUserReference]),
-            'cheersEnd': FieldValue.arrayUnion([currentUserReference]),
-            'usermassage': FieldValue.arrayUnion([currentUserReference]),
-          })
-        });
+        // --- Create DM Chat Room if it doesn't exist ---
+        try {
+          final existingRoomsRes = await Supabase.instance.client
+              .from('chat_rooms')
+              .select('id')
+              .eq('group_chat', false)
+              .contains('user_ids', [currentUserUid, senderId]);
+
+          if (existingRoomsRes.isEmpty) {
+            await Supabase.instance.client.from('chat_rooms').insert({
+              'user_ids': [currentUserUid, senderId],
+              'created_time': DateTime.now().toIso8601String(),
+              'last_message_time': DateTime.now().toIso8601String(),
+              'group_chat': false,
+            });
+          }
+        } catch (e) {
+          debugPrint('Error creating chat room: $e');
+        }
+        // -----------------------------------------------
       }
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(accept ? 'Friend request accepted!' : 'Declined.'),
-        backgroundColor: accept ? _kGreen : const Color(0xFF333333),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(accept ? 'Friend request accepted!' : 'Declined.'),
+          backgroundColor: accept ? _kGreen : const Color(0xFF333333),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      );
       _fetchFriendRequests();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red));
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+      );
     }
   }
 
@@ -416,20 +463,22 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       _dismissedMockRequests.clear();
       _dismissedMockTickets.clear();
     });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(_mockupMode ? 'Mockup mode ON' : 'Mockup mode OFF'),
-      backgroundColor: _mockupMode ? _kPurple : const Color(0xFF333333),
-      behavior: SnackBarBehavior.floating,
-      duration: const Duration(seconds: 1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(_mockupMode ? 'Mockup mode ON' : 'Mockup mode OFF'),
+        backgroundColor: _mockupMode ? _kPurple : const Color(0xFF333333),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
   }
 
   int get _unreadCount => _mockupMode
       ? 2 + (_mockRequests.length - _dismissedMockRequests.length)
       : (currentUserDocument?.usermassage ?? []).length +
-          (currentUserDocument?.usercheerme ?? []).length +
-          _friendRequests.length;
+            (currentUserDocument?.usercheerme ?? []).length +
+            _friendRequests.length;
 
   // ─── Build ────────────────────────────────────────────────────────────────
 
@@ -470,8 +519,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 shape: BoxShape.circle,
                 border: Border.all(color: _kCardBorder),
               ),
-              child: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: _kText, size: 16),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: _kText,
+                size: 16,
+              ),
             ),
           ),
           const SizedBox(width: 14),
@@ -491,39 +543,50 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 if (total > 0) ...[
                   const SizedBox(width: 10),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                          colors: [Color(0xFFFF4444), _kRed]),
+                        colors: [Color(0xFFFF4444), _kRed],
+                      ),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       total > 99 ? '99+' : '$total',
                       style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700),
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ],
                 if (_mockupMode) ...[
                   const SizedBox(width: 8),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
                     decoration: BoxDecoration(
                       color: _kPurple.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                          color: _kPurple.withValues(alpha: 0.5), width: 1),
+                        color: _kPurple.withValues(alpha: 0.5),
+                        width: 1,
+                      ),
                     ),
-                    child: Text('MOCKUP',
-                        style: GoogleFonts.openSans(
-                            color: _kPurple,
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.8)),
+                    child: Text(
+                      'MOCKUP',
+                      style: GoogleFonts.openSans(
+                        color: _kPurple,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
                   ),
                 ],
               ],
@@ -539,12 +602,16 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 color: const Color(0xFF111111),
                 shape: BoxShape.circle,
                 border: Border.all(
-                    color: _mockupMode
-                        ? _kPurple.withValues(alpha: 0.5)
-                        : _kCardBorder),
+                  color: _mockupMode
+                      ? _kPurple.withValues(alpha: 0.5)
+                      : _kCardBorder,
+                ),
               ),
-              child: Icon(Icons.refresh_rounded,
-                  color: _mockupMode ? _kPurple : _kTextSub, size: 18),
+              child: Icon(
+                Icons.refresh_rounded,
+                color: _mockupMode ? _kPurple : _kTextSub,
+                size: 18,
+              ),
             ),
           ),
         ],
@@ -584,23 +651,33 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           _buildMockActivityCard(_mockActivityItems[0]),
           if (visibleTickets.isNotEmpty)
             _buildMockTicketCard(
-                visibleTickets[0].key, visibleTickets[0].value),
+              visibleTickets[0].key,
+              visibleTickets[0].value,
+            ),
           if (visibleRequests.isNotEmpty)
             _buildMockRequestCard(
-                visibleRequests[0].key, visibleRequests[0].value),
+              visibleRequests[0].key,
+              visibleRequests[0].value,
+            ),
           _buildMockActivityCard(_mockActivityItems[1]),
           _buildFeedHeader('ก่อนหน้า'),
           if (visibleTickets.length > 1)
             _buildMockTicketCard(
-                visibleTickets[1].key, visibleTickets[1].value),
+              visibleTickets[1].key,
+              visibleTickets[1].value,
+            ),
           if (visibleRequests.length > 1)
             _buildMockRequestCard(
-                visibleRequests[1].key, visibleRequests[1].value),
+              visibleRequests[1].key,
+              visibleRequests[1].value,
+            ),
           _buildMockNewsCard(_mockNewsItems[0]),
           _buildMockActivityCard(_mockActivityItems[2]),
           if (visibleRequests.length > 2)
             _buildMockRequestCard(
-                visibleRequests[2].key, visibleRequests[2].value),
+              visibleRequests[2].key,
+              visibleRequests[2].value,
+            ),
           _buildMockActivityCard(_mockActivityItems[3]),
           _buildMockNewsCard(_mockNewsItems[1]),
           _buildMockNewsCard(_mockNewsItems[2]),
@@ -618,7 +695,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
 
     final usermassage = currentUserDocument?.usermassage ?? [];
     final usercheerme = currentUserDocument?.usercheerme ?? [];
-    final hasActivity = _friendRequests.isNotEmpty ||
+    final hasActivity =
+        _friendRequests.isNotEmpty ||
         usermassage.isNotEmpty ||
         usercheerme.isNotEmpty;
 
@@ -664,7 +742,10 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           ),
           if (!hasActivity)
             _buildEmpty(
-                'ไม่มีการแจ้งเตือนใหม่', Icons.notifications_none_outlined),
+              context,
+              'ไม่มีการแจ้งเตือนใหม่',
+              Icons.notifications_none_outlined,
+            ),
           const SizedBox(height: 40),
         ],
       ),
@@ -695,26 +776,28 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: item.name,
-                          style: GoogleFonts.openSans(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            height: 1.45,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: item.name,
+                            style: GoogleFonts.openSans(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              height: 1.45,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: ' ${item.subtitle}',
-                          style: GoogleFonts.openSans(
-                            color: const Color(0xFFCCCCCC),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.45,
+                          TextSpan(
+                            text: ' ${item.subtitle}',
+                            style: GoogleFonts.openSans(
+                              color: const Color(0xFFCCCCCC),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 1.45,
+                            ),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -724,8 +807,9 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       style: GoogleFonts.openSans(
                         color: item.isUnread ? item.iconColor : _kTextSub,
                         fontSize: 12,
-                        fontWeight:
-                            item.isUnread ? FontWeight.w600 : FontWeight.w400,
+                        fontWeight: item.isUnread
+                            ? FontWeight.w600
+                            : FontWeight.w400,
                       ),
                     ),
                   ],
@@ -742,8 +826,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   ),
                 )
               else
-                const Icon(Icons.more_horiz_rounded,
-                    color: Color(0xFF444444), size: 22),
+                const Icon(
+                  Icons.more_horiz_rounded,
+                  color: Color(0xFF444444),
+                  size: 22,
+                ),
             ],
           ),
         ),
@@ -814,26 +901,28 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: req.name,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                height: 1.45,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: req.name,
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ' ส่งคำขอเป็นเพื่อน',
-                              style: GoogleFonts.openSans(
-                                color: const Color(0xFFCCCCCC),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 1.45,
+                              TextSpan(
+                                text: ' ส่งคำขอเป็นเพื่อน',
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFFCCCCCC),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                           maxLines: 2,
                         ),
                         const SizedBox(height: 4),
@@ -847,8 +936,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       ],
                     ),
                   ),
-                  const Icon(Icons.more_horiz_rounded,
-                      color: Color(0xFF444444), size: 22),
+                  const Icon(
+                    Icons.more_horiz_rounded,
+                    color: Color(0xFF444444),
+                    size: 22,
+                  ),
                 ],
               ),
             ),
@@ -862,14 +954,17 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() => _dismissedMockRequests.add(index));
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('${req.name} added as friend!'),
-                      backgroundColor: _kGreen,
-                      behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${req.name} added as friend!'),
+                        backgroundColor: _kGreen,
+                        behavior: SnackBarBehavior.floating,
+                        duration: const Duration(seconds: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 34,
@@ -878,11 +973,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('ยอมรับ',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700)),
+                      child: Text(
+                        'ยอมรับ',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -899,11 +997,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('ปฏิเสธ',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'ปฏิเสธ',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -949,35 +1050,37 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: ticket.senderName,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                height: 1.45,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: ticket.senderName,
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ' ส่ง ticket เข้างาน ',
-                              style: GoogleFonts.openSans(
-                                color: const Color(0xFFCCCCCC),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 1.45,
+                              TextSpan(
+                                text: ' ส่ง ticket เข้างาน ',
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFFCCCCCC),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ticket.eventName,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                height: 1.45,
+                              TextSpan(
+                                text: ticket.eventName,
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -1026,8 +1129,10 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text(ticket.eventEmoji,
-                          style: const TextStyle(fontSize: 20)),
+                      child: Text(
+                        ticket.eventEmoji,
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                 ],
@@ -1044,15 +1149,19 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() => _dismissedMockTickets.add(index));
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text('รับ ticket จาก ${ticket.senderName} แล้ว!'),
-                      backgroundColor: ticketColor,
-                      behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'รับ ticket จาก ${ticket.senderName} แล้ว!',
+                        ),
+                        backgroundColor: ticketColor,
+                        behavior: SnackBarBehavior.floating,
+                        duration: const Duration(seconds: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 34,
@@ -1061,11 +1170,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('รับ ticket',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700)),
+                      child: Text(
+                        'รับ ticket',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1081,11 +1193,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('ปฏิเสธ',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'ปฏิเสธ',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1103,7 +1218,9 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   }
 
   Widget _buildFriendRequestCard(
-      BuildContext context, Map<String, dynamic> req) {
+    BuildContext context,
+    Map<String, dynamic> req,
+  ) {
     final photo = (req['senderPhoto'] as String?) ?? '';
     final name = (req['senderName'] as String?) ?? 'Unknown';
     final requestId = req['requestId'] as String;
@@ -1130,7 +1247,9 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       color: const Color(0xFF2A2A2A),
                       image: photo.isNotEmpty
                           ? DecorationImage(
-                              fit: BoxFit.cover, image: NetworkImage(photo))
+                              fit: BoxFit.cover,
+                              image: NetworkImage(photo),
+                            )
                           : null,
                     ),
                     child: photo.isEmpty
@@ -1143,26 +1262,28 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: name,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                height: 1.45,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: name,
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ' ส่งคำขอเป็นเพื่อน',
-                              style: GoogleFonts.openSans(
-                                color: const Color(0xFFCCCCCC),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 1.45,
+                              TextSpan(
+                                text: ' ส่งคำขอเป็นเพื่อน',
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFFCCCCCC),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                           maxLines: 2,
                         ),
                         const SizedBox(height: 4),
@@ -1176,8 +1297,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       ],
                     ),
                   ),
-                  const Icon(Icons.more_horiz_rounded,
-                      color: Color(0xFF444444), size: 22),
+                  const Icon(
+                    Icons.more_horiz_rounded,
+                    color: Color(0xFF444444),
+                    size: 22,
+                  ),
                 ],
               ),
             ),
@@ -1197,11 +1321,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('ยอมรับ',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700)),
+                      child: Text(
+                        'ยอมรับ',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1217,11 +1344,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
-                      child: Text('ปฏิเสธ',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'ปฏิเสธ',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1263,8 +1393,10 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: Text(news.emoji,
-                          style: const TextStyle(fontSize: 22)),
+                      child: Text(
+                        news.emoji,
+                        style: const TextStyle(fontSize: 22),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -1273,26 +1405,28 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: news.venue,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                height: 1.45,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: news.venue,
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ' ${news.title}',
-                              style: GoogleFonts.openSans(
-                                color: const Color(0xFFCCCCCC),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 1.45,
+                              TextSpan(
+                                text: ' ${news.title}',
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFFCCCCCC),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -1309,16 +1443,20 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                             ),
                             const SizedBox(width: 6),
                             _buildCategoryChip(
-                                news.category, news.categoryGradient),
+                              news.category,
+                              news.categoryGradient,
+                            ),
                             if (news.isFree) ...[
                               const SizedBox(width: 4),
                               _buildFreePaidBadge(true),
                             ],
                             if (news.isHot) ...[
                               const SizedBox(width: 4),
-                              Icon(Icons.local_fire_department_rounded,
-                                  size: 13,
-                                  color: _kOrange.withValues(alpha: 0.9)),
+                              Icon(
+                                Icons.local_fire_department_rounded,
+                                size: 13,
+                                color: _kOrange.withValues(alpha: 0.9),
+                              ),
                             ],
                           ],
                         ),
@@ -1326,8 +1464,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Icon(Icons.more_horiz_rounded,
-                      color: Color(0xFF444444), size: 22),
+                  const Icon(
+                    Icons.more_horiz_rounded,
+                    color: Color(0xFF444444),
+                    size: 22,
+                  ),
                 ],
               ),
             ),
@@ -1347,16 +1488,20 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: gradient.map((c) => c.withValues(alpha: 0.2)).toList()),
+          colors: gradient.map((c) => c.withValues(alpha: 0.2)).toList(),
+        ),
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: gradient.first.withValues(alpha: 0.3)),
       ),
-      child: Text(category,
-          style: TextStyle(
-              color: gradient.first,
-              fontSize: 9,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.6)),
+      child: Text(
+        category,
+        style: TextStyle(
+          color: gradient.first,
+          fontSize: 9,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0.6,
+        ),
+      ),
     );
   }
 
@@ -1369,23 +1514,26 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
             : _kRed.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-            color: isFree
-                ? _kGreen.withValues(alpha: 0.3)
-                : _kRed.withValues(alpha: 0.3)),
+          color: isFree
+              ? _kGreen.withValues(alpha: 0.3)
+              : _kRed.withValues(alpha: 0.3),
+        ),
       ),
       child: Text(
         isFree ? 'FREE' : 'PAID',
         style: TextStyle(
-            color: isFree ? _kGreen : _kRed,
-            fontSize: 10,
-            fontWeight: FontWeight.w800),
+          color: isFree ? _kGreen : _kRed,
+          fontSize: 10,
+          fontWeight: FontWeight.w800,
+        ),
       ),
     );
   }
 
   Widget _buildEventNotifCard(BuildContext context, EventsRecord event) {
-    final dateText =
-        event.date != null ? dateTimeFormat('d MMM yyyy', event.date!) : '';
+    final dateText = event.date != null
+        ? dateTimeFormat('d MMM yyyy', event.date!)
+        : '';
 
     return Material(
       color: Colors.transparent,
@@ -1405,7 +1553,9 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   color: const Color(0xFF2A2A2A),
                   image: event.poster.isNotEmpty
                       ? DecorationImage(
-                          fit: BoxFit.cover, image: NetworkImage(event.poster))
+                          fit: BoxFit.cover,
+                          image: NetworkImage(event.poster),
+                        )
                       : null,
                 ),
                 child: event.poster.isEmpty
@@ -1418,29 +1568,31 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: event.nameStore.isNotEmpty
-                              ? event.nameStore
-                              : 'New Event',
-                          style: GoogleFonts.openSans(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            height: 1.45,
-                          ),
-                        ),
-                        if (event.detail.isNotEmpty)
+                      text: TextSpan(
+                        children: [
                           TextSpan(
-                            text: ' ${event.detail}',
+                            text: event.nameStore.isNotEmpty
+                                ? event.nameStore
+                                : 'New Event',
                             style: GoogleFonts.openSans(
-                              color: const Color(0xFFCCCCCC),
+                              color: Colors.white,
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w700,
                               height: 1.45,
                             ),
                           ),
-                      ]),
+                          if (event.detail.isNotEmpty)
+                            TextSpan(
+                              text: ' ${event.detail}',
+                              style: GoogleFonts.openSans(
+                                color: const Color(0xFFCCCCCC),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                height: 1.45,
+                              ),
+                            ),
+                        ],
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1458,8 +1610,10 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                           ),
                           const SizedBox(width: 6),
                         ],
-                        _buildCategoryChip(
-                            'EVENT', [_kRed, const Color(0xFFAA0000)]),
+                        _buildCategoryChip('EVENT', [
+                          _kRed,
+                          const Color(0xFFAA0000),
+                        ]),
                         if (event.free) ...[
                           const SizedBox(width: 4),
                           _buildFreePaidBadge(true),
@@ -1470,8 +1624,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Icon(Icons.more_horiz_rounded,
-                  color: Color(0xFF444444), size: 22),
+              const Icon(
+                Icons.more_horiz_rounded,
+                color: Color(0xFF444444),
+                size: 22,
+              ),
             ],
           ),
         ),
@@ -1502,18 +1659,22 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
             ),
             boxShadow: [
               BoxShadow(
-                  color: gradient.first.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3))
+                color: gradient.first.withValues(alpha: 0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
             ],
           ),
           child: Center(
-            child: Text(initials,
-                style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: size * 0.3,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.5)),
+            child: Text(
+              initials,
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontSize: size * 0.3,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.5,
+              ),
+            ),
           ),
         ),
         if (badgeIcon != null && badgeColor != null)
@@ -1524,13 +1685,16 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                  color: badgeColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: _kBg, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                        color: badgeColor.withValues(alpha: 0.4), blurRadius: 4)
-                  ]),
+                color: badgeColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: _kBg, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: badgeColor.withValues(alpha: 0.4),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
               child: Icon(badgeIcon, color: Colors.white, size: 10),
             ),
           ),
@@ -1552,8 +1716,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     );
   }
 
-  Widget _buildSectionHeader(String title, IconData icon,
-      {Color? accentColor}) {
+  Widget _buildSectionHeader(
+    String title,
+    IconData icon, {
+    Color? accentColor,
+  }) {
     final color = accentColor ?? _kTextMuted;
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 12),
@@ -1561,12 +1728,15 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
         children: [
           Icon(icon, color: color, size: 13),
           const SizedBox(width: 6),
-          Text(title.toUpperCase(),
-              style: GoogleFonts.openSans(
-                  color: color,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2)),
+          Text(
+            title.toUpperCase(),
+            style: GoogleFonts.openSans(
+              color: color,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(width: 10),
           Expanded(child: Container(height: 1, color: _kCardBorder)),
         ],
@@ -1604,7 +1774,9 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       color: const Color(0xFF2A2A2A),
                       image: photo.isNotEmpty
                           ? DecorationImage(
-                              fit: BoxFit.cover, image: NetworkImage(photo))
+                              fit: BoxFit.cover,
+                              image: NetworkImage(photo),
+                            )
                           : null,
                     ),
                     child: photo.isEmpty
@@ -1633,26 +1805,28 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: title,
-                          style: GoogleFonts.openSans(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            height: 1.45,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: title,
+                            style: GoogleFonts.openSans(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              height: 1.45,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: ' $subtitle',
-                          style: GoogleFonts.openSans(
-                            color: const Color(0xFFCCCCCC),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 1.45,
+                          TextSpan(
+                            text: ' $subtitle',
+                            style: GoogleFonts.openSans(
+                              color: const Color(0xFFCCCCCC),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 1.45,
+                            ),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1668,8 +1842,11 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Icon(Icons.more_horiz_rounded,
-                  color: Color(0xFF444444), size: 22),
+              const Icon(
+                Icons.more_horiz_rounded,
+                color: Color(0xFF444444),
+                size: 22,
+              ),
             ],
           ),
         ),
@@ -1677,27 +1854,34 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     );
   }
 
-  Widget _buildEmpty(String message, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
+  Widget _buildEmpty(BuildContext context, String message, IconData icon) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.6,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
                 color: const Color(0xFF0F0F0F),
                 shape: BoxShape.circle,
-                border: Border.all(color: _kCardBorder)),
-            child: Icon(icon, color: const Color(0xFF2A2A2A), size: 36),
-          ),
-          const SizedBox(height: 16),
-          Text(message,
+                border: Border.all(color: _kCardBorder),
+              ),
+              child: Icon(icon, color: const Color(0xFF2A2A2A), size: 36),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              message,
               style: GoogleFonts.openSans(
-                  color: _kTextMuted,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500)),
-        ],
+                color: _kTextMuted,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1714,13 +1898,41 @@ class NotificationBadgeButton extends ConsumerStatefulWidget {
       _NotificationBadgeButtonState();
 }
 
-class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButton> {
+class _NotificationBadgeButtonState
+    extends ConsumerState<NotificationBadgeButton> {
   int _pendingRequests = 0;
+  RealtimeChannel? _subscription;
 
   @override
   void initState() {
     super.initState();
     _fetchCount();
+    _setupRealtime();
+  }
+
+  void _setupRealtime() {
+    _subscription = Supabase.instance.client
+        .channel('public:friend_request:receiver_id=eq.$currentUserUid')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'friend_request',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'receiver_id',
+            value: currentUserUid,
+          ),
+          callback: (payload) {
+            _fetchCount();
+          },
+        )
+        .subscribe();
+  }
+
+  @override
+  void dispose() {
+    _subscription?.unsubscribe();
+    super.dispose();
   }
 
   Future<void> _fetchCount() async {
@@ -1750,13 +1962,18 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
       child: Container(
         width: 40,
         height: 40,
-        decoration:
-            const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
         child: Stack(
           children: [
             Center(
-              child: Image.asset('assets/images/icon_notification.png',
-                  width: 22, height: 22),
+              child: Image.asset(
+                'assets/images/icon_notification.png',
+                width: 22,
+                height: 22,
+              ),
             ),
             if (total > 0)
               Positioned(
@@ -1771,11 +1988,14 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
                     border: Border.all(color: Colors.black, width: 1.5),
                   ),
                   child: Center(
-                    child: Text(total > 9 ? '9+' : '$total',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold)),
+                    child: Text(
+                      total > 9 ? '9+' : '$total',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),

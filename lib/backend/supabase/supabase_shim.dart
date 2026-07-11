@@ -24,7 +24,8 @@ class SupabaseFirestore {
   }
 
   Future<T> runTransaction<T>(
-      Future<T> Function(SupabaseTransaction) updateFunction) async {
+    Future<T> Function(SupabaseTransaction) updateFunction,
+  ) async {
     final transaction = SupabaseTransaction();
     final result = await updateFunction(transaction);
     await transaction.commit();
@@ -57,8 +58,9 @@ class SupabaseCollectionRef extends SupabaseQuery {
         .insert(_sanitizeData(data))
         .select()
         .single();
-    return doc(res['id']?.toString() ??
-        res['uid']?.toString()); // Assuming 'id' or 'uid' column
+    return doc(
+      res['id']?.toString() ?? res['uid']?.toString(),
+    ); // Assuming 'id' or 'uid' column
   }
 }
 
@@ -74,12 +76,9 @@ Map<String, dynamic> _normalizeMap(
   dynamic Function(dynamic value) mapValue,
 ) {
   return Map<String, dynamic>.fromEntries(
-    data.entries.where((entry) => entry.key != null).map(
-          (entry) => MapEntry(
-            entry.key.toString(),
-            mapValue(entry.value),
-          ),
-        ),
+    data.entries
+        .where((entry) => entry.key != null)
+        .map((entry) => MapEntry(entry.key.toString(), mapValue(entry.value))),
   );
 }
 
@@ -90,8 +89,9 @@ Timestamp? _timestampFromMap(Map data) {
   }
 
   final dynamic nanosecondsValue = data['_nanoseconds'] ?? data['nanoseconds'];
-  final int nanoseconds =
-      nanosecondsValue is num ? nanosecondsValue.toInt() : 0;
+  final int nanoseconds = nanosecondsValue is num
+      ? nanosecondsValue.toInt()
+      : 0;
 
   return Timestamp(secondsValue.toInt(), nanoseconds);
 }
@@ -168,11 +168,13 @@ class SupabaseDocRef {
 
   Future<void> update(Map<String, dynamic> data) async {
     // Check if any value is a FieldValue marker
-    bool hasSpecialFields = data.values.any((v) =>
-        v is _FieldValueArrayUnion ||
-        v is _FieldValueArrayRemove ||
-        v is _FieldValueIncrement ||
-        v is _FieldValueMapMerge);
+    bool hasSpecialFields = data.values.any(
+      (v) =>
+          v is _FieldValueArrayUnion ||
+          v is _FieldValueArrayRemove ||
+          v is _FieldValueIncrement ||
+          v is _FieldValueMapMerge,
+    );
 
     if (hasSpecialFields) {
       // Read-Modify-Write strategy
@@ -201,10 +203,7 @@ class SupabaseDocRef {
           final existing = value.replace || currentData[key] is! Map
               ? <String, dynamic>{}
               : Map<String, dynamic>.from(currentData[key] as Map);
-          currentData[key] = {
-            ...existing,
-            ...value.values,
-          };
+          currentData[key] = {...existing, ...value.values};
         } else {
           currentData[key] = value;
         }
@@ -241,8 +240,9 @@ class SupabaseDocRef {
     }
   }
 
-  Stream<SupabaseDocSnapshot> snapshots(
-      {bool includeMetadataChanges = false}) async* {
+  Stream<SupabaseDocSnapshot> snapshots({
+    bool includeMetadataChanges = false,
+  }) async* {
     try {
       yield await get();
     } catch (_) {}
@@ -256,7 +256,11 @@ class SupabaseDocRef {
             return SupabaseDocSnapshot(id, null, false, this);
           }
           return SupabaseDocSnapshot(
-              id, _processReadData(data.first), true, this);
+            id,
+            _processReadData(data.first),
+            true,
+            this,
+          );
         })
         .handleError((_, __) {});
 
@@ -275,8 +279,9 @@ class SupabaseQuery {
   String? _orderByField;
   bool _descending = false;
 
-  SupabaseQuery(
-      [this._collectionPath]); // Constructor for SupabaseCollectionRef to call super
+  SupabaseQuery([
+    this._collectionPath,
+  ]); // Constructor for SupabaseCollectionRef to call super
 
   // Add constraint and return new Query (to mimic immutability of Firestore calls)
   SupabaseQuery _clone() {
@@ -316,16 +321,19 @@ class SupabaseQuery {
     if (isLessThan != null)
       q._constraints.add(QueryConstraint(fieldName, 'lt', isLessThan));
     if (isLessThanOrEqualTo != null)
-      q._constraints
-          .add(QueryConstraint(fieldName, 'lte', isLessThanOrEqualTo));
+      q._constraints.add(
+        QueryConstraint(fieldName, 'lte', isLessThanOrEqualTo),
+      );
     if (isGreaterThan != null)
       q._constraints.add(QueryConstraint(fieldName, 'gt', isGreaterThan));
     if (isGreaterThanOrEqualTo != null)
-      q._constraints
-          .add(QueryConstraint(fieldName, 'gte', isGreaterThanOrEqualTo));
+      q._constraints.add(
+        QueryConstraint(fieldName, 'gte', isGreaterThanOrEqualTo),
+      );
     if (arrayContains != null) {
-      q._constraints
-          .add(QueryConstraint(fieldName, 'arrayContains', arrayContains));
+      q._constraints.add(
+        QueryConstraint(fieldName, 'arrayContains', arrayContains),
+      );
     }
     if (whereIn != null)
       q._constraints.add(QueryConstraint(fieldName, 'in', whereIn));
@@ -348,6 +356,12 @@ class SupabaseQuery {
     return q;
   }
 
+  SupabaseQuery ilike(String field, String pattern) {
+    var q = _clone();
+    q._constraints.add(QueryConstraint(field, 'ilike', pattern));
+    return q;
+  }
+
   // Handlers for pagination (startAfter etc) - skipped for brevity but usually needed.
   SupabaseQuery startAfterDocument(SupabaseDocSnapshot document) {
     // Naive implementation: In Supabase keyset pagination is harder without precise cursor.
@@ -361,10 +375,18 @@ class SupabaseQuery {
     final data = await builder;
     // data should be List<Map<String, dynamic>>
     final List<dynamic> list = data as List<dynamic>;
-    return SupabaseQuerySnapshot(list
-        .map((e) => SupabaseDocSnapshot(e['id'].toString(), _processReadData(e),
-            true, SupabaseDocRef(_collectionPath!, e['id'].toString())))
-        .toList());
+    return SupabaseQuerySnapshot(
+      list
+          .map(
+            (e) => SupabaseDocSnapshot(
+              e['id'].toString(),
+              _processReadData(e),
+              true,
+              SupabaseDocRef(_collectionPath!, e['id'].toString()),
+            ),
+          )
+          .toList(),
+    );
   }
 
   Stream<SupabaseQuerySnapshot> snapshots() {
@@ -414,6 +436,9 @@ class SupabaseQuery {
             query = query.or(f.toSupabaseString());
           }
           break;
+        case 'ilike':
+          query = query.ilike(c.field, c.value as String);
+          break;
       }
     }
     if (_orderByField != null) {
@@ -439,9 +464,12 @@ class QueryConstraint {
 
 // Added SupabaseQueryDocSnapshot class
 class SupabaseQueryDocSnapshot extends SupabaseDocSnapshot {
-  SupabaseQueryDocSnapshot(String id, Map<String, dynamic>? data, bool exists,
-      SupabaseDocRef reference)
-      : super(id, data, exists, reference);
+  SupabaseQueryDocSnapshot(
+    String id,
+    Map<String, dynamic>? data,
+    bool exists,
+    SupabaseDocRef reference,
+  ) : super(id, data, exists, reference);
 }
 
 class SupabaseDocSnapshot {
@@ -507,10 +535,7 @@ class FieldValue {
     return _FieldValueIncrement(value);
   }
 
-  static dynamic mapMerge(
-    Map<String, dynamic> values, {
-    bool replace = false,
-  }) {
+  static dynamic mapMerge(Map<String, dynamic> values, {bool replace = false}) {
     return _FieldValueMapMerge(values, replace: replace);
   }
 
@@ -549,8 +574,9 @@ class _FieldValueMapMerge {
 class Timestamp {
   final DateTime _date;
   Timestamp(int seconds, int nanoseconds)
-      : _date = DateTime.fromMicrosecondsSinceEpoch(
-            seconds * 1000000 + nanoseconds ~/ 1000);
+    : _date = DateTime.fromMicrosecondsSinceEpoch(
+        seconds * 1000000 + nanoseconds ~/ 1000,
+      );
   Timestamp.fromDate(this._date);
   DateTime toDate() => _date;
   int get millisecondsSinceEpoch => _date.millisecondsSinceEpoch;
@@ -574,8 +600,11 @@ class SupabaseTransaction {
     _operations.add(() => ref.update(data));
   }
 
-  void set(SupabaseDocRef ref, Map<String, dynamic> data,
-      [SetOptions? options]) {
+  void set(
+    SupabaseDocRef ref,
+    Map<String, dynamic> data, [
+    SetOptions? options,
+  ]) {
     // If SetOptions merge=true, use set(upsert).
     // The Shim SupabaseDocRef.set usually implies Upsert alias.
     _operations.add(() => ref.set(data));
@@ -600,15 +629,15 @@ class Filter {
   final List<Filter>? orFilters;
 
   Filter(this.field, {Object? isEqualTo})
-      : operator = 'eq',
-        value = isEqualTo,
-        orFilters = null;
+    : operator = 'eq',
+      value = isEqualTo,
+      orFilters = null;
 
   Filter.or(Filter a, Filter b)
-      : field = null,
-        operator = null,
-        value = null,
-        orFilters = [a, b];
+    : field = null,
+      operator = null,
+      value = null,
+      orFilters = [a, b];
 
   String toSupabaseString() {
     if (orFilters != null) {

@@ -3,10 +3,8 @@ part of '../main_page.dart';
 class MainCategoriesWidget extends StatelessWidget {
   final MainModel _model;
 
-  const MainCategoriesWidget({
-    super.key,
-    required MainModel model,
-  }) : _model = model;
+  const MainCategoriesWidget({super.key, required MainModel model})
+    : _model = model;
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +19,40 @@ class MainCategoriesWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  20.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                ),
                 child: Text(
                   'รูปแบบร้าน',
                   style: Theme.of(context).textTheme.bodyMedium!.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight: FontWeight.w600,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                        ),
-                        color: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
-                        fontSize: 18.0,
-                        letterSpacing: 0.4,
-                        fontWeight: FontWeight.w600,
-                        fontStyle:
-                            Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                      ),
+                    font: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontStyle,
+                    ),
+                    color: Theme.of(
+                      context,
+                    ).extension<CustomColors>()!.primaryText,
+                    fontSize: 18.0,
+                    letterSpacing: 0.4,
+                    fontWeight: FontWeight.w600,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.fontStyle,
+                  ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 30.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  0.0,
+                  30.0,
+                  0.0,
+                ),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -56,25 +64,23 @@ class MainCategoriesWidget extends StatelessWidget {
                   child: Text(
                     'อื่นๆ',
                     style: Theme.of(context).textTheme.bodyMedium!.override(
-                          font: GoogleFonts.openSans(
-                            fontWeight: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontWeight,
-                            fontStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontStyle,
-                          ),
-                          color: const Color(0xFF7D7D7D),
-                          letterSpacing: 0.0,
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .fontWeight,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                        ),
+                      font: GoogleFonts.openSans(
+                        fontWeight: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.fontWeight,
+                        fontStyle: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.fontStyle,
+                      ),
+                      color: const Color(0xFF7D7D7D),
+                      letterSpacing: 0.0,
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontStyle,
+                    ),
                   ),
                 ),
               ),
@@ -94,8 +100,12 @@ class MainCategoriesWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    0.0,
+                    5.0,
+                    0.0,
+                    5.0,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -143,33 +153,31 @@ class MainCategoriesWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 7.0, 0.0, 0.0),
+                                  0.0,
+                                  7.0,
+                                  0.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   'ผับ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                         fontSize: 11.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -207,7 +215,11 @@ class MainCategoriesWidget extends StatelessWidget {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      3.0, 5.0, 7.0, 5.0),
+                                    3.0,
+                                    5.0,
+                                    7.0,
+                                    5.0,
+                                  ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(0.0),
                                     child: Image.asset(
@@ -221,33 +233,31 @@ class MainCategoriesWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 7.0, 0.0, 0.0),
+                                  0.0,
+                                  7.0,
+                                  0.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   'บาร์',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                         fontSize: 11.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -285,7 +295,11 @@ class MainCategoriesWidget extends StatelessWidget {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5.0, 8.0, 5.0, 2.0),
+                                    5.0,
+                                    8.0,
+                                    5.0,
+                                    2.0,
+                                  ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(0.0),
                                     child: Image.asset(
@@ -299,33 +313,31 @@ class MainCategoriesWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 7.0, 0.0, 0.0),
+                                  0.0,
+                                  7.0,
+                                  0.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   'นั่งชิล',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                         fontSize: 11.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -363,7 +375,11 @@ class MainCategoriesWidget extends StatelessWidget {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      2.0, 6.0, 2.0, 0.0),
+                                    2.0,
+                                    6.0,
+                                    2.0,
+                                    0.0,
+                                  ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.asset(
@@ -377,33 +393,31 @@ class MainCategoriesWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 7.0, 0.0, 0.0),
+                                  0.0,
+                                  7.0,
+                                  0.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   'ลานเบียร์',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
+                                  style: Theme.of(context).textTheme.bodyMedium!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                         fontSize: 11.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -417,7 +431,7 @@ class MainCategoriesWidget extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

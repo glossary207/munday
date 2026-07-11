@@ -203,10 +203,16 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
           );
         }
         List<VenuesRecord> promotionVenuesRecordList = snapshot.data!;
-        
-        print("DEBUG PROMOTION PAGE: Total venues fetched = ${promotionVenuesRecordList.length}");
-        int withPromotions = promotionVenuesRecordList.where((e) => e.listpromotion.length != 0).length;
-        print("DEBUG PROMOTION PAGE: Venues with listpromotion.length != 0 = $withPromotions");
+
+        print(
+          "DEBUG PROMOTION PAGE: Total venues fetched = ${promotionVenuesRecordList.length}",
+        );
+        int withPromotions = promotionVenuesRecordList
+            .where((e) => e.listpromotion.length != 0)
+            .length;
+        print(
+          "DEBUG PROMOTION PAGE: Venues with listpromotion.length != 0 = $withPromotions",
+        );
 
         return GestureDetector(
           onTap: () {
@@ -218,6 +224,7 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
             backgroundColor: Colors.black,
             body: SafeArea(
               top: true,
+              bottom: false,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -2351,25 +2358,37 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                                                           datapromotionItem,
                                                                                         )?.iDVenuse,
                                                                                       )) {
-                                                                                    await currentUserReference!.update({
-                                                                                      ...mapToSupabase({
-                                                                                        'loveVenuse': FieldValue.arrayRemove([
-                                                                                          DataVenuesStruct.maybeFromMap(
-                                                                                            datapromotionItem,
-                                                                                          )?.iDVenuse,
-                                                                                        ]),
-                                                                                      }),
-                                                                                    });
+                                                                                    await currentUserReference!.update(
+                                                                                      {
+                                                                                        ...mapToSupabase(
+                                                                                          {
+                                                                                            'loveVenuse': FieldValue.arrayRemove(
+                                                                                              [
+                                                                                                DataVenuesStruct.maybeFromMap(
+                                                                                                  datapromotionItem,
+                                                                                                )?.iDVenuse,
+                                                                                              ],
+                                                                                            ),
+                                                                                          },
+                                                                                        ),
+                                                                                      },
+                                                                                    );
                                                                                   } else {
-                                                                                    await currentUserReference!.update({
-                                                                                      ...mapToSupabase({
-                                                                                        'loveVenuse': FieldValue.arrayUnion([
-                                                                                          DataVenuesStruct.maybeFromMap(
-                                                                                            datapromotionItem,
-                                                                                          )?.iDVenuse,
-                                                                                        ]),
-                                                                                      }),
-                                                                                    });
+                                                                                    await currentUserReference!.update(
+                                                                                      {
+                                                                                        ...mapToSupabase(
+                                                                                          {
+                                                                                            'loveVenuse': FieldValue.arrayUnion(
+                                                                                              [
+                                                                                                DataVenuesStruct.maybeFromMap(
+                                                                                                  datapromotionItem,
+                                                                                                )?.iDVenuse,
+                                                                                              ],
+                                                                                            ),
+                                                                                          },
+                                                                                        ),
+                                                                                      },
+                                                                                    );
                                                                                   }
                                                                                 },
                                                                                 child: Container(
@@ -3069,12 +3088,14 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                                                     .where(
                                                                                       (
                                                                                         e,
-                                                                                      ) => functions.checkdate(
-                                                                                        (e
-                                                                                                as dynamic)
-                                                                                            ?.date,
-                                                                                        getCurrentTimestamp,
-                                                                                      ) ?? false,
+                                                                                      ) =>
+                                                                                          functions.checkdate(
+                                                                                            (e
+                                                                                                    as dynamic)
+                                                                                                ?.date,
+                                                                                            getCurrentTimestamp,
+                                                                                          ) ??
+                                                                                          false,
                                                                                     )
                                                                                     .toList()
                                                                                     .length !=
@@ -3131,12 +3152,14 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                                                                 .where(
                                                                                                   (
                                                                                                     e,
-                                                                                                  ) => functions.checkdate(
-                                                                                                    (e
-                                                                                                            as dynamic)
-                                                                                                        ?.date,
-                                                                                                    getCurrentTimestamp,
-                                                                                                  ) ?? false,
+                                                                                                  ) =>
+                                                                                                      functions.checkdate(
+                                                                                                        (e
+                                                                                                                as dynamic)
+                                                                                                            ?.date,
+                                                                                                        getCurrentTimestamp,
+                                                                                                      ) ??
+                                                                                                      false,
                                                                                                 )
                                                                                                 .toList()
                                                                                                 .length
@@ -3284,17 +3307,6 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                           ),
                                         ),
                                       ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
-                                      child: ChangeNotifierProvider.value(
-                                        value: _model.navBarModel.setOnUpdate(
-                                          onUpdate: () => safeSetState(() {}),
-                                        ),
-                                        child: NavBarWidget(
-                                          items: context.appState.menuItems,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),

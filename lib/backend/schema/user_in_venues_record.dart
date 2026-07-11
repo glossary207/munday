@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class UserInVenuesRecord extends SupabaseRecord {
-  UserInVenuesRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  UserInVenuesRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -34,10 +32,7 @@ class UserInVenuesRecord extends SupabaseRecord {
 
   void _initializeFields() {
     _iDVenues = getSupabaseDocRef(snapshotData['IDVenues'], 'venues');
-    _user = getStructList(
-      snapshotData['user'],
-      DaStruct.fromMap,
-    );
+    _user = getStructList(snapshotData['user'], DaStruct.fromMap);
     _nameVenues = snapshotData['NameVenues'] as String?;
   }
 
@@ -59,8 +54,7 @@ class UserInVenuesRecord extends SupabaseRecord {
   static UserInVenuesRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      UserInVenuesRecord._(reference, mapFromSupabase(data));
+  ) => UserInVenuesRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>

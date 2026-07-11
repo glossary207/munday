@@ -30,8 +30,7 @@ class MundayCountController extends ConsumerStatefulWidget {
       _MundayCountControllerState();
 }
 
-class _MundayCountControllerState
-    extends ConsumerState<MundayCountController> {
+class _MundayCountControllerState extends ConsumerState<MundayCountController> {
   int get count => widget.count;
   int? get minimum => widget.minimum;
   int? get maximum => widget.maximum;
@@ -54,20 +53,20 @@ class _MundayCountControllerState
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: widget.contentPadding,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: _decrementCounter,
-              child: widget.decrementIconBuilder(canDecrement),
-            ),
-            widget.countBuilder(count),
-            InkWell(
-              onTap: _incrementCounter,
-              child: widget.incrementIconBuilder(canIncrement),
-            ),
-          ],
+    padding: widget.contentPadding,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: _decrementCounter,
+          child: widget.decrementIconBuilder(canDecrement),
         ),
-      );
+        widget.countBuilder(count),
+        InkWell(
+          onTap: _incrementCounter,
+          child: widget.incrementIconBuilder(canIncrement),
+        ),
+      ],
+    ),
+  );
 }

@@ -18,12 +18,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:munday/core/theme/theme.dart';
 
 class Swipecard extends ConsumerStatefulWidget {
-  const Swipecard({
-    super.key,
-    this.width,
-    this.height,
-    this.dataid,
-  });
+  const Swipecard({super.key, this.width, this.height, this.dataid});
 
   /// ความกว้างของ Widget
   final double? width;
@@ -128,7 +123,10 @@ class _SwipecardState extends ConsumerState<Swipecard> {
 
   /// callback เมื่อการ์ดถูกปัด (Gesture หรือสั่ง _controller.swipe())
   bool _onSwipe(
-      int previousIndex, int? currentIndex, CardSwiperDirection direction) {
+    int previousIndex,
+    int? currentIndex,
+    CardSwiperDirection direction,
+  ) {
     print('Swiped from $previousIndex to ${direction.name}');
 
     // ถ้าทิศ == ซ้าย => ถือว่า Next
@@ -157,7 +155,10 @@ class _SwipecardState extends ConsumerState<Swipecard> {
 
   /// callback เมื่อ undo เสร็จ
   bool _onUndo(
-      int? previousIndex, int currentIndex, CardSwiperDirection direction) {
+    int? previousIndex,
+    int currentIndex,
+    CardSwiperDirection direction,
+  ) {
     print('Undo from $currentIndex to $previousIndex');
     context.appState.Back = false;
     if (previousIndex != null &&
@@ -214,28 +215,31 @@ class _SwipecardState extends ConsumerState<Swipecard> {
                   scale: 0.86,
                   backCardOffset: const Offset(15, 15),
                   padding: const EdgeInsets.all(16.0),
-                  cardBuilder: (context, index, horizontalThresholdPercentage,
-                      verticalThresholdPercentage) {
-                    final userRecord = usersList[index];
+                  cardBuilder:
+                      (
+                        context,
+                        index,
+                        horizontalThresholdPercentage,
+                        verticalThresholdPercentage,
+                      ) {
+                        final userRecord = usersList[index];
 
-                    // ในที่นี้ userRecord คือข้อมูล users ที่โหลดมาแล้ว (ไม่ต้อง stream)
-                    final imageUrl = userRecord.photoUrl ??
-                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
+                        // ในที่นี้ userRecord คือข้อมูล users ที่โหลดมาแล้ว (ไม่ต้อง stream)
+                        final imageUrl =
+                            userRecord.photoUrl ??
+                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png';
 
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(imageUrl, fit: BoxFit.cover),
+                          ),
+                        );
+                      },
                 ),
               ),
             ],

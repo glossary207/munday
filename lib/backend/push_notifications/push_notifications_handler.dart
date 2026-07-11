@@ -12,7 +12,7 @@ final _handledMessageIds = <String?>{};
 
 class PushNotificationsHandler extends ConsumerStatefulWidget {
   const PushNotificationsHandler({Key? key, required this.child})
-      : super(key: key);
+    : super(key: key);
 
   final Widget child;
 
@@ -21,7 +21,8 @@ class PushNotificationsHandler extends ConsumerStatefulWidget {
       _PushNotificationsHandlerState();
 }
 
-class _PushNotificationsHandlerState extends ConsumerState<PushNotificationsHandler> {
+class _PushNotificationsHandlerState
+    extends ConsumerState<PushNotificationsHandler> {
   bool _loading = false;
 
   Future handleOpenedPushNotification() async {
@@ -90,19 +91,20 @@ class _PushNotificationsHandlerState extends ConsumerState<PushNotificationsHand
 }
 
 class ParameterData {
-  const ParameterData(
-      {this.requiredParams = const {}, this.allParams = const {}});
+  const ParameterData({
+    this.requiredParams = const {},
+    this.allParams = const {},
+  });
   final Map<String, String?> requiredParams;
   final Map<String, dynamic> allParams;
 
   Map<String, String> get pathParameters => Map.fromEntries(
-        requiredParams.entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
-      );
-  Map<String, dynamic> get extra => Map.fromEntries(
-        allParams.entries.where((e) => e.value != null),
-      );
+    requiredParams.entries
+        .where((e) => e.value != null)
+        .map((e) => MapEntry(e.key, e.value!)),
+  );
+  Map<String, dynamic> get extra =>
+      Map.fromEntries(allParams.entries.where((e) => e.value != null));
 
   static Future<ParameterData> Function(Map<String, dynamic>) none() =>
       (data) async => ParameterData();
@@ -110,8 +112,8 @@ class ParameterData {
 
 final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
-  'HomePage': ParameterData.none(),
-  'Chats': (data) async => ParameterData(
+      'HomePage': ParameterData.none(),
+      'Chats': (data) async => ParameterData(
         allParams: {
           'userProfile': getParameter<String>(data, 'userProfile'),
           'roomref': getParameter<SupabaseDocRef>(data, 'roomref'),
@@ -120,31 +122,27 @@ final parametersBuilderMap =
           'openchat': getParameter<bool>(data, 'openchat'),
         },
       ),
-  'Profile': (data) async => ParameterData(
-        allParams: {
-          'fromSeting': getParameter<bool>(data, 'fromSeting'),
-        },
+      'Profile': (data) async => ParameterData(
+        allParams: {'fromSeting': getParameter<bool>(data, 'fromSeting')},
       ),
-  'Authentication': (data) async => ParameterData(
-        allParams: {
-          'namestore': getParameter<String>(data, 'namestore'),
-        },
+      'Authentication': (data) async => ParameterData(
+        allParams: {'namestore': getParameter<String>(data, 'namestore')},
       ),
-  'home': ParameterData.none(),
-  'AccountSettings': ParameterData.none(),
-  'Profile06': ParameterData.none(),
-  'privacyPolicy': ParameterData.none(),
-  'Support': ParameterData.none(),
-  'forgetpassword': ParameterData.none(),
-  'success': ParameterData.none(),
-  'Blocklist': ParameterData.none(),
-  'AUT': ParameterData.none(),
-  'Main': ParameterData.none(),
-  'Events': ParameterData.none(),
-  'Venues': ParameterData.none(),
-  'HomeMain': ParameterData.none(),
-  'Promotion': ParameterData.none(),
-  'InVenuse': (data) async => ParameterData(
+      'home': ParameterData.none(),
+      'AccountSettings': ParameterData.none(),
+      'Profile06': ParameterData.none(),
+      'privacyPolicy': ParameterData.none(),
+      'Support': ParameterData.none(),
+      'forgetpassword': ParameterData.none(),
+      'success': ParameterData.none(),
+      'Blocklist': ParameterData.none(),
+      'AUT': ParameterData.none(),
+      'Main': ParameterData.none(),
+      'Events': ParameterData.none(),
+      'Venues': ParameterData.none(),
+      'HomeMain': ParameterData.none(),
+      'Promotion': ParameterData.none(),
+      'InVenuse': (data) async => ParameterData(
         allParams: {
           'idVenues': getParameter<SupabaseDocRef>(data, 'idVenues'),
           'distance': getParameter<String>(data, 'distance'),
@@ -152,10 +150,10 @@ final parametersBuilderMap =
           'index': getParameter<int>(data, 'index'),
         },
       ),
-  'veer': ParameterData.none(),
-  'bookng': ParameterData.none(),
-  'ticket': ParameterData.none(),
-  'Booking': (data) async => ParameterData(
+      'veer': ParameterData.none(),
+      'bookng': ParameterData.none(),
+      'ticket': ParameterData.none(),
+      'Booking': (data) async => ParameterData(
         allParams: {
           'id': getParameter<SupabaseDocRef>(data, 'id'),
           'location': getParameter<LatLng>(data, 'location'),
@@ -164,13 +162,12 @@ final parametersBuilderMap =
           'floorId': getParameter<String>(data, 'floorId'),
         },
       ),
-  'mapdum': ParameterData.none(),
-  'mapEx': ParameterData.none(),
-  'showallphoto': (data) async => ParameterData(
-        allParams: <String, dynamic>{},
-      ),
-  'booking2c': ParameterData.none(),
-  'sharepage': (data) async => ParameterData(
+      'mapdum': ParameterData.none(),
+      'mapEx': ParameterData.none(),
+      'showallphoto': (data) async =>
+          ParameterData(allParams: <String, dynamic>{}),
+      'booking2c': ParameterData.none(),
+      'sharepage': (data) async => ParameterData(
         allParams: {
           'idVenues': getParameter<SupabaseDocRef>(data, 'idVenues'),
           'distance': getParameter<String>(data, 'distance'),
@@ -178,14 +175,14 @@ final parametersBuilderMap =
           'index': getParameter<int>(data, 'index'),
         },
       ),
-  'test': ParameterData.none(),
-  'Booking2': ParameterData.none(),
-  'homeCopy2': ParameterData.none(),
-  'testui': ParameterData.none(),
-  'payreservenormday': ParameterData.none(),
-  'homeCopy2Copy': ParameterData.none(),
-  'ticketCopy': ParameterData.none(),
-  'InVenuseCopy': (data) async => ParameterData(
+      'test': ParameterData.none(),
+      'Booking2': ParameterData.none(),
+      'homeCopy2': ParameterData.none(),
+      'testui': ParameterData.none(),
+      'payreservenormday': ParameterData.none(),
+      'homeCopy2Copy': ParameterData.none(),
+      'ticketCopy': ParameterData.none(),
+      'InVenuseCopy': (data) async => ParameterData(
         allParams: {
           'idVenues': getParameter<SupabaseDocRef>(data, 'idVenues'),
           'distance': getParameter<String>(data, 'distance'),
@@ -193,7 +190,7 @@ final parametersBuilderMap =
           'index': getParameter<int>(data, 'index'),
         },
       ),
-};
+    };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
   try {

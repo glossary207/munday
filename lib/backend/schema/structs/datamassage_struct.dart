@@ -20,14 +20,14 @@ class DatamassageStruct extends FFSupabaseStruct {
     String? userphoto,
     String? name,
     SupabaseUtilData supabaseUtilData = const SupabaseUtilData(),
-  })  : _who = who,
-        _messagetext = messagetext,
-        _messagephoto = messagephoto,
-        _timeup = timeup,
-        _idchat = idchat,
-        _userphoto = userphoto,
-        _name = name,
-        super(supabaseUtilData);
+  }) : _who = who,
+       _messagetext = messagetext,
+       _messagephoto = messagephoto,
+       _timeup = timeup,
+       _idchat = idchat,
+       _userphoto = userphoto,
+       _name = name,
+       super(supabaseUtilData);
 
   // "who" field.
   SupabaseDocRef? _who;
@@ -96,46 +96,25 @@ class DatamassageStruct extends FFSupabaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
-        'who': _who,
-        'messagetext': _messagetext,
-        'messagephoto': _messagephoto,
-        'timeup': _timeup,
-        'idchat': _idchat,
-        'userphoto': _userphoto,
-        'name': _name,
-      }.withoutNulls;
+    'who': _who,
+    'messagetext': _messagetext,
+    'messagephoto': _messagephoto,
+    'timeup': _timeup,
+    'idchat': _idchat,
+    'userphoto': _userphoto,
+    'name': _name,
+  }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'who': serializeParam(
-          _who,
-          ParamType.SupabaseDocRef,
-        ),
-        'messagetext': serializeParam(
-          _messagetext,
-          ParamType.String,
-        ),
-        'messagephoto': serializeParam(
-          _messagephoto,
-          ParamType.String,
-        ),
-        'timeup': serializeParam(
-          _timeup,
-          ParamType.DateTime,
-        ),
-        'idchat': serializeParam(
-          _idchat,
-          ParamType.int,
-        ),
-        'userphoto': serializeParam(
-          _userphoto,
-          ParamType.String,
-        ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
-      }.withoutNulls;
+    'who': serializeParam(_who, ParamType.SupabaseDocRef),
+    'messagetext': serializeParam(_messagetext, ParamType.String),
+    'messagephoto': serializeParam(_messagephoto, ParamType.String),
+    'timeup': serializeParam(_timeup, ParamType.DateTime),
+    'idchat': serializeParam(_idchat, ParamType.int),
+    'userphoto': serializeParam(_userphoto, ParamType.String),
+    'name': serializeParam(_name, ParamType.String),
+  }.withoutNulls;
 
   static DatamassageStruct fromSerializableMap(Map<String, dynamic> data) =>
       DatamassageStruct(
@@ -155,26 +134,10 @@ class DatamassageStruct extends FFSupabaseStruct {
           ParamType.String,
           false,
         ),
-        timeup: deserializeParam(
-          data['timeup'],
-          ParamType.DateTime,
-          false,
-        ),
-        idchat: deserializeParam(
-          data['idchat'],
-          ParamType.int,
-          false,
-        ),
-        userphoto: deserializeParam(
-          data['userphoto'],
-          ParamType.String,
-          false,
-        ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
+        timeup: deserializeParam(data['timeup'], ParamType.DateTime, false),
+        idchat: deserializeParam(data['idchat'], ParamType.int, false),
+        userphoto: deserializeParam(data['userphoto'], ParamType.String, false),
+        name: deserializeParam(data['name'], ParamType.String, false),
       );
 
   @override
@@ -193,8 +156,15 @@ class DatamassageStruct extends FFSupabaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([who, messagetext, messagephoto, timeup, idchat, userphoto, name]);
+  int get hashCode => const ListEquality().hash([
+    who,
+    messagetext,
+    messagephoto,
+    timeup,
+    idchat,
+    userphoto,
+    name,
+  ]);
 }
 
 DatamassageStruct createDatamassageStruct({
@@ -209,33 +179,31 @@ DatamassageStruct createDatamassageStruct({
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
-}) =>
-    DatamassageStruct(
-      who: who,
-      messagetext: messagetext,
-      messagephoto: messagephoto,
-      timeup: timeup,
-      idchat: idchat,
-      userphoto: userphoto,
-      name: name,
-      supabaseUtilData: SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
-    );
+}) => DatamassageStruct(
+  who: who,
+  messagetext: messagetext,
+  messagephoto: messagephoto,
+  timeup: timeup,
+  idchat: idchat,
+  userphoto: userphoto,
+  name: name,
+  supabaseUtilData: SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+    delete: delete,
+    fieldValues: fieldValues,
+  ),
+);
 
 DatamassageStruct? updateDatamassageStruct(
   DatamassageStruct? datamassage, {
   bool clearUnsetFields = true,
   bool create = false,
-}) =>
-    datamassage
-      ?..supabaseUtilData = SupabaseUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
+}) => datamassage
+  ?..supabaseUtilData = SupabaseUtilData(
+    clearUnsetFields: clearUnsetFields,
+    create: create,
+  );
 
 void addDatamassageStructData(
   Map<String, dynamic> supabaseData,
@@ -256,10 +224,13 @@ void addDatamassageStructData(
   if (clearFields) {
     supabaseData[fieldName] = <String, dynamic>{};
   }
-  final datamassageData =
-      getDatamassageFirestoreData(datamassage, forFieldValue);
-  final nestedData =
-      datamassageData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final datamassageData = getDatamassageFirestoreData(
+    datamassage,
+    forFieldValue,
+  );
+  final nestedData = datamassageData.map(
+    (k, v) => MapEntry('$fieldName.$k', v),
+  );
 
   final mergeFields = datamassage.supabaseUtilData.create || clearFields;
   supabaseData.addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
@@ -275,8 +246,9 @@ Map<String, dynamic> getDatamassageFirestoreData(
   final supabaseData = mapToSupabase(datamassage.toMap());
 
   // Add any Firestore field values
-  datamassage.supabaseUtilData.fieldValues
-      .forEach((k, v) => supabaseData[k] = v);
+  datamassage.supabaseUtilData.fieldValues.forEach(
+    (k, v) => supabaseData[k] = v,
+  );
 
   return forFieldValue ? mergeNestedFields(supabaseData) : supabaseData;
 }

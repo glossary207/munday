@@ -1,7 +1,6 @@
 import 'package:munday/core/theme/theme.dart';
 import 'package:provider/provider.dart';
 
-
 import 'package:nowa_runtime/nowa_runtime.dart';
 import 'package:munday/core/state/app_state.dart';
 import 'package:munday/l10n/app_localizations.dart';
@@ -105,48 +104,37 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 36.0,
-                ),
+                Icon(icon, color: Colors.white, size: 36.0),
                 const SizedBox(height: 12.0),
                 Text(
                   title,
                   style: MundayTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight: FontWeight.w600,
-                          fontStyle:
-                              MundayTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w600,
-                        fontStyle:
-                            MundayTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                    font: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600,
+                      fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                    fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8.0),
                 Text(
                   message,
                   style: MundayTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.openSans(
-                          fontWeight: MundayTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              MundayTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        color: const Color(0xFFB3B3B3),
-                        fontSize: 14.0,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            MundayTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            MundayTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                    font: GoogleFonts.openSans(
+                      fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    color: const Color(0xFFB3B3B3),
+                    fontSize: 14.0,
+                    letterSpacing: 0.0,
+                    fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -176,10 +164,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
     return NetworkImage(url!.trim());
   }
 
-  String _safeNetworkImageUrl(
-    String? url, {
-    required String fallback,
-  }) {
+  String _safeNetworkImageUrl(String? url, {required String fallback}) {
     if (_hasValidNetworkImageUrl(url)) {
       return url!.trim();
     }
@@ -193,9 +178,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        SnackBar(
-          content: Text('$feature ยังไม่รองรับใน schema ปัจจุบัน'),
-        ),
+        SnackBar(content: Text('$feature ยังไม่รองรับใน schema ปัจจุบัน')),
       );
   }
 
@@ -235,9 +218,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
     final users = await queryUsersRecordOnce(
       queryBuilder: (q) => q.where('id', whereIn: userIds),
     );
-    final usersById = {
-      for (final user in users) user.reference.id: user,
-    };
+    final usersById = {for (final user in users) user.reference.id: user};
 
     return userIds
         .map((userId) => usersById[userId])
@@ -305,9 +286,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
           },
           child: Padding(
             padding: MediaQuery.viewInsetsOf(context),
-            child: ShowphotoWidget(
-              photo: orderedPhotos,
-            ),
+            child: ShowphotoWidget(photo: orderedPhotos),
           ),
         );
       },
@@ -339,14 +318,10 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                 width: tileWidth,
                 height: MediaQuery.sizeOf(context).height * 1.0,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  color: const Color(0xFF1A1A1A),
-                ),
+                errorBuilder: (context, error, stackTrace) =>
+                    Container(color: const Color(0xFF1A1A1A)),
               )
-            : Container(
-                width: tileWidth,
-                color: const Color(0xFF1A1A1A),
-              ),
+            : Container(width: tileWidth, color: const Color(0xFF1A1A1A)),
       ),
     );
   }
@@ -356,8 +331,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
       builder: (context, constraints) {
         final gridHeight =
             constraints.maxHeight.isFinite && constraints.maxHeight > 0.0
-                ? constraints.maxHeight
-                : 260.0;
+            ? constraints.maxHeight
+            : 260.0;
         final rowHeight = (gridHeight - 1.0) / 2;
 
         return SizedBox(
@@ -378,8 +353,12 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                ),
                 child: SizedBox(
                   height: rowHeight,
                   child: Row(
@@ -426,9 +405,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
           },
           child: Padding(
             padding: MediaQuery.viewInsetsOf(context),
-            child: const YouarenothereWidget(
-              poperror: false,
-            ),
+            child: const YouarenothereWidget(poperror: false),
           ),
         );
       },
@@ -461,11 +438,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
       if (!mounted) return;
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(
-            content: Text('คุณเช็กอินร้านนี้แล้ว'),
-          ),
-        );
+        ..showSnackBar(const SnackBar(content: Text('คุณเช็กอินร้านนี้แล้ว')));
       return;
     }
 
@@ -477,11 +450,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
     if (!mounted) return;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text('เช็กอินเรียบร้อย'),
-        ),
-      );
+      ..showSnackBar(const SnackBar(content: Text('เช็กอินเรียบร้อย')));
   }
 
   Widget _buildVenueMemberTile(BuildContext context, UsersRecord user) {
@@ -493,9 +462,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
           Container(
             width: MediaQuery.sizeOf(context).width * 0.17,
             height: MediaQuery.sizeOf(context).width * 0.17,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(999.0),
               child: Image.network(
@@ -504,9 +471,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                   fallback: _kInVenuseFallbackPosterUrl,
                 ),
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  color: const Color(0xFF1A1A1A),
-                ),
+                errorBuilder: (context, error, stackTrace) =>
+                    Container(color: const Color(0xFF1A1A1A)),
               ),
             ),
           ),
@@ -519,19 +485,15 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
               ).maybeHandleOverflow(maxChars: 12),
               textAlign: TextAlign.center,
               style: MundayTheme.of(context).bodyMedium.override(
-                    font: GoogleFonts.openSans(
-                      fontWeight:
-                          MundayTheme.of(context).bodyMedium.fontWeight,
-                      fontStyle:
-                          MundayTheme.of(context).bodyMedium.fontStyle,
-                    ),
-                    fontSize: 10.0,
-                    letterSpacing: 0.0,
-                    fontWeight:
-                        MundayTheme.of(context).bodyMedium.fontWeight,
-                    fontStyle:
-                        MundayTheme.of(context).bodyMedium.fontStyle,
-                  ),
+                font: GoogleFonts.openSans(
+                  fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
+                  fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                ),
+                fontSize: 10.0,
+                letterSpacing: 0.0,
+                fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
+                fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+              ),
             ),
           ),
         ],
@@ -584,8 +546,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                   width: 40.0,
                   height: 40.0,
                   child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xFFFF0000)),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFFFF0000),
+                    ),
                   ),
                 ),
               ),
@@ -612,79 +575,91 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  15.0,
+                  0.0,
+                  0.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          25.0, 0.0, 0.0, 3.0),
+                        25.0,
+                        0.0,
+                        0.0,
+                        3.0,
+                      ),
                       child: Text(
                         valueOrDefault<String>(
                           functions.month(selectedDate),
                           'ไม่ระบุ',
                         ),
                         style: MundayTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w600,
-                                fontStyle: MundayTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              fontSize: 16.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: MundayTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w600,
+                            fontStyle: MundayTheme.of(
+                              context,
+                            ).bodyMedium.fontStyle,
+                          ),
+                          fontSize: 16.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: MundayTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 25.0, 0.0),
+                        0.0,
+                        0.0,
+                        25.0,
+                        0.0,
+                      ),
                       child: Row(
                         children: [
                           Text(
                             '${venue.capacity}',
-                            style: MundayTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.openSans(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: MundayTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: MundayTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                            style: MundayTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: MundayTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: MundayTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
+                            ),
                           ),
                           Text(
                             ' / ${venue.maxCapacity}',
-                            style: MundayTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.openSans(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: MundayTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: MundayTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                            style: MundayTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: MundayTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: MundayTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                15.0, 0.0, 0.0, 0.0),
+                              15.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Icon(
                               Icons.people_rounded,
                               color: MundayTheme.of(context).primaryText,
@@ -693,23 +668,26 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10.0, 0.0, 0.0, 0.0),
+                              10.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             child: Text(
                               memberIds.length.toString(),
-                              style: MundayTheme.of(context)
-                                  .bodyMedium
+                              style: MundayTheme.of(context).bodyMedium
                                   .override(
                                     font: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: MundayTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                                      fontStyle: MundayTheme.of(
+                                        context,
+                                      ).bodyMedium.fontStyle,
                                     ),
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
-                                    fontStyle: MundayTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontStyle: MundayTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
                             ),
                           ),
@@ -720,8 +698,12 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(15.0, 7.0, 15.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  15.0,
+                  7.0,
+                  15.0,
+                  0.0,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   height: 80.0,
@@ -744,28 +726,30 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(25.0, 10.0, 25.0, 8.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  25.0,
+                  10.0,
+                  25.0,
+                  8.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Check in',
                       style: MundayTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.openSans(
-                              fontWeight: FontWeight.w500,
-                              fontStyle: MundayTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            color: MundayTheme.of(context).primaryBtnText,
-                            fontSize: 14.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: MundayTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                        font: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w500,
+                          fontStyle: MundayTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+                        color: MundayTheme.of(context).primaryBtnText,
+                        fontSize: 14.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                      ),
                     ),
                     InkWell(
                       splashColor: Colors.transparent,
@@ -782,27 +766,28 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                         ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              12.0, 3.0, 12.0, 5.0),
+                            12.0,
+                            3.0,
+                            12.0,
+                            5.0,
+                          ),
                           child: Text(
                             hasCheckedIn ? 'checked in' : 'check in',
-                            style: MundayTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.openSans(
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: MundayTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  color:
-                                      MundayTheme.of(context).primaryText,
-                                  fontSize: 12.0,
-                                  letterSpacing: 1.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: MundayTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                            style: MundayTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w600,
+                                fontStyle: MundayTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
+                              color: MundayTheme.of(context).primaryText,
+                              fontSize: 12.0,
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: MundayTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
+                            ),
                           ),
                         ),
                       ),
@@ -812,7 +797,11 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
-                    14.0, 8.0, 14.0, 150.0),
+                  14.0,
+                  8.0,
+                  14.0,
+                  150.0,
+                ),
                 child: FutureBuilder<List<UsersRecord>>(
                   future: _loadVenueMemberUsers(memberIds),
                   builder: (context, usersSnapshot) {
@@ -826,7 +815,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                             height: 32.0,
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                  Color(0xFFFF0000)),
+                                Color(0xFFFF0000),
+                              ),
                             ),
                           ),
                         ),
@@ -837,26 +827,29 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                     if (users.isEmpty) {
                       return Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 0.0),
+                          0.0,
+                          12.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Text(
                           'ยังไม่มีคนเช็กอินร้านนี้',
                           textAlign: TextAlign.center,
-                          style:
-                              MundayTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: MundayTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: const Color(0xFFB3B3B3),
-                                    fontSize: 13.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: MundayTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+                          style: MundayTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.openSans(
+                              fontWeight: FontWeight.w500,
+                              fontStyle: MundayTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
+                            ),
+                            color: const Color(0xFFB3B3B3),
+                            fontSize: 13.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: MundayTheme.of(
+                              context,
+                            ).bodyMedium.fontStyle,
+                          ),
                         ),
                       );
                     }
@@ -883,19 +876,23 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
   void initState() {
     super.initState();
     _model = InVenuseModel()..internalInit(context);
-    context.appState.dateclick ??= widget.dateclick ??
+    context.appState.dateclick ??=
+        widget.dateclick ??
         functions.boxstarttime(getCurrentTimestamp) ??
         getCurrentTimestamp;
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
+      currentUserLocationValue = await getCurrentUserLocation(
+        defaultLocation: const LatLng(0.0, 0.0),
+      );
       if (widget.dateclick != null) {
         context.appState.dateclick = widget.dateclick;
         safeSetState(() {});
       } else {
-        context.appState.dateclick = functions.boxstarttime(getCurrentTimestamp);
+        context.appState.dateclick = functions.boxstarttime(
+          getCurrentTimestamp,
+        );
         safeSetState(() {});
       }
 
@@ -997,9 +994,11 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
       ),
     });
     setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
+      animationsMap.values.where(
+        (anim) =>
+            anim.trigger == AnimationTrigger.onActionTrigger ||
+            !anim.applyInitialState,
+      ),
       this,
     );
 
@@ -1017,7 +1016,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
   Widget build(BuildContext context) {
     context.watch<AppState>();
 
-    final selectedDate = context.appState.dateclick ??
+    final selectedDate =
+        context.appState.dateclick ??
         widget.dateclick ??
         functions.boxstarttime(getCurrentTimestamp) ??
         getCurrentTimestamp;
@@ -1035,9 +1035,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
       stream: VenuesRecord.getDocument(widget.idVenues!),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return _buildVenueLoadError(
-            context,
-          );
+          return _buildVenueLoadError(context);
         }
 
         // Customize what your widget looks like when it's loading.
@@ -1049,9 +1047,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white,
-                  ),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               ),
             ),
@@ -1059,10 +1055,12 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
         }
 
         final inVenuseVenuesRecord = snapshot.data!;
-        final venueBgImage =
-            _networkImageProviderOrNull(inVenuseVenuesRecord.bg);
-        final venueLogoImage =
-            _networkImageProviderOrNull(inVenuseVenuesRecord.logo);
+        final venueBgImage = _networkImageProviderOrNull(
+          inVenuseVenuesRecord.bg,
+        );
+        final venueLogoImage = _networkImageProviderOrNull(
+          inVenuseVenuesRecord.logo,
+        );
         final fadeFactor = (1.0 - (_scrollOffset / 250.0)).clamp(0.0, 1.0);
 
         return GestureDetector(
@@ -1118,9 +1116,10 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                             currentUserLocationValue: currentUserLocationValue,
                             onStateChanged: () => safeSetState(() {}),
                             venueAudienceSection: _buildVenueAudienceSection(
-                                context,
-                                inVenuseVenuesRecord,
-                                DateTime.now() ?? DateTime.now()),
+                              context,
+                              inVenuseVenuesRecord,
+                              DateTime.now() ?? DateTime.now(),
+                            ),
                           ),
                         ],
                       ),
@@ -1174,7 +1173,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                 colors: [
                                   Colors.transparent,
                                   Color(0x9A000000),
-                                  Colors.black
+                                  Colors.black,
                                 ],
                                 stops: [0.0, 0.5, 1.0],
                                 begin: AlignmentDirectional(0.0, -1.0),
@@ -1182,12 +1181,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                               ),
                             ),
                           ).animateOnPageLoad(
-                              animationsMap['containerOnPageLoadAnimation1']!),
+                            animationsMap['containerOnPageLoadAnimation1']!,
+                          ),
                           Align(
                             alignment: const AlignmentDirectional(0.0, 1.0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 30.0),
+                                10.0,
+                                10.0,
+                                10.0,
+                                30.0,
+                              ),
                               child: Container(
                                 height: 65.0,
                                 decoration: BoxDecoration(
@@ -1195,11 +1199,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                     BoxShadow(
                                       blurRadius: 4.0,
                                       color: Color(0x33000000),
-                                      offset: Offset(
-                                        0.0,
-                                        2.0,
-                                      ),
-                                    )
+                                      offset: Offset(0.0, 2.0),
+                                    ),
                                   ],
                                   borderRadius: BorderRadius.circular(45.0),
                                 ),
@@ -1211,8 +1212,13 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 3.0, 6.0, 3.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                3.0,
+                                                6.0,
+                                                3.0,
+                                              ),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -1228,20 +1234,23 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                 color: const Color(0xFF121212),
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                  color:
-                                                      const Color(0xFF343434),
+                                                  color: const Color(
+                                                    0xFF343434,
+                                                  ),
                                                   width: 2.0,
                                                 ),
                                               ),
                                               child: Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        0.0, 0.0),
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: Icon(
                                                   Icons.arrow_back_ios_outlined,
                                                   color: MundayTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                    context,
+                                                  ).primaryText,
                                                   size: 28.0,
                                                 ),
                                               ),
@@ -1252,12 +1261,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(
-                                                    0.0, -1.0),
+                                                  0.0,
+                                                  -1.0,
+                                                ),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      0.0, 0.0, 0.0, 2.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    2.0,
+                                                  ),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -1269,8 +1283,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       currentUser != null;
                                                   if (!isLoggedIn) {
                                                     context.pushNamed(
-                                                        PhoneLoginPage
-                                                            .routeName);
+                                                      PhoneLoginPage.routeName,
+                                                    );
                                                     return;
                                                   }
                                                   context.pushNamed(
@@ -1283,19 +1297,19 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       ),
                                                       'location':
                                                           serializeParam(
-                                                        inVenuseVenuesRecord
-                                                            .position,
-                                                        ParamType.LatLng,
-                                                      ),
+                                                            inVenuseVenuesRecord
+                                                                .position,
+                                                            ParamType.LatLng,
+                                                          ),
                                                       'date': serializeParam(
                                                         widget.dateclick,
                                                         ParamType.DateTime,
                                                       ),
                                                       'currentuid':
                                                           serializeParam(
-                                                        currentUserUid,
-                                                        ParamType.String,
-                                                      ),
+                                                            currentUserUid,
+                                                            ParamType.String,
+                                                          ),
                                                       'floorId': serializeParam(
                                                         '',
                                                         ParamType.String,
@@ -1305,39 +1319,45 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                 },
                                                 child: Container(
                                                   width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          1.0,
+                                                      MediaQuery.sizeOf(
+                                                        context,
+                                                      ).width *
+                                                      1.0,
                                                   height: double.infinity,
                                                   decoration: BoxDecoration(
                                                     boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 5.0,
-                                                        color:
-                                                            Color(0x99000000),
+                                                        color: Color(
+                                                          0x99000000,
+                                                        ),
                                                         offset: Offset(
                                                           2.0,
                                                           2.0,
                                                         ),
                                                         spreadRadius: 4.0,
-                                                      )
+                                                      ),
                                                     ],
-                                                    gradient:
-                                                        const LinearGradient(
+                                                    gradient: const LinearGradient(
                                                       colors: [
                                                         Color(0xFFFF0000),
-                                                        Color(0xFFC10000)
+                                                        Color(0xFFC10000),
                                                       ],
                                                       stops: [0.0, 1.0],
                                                       begin:
                                                           AlignmentDirectional(
-                                                              0.0, -1.0),
+                                                            0.0,
+                                                            -1.0,
+                                                          ),
                                                       end: AlignmentDirectional(
-                                                          0, 1.0),
+                                                        0,
+                                                        1.0,
+                                                      ),
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            45.0),
+                                                          45.0,
+                                                        ),
                                                   ),
                                                   child: Row(
                                                     mainAxisSize:
@@ -1360,29 +1380,26 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                               Align(
                                                                 alignment:
                                                                     const AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Padding(
                                                                   padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      Container(
+                                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        10.0,
+                                                                        0.0,
+                                                                      ),
+                                                                  child: Container(
                                                                     width: 35.0,
                                                                     height:
                                                                         35.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      image:
-                                                                          DecorationImage(
+                                                                    decoration: BoxDecoration(
+                                                                      image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: Image
-                                                                            .network(
+                                                                        image: Image.network(
                                                                           'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/munday-f3fumu/assets/vkqck67kmjo7/22.png',
                                                                         ).image,
                                                                       ),
@@ -1394,38 +1411,37 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        10.0,
-                                                                        0.0),
+                                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0,
+                                                                    ),
                                                                 child: Text(
                                                                   AppLocalizations.of(
-                                                                          context)!
-                                                                      .k_ajawujz7,
-                                                                  style: MundayTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .openSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle: MundayTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        fontSize:
-                                                                            16.5,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: MundayTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
+                                                                    context,
+                                                                  )!.k_ajawujz7,
+                                                                  style: MundayTheme.of(context).bodyMedium.override(
+                                                                    font: GoogleFonts.openSans(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontStyle: MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontStyle,
+                                                                    ),
+                                                                    fontSize:
+                                                                        16.5,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle:
+                                                                        MundayTheme.of(
+                                                                          context,
+                                                                        ).bodyMedium.fontStyle,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
@@ -1441,10 +1457,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              1.0, -2.2),
+                                            1.0,
+                                            -2.2,
+                                          ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(6.0, 3.0, 0.0, 3.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  6.0,
+                                                  3.0,
+                                                  0.0,
+                                                  3.0,
+                                                ),
                                             child: InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,
@@ -1456,8 +1479,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     currentUser != null;
                                                 if (!isLoggedIn) {
                                                   context.pushNamed(
-                                                      PhoneLoginPage
-                                                          .routeName);
+                                                    PhoneLoginPage.routeName,
+                                                  );
                                                   return;
                                                 }
                                                 if (!_supportsVenueGroupInvites) {
@@ -1470,100 +1493,96 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                 var groupInviteRecordReference =
                                                     GroupInviteRecord.collection
                                                         .doc();
-                                                await groupInviteRecordReference
-                                                    .set({
+                                                await groupInviteRecordReference.set({
                                                   ...createGroupInviteRecordData(
                                                     nameGroup: '',
                                                     iDVenues: widget.idVenues,
                                                   ),
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'User_in_group': [
-                                                        getUserInGroupInviteFirestoreData(
-                                                          createUserInGroupInviteStruct(
-                                                            username:
-                                                                currentUserDisplayName,
-                                                            uid:
-                                                                currentUserReference,
-                                                            photoPath:
-                                                                currentUserPhoto,
-                                                            status: 0,
-                                                            clearUnsetFields:
-                                                                false,
-                                                            create: true,
-                                                          ),
-                                                          true,
-                                                        )
-                                                      ],
-                                                      'chat_room': [
-                                                        getChatElementLivechatFirestoreData(
-                                                          createChatElementLivechatStruct(
-                                                            id: currentUserReference,
-                                                            name:
-                                                                currentUserDisplayName,
-                                                            message:
-                                                                currentUserDisplayName,
-                                                            clearUnsetFields:
-                                                                false,
-                                                            create: true,
-                                                          ),
-                                                          true,
-                                                        )
-                                                      ],
-                                                    },
-                                                  ),
+                                                  ...mapToSupabase({
+                                                    'User_in_group': [
+                                                      getUserInGroupInviteFirestoreData(
+                                                        createUserInGroupInviteStruct(
+                                                          username:
+                                                              currentUserDisplayName,
+                                                          uid:
+                                                              currentUserReference,
+                                                          photoPath:
+                                                              currentUserPhoto,
+                                                          status: 0,
+                                                          clearUnsetFields:
+                                                              false,
+                                                          create: true,
+                                                        ),
+                                                        true,
+                                                      ),
+                                                    ],
+                                                    'chat_room': [
+                                                      getChatElementLivechatFirestoreData(
+                                                        createChatElementLivechatStruct(
+                                                          id: currentUserReference,
+                                                          name:
+                                                              currentUserDisplayName,
+                                                          message:
+                                                              currentUserDisplayName,
+                                                          clearUnsetFields:
+                                                              false,
+                                                          create: true,
+                                                        ),
+                                                        true,
+                                                      ),
+                                                    ],
+                                                  }),
                                                 });
-                                                _model.idRefGroup =
-                                                    GroupInviteRecord
-                                                        .getDocumentFromData({
+                                                _model
+                                                    .idRefGroup = GroupInviteRecord.getDocumentFromData({
                                                   ...createGroupInviteRecordData(
                                                     nameGroup: '',
                                                     iDVenues: widget.idVenues,
                                                   ),
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'User_in_group': [
-                                                        getUserInGroupInviteFirestoreData(
-                                                          createUserInGroupInviteStruct(
-                                                            username:
-                                                                currentUserDisplayName,
-                                                            uid:
-                                                                currentUserReference,
-                                                            photoPath:
-                                                                currentUserPhoto,
-                                                            status: 0,
-                                                            clearUnsetFields:
-                                                                false,
-                                                            create: true,
-                                                          ),
-                                                          true,
-                                                        )
-                                                      ],
-                                                      'chat_room': [
-                                                        getChatElementLivechatFirestoreData(
-                                                          createChatElementLivechatStruct(
-                                                            id: currentUserReference,
-                                                            name:
-                                                                currentUserDisplayName,
-                                                            message:
-                                                                currentUserDisplayName,
-                                                            clearUnsetFields:
-                                                                false,
-                                                            create: true,
-                                                          ),
-                                                          true,
-                                                        )
-                                                      ],
-                                                    },
-                                                  ),
+                                                  ...mapToSupabase({
+                                                    'User_in_group': [
+                                                      getUserInGroupInviteFirestoreData(
+                                                        createUserInGroupInviteStruct(
+                                                          username:
+                                                              currentUserDisplayName,
+                                                          uid:
+                                                              currentUserReference,
+                                                          photoPath:
+                                                              currentUserPhoto,
+                                                          status: 0,
+                                                          clearUnsetFields:
+                                                              false,
+                                                          create: true,
+                                                        ),
+                                                        true,
+                                                      ),
+                                                    ],
+                                                    'chat_room': [
+                                                      getChatElementLivechatFirestoreData(
+                                                        createChatElementLivechatStruct(
+                                                          id: currentUserReference,
+                                                          name:
+                                                              currentUserDisplayName,
+                                                          message:
+                                                              currentUserDisplayName,
+                                                          clearUnsetFields:
+                                                              false,
+                                                          create: true,
+                                                        ),
+                                                        true,
+                                                      ),
+                                                    ],
+                                                  }),
                                                 }, groupInviteRecordReference);
 
                                                 await currentUserReference!
                                                     .update(
-                                                        createUsersRecordData(
-                                                  groupInviteID: _model
-                                                      .idRefGroup?.reference,
-                                                ));
+                                                      createUsersRecordData(
+                                                        groupInviteID: _model
+                                                            .idRefGroup
+                                                            ?.reference,
+                                                      ),
+                                                    );
 
                                                 safeSetState(() {});
                                               },
@@ -1571,23 +1590,22 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                 width: 65.0,
                                                 height: 65.0,
                                                 decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xFF121212),
+                                                  color: const Color(
+                                                    0xFF121212,
+                                                  ),
                                                   boxShadow: const [
                                                     BoxShadow(
                                                       blurRadius: 5.0,
                                                       color: Color(0x99000000),
-                                                      offset: Offset(
-                                                        2.0,
-                                                        2.0,
-                                                      ),
+                                                      offset: Offset(2.0, 2.0),
                                                       spreadRadius: 4.0,
-                                                    )
+                                                    ),
                                                   ],
                                                   shape: BoxShape.circle,
                                                   border: Border.all(
-                                                    color:
-                                                        const Color(0xFF343434),
+                                                    color: const Color(
+                                                      0xFF343434,
+                                                    ),
                                                     width: 2.0,
                                                   ),
                                                 ),
@@ -1596,81 +1614,88 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                20.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              20.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           AppLocalizations.of(
-                                                                  context)!
-                                                              .k_4cfjxu9d,
+                                                            context,
+                                                          )!.k_4cfjxu9d,
                                                           textAlign:
                                                               TextAlign.center,
-                                                          style: MundayTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .openSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: MundayTheme.of(
-                                                                          context)
+                                                          style: MundayTheme.of(context).bodyMedium.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontStyle:
+                                                                  MundayTheme.of(
+                                                                        context,
+                                                                      )
                                                                       .bodyMedium
                                                                       .fontStyle,
-                                                                ),
-                                                                fontSize: 10.0,
-                                                                letterSpacing:
-                                                                    0.5,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontStyle: MundayTheme.of(
-                                                                        context)
+                                                            ),
+                                                            fontSize: 10.0,
+                                                            letterSpacing: 0.5,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle:
+                                                                MundayTheme.of(
+                                                                      context,
+                                                                    )
                                                                     .bodyMedium
                                                                     .fontStyle,
-                                                              ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              1.2, -1.2),
+                                                            1.2,
+                                                            -1.2,
+                                                          ),
                                                       child: Container(
                                                         width: 22.0,
                                                         height: 22.0,
-                                                        decoration:
-                                                            BoxDecoration(
+                                                        decoration: BoxDecoration(
                                                           color: const Color(
-                                                              0xFF00B42C),
+                                                            0xFF00B42C,
+                                                          ),
                                                           boxShadow: const [
                                                             BoxShadow(
                                                               blurRadius: 2.0,
                                                               color: Color(
-                                                                  0xAC000000),
+                                                                0xAC000000,
+                                                              ),
                                                               offset: Offset(
                                                                 -3.0,
                                                                 3.0,
                                                               ),
-                                                            )
+                                                            ),
                                                           ],
                                                           shape:
                                                               BoxShape.circle,
                                                           border: Border.all(
                                                             color: const Color(
-                                                                0xFF121212),
+                                                              0xFF121212,
+                                                            ),
                                                             width: 2.2,
                                                           ),
                                                         ),
                                                         child: Icon(
                                                           Icons.add_outlined,
-                                                          color: MundayTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                          color: MundayTheme.of(
+                                                            context,
+                                                          ).primaryText,
                                                           size: 15.0,
                                                         ),
                                                       ),
@@ -1678,17 +1703,22 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 15.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                              15.0,
+                                                            ),
                                                         child: Icon(
                                                           Icons.people,
-                                                          color: MundayTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                          color: MundayTheme.of(
+                                                            context,
+                                                          ).primaryText,
                                                           size: 30.0,
                                                         ),
                                                       ),
@@ -1718,7 +1748,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                     child: AuthUserStreamWidget(
                       builder: (context) => StreamBuilder<GroupInviteRecord>(
                         stream: GroupInviteRecord.getDocument(
-                            currentUserDocument!.groupInviteID!),
+                          currentUserDocument!.groupInviteID!,
+                        ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
@@ -1749,7 +1780,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                     colors: [
                                       Colors.transparent,
                                       Color(0xDF000000),
-                                      Colors.black
+                                      Colors.black,
                                     ],
                                     stops: [0.0, 0.2, 1.0],
                                     begin: AlignmentDirectional(0.0, -1.0),
@@ -1765,8 +1796,13 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                       height: 55.0,
                                       decoration: const BoxDecoration(),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(15.0, 0.0, 15.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              15.0,
+                                              0.0,
+                                              15.0,
+                                              0.0,
+                                            ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
@@ -1779,25 +1815,37 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                   gradient: LinearGradient(
                                                     colors: [
                                                       Color(0xFF2C2C2C),
-                                                      Color(0xFF1C1C1C)
+                                                      Color(0xFF1C1C1C),
                                                     ],
                                                     stops: [0.0, 1.0],
                                                     begin: AlignmentDirectional(
-                                                        0.0, -1.0),
+                                                      0.0,
+                                                      -1.0,
+                                                    ),
                                                     end: AlignmentDirectional(
-                                                        0, 1.0),
+                                                      0,
+                                                      1.0,
+                                                    ),
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(90.0),
-                                                    bottomRight:
-                                                        Radius.circular(0.0),
-                                                    topLeft:
-                                                        Radius.circular(90.0),
-                                                    topRight:
-                                                        Radius.circular(0.0),
-                                                  ),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                              90.0,
+                                                            ),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                              90.0,
+                                                            ),
+                                                        topRight:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                      ),
                                                 ),
                                                 child: Stack(
                                                   children: [
@@ -1805,27 +1853,32 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       opacity: 0.4,
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(2.0),
+                                                            const EdgeInsets.all(
+                                                              2.0,
+                                                            ),
                                                         child: ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
+                                                          borderRadius: const BorderRadius.only(
                                                             bottomLeft:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                             bottomRight:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             topLeft:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                             topRight:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                           ),
-                                                          child: inVenuseVenuesRecord
-                                                                  .bg.isNotEmpty
+                                                          child:
+                                                              inVenuseVenuesRecord
+                                                                  .bg
+                                                                  .isNotEmpty
                                                               ? Image.network(
                                                                   inVenuseVenuesRecord
                                                                       .bg,
@@ -1835,16 +1888,22 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                       .infinity,
                                                                   fit: BoxFit
                                                                       .cover,
-                                                                  errorBuilder: (context,
-                                                                          error,
-                                                                          stackTrace) =>
-                                                                      Container(
-                                                                          color:
-                                                                              const Color(0xFF1A1A1A)),
+                                                                  errorBuilder:
+                                                                      (
+                                                                        context,
+                                                                        error,
+                                                                        stackTrace,
+                                                                      ) => Container(
+                                                                        color: const Color(
+                                                                          0xFF1A1A1A,
+                                                                        ),
+                                                                      ),
                                                                 )
                                                               : Container(
                                                                   color: const Color(
-                                                                      0xFF1A1A1A)),
+                                                                    0xFF1A1A1A,
+                                                                  ),
+                                                                ),
                                                         ),
                                                       ),
                                                     ),
@@ -1854,83 +1913,92 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       decoration: BoxDecoration(
                                                         image:
                                                             inVenuseVenuesRecord
-                                                                    .bg
-                                                                    .isNotEmpty
-                                                                ? DecorationImage(
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                    image: NetworkImage(
-                                                                        inVenuseVenuesRecord
-                                                                            .bg),
-                                                                  )
-                                                                : null,
+                                                                .bg
+                                                                .isNotEmpty
+                                                            ? DecorationImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                image: NetworkImage(
+                                                                  inVenuseVenuesRecord
+                                                                      .bg,
+                                                                ),
+                                                              )
+                                                            : null,
                                                         borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  90.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  90.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                        ),
+                                                            const BorderRadius.only(
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
+                                                              bottomRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
+                                                              topRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                            ),
                                                       ),
                                                       child: ClipRRect(
                                                         borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  90.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  90.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                        ),
+                                                            const BorderRadius.only(
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
+                                                              bottomRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
+                                                              topRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                            ),
                                                         child: BackdropFilter(
                                                           filter:
                                                               ImageFilter.blur(
-                                                            sigmaX: 50.0,
-                                                            sigmaY: 20.0,
-                                                          ),
+                                                                sigmaX: 50.0,
+                                                                sigmaY: 20.0,
+                                                              ),
                                                           child: Container(
                                                             width:
                                                                 double.infinity,
                                                             height:
                                                                 double.infinity,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        90.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        0.0),
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        90.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        0.0),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: const BorderRadius.only(
+                                                                bottomLeft:
+                                                                    Radius.circular(
+                                                                      90.0,
+                                                                    ),
+                                                                bottomRight:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
+                                                                topLeft:
+                                                                    Radius.circular(
+                                                                      90.0,
+                                                                    ),
+                                                                topRight:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
                                                               ),
-                                                              border:
-                                                                  Border.all(
-                                                                color: const Color(
-                                                                    0xFF1D1D1D),
+                                                              border: Border.all(
+                                                                color:
+                                                                    const Color(
+                                                                      0xFF1D1D1D,
+                                                                    ),
                                                                 width: 1.5,
                                                               ),
                                                             ),
@@ -1941,7 +2009,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1952,47 +2022,45 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                           const Icon(
                                                             Icons.check_rounded,
                                                             color: Color(
-                                                                0xFF58BB2F),
+                                                              0xFF58BB2F,
+                                                            ),
                                                             size: 20.0,
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    6.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  6.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_f56db5sz,
-                                                              style: MundayTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: MundayTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: MundayTheme.of(
-                                                                            context)
+                                                                context,
+                                                              )!.k_f56db5sz,
+                                                              style: MundayTheme.of(context).bodyMedium.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle:
+                                                                      MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontStyle,
+                                                                ),
+                                                                fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    MundayTheme.of(
+                                                                          context,
+                                                                        )
                                                                         .bodyMedium
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -2016,25 +2084,37 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                   gradient: LinearGradient(
                                                     colors: [
                                                       Color(0xFF2C2C2C),
-                                                      Color(0xFF1C1C1C)
+                                                      Color(0xFF1C1C1C),
                                                     ],
                                                     stops: [0.0, 1.0],
                                                     begin: AlignmentDirectional(
-                                                        0.0, -1.0),
+                                                      0.0,
+                                                      -1.0,
+                                                    ),
                                                     end: AlignmentDirectional(
-                                                        0, 1.0),
+                                                      0,
+                                                      1.0,
+                                                    ),
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(0.0),
-                                                    bottomRight:
-                                                        Radius.circular(0.0),
-                                                    topLeft:
-                                                        Radius.circular(0.0),
-                                                    topRight:
-                                                        Radius.circular(0.0),
-                                                  ),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        topRight:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                      ),
                                                 ),
                                                 child: Stack(
                                                   children: [
@@ -2042,27 +2122,32 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       opacity: 0.4,
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(2.0),
+                                                            const EdgeInsets.all(
+                                                              2.0,
+                                                            ),
                                                         child: ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
+                                                          borderRadius: const BorderRadius.only(
                                                             bottomLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             bottomRight:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             topLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             topRight:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                           ),
-                                                          child: inVenuseVenuesRecord
-                                                                  .bg.isNotEmpty
+                                                          child:
+                                                              inVenuseVenuesRecord
+                                                                  .bg
+                                                                  .isNotEmpty
                                                               ? Image.network(
                                                                   inVenuseVenuesRecord
                                                                       .bg,
@@ -2072,90 +2157,103 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                       .infinity,
                                                                   fit: BoxFit
                                                                       .cover,
-                                                                  errorBuilder: (context,
-                                                                          error,
-                                                                          stackTrace) =>
-                                                                      Container(
-                                                                          color:
-                                                                              const Color(0xFF1A1A1A)),
+                                                                  errorBuilder:
+                                                                      (
+                                                                        context,
+                                                                        error,
+                                                                        stackTrace,
+                                                                      ) => Container(
+                                                                        color: const Color(
+                                                                          0xFF1A1A1A,
+                                                                        ),
+                                                                      ),
                                                                 )
                                                               : Container(
                                                                   color: const Color(
-                                                                      0xFF1A1A1A)),
+                                                                    0xFF1A1A1A,
+                                                                  ),
+                                                                ),
                                                         ),
                                                       ),
                                                     ),
                                                     Container(
                                                       width: double.infinity,
                                                       height: double.infinity,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.only(
+                                                      decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.only(
                                                           bottomLeft:
                                                               Radius.circular(
-                                                                  0.0),
+                                                                0.0,
+                                                              ),
                                                           bottomRight:
                                                               Radius.circular(
-                                                                  0.0),
+                                                                0.0,
+                                                              ),
                                                           topLeft:
                                                               Radius.circular(
-                                                                  0.0),
+                                                                0.0,
+                                                              ),
                                                           topRight:
                                                               Radius.circular(
-                                                                  0.0),
+                                                                0.0,
+                                                              ),
                                                         ),
                                                       ),
                                                       child: ClipRRect(
                                                         borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                        ),
+                                                            const BorderRadius.only(
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              bottomRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              topRight:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                            ),
                                                         child: BackdropFilter(
                                                           filter:
                                                               ImageFilter.blur(
-                                                            sigmaX: 50.0,
-                                                            sigmaY: 20.0,
-                                                          ),
+                                                                sigmaX: 50.0,
+                                                                sigmaY: 20.0,
+                                                              ),
                                                           child: Container(
                                                             width:
                                                                 double.infinity,
                                                             height:
                                                                 double.infinity,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        0.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        0.0),
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        0.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        0.0),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: const BorderRadius.only(
+                                                                bottomLeft:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
+                                                                bottomRight:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
+                                                                topLeft:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
+                                                                topRight:
+                                                                    Radius.circular(
+                                                                      0.0,
+                                                                    ),
                                                               ),
-                                                              border:
-                                                                  Border.all(
-                                                                color: const Color(
-                                                                    0xFF1D1D1D),
+                                                              border: Border.all(
+                                                                color:
+                                                                    const Color(
+                                                                      0xFF1D1D1D,
+                                                                    ),
                                                                 width: 1.5,
                                                               ),
                                                             ),
@@ -2166,7 +2264,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -2177,49 +2277,47 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                           Icon(
                                                             Icons
                                                                 .question_mark_rounded,
-                                                            color: MundayTheme
-                                                                    .of(context)
-                                                                .warning,
+                                                            color:
+                                                                MundayTheme.of(
+                                                                  context,
+                                                                ).warning,
                                                             size: 17.0,
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    5.0,
-                                                                    0.0,
-                                                                    4.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  5.0,
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_ifymhz2z,
-                                                              style: MundayTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: MundayTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: MundayTheme.of(
-                                                                            context)
+                                                                context,
+                                                              )!.k_ifymhz2z,
+                                                              style: MundayTheme.of(context).bodyMedium.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle:
+                                                                      MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontStyle,
+                                                                ),
+                                                                fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    MundayTheme.of(
+                                                                          context,
+                                                                        )
                                                                         .bodyMedium
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -2249,31 +2347,42 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                 },
                                                 child: Container(
                                                   height: 40.0,
-                                                  decoration:
-                                                      const BoxDecoration(
+                                                  decoration: const BoxDecoration(
                                                     gradient: LinearGradient(
                                                       colors: [
                                                         Color(0xFF2C2C2C),
-                                                        Color(0xFF1C1C1C)
+                                                        Color(0xFF1C1C1C),
                                                       ],
                                                       stops: [0.0, 1.0],
                                                       begin:
                                                           AlignmentDirectional(
-                                                              0.0, -1.0),
+                                                            0.0,
+                                                            -1.0,
+                                                          ),
                                                       end: AlignmentDirectional(
-                                                          0, 1.0),
+                                                        0,
+                                                        1.0,
+                                                      ),
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(0.0),
-                                                      bottomRight:
-                                                          Radius.circular(90.0),
-                                                      topLeft:
-                                                          Radius.circular(0.0),
-                                                      topRight:
-                                                          Radius.circular(90.0),
-                                                    ),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                0.0,
+                                                              ),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                90.0,
+                                                              ),
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                0.0,
+                                                              ),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                90.0,
+                                                              ),
+                                                        ),
                                                   ),
                                                   child: Stack(
                                                     children: [
@@ -2281,27 +2390,30 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                         opacity: 0.4,
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                  .all(2.0),
+                                                              const EdgeInsets.all(
+                                                                2.0,
+                                                              ),
                                                           child: ClipRRect(
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              bottomLeft: Radius
-                                                                  .circular(
-                                                                      0.0),
+                                                            borderRadius: const BorderRadius.only(
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
                                                               bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          90.0),
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      0.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      90.0),
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                    0.0,
+                                                                  ),
+                                                              topRight:
+                                                                  Radius.circular(
+                                                                    90.0,
+                                                                  ),
                                                             ),
-                                                            child: inVenuseVenuesRecord
+                                                            child:
+                                                                inVenuseVenuesRecord
                                                                     .bg
                                                                     .isNotEmpty
                                                                 ? Image.network(
@@ -2313,90 +2425,101 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                         .infinity,
                                                                     fit: BoxFit
                                                                         .cover,
-                                                                    errorBuilder: (context,
-                                                                            error,
-                                                                            stackTrace) =>
-                                                                        Container(
-                                                                            color:
-                                                                                const Color(0xFF1A1A1A)),
+                                                                    errorBuilder:
+                                                                        (
+                                                                          context,
+                                                                          error,
+                                                                          stackTrace,
+                                                                        ) => Container(
+                                                                          color: const Color(
+                                                                            0xFF1A1A1A,
+                                                                          ),
+                                                                        ),
                                                                   )
                                                                 : Container(
                                                                     color: const Color(
-                                                                        0xFF1A1A1A)),
+                                                                      0xFF1A1A1A,
+                                                                    ),
+                                                                  ),
                                                           ),
                                                         ),
                                                       ),
                                                       Container(
                                                         width: double.infinity,
                                                         height: double.infinity,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.only(
+                                                        decoration: const BoxDecoration(
+                                                          borderRadius: BorderRadius.only(
                                                             bottomLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             bottomRight:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                             topLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             topRight:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                           ),
                                                         ),
                                                         child: ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
+                                                          borderRadius: const BorderRadius.only(
                                                             bottomLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             bottomRight:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                             topLeft:
                                                                 Radius.circular(
-                                                                    0.0),
+                                                                  0.0,
+                                                                ),
                                                             topRight:
                                                                 Radius.circular(
-                                                                    90.0),
+                                                                  90.0,
+                                                                ),
                                                           ),
                                                           child: BackdropFilter(
-                                                            filter: ImageFilter
-                                                                .blur(
-                                                              sigmaX: 50.0,
-                                                              sigmaY: 20.0,
-                                                            ),
+                                                            filter:
+                                                                ImageFilter.blur(
+                                                                  sigmaX: 50.0,
+                                                                  sigmaY: 20.0,
+                                                                ),
                                                             child: Container(
                                                               width: double
                                                                   .infinity,
                                                               height: double
                                                                   .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                        .only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          0.0),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          90.0),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          0.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          90.0),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: const BorderRadius.only(
+                                                                  bottomLeft:
+                                                                      Radius.circular(
+                                                                        0.0,
+                                                                      ),
+                                                                  bottomRight:
+                                                                      Radius.circular(
+                                                                        90.0,
+                                                                      ),
+                                                                  topLeft:
+                                                                      Radius.circular(
+                                                                        0.0,
+                                                                      ),
+                                                                  topRight:
+                                                                      Radius.circular(
+                                                                        90.0,
+                                                                      ),
                                                                 ),
-                                                                border:
-                                                                    Border.all(
+                                                                border: Border.all(
                                                                   color: const Color(
-                                                                      0xFF1D1D1D),
+                                                                    0xFF1D1D1D,
+                                                                  ),
                                                                   width: 1.5,
                                                                 ),
                                                               ),
@@ -2407,7 +2530,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -2419,45 +2544,44 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                               Icons
                                                                   .close_rounded,
                                                               color: Color(
-                                                                  0xFFFF0000),
+                                                                0xFFFF0000,
+                                                              ),
                                                               size: 20.0,
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      6.0,
-                                                                      0.0,
-                                                                      7.0,
-                                                                      0.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    6.0,
+                                                                    0.0,
+                                                                    7.0,
+                                                                    0.0,
+                                                                  ),
                                                               child: Text(
                                                                 AppLocalizations.of(
-                                                                        context)!
-                                                                    .k_gkhwh8ji,
-                                                                style: MundayTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .openSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: MundayTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: MundayTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
+                                                                  context,
+                                                                )!.k_gkhwh8ji,
+                                                                style: MundayTheme.of(context).bodyMedium.override(
+                                                                  font: GoogleFonts.openSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontStyle:
+                                                                        MundayTheme.of(
+                                                                          context,
+                                                                        ).bodyMedium.fontStyle,
+                                                                  ),
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle:
+                                                                      MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontStyle,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -2473,8 +2597,10 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(0.0, 1.0),
+                                      alignment: const AlignmentDirectional(
+                                        0.0,
+                                        1.0,
+                                      ),
                                       child: Container(
                                         width: double.infinity,
                                         height: 245.0,
@@ -2483,13 +2609,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                             colors: [
                                               Color(0xFF1C1C1C),
                                               Color(0xFF070707),
-                                              Color(0xDA000000)
+                                              Color(0xDA000000),
                                             ],
                                             stops: [0.0, 0.5, 1.0],
                                             begin: AlignmentDirectional(
-                                                1.0, -0.34),
+                                              1.0,
+                                              -0.34,
+                                            ),
                                             end: AlignmentDirectional(
-                                                -1.0, 0.34),
+                                              -1.0,
+                                              0.34,
+                                            ),
                                           ),
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(0.0),
@@ -2504,23 +2634,36 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                               opacity: 0.4,
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        0.0, 2.0, 0.0, 0.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      0.0,
+                                                      2.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(0.0),
-                                                    bottomRight:
-                                                        Radius.circular(0.0),
-                                                    topLeft:
-                                                        Radius.circular(20.0),
-                                                    topRight:
-                                                        Radius.circular(20.0),
-                                                  ),
-                                                  child: inVenuseVenuesRecord
-                                                          .bg.isNotEmpty
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                              0.0,
+                                                            ),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                              20.0,
+                                                            ),
+                                                        topRight:
+                                                            Radius.circular(
+                                                              20.0,
+                                                            ),
+                                                      ),
+                                                  child:
+                                                      inVenuseVenuesRecord
+                                                          .bg
+                                                          .isNotEmpty
                                                       ? Image.network(
                                                           inVenuseVenuesRecord
                                                               .bg,
@@ -2529,16 +2672,23 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                           height:
                                                               double.infinity,
                                                           fit: BoxFit.cover,
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Container(
-                                                                  color: const Color(
-                                                                      0xFF1A1A1A)),
+                                                          errorBuilder:
+                                                              (
+                                                                context,
+                                                                error,
+                                                                stackTrace,
+                                                              ) => Container(
+                                                                color:
+                                                                    const Color(
+                                                                      0xFF1A1A1A,
+                                                                    ),
+                                                              ),
                                                         )
                                                       : Container(
                                                           color: const Color(
-                                                              0xFF1A1A1A)),
+                                                            0xFF1A1A1A,
+                                                          ),
+                                                        ),
                                                 ),
                                               ),
                                             ),
@@ -2547,46 +2697,58 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                               child: Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        1.0, -1.0),
+                                                      1.0,
+                                                      -1.0,
+                                                    ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 2.0, 0.0, 0.0),
+                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        2.0,
+                                                        0.0,
+                                                        0.0,
+                                                      ),
                                                   child: Container(
                                                     width: double.infinity,
                                                     height: double.infinity,
-                                                    decoration:
-                                                        const BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
                                                           Color(0xFF1C1C1C),
                                                           Color(0xFF070707),
-                                                          Color(0xDA000000)
+                                                          Color(0xDA000000),
                                                         ],
                                                         stops: [0.0, 0.5, 1.0],
                                                         begin:
                                                             AlignmentDirectional(
-                                                                1.0, -0.34),
+                                                              1.0,
+                                                              -0.34,
+                                                            ),
                                                         end:
                                                             AlignmentDirectional(
-                                                                -1.0, 0.34),
+                                                              -1.0,
+                                                              0.34,
+                                                            ),
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                20.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                20.0),
-                                                      ),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                  0.0,
+                                                                ),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                  0.0,
+                                                                ),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                  20.0,
+                                                                ),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                  20.0,
+                                                                ),
+                                                          ),
                                                       shape: BoxShape.rectangle,
                                                     ),
                                                   ),
@@ -2596,7 +2758,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      1.0, -1.0),
+                                                    1.0,
+                                                    -1.0,
+                                                  ),
                                               child: Container(
                                                 width: 100.0,
                                                 height: 100.0,
@@ -2609,7 +2773,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                    -1.0,
+                                                    0.0,
+                                                  ),
                                               child: Container(
                                                 width: 120.0,
                                                 height: 120.0,
@@ -2624,28 +2790,34 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                               height: double.infinity,
                                               decoration: const BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
-                                                  topLeft:
-                                                      Radius.circular(20.0),
-                                                  topRight:
-                                                      Radius.circular(20.0),
+                                                  bottomLeft: Radius.circular(
+                                                    0.0,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    0.0,
+                                                  ),
+                                                  topLeft: Radius.circular(
+                                                    20.0,
+                                                  ),
+                                                  topRight: Radius.circular(
+                                                    20.0,
+                                                  ),
                                                 ),
                                               ),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     const BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
-                                                  topLeft:
-                                                      Radius.circular(20.0),
-                                                  topRight:
-                                                      Radius.circular(20.0),
-                                                ),
+                                                      bottomLeft:
+                                                          Radius.circular(0.0),
+                                                      bottomRight:
+                                                          Radius.circular(0.0),
+                                                      topLeft: Radius.circular(
+                                                        20.0,
+                                                      ),
+                                                      topRight: Radius.circular(
+                                                        20.0,
+                                                      ),
+                                                    ),
                                                 child: BackdropFilter(
                                                   filter: ImageFilter.blur(
                                                     sigmaX: 50.0,
@@ -2663,14 +2835,18 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                               height: double.infinity,
                                               decoration: const BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0.0),
-                                                  bottomRight:
-                                                      Radius.circular(0.0),
-                                                  topLeft:
-                                                      Radius.circular(20.0),
-                                                  topRight:
-                                                      Radius.circular(20.0),
+                                                  bottomLeft: Radius.circular(
+                                                    0.0,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    0.0,
+                                                  ),
+                                                  topLeft: Radius.circular(
+                                                    20.0,
+                                                  ),
+                                                  topRight: Radius.circular(
+                                                    20.0,
+                                                  ),
                                                 ),
                                               ),
                                               child: Column(
@@ -2689,54 +2865,53 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    25.0,
-                                                                    12.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  25.0,
+                                                                  12.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                      context)!
-                                                                  .k_3kzdm2df,
-                                                              style: MundayTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: MundayTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: MundayTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    fontSize:
-                                                                        16.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: MundayTheme.of(
-                                                                            context)
+                                                                context,
+                                                              )!.k_3kzdm2df,
+                                                              style: MundayTheme.of(context).bodyMedium.override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontWeight,
+                                                                  fontStyle:
+                                                                      MundayTheme.of(
+                                                                        context,
+                                                                      ).bodyMedium.fontStyle,
+                                                                ),
+                                                                fontSize: 16.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    MundayTheme.of(
+                                                                          context,
+                                                                        )
                                                                         .bodyMedium
                                                                         .fontWeight,
-                                                                    fontStyle: MundayTheme.of(
-                                                                            context)
+                                                                fontStyle:
+                                                                    MundayTheme.of(
+                                                                          context,
+                                                                        )
                                                                         .bodyMedium
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                             ),
                                                           ),
                                                           const Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        8.0,
-                                                                        15.0,
-                                                                        4.0,
-                                                                        0.0),
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                  8.0,
+                                                                  15.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Icon(
                                                               Icons.edit_sharp,
                                                               color:
@@ -2752,82 +2927,90 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    10.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  0.0,
+                                                                  8.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                ),
                                                             child: Container(
                                                               height: 25.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color(
-                                                                    0x741D1D1D),
+                                                              decoration: BoxDecoration(
+                                                                color:
+                                                                    const Color(
+                                                                      0x741D1D1D,
+                                                                    ),
                                                                 borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            90.0),
-                                                                border:
-                                                                    Border.all(
+                                                                    BorderRadius.circular(
+                                                                      90.0,
+                                                                    ),
+                                                                border: Border.all(
                                                                   color: const Color(
-                                                                      0xC31D1D1D),
+                                                                    0xC31D1D1D,
+                                                                  ),
                                                                   width: 2.0,
                                                                 ),
                                                               ),
                                                               child: Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.5,
-                                                                        0.0,
-                                                                        0.5),
+                                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                                      0.0,
+                                                                      0.5,
+                                                                      0.0,
+                                                                      0.5,
+                                                                    ),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Icon(
+                                                                      padding:
+                                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                          ),
+                                                                      child: Icon(
                                                                         Icons
                                                                             .swap_horiz,
-                                                                        color: MundayTheme.of(context)
-                                                                            .primaryText,
+                                                                        color: MundayTheme.of(
+                                                                          context,
+                                                                        ).primaryText,
                                                                         size:
                                                                             20.0,
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          10.0,
-                                                                          1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .k_ffx98bbd,
-                                                                        style: MundayTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
+                                                                      padding:
+                                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            10.0,
+                                                                            1.0,
+                                                                          ),
+                                                                      child: Text(
+                                                                        AppLocalizations.of(
+                                                                          context,
+                                                                        )!.k_ffx98bbd,
+                                                                        style:
+                                                                            MundayTheme.of(
+                                                                              context,
+                                                                            ).bodyMedium.override(
                                                                               font: GoogleFonts.openSans(
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                fontStyle: MundayTheme.of(
+                                                                                  context,
+                                                                                ).bodyMedium.fontStyle,
                                                                               ),
                                                                               color: Colors.white,
                                                                               fontSize: 12.0,
                                                                               letterSpacing: 0.5,
                                                                               fontWeight: FontWeight.w500,
-                                                                              fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                              fontStyle: MundayTheme.of(
+                                                                                context,
+                                                                              ).bodyMedium.fontStyle,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -2838,12 +3021,12 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    10.0,
-                                                                    0.0),
+                                                                const EdgeInsetsDirectional.fromSTEB(
+                                                                  0.0,
+                                                                  8.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                ),
                                                             child: InkWell(
                                                               splashColor: Colors
                                                                   .transparent,
@@ -2855,68 +3038,69 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
-                                                                await currentUserReference!
-                                                                    .update({
-                                                                  ...mapToSupabase(
-                                                                    {
-                                                                      'Group_invite_ID':
-                                                                          FieldValue
-                                                                              .delete(),
-                                                                    },
-                                                                  ),
+                                                                await currentUserReference!.update({
+                                                                  ...mapToSupabase({
+                                                                    'Group_invite_ID':
+                                                                        FieldValue.delete(),
+                                                                  }),
                                                                 });
                                                               },
                                                               child: Container(
                                                                 height: 25.0,
-                                                                decoration:
-                                                                    BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                   color: Colors
                                                                       .white,
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              90.0),
-                                                                  border: Border
-                                                                      .all(
-                                                                    width: 2.0,
-                                                                  ),
+                                                                      BorderRadius.circular(
+                                                                        90.0,
+                                                                      ),
+                                                                  border:
+                                                                      Border.all(
+                                                                        width:
+                                                                            2.0,
+                                                                      ),
                                                                 ),
                                                                 child: Padding(
                                                                   padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          0.5,
-                                                                          0.0,
-                                                                          0.5),
+                                                                      const EdgeInsetsDirectional.fromSTEB(
+                                                                        0.0,
+                                                                        0.5,
+                                                                        0.0,
+                                                                        0.5,
+                                                                      ),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
                                                                             .max,
                                                                     children: [
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            10.0,
-                                                                            0.0,
-                                                                            10.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Text(
-                                                                          AppLocalizations.of(context)!
-                                                                              .k_dvgerlhc,
-                                                                          style: MundayTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          10.0,
+                                                                          0.0,
+                                                                          10.0,
+                                                                          1.0,
+                                                                        ),
+                                                                        child: Text(
+                                                                          AppLocalizations.of(
+                                                                            context,
+                                                                          )!.k_dvgerlhc,
+                                                                          style:
+                                                                              MundayTheme.of(
+                                                                                context,
+                                                                              ).bodyMedium.override(
                                                                                 font: GoogleFonts.openSans(
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                  fontStyle: MundayTheme.of(
+                                                                                    context,
+                                                                                  ).bodyMedium.fontStyle,
                                                                                 ),
                                                                                 color: Colors.black,
                                                                                 fontSize: 12.0,
                                                                                 letterSpacing: 0.5,
                                                                                 fontWeight: FontWeight.w500,
-                                                                                fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                fontStyle: MundayTheme.of(
+                                                                                  context,
+                                                                                ).bodyMedium.fontStyle,
                                                                               ),
                                                                         ),
                                                                       ),
@@ -2932,15 +3116,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(15.0,
-                                                            20.0, 0.0, 0.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          15.0,
+                                                          20.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Container(
                                                       width: double.infinity,
                                                       decoration:
                                                           const BoxDecoration(),
-                                                      child:
-                                                          SingleChildScrollView(
+                                                      child: SingleChildScrollView(
                                                         scrollDirection:
                                                             Axis.horizontal,
                                                         child: Row(
@@ -2952,32 +3138,33 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      10.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                  ),
                                                               child: Container(
                                                                 width: 70.0,
-                                                                decoration:
-                                                                    const BoxDecoration(
+                                                                decoration: const BoxDecoration(
                                                                   shape: BoxShape
                                                                       .rectangle,
                                                                 ),
                                                                 child: Align(
                                                                   alignment:
                                                                       const AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
+                                                                        0.0,
+                                                                        0.0,
+                                                                      ),
                                                                   child: Stack(
                                                                     children: [
                                                                       Align(
-                                                                        alignment: const AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Column(
+                                                                        alignment:
+                                                                            const AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                        child: Column(
                                                                           mainAxisSize:
                                                                               MainAxisSize.max,
                                                                           mainAxisAlignment:
@@ -2992,18 +3179,32 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                               ),
                                                                             ),
                                                                             Padding(
-                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                              ),
                                                                               child: Text(
-                                                                                AppLocalizations.of(context)!.k_eo1pf729,
-                                                                                style: MundayTheme.of(context).bodyMedium.override(
+                                                                                AppLocalizations.of(
+                                                                                  context,
+                                                                                )!.k_eo1pf729,
+                                                                                style:
+                                                                                    MundayTheme.of(
+                                                                                      context,
+                                                                                    ).bodyMedium.override(
                                                                                       font: GoogleFonts.openSans(
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                        fontStyle: MundayTheme.of(
+                                                                                          context,
+                                                                                        ).bodyMedium.fontStyle,
                                                                                       ),
                                                                                       fontSize: 12.0,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
-                                                                                      fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                      fontStyle: MundayTheme.of(
+                                                                                        context,
+                                                                                      ).bodyMedium.fontStyle,
                                                                                     ),
                                                                               ),
                                                                             ),
@@ -3017,15 +3218,14 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      10.0),
+                                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                  ),
                                                               child: Builder(
-                                                                builder:
-                                                                    (context) {
+                                                                builder: (context) {
                                                                   final friend =
                                                                       columnGroupInviteRecord
                                                                           .userInGroup
@@ -3036,94 +3236,128 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                         MainAxisSize
                                                                             .min,
                                                                     children: List.generate(
-                                                                        friend
-                                                                            .length,
-                                                                        (friendIndex) {
-                                                                      final friendItem =
-                                                                          friend[
-                                                                              friendIndex];
-                                                                      return Container(
-                                                                        width:
-                                                                            70.0,
-                                                                        decoration:
-                                                                            const BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.rectangle,
-                                                                        ),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment: const AlignmentDirectional(
+                                                                      friend
+                                                                          .length,
+                                                                      (
+                                                                        friendIndex,
+                                                                      ) {
+                                                                        final friendItem =
+                                                                            friend[friendIndex];
+                                                                        return Container(
+                                                                          width:
+                                                                              70.0,
+                                                                          decoration: const BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.rectangle,
+                                                                          ),
+                                                                          child: Align(
+                                                                            alignment: const AlignmentDirectional(
                                                                               0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Stack(
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                                                                child: Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  children: [
-                                                                                    Align(
-                                                                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                                                                      child: Container(
-                                                                                        width: 50.0,
-                                                                                        height: 50.0,
-                                                                                        decoration: BoxDecoration(
-                                                                                          color: const Color(0xFF1D1D1D),
-                                                                                          image: friendItem.photoPath.isNotEmpty
-                                                                                              ? DecorationImage(
-                                                                                                  fit: BoxFit.cover,
-                                                                                                  image: NetworkImage(friendItem.photoPath),
-                                                                                                )
-                                                                                              : null,
-                                                                                          shape: BoxShape.circle,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Stack(
+                                                                              children: [
+                                                                                Align(
+                                                                                  alignment: const AlignmentDirectional(
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                  ),
+                                                                                  child: Column(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+                                                                                      Align(
+                                                                                        alignment: const AlignmentDirectional(
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                        ),
+                                                                                        child: Container(
+                                                                                          width: 50.0,
+                                                                                          height: 50.0,
+                                                                                          decoration: BoxDecoration(
+                                                                                            color: const Color(
+                                                                                              0xFF1D1D1D,
+                                                                                            ),
+                                                                                            image: friendItem.photoPath.isNotEmpty
+                                                                                                ? DecorationImage(
+                                                                                                    fit: BoxFit.cover,
+                                                                                                    image: NetworkImage(
+                                                                                                      friendItem.photoPath,
+                                                                                                    ),
+                                                                                                  )
+                                                                                                : null,
+                                                                                            shape: BoxShape.circle,
+                                                                                          ),
                                                                                         ),
                                                                                       ),
-                                                                                    ),
-                                                                                    Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        friendItem.username,
-                                                                                        style: MundayTheme.of(context).bodyMedium.override(
-                                                                                              font: GoogleFonts.openSans(
-                                                                                                fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
-                                                                                                fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                          0.0,
+                                                                                          8.0,
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                        ),
+                                                                                        child: Text(
+                                                                                          friendItem.username,
+                                                                                          style:
+                                                                                              MundayTheme.of(
+                                                                                                context,
+                                                                                              ).bodyMedium.override(
+                                                                                                font: GoogleFonts.openSans(
+                                                                                                  fontWeight: MundayTheme.of(
+                                                                                                    context,
+                                                                                                  ).bodyMedium.fontWeight,
+                                                                                                  fontStyle: MundayTheme.of(
+                                                                                                    context,
+                                                                                                  ).bodyMedium.fontStyle,
+                                                                                                ),
+                                                                                                fontSize: 12.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: MundayTheme.of(
+                                                                                                  context,
+                                                                                                ).bodyMedium.fontWeight,
+                                                                                                fontStyle: MundayTheme.of(
+                                                                                                  context,
+                                                                                                ).bodyMedium.fontStyle,
                                                                                               ),
-                                                                                              fontSize: 12.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: MundayTheme.of(context).bodyMedium.fontWeight,
-                                                                                              fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
-                                                                                            ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                                Align(
+                                                                                  alignment: const AlignmentDirectional(
+                                                                                    1.0,
+                                                                                    -1.0,
+                                                                                  ),
+                                                                                  child: Container(
+                                                                                    width: 18.0,
+                                                                                    height: 18.0,
+                                                                                    decoration: const BoxDecoration(
+                                                                                      color: Color(
+                                                                                        0xFF58BB2F,
+                                                                                      ),
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: const Align(
+                                                                                      alignment: AlignmentDirectional(
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                      ),
+                                                                                      child: Icon(
+                                                                                        Icons.check_rounded,
+                                                                                        color: Colors.white,
+                                                                                        size: 14.0,
                                                                                       ),
                                                                                     ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              Align(
-                                                                                alignment: const AlignmentDirectional(1.0, -1.0),
-                                                                                child: Container(
-                                                                                  width: 18.0,
-                                                                                  height: 18.0,
-                                                                                  decoration: const BoxDecoration(
-                                                                                    color: Color(0xFF58BB2F),
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: const Align(
-                                                                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                    child: Icon(
-                                                                                      Icons.check_rounded,
-                                                                                      color: Colors.white,
-                                                                                      size: 14.0,
-                                                                                    ),
                                                                                   ),
                                                                                 ),
-                                                                              ),
-                                                                            ],
+                                                                              ],
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      );
-                                                                    }),
+                                                                        );
+                                                                      },
+                                                                    ),
                                                                   );
                                                                 },
                                                               ),
@@ -3139,7 +3373,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      0.0, 1.0),
+                                                    0.0,
+                                                    1.0,
+                                                  ),
                                               child: Container(
                                                 decoration:
                                                     const BoxDecoration(),
@@ -3151,27 +3387,29 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       Container(
                                                         width: double.infinity,
                                                         height: double.infinity,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
+                                                        decoration: const BoxDecoration(
+                                                          gradient: LinearGradient(
                                                             colors: [
                                                               Colors
                                                                   .transparent,
-                                                              Color(0xEB000000)
+                                                              Color(0xEB000000),
                                                             ],
                                                             stops: [0.0, 1.0],
                                                             begin:
                                                                 AlignmentDirectional(
-                                                                    0.0, -1.0),
+                                                                  0.0,
+                                                                  -1.0,
+                                                                ),
                                                             end:
                                                                 AlignmentDirectional(
-                                                                    0, 1.0),
+                                                                  0,
+                                                                  1.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation2']!),
+                                                        animationsMap['containerOnPageLoadAnimation2']!,
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -3180,7 +3418,9 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      0.0, 1.0),
+                                                    0.0,
+                                                    1.0,
+                                                  ),
                                               child: Container(
                                                 decoration:
                                                     const BoxDecoration(),
@@ -3192,65 +3432,69 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                       Container(
                                                         width: double.infinity,
                                                         height: double.infinity,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
+                                                        decoration: const BoxDecoration(
+                                                          gradient: LinearGradient(
                                                             colors: [
                                                               Colors
                                                                   .transparent,
                                                               Color(0x9A000000),
-                                                              Colors.black
+                                                              Colors.black,
                                                             ],
                                                             stops: [
                                                               0.0,
                                                               0.5,
-                                                              1.0
+                                                              1.0,
                                                             ],
                                                             begin:
                                                                 AlignmentDirectional(
-                                                                    0.0, -1.0),
+                                                                  0.0,
+                                                                  -1.0,
+                                                                ),
                                                             end:
                                                                 AlignmentDirectional(
-                                                                    0, 1.0),
+                                                                  0,
+                                                                  1.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation3']!),
+                                                        animationsMap['containerOnPageLoadAnimation3']!,
+                                                      ),
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
-                                                                0.0, 1.0),
+                                                              0.0,
+                                                              1.0,
+                                                            ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  10.0,
-                                                                  10.0,
-                                                                  10.0,
-                                                                  30.0),
+                                                              const EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                10.0,
+                                                                10.0,
+                                                                30.0,
+                                                              ),
                                                           child: Container(
                                                             height: 65.0,
-                                                            decoration:
-                                                                BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                               boxShadow: const [
                                                                 BoxShadow(
                                                                   blurRadius:
                                                                       4.0,
                                                                   color: Color(
-                                                                      0x33000000),
+                                                                    0x33000000,
+                                                                  ),
                                                                   offset:
                                                                       Offset(
-                                                                    0.0,
-                                                                    2.0,
-                                                                  ),
-                                                                )
+                                                                        0.0,
+                                                                        2.0,
+                                                                      ),
+                                                                ),
                                                               ],
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          45.0),
+                                                                  BorderRadius.circular(
+                                                                    45.0,
+                                                                  ),
                                                             ),
                                                             child: Stack(
                                                               children: [
@@ -3263,14 +3507,14 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                           .center,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          3.0,
-                                                                          6.0,
-                                                                          3.0),
-                                                                      child:
-                                                                          InkWell(
+                                                                      padding:
+                                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            3.0,
+                                                                            6.0,
+                                                                            3.0,
+                                                                          ),
+                                                                      child: InkWell(
                                                                         splashColor:
                                                                             Colors.transparent,
                                                                         focusColor:
@@ -3279,37 +3523,38 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                             Colors.transparent,
                                                                         highlightColor:
                                                                             Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
+                                                                        onTap: () async {
                                                                           context
                                                                               .pop();
                                                                         },
-                                                                        child:
-                                                                            Container(
+                                                                        child: Container(
                                                                           width:
                                                                               65.0,
                                                                           height:
                                                                               65.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                const Color(0xFF121212),
+                                                                          decoration: BoxDecoration(
+                                                                            color: const Color(
+                                                                              0xFF121212,
+                                                                            ),
                                                                             shape:
                                                                                 BoxShape.circle,
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: const Color(0xFF343434),
+                                                                            border: Border.all(
+                                                                              color: const Color(
+                                                                                0xFF343434,
+                                                                              ),
                                                                               width: 2.0,
                                                                             ),
                                                                           ),
-                                                                          child:
-                                                                              Align(
-                                                                            alignment:
-                                                                                const AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                Icon(
+                                                                          child: Align(
+                                                                            alignment: const AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0,
+                                                                            ),
+                                                                            child: Icon(
                                                                               Icons.arrow_back_ios_outlined,
-                                                                              color: MundayTheme.of(context).primaryText,
+                                                                              color: MundayTheme.of(
+                                                                                context,
+                                                                              ).primaryText,
                                                                               size: 28.0,
                                                                             ),
                                                                           ),
@@ -3317,21 +3562,19 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                       ),
                                                                     ),
                                                                     Expanded(
-                                                                      child:
-                                                                          Align(
+                                                                      child: Align(
                                                                         alignment: const AlignmentDirectional(
+                                                                          0.0,
+                                                                          -1.0,
+                                                                        ),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
-                                                                            -1.0),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              2.0),
-                                                                          child:
-                                                                              InkWell(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            2.0,
+                                                                          ),
+                                                                          child: InkWell(
                                                                             splashColor:
                                                                                 Colors.transparent,
                                                                             focusColor:
@@ -3340,11 +3583,14 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                 Colors.transparent,
                                                                             highlightColor:
                                                                                 Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              final isLoggedIn = currentUser != null;
+                                                                            onTap: () async {
+                                                                              final isLoggedIn =
+                                                                                  currentUser !=
+                                                                                  null;
                                                                               if (!isLoggedIn) {
-                                                                                context.pushNamed(PhoneLoginPage.routeName);
+                                                                                context.pushNamed(
+                                                                                  PhoneLoginPage.routeName,
+                                                                                );
                                                                                 return;
                                                                               }
                                                                               context.pushNamed(
@@ -3373,35 +3619,52 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                 }.withoutNulls,
                                                                               );
                                                                             },
-                                                                            child:
-                                                                                Container(
-                                                                              width: MediaQuery.sizeOf(context).width * 1.0,
+                                                                            child: Container(
+                                                                              width:
+                                                                                  MediaQuery.sizeOf(
+                                                                                    context,
+                                                                                  ).width *
+                                                                                  1.0,
                                                                               height: double.infinity,
                                                                               decoration: BoxDecoration(
                                                                                 boxShadow: const [
                                                                                   BoxShadow(
                                                                                     blurRadius: 5.0,
-                                                                                    color: Color(0x99000000),
+                                                                                    color: Color(
+                                                                                      0x99000000,
+                                                                                    ),
                                                                                     offset: Offset(
                                                                                       2.0,
                                                                                       2.0,
                                                                                     ),
                                                                                     spreadRadius: 4.0,
-                                                                                  )
+                                                                                  ),
                                                                                 ],
                                                                                 gradient: const LinearGradient(
                                                                                   colors: [
-                                                                                    Color(0xFFFF0000),
-                                                                                    Color(0xFFC10000)
+                                                                                    Color(
+                                                                                      0xFFFF0000,
+                                                                                    ),
+                                                                                    Color(
+                                                                                      0xFFC10000,
+                                                                                    ),
                                                                                   ],
                                                                                   stops: [
                                                                                     0.0,
-                                                                                    1.0
+                                                                                    1.0,
                                                                                   ],
-                                                                                  begin: AlignmentDirectional(0.0, -1.0),
-                                                                                  end: AlignmentDirectional(0, 1.0),
+                                                                                  begin: AlignmentDirectional(
+                                                                                    0.0,
+                                                                                    -1.0,
+                                                                                  ),
+                                                                                  end: AlignmentDirectional(
+                                                                                    0,
+                                                                                    1.0,
+                                                                                  ),
                                                                                 ),
-                                                                                borderRadius: BorderRadius.circular(45.0),
+                                                                                borderRadius: BorderRadius.circular(
+                                                                                  45.0,
+                                                                                ),
                                                                               ),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
@@ -3415,9 +3678,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                                                         children: [
                                                                                           Align(
-                                                                                            alignment: const AlignmentDirectional(0.0, 0.0),
+                                                                                            alignment: const AlignmentDirectional(
+                                                                                              0.0,
+                                                                                              0.0,
+                                                                                            ),
                                                                                             child: Padding(
-                                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                                                                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                10.0,
+                                                                                                0.0,
+                                                                                              ),
                                                                                               child: Container(
                                                                                                 width: 35.0,
                                                                                                 height: 35.0,
@@ -3434,18 +3705,32 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                             ),
                                                                                           ),
                                                                                           Padding(
-                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                              0.0,
+                                                                                              0.0,
+                                                                                              10.0,
+                                                                                              0.0,
+                                                                                            ),
                                                                                             child: Text(
-                                                                                              AppLocalizations.of(context)!.k_f0jkfy7q,
-                                                                                              style: MundayTheme.of(context).bodyMedium.override(
+                                                                                              AppLocalizations.of(
+                                                                                                context,
+                                                                                              )!.k_f0jkfy7q,
+                                                                                              style:
+                                                                                                  MundayTheme.of(
+                                                                                                    context,
+                                                                                                  ).bodyMedium.override(
                                                                                                     font: GoogleFonts.openSans(
                                                                                                       fontWeight: FontWeight.w600,
-                                                                                                      fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                                      fontStyle: MundayTheme.of(
+                                                                                                        context,
+                                                                                                      ).bodyMedium.fontStyle,
                                                                                                     ),
                                                                                                     fontSize: 16.5,
                                                                                                     letterSpacing: 0.0,
                                                                                                     fontWeight: FontWeight.w600,
-                                                                                                    fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                                    fontStyle: MundayTheme.of(
+                                                                                                      context,
+                                                                                                    ).bodyMedium.fontStyle,
                                                                                                   ),
                                                                                             ),
                                                                                           ),
@@ -3463,18 +3748,17 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                     Align(
                                                                       alignment:
                                                                           const AlignmentDirectional(
-                                                                              1.0,
-                                                                              -2.2),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            6.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            3.0),
-                                                                        child:
-                                                                            InkWell(
+                                                                            1.0,
+                                                                            -2.2,
+                                                                          ),
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          6.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          3.0,
+                                                                        ),
+                                                                        child: InkWell(
                                                                           splashColor:
                                                                               Colors.transparent,
                                                                           focusColor:
@@ -3483,39 +3767,47 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                               Colors.transparent,
                                                                           highlightColor:
                                                                               Colors.transparent,
-                                                                          onTap:
-                                                                              () async {
+                                                                          onTap: () async {
                                                                             _model.ononvite =
                                                                                 true;
-                                                                            safeSetState(() {});
+                                                                            safeSetState(
+                                                                              () {},
+                                                                            );
                                                                           },
-                                                                          child:
-                                                                              Container(
+                                                                          child: Container(
                                                                             width:
                                                                                 65.0,
                                                                             height:
                                                                                 65.0,
-                                                                            decoration:
-                                                                                const BoxDecoration(
+                                                                            decoration: const BoxDecoration(
                                                                               boxShadow: [
                                                                                 BoxShadow(
                                                                                   blurRadius: 4.0,
-                                                                                  color: Color(0x33000000),
+                                                                                  color: Color(
+                                                                                    0x33000000,
+                                                                                  ),
                                                                                   offset: Offset(
                                                                                     0.0,
                                                                                     2.0,
                                                                                   ),
-                                                                                )
+                                                                                ),
                                                                               ],
                                                                               shape: BoxShape.circle,
                                                                             ),
-                                                                            child:
-                                                                                Stack(
+                                                                            child: Stack(
                                                                               children: [
                                                                                 Align(
-                                                                                  alignment: const AlignmentDirectional(0.0, -1.0),
+                                                                                  alignment: const AlignmentDirectional(
+                                                                                    0.0,
+                                                                                    -1.0,
+                                                                                  ),
                                                                                   child: Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                      0.0,
+                                                                                      5.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                    ),
                                                                                     child: Image.asset(
                                                                                       'assets/images/chat-bubble_(2).png',
                                                                                       width: 35.0,
@@ -3525,21 +3817,38 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                   ),
                                                                                 ),
                                                                                 Align(
-                                                                                  alignment: const AlignmentDirectional(0.0, 1.0),
+                                                                                  alignment: const AlignmentDirectional(
+                                                                                    0.0,
+                                                                                    1.0,
+                                                                                  ),
                                                                                   child: Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      0.0,
+                                                                                      4.0,
+                                                                                    ),
                                                                                     child: Text(
-                                                                                      AppLocalizations.of(context)!.k_l53tynrs,
-                                                                                      style: MundayTheme.of(context).bodyMedium.override(
+                                                                                      AppLocalizations.of(
+                                                                                        context,
+                                                                                      )!.k_l53tynrs,
+                                                                                      style:
+                                                                                          MundayTheme.of(
+                                                                                            context,
+                                                                                          ).bodyMedium.override(
                                                                                             font: GoogleFonts.openSans(
                                                                                               fontWeight: FontWeight.w500,
-                                                                                              fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                              fontStyle: MundayTheme.of(
+                                                                                                context,
+                                                                                              ).bodyMedium.fontStyle,
                                                                                             ),
                                                                                             color: Colors.white,
                                                                                             fontSize: 9.0,
                                                                                             letterSpacing: 0.5,
                                                                                             fontWeight: FontWeight.w500,
-                                                                                            fontStyle: MundayTheme.of(context).bodyMedium.fontStyle,
+                                                                                            fontStyle: MundayTheme.of(
+                                                                                              context,
+                                                                                            ).bodyMedium.fontStyle,
                                                                                           ),
                                                                                     ),
                                                                                   ),
@@ -3571,7 +3880,8 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                               ),
                             ],
                           ).animateOnPageLoad(
-                              animationsMap['columnOnPageLoadAnimation']!);
+                            animationsMap['columnOnPageLoadAnimation']!,
+                          );
                         },
                       ),
                     ),

@@ -55,8 +55,14 @@ dynamic deserializeStructParam<T>(
       return null;
     }
     return paramValues
-        .map<T>((e) => deserializeStructParam<T>(e, paramType, false,
-            structBuilder: structBuilder))
+        .map<T>(
+          (e) => deserializeStructParam<T>(
+            e,
+            paramType,
+            false,
+            structBuilder: structBuilder,
+          ),
+        )
         .toList();
   } else if (param is Map) {
     final dataMap = getDataMap(param);
@@ -74,17 +80,14 @@ dynamic deserializeStructParam<T>(
   }
 }
 
-List<T>? getStructList<T>(
-  dynamic value,
-  StructBuilder<T> structBuilder,
-) =>
+List<T>? getStructList<T>(dynamic value, StructBuilder<T> structBuilder) =>
     value is! List
-        ? null
-        : value
-            .map(getDataMap)
-            .whereType<Map<String, dynamic>>()
-            .map(structBuilder)
-            .toList();
+    ? null
+    : value
+          .map(getDataMap)
+          .whereType<Map<String, dynamic>>()
+          .map(structBuilder)
+          .toList();
 
 List<T>? getEnumList<T>(dynamic value) => value is! List
     ? null
@@ -93,8 +96,8 @@ List<T>? getEnumList<T>(dynamic value) => value is! List
 Color? getSchemaColor(dynamic value) => value is String
     ? fromCssColor(value)
     : value is Color
-        ? value
-        : null;
+    ? value
+    : null;
 
 List<Color>? getColorsList(dynamic value) =>
     value is! List ? null : value.map(getSchemaColor).withoutNulls;

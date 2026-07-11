@@ -49,7 +49,8 @@ class CropImageViewWidget extends ConsumerStatefulWidget {
   final Future<dynamic> Function() onCrop;
 
   @override
-  ConsumerState<CropImageViewWidget> createState() => _CropImageViewWidgetState();
+  ConsumerState<CropImageViewWidget> createState() =>
+      _CropImageViewWidgetState();
 }
 
 class _CropImageViewWidgetState extends ConsumerState<CropImageViewWidget> {
@@ -114,14 +115,18 @@ class _CropImageViewWidgetState extends ConsumerState<CropImageViewWidget> {
                     options: MundayButtonOptions(
                       height: 44,
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                        15,
+                        0,
+                        15,
+                        0,
+                      ),
                       color: Colors.transparent,
-                      textStyle:
-                          Theme.of(context).textTheme.titleSmall!.override(
-                                fontFamily: 'Inter',
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                              ),
+                      textStyle: Theme.of(context).textTheme.titleSmall!
+                          .override(
+                            fontFamily: 'Inter',
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                          ),
                       borderSide: const BorderSide(
                         color: Color.fromARGB(255, 32, 32, 32),
                         width: 2,
@@ -140,14 +145,18 @@ class _CropImageViewWidgetState extends ConsumerState<CropImageViewWidget> {
                     options: MundayButtonOptions(
                       height: 44,
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 5),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                        15,
+                        5,
+                        15,
+                        5,
+                      ),
                       color: const Color.fromARGB(255, 32, 32, 32),
-                      textStyle:
-                          Theme.of(context).textTheme.titleSmall!.override(
-                                fontFamily: 'Inter',
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                              ),
+                      textStyle: Theme.of(context).textTheme.titleSmall!
+                          .override(
+                            fontFamily: 'Inter',
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                          ),
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),

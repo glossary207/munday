@@ -72,26 +72,18 @@ class FullQrWidget extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               Text(
-                valueOrDefault<String>(
-                  currentUserDisplayName,
-                  'My Profile',
-                ),
+                valueOrDefault<String>(currentUserDisplayName, 'My Profile'),
                 style: Theme.of(context).textTheme.bodyMedium!.override(
-                      font: GoogleFonts.openSans(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      fontSize: 22.0,
-                      color: Colors.white,
-                    ),
+                  font: GoogleFonts.openSans(fontWeight: FontWeight.bold),
+                  fontSize: 22.0,
+                  color: Colors.white,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8.0),
               const Text(
                 'Scan QR to add me',
-                style: TextStyle(
-                  color: Colors.white54,
-                  fontSize: 14.0,
-                ),
+                style: TextStyle(color: Colors.white54, fontSize: 14.0),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32.0),

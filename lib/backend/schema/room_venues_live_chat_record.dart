@@ -53,8 +53,7 @@ class RoomVenuesLiveChatRecord extends SupabaseRecord {
   static RoomVenuesLiveChatRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      RoomVenuesLiveChatRecord._(reference, mapFromSupabase(data));
+  ) => RoomVenuesLiveChatRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -73,9 +72,7 @@ Map<String, dynamic> createRoomVenuesLiveChatRecordData({
   SupabaseDocRef? idVenue,
 }) {
   final supabaseData = mapToSupabase(
-    <String, dynamic>{
-      'id_venue': idVenue,
-    }.withoutNulls,
+    <String, dynamic>{'id_venue': idVenue}.withoutNulls,
   );
 
   return supabaseData;

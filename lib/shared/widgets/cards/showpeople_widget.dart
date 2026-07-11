@@ -74,7 +74,10 @@ class _ShowpeopleWidgetState extends ConsumerState<ShowpeopleWidget> {
           return Builder(
             builder: (context) {
               final datauser = gridViewUserInVenuesRecord.user
-                  .where((e) => functions.checkdate((e as dynamic)?.date, widget.date)!)
+                  .where(
+                    (e) =>
+                        functions.checkdate((e as dynamic)?.date, widget.date)!,
+                  )
                   .toList()
                   .map((e) => (e as dynamic)?.user)
                   .toList()
@@ -124,8 +127,13 @@ class _ShowpeopleWidgetState extends ConsumerState<ShowpeopleWidget> {
                                           )!,
                                         )
                                         .toList()
-                                        .map((e) => (e as dynamic)?.user?.userinstore)
-                                        .withoutNulls.toList().cast<SupabaseDocRef>(),
+                                        .map(
+                                          (e) =>
+                                              (e as dynamic)?.user?.userinstore,
+                                        )
+                                        .withoutNulls
+                                        .toList()
+                                        .cast<SupabaseDocRef>(),
                                     datauserItem.userinstore,
                                   )!,
                                 ),
@@ -165,8 +173,13 @@ class _ShowpeopleWidgetState extends ConsumerState<ShowpeopleWidget> {
                                           )!,
                                         )
                                         .toList()
-                                        .map((e) => (e as dynamic)?.user?.userinstore)
-                                        .withoutNulls.toList().cast<SupabaseDocRef>(),
+                                        .map(
+                                          (e) =>
+                                              (e as dynamic)?.user?.userinstore,
+                                        )
+                                        .withoutNulls
+                                        .toList()
+                                        .cast<SupabaseDocRef>(),
                                     datauserItem.userinstore,
                                   )!,
                                 ),

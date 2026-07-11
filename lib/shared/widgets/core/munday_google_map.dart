@@ -14,14 +14,7 @@ export 'dart:async' show Completer;
 export 'package:google_maps_flutter/google_maps_flutter.dart' hide LatLng;
 export 'package:munday/core/types/lat_lng.dart' show LatLng;
 
-enum GoogleMapStyle {
-  standard,
-  silver,
-  retro,
-  dark,
-  night,
-  aubergine,
-}
+enum GoogleMapStyle { standard, silver, retro, dark, night, aubergine }
 
 enum GoogleMarkerColor {
   red,
@@ -152,20 +145,26 @@ class _MundayGoogleMapState extends ConsumerState<MundayGoogleMap> {
           allowUpscaling: true,
         );
       }
-      final imageConfiguration =
-          createLocalImageConfiguration(context, size: markerImageSize);
+      final imageConfiguration = createLocalImageConfiguration(
+        context,
+        size: markerImageSize,
+      );
       imageProvider
           .resolve(imageConfiguration)
-          .addListener(ImageStreamListener((img, _) async {
-        final bytes = await img.image.toByteData(format: ImageByteFormat.png);
-        if (bytes != null && mounted) {
-          _markerDescriptor = BitmapDescriptor.fromBytes(
-            bytes.buffer.asUint8List(),
-            size: markerImageSize,
+          .addListener(
+            ImageStreamListener((img, _) async {
+              final bytes = await img.image.toByteData(
+                format: ImageByteFormat.png,
+              );
+              if (bytes != null && mounted) {
+                _markerDescriptor = BitmapDescriptor.fromBytes(
+                  bytes.buffer.asUint8List(),
+                  size: markerImageSize,
+                );
+                setState(() {});
+              }
+            }),
           );
-          setState(() {});
-        }
-      }));
     });
   }
 
@@ -191,7 +190,8 @@ class _MundayGoogleMapState extends ConsumerState<MundayGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    final mapHasGesturePreference = widget.mapTakesGesturePreference &&
+    final mapHasGesturePreference =
+        widget.mapTakesGesturePreference &&
         widget.allowInteraction &&
         widget.allowZoom;
 
@@ -241,8 +241,9 @@ class _MundayGoogleMapState extends ConsumerState<MundayGoogleMap> {
               EagerGestureRecognizer.new,
             ),
         },
-        webGestureHandling:
-            mapHasGesturePreference ? WebGestureHandling.cooperative : null,
+        webGestureHandling: mapHasGesturePreference
+            ? WebGestureHandling.cooperative
+            : null,
       ),
     );
 

@@ -23,12 +23,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'core/state/app_state.dart';
 import 'core/theme/app_theme.dart';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 late SharedPreferences sharedPrefs;
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   sharedPrefs = await SharedPreferences.getInstance();
   await SupabaseService().initialize();
   runApp(
@@ -53,9 +55,9 @@ class MyApp extends ConsumerStatefulWidget {
 class MyAppScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+  };
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
@@ -64,8 +66,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   ThemeMode _themeMode = AppTheme.themeMode;
 
   late AppStateNotifier _appStateNotifier;
-
-  
 
   late Stream<BaseAuthUser> userStream;
 
@@ -77,8 +77,9 @@ class _MyAppState extends ConsumerState<MyApp> {
     final configuration = appRouter.routerDelegate.currentConfiguration;
     if (configuration == null) return '';
     final RouteMatchBase lastMatch = routeMatch ?? configuration.last;
-    final RouteMatchList matchList =
-        lastMatch is ImperativeRouteMatch ? lastMatch.matches : configuration;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : configuration;
     return matchList.uri.toString();
   }
 
@@ -91,7 +92,9 @@ class _MyAppState extends ConsumerState<MyApp> {
   Future<void> _bootstrapPersistedSession(User? persistedUser) async {
     if (persistedUser != null) {
       try {
-        await maybeCreateUser(persistedUser).timeout(const Duration(seconds: 5));
+        await maybeCreateUser(
+          persistedUser,
+        ).timeout(const Duration(seconds: 5));
       } catch (_) {}
     }
     if (!mounted) {
@@ -106,8 +109,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     _appStateNotifier = AppStateNotifier.instance;
     final persistedUser = Supabase.instance.client.auth.currentUser;
     _appStateNotifier.update(MundaySupabaseUser(persistedUser));
-    
-    
+
     _bootstrapPersistedSession(persistedUser);
     userStream = mundaySupabaseUserStream()
       ..listen((user) {
@@ -151,7 +153,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       supportedLocales: const [Locale('en'), Locale('th')],
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: _themeMode,
+      themeMode: ThemeMode.dark,
       routerConfig: router,
     );
   }

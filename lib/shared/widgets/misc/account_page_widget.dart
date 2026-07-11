@@ -68,8 +68,12 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                   Align(
                     alignment: AlignmentDirectional(0.0, -1.0),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        8.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: Container(
                         width: 40.0,
                         height: 3.5,
@@ -86,9 +90,7 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
           ),
           Container(
             height: MediaQuery.sizeOf(context).height * 0.85,
-            decoration: BoxDecoration(
-              color: Color(0xFF111111),
-            ),
+            decoration: BoxDecoration(color: Color(0xFF111111)),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
               child: SingleChildScrollView(
@@ -97,50 +99,54 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        10.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)!.k_1tuf3zdu,
                         style: Theme.of(context).textTheme.bodyMedium!.override(
-                              font: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w500,
-                                fontStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontStyle,
-                              ),
-                              fontSize: 25.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w500,
+                            fontStyle: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.fontStyle,
+                          ),
+                          fontSize: 25.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium!.fontStyle,
+                        ),
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        5.0,
+                        0.0,
+                        5.0,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)!.k_thg66gfp,
                         style: Theme.of(context).textTheme.bodyMedium!.override(
-                              font: GoogleFonts.openSans(
-                                fontWeight: FontWeight.normal,
-                                fontStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontStyle,
-                              ),
-                              color: Color(0xFFB3B3B3),
-                              fontSize: 16.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.normal,
-                              fontStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.openSans(
+                            fontWeight: FontWeight.normal,
+                            fontStyle: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.fontStyle,
+                          ),
+                          color: Color(0xFFB3B3B3),
+                          fontSize: 16.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium!.fontStyle,
+                        ),
                       ),
                     ),
                     Divider(
@@ -149,40 +155,42 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                       color: Color(0xFF252525),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0.0,
+                        0.0,
+                        10.0,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 1.0),
+                              0.0,
+                              0.0,
+                              0.0,
+                              1.0,
+                            ),
                             child: Text(
                               AppLocalizations.of(context)!.k_d2x52u28,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
+                              style: Theme.of(context).textTheme.bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontStyle,
                                     ),
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontStyle,
                                   ),
                             ),
                           ),
@@ -191,34 +199,32 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 5.0, 0.0),
+                                  0.0,
+                                  0.0,
+                                  5.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   AppLocalizations.of(context)!.k_ky5kczto,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
+                                  style: Theme.of(context).textTheme.bodyLarge!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge!.fontStyle,
                                         ),
                                         color: Color(0xFF888888),
                                         fontSize: 14.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -235,7 +241,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -248,7 +258,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 12.0, 8.0),
+                                12.0,
+                                8.0,
+                                12.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -264,7 +278,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -273,8 +291,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_v0s1yakg,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_v0s1yakg,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge!
@@ -303,11 +322,17 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    4.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_plpi8ac3,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_plpi8ac3,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelSmall!
@@ -352,25 +377,21 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ],
@@ -380,7 +401,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -393,7 +418,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 12.0, 8.0),
+                                12.0,
+                                8.0,
+                                12.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -409,7 +438,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -418,8 +451,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_1taykv9o,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_1taykv9o,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge!
@@ -448,11 +482,17 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    4.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_61koln9m,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_61koln9m,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelSmall!
@@ -497,25 +537,21 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ],
@@ -525,7 +561,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -538,7 +578,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 12.0, 8.0),
+                                12.0,
+                                8.0,
+                                12.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -554,7 +598,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -563,8 +611,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_fopxh6ut,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_fopxh6ut,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge!
@@ -593,11 +642,17 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    4.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_o45tq0eo,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_o45tq0eo,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelSmall!
@@ -642,25 +697,21 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ],
@@ -670,7 +721,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -683,7 +738,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 12.0, 8.0),
+                                12.0,
+                                8.0,
+                                12.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -699,7 +758,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -708,8 +771,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_ktst41ad,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_ktst41ad,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge!
@@ -738,11 +802,17 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    4.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_jr24icaw,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_jr24icaw,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelSmall!
@@ -787,25 +857,21 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ],
@@ -815,7 +881,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            8.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -828,7 +898,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 12.0, 8.0),
+                                12.0,
+                                8.0,
+                                12.0,
+                                8.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -844,7 +918,11 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
+                                        12.0,
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -853,8 +931,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_6qsq9emi,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_6qsq9emi,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge!
@@ -883,11 +962,17 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    4.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .k_tte3l895,
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.k_tte3l895,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelSmall!
@@ -932,25 +1017,21 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                         .bodyMedium!
                                         .override(
                                           font: GoogleFonts.openSans(
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                           fontSize: 18.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium!.fontStyle,
                                         ),
                                   ),
                                 ],
@@ -966,40 +1047,42 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                       color: Color(0xFF252525),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0.0,
+                        0.0,
+                        10.0,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 1.0),
+                              0.0,
+                              0.0,
+                              0.0,
+                              1.0,
+                            ),
                             child: Text(
                               AppLocalizations.of(context)!.k_6ld7endt,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
+                              style: Theme.of(context).textTheme.bodyLarge!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontStyle,
                                     ),
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge!.fontStyle,
                                   ),
                             ),
                           ),
@@ -1008,34 +1091,32 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 5.0, 0.0),
+                                  0.0,
+                                  0.0,
+                                  5.0,
+                                  0.0,
+                                ),
                                 child: Text(
                                   AppLocalizations.of(context)!.k_uhdtdr8l,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
+                                  style: Theme.of(context).textTheme.bodyLarge!
                                       .override(
                                         font: GoogleFonts.openSans(
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .fontWeight,
-                                          fontStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .fontStyle,
+                                          fontWeight: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge!.fontWeight,
+                                          fontStyle: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge!.fontStyle,
                                         ),
                                         color: Color(0xFF888888),
                                         fontSize: 14.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .fontWeight,
-                                        fontStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .fontStyle,
+                                        fontWeight: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge!.fontWeight,
+                                        fontStyle: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge!.fontStyle,
                                       ),
                                 ),
                               ),
@@ -1052,28 +1133,41 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 1.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             decoration: BoxDecoration(),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 10.0),
+                                10.0,
+                                10.0,
+                                10.0,
+                                10.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 12.0, 0.0),
+                                        0.0,
+                                        0.0,
+                                        12.0,
+                                        0.0,
+                                      ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_y7p97833,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_y7p97833,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -1097,8 +1191,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_p4wxhn1k,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_p4wxhn1k,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall!
@@ -1129,8 +1224,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     data: ThemeData(
                                       checkboxTheme: CheckboxThemeData(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
+                                          borderRadius: BorderRadius.circular(
+                                            4.0,
+                                          ),
                                         ),
                                       ),
                                       unselectedWidgetColor: Color(0xFF6A6A6A),
@@ -1138,8 +1234,10 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     child: Checkbox(
                                       value: _model.checkboxValue1 ??= true,
                                       onChanged: (newValue) async {
-                                        safeSetState(() =>
-                                            _model.checkboxValue1 = newValue!);
+                                        safeSetState(
+                                          () =>
+                                              _model.checkboxValue1 = newValue!,
+                                        );
                                       },
                                       side: (Color(0xFF6A6A6A) != null)
                                           ? BorderSide(
@@ -1157,28 +1255,41 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 1.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             decoration: BoxDecoration(),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 10.0),
+                                10.0,
+                                10.0,
+                                10.0,
+                                10.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 12.0, 0.0),
+                                        0.0,
+                                        0.0,
+                                        12.0,
+                                        0.0,
+                                      ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_8jyip9q8,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_8jyip9q8,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -1202,8 +1313,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_m8saqwv0,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_m8saqwv0,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall!
@@ -1234,8 +1346,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     data: ThemeData(
                                       checkboxTheme: CheckboxThemeData(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
+                                          borderRadius: BorderRadius.circular(
+                                            4.0,
+                                          ),
                                         ),
                                       ),
                                       unselectedWidgetColor: Color(0xFF6A6A6A),
@@ -1243,8 +1356,10 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     child: Checkbox(
                                       value: _model.checkboxValue2 ??= true,
                                       onChanged: (newValue) async {
-                                        safeSetState(() =>
-                                            _model.checkboxValue2 = newValue!);
+                                        safeSetState(
+                                          () =>
+                                              _model.checkboxValue2 = newValue!,
+                                        );
                                       },
                                       side: (Color(0xFF6A6A6A) != null)
                                           ? BorderSide(
@@ -1262,28 +1377,41 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 1.0),
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                          ),
                           child: Container(
                             width: 100.0,
                             decoration: BoxDecoration(),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 10.0),
+                                10.0,
+                                10.0,
+                                10.0,
+                                10.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 12.0, 0.0),
+                                        0.0,
+                                        0.0,
+                                        12.0,
+                                        0.0,
+                                      ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_e74jcwol,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_e74jcwol,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -1307,8 +1435,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_h2eowim4,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_h2eowim4,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall!
@@ -1339,8 +1468,9 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     data: ThemeData(
                                       checkboxTheme: CheckboxThemeData(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
+                                          borderRadius: BorderRadius.circular(
+                                            4.0,
+                                          ),
                                         ),
                                       ),
                                       unselectedWidgetColor: Color(0xFF6A6A6A),
@@ -1348,8 +1478,10 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                                     child: Checkbox(
                                       value: _model.checkboxValue3 ??= false,
                                       onChanged: (newValue) async {
-                                        safeSetState(() =>
-                                            _model.checkboxValue3 = newValue!);
+                                        safeSetState(
+                                          () =>
+                                              _model.checkboxValue3 = newValue!,
+                                        );
                                       },
                                       side: (Color(0xFF6A6A6A) != null)
                                           ? BorderSide(
@@ -1381,53 +1513,45 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           isDense: true,
-                          labelStyle:
-                              Theme.of(context).textTheme.labelMedium!.override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFFB3B3B3),
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
-                                  ),
+                          labelStyle: Theme.of(context).textTheme.labelMedium!
+                              .override(
+                                font: GoogleFonts.roboto(
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontStyle,
+                                ),
+                                color: Color(0xFFB3B3B3),
+                                letterSpacing: 0.0,
+                                fontWeight: Theme.of(
+                                  context,
+                                ).textTheme.labelMedium!.fontWeight,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.labelMedium!.fontStyle,
+                              ),
                           hintText: AppLocalizations.of(context)!.k_2c0ttz1g,
-                          hintStyle:
-                              Theme.of(context).textTheme.labelMedium!.override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFFB3B3B3),
-                                    letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .fontStyle,
-                                  ),
+                          hintStyle: Theme.of(context).textTheme.labelMedium!
+                              .override(
+                                font: GoogleFonts.roboto(
+                                  fontWeight: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontWeight,
+                                  fontStyle: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium!.fontStyle,
+                                ),
+                                color: Color(0xFFB3B3B3),
+                                letterSpacing: 0.0,
+                                fontWeight: Theme.of(
+                                  context,
+                                ).textTheme.labelMedium!.fontWeight,
+                                fontStyle: Theme.of(
+                                  context,
+                                ).textTheme.labelMedium!.fontStyle,
+                              ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0xFF1C1C1C),
@@ -1460,32 +1584,29 @@ class _AccountPageWidgetState extends ConsumerState<AccountPageWidget> {
                           fillColor: Color(0xFF050505),
                         ),
                         style: Theme.of(context).textTheme.bodyMedium!.override(
-                              font: GoogleFonts.openSans(
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontWeight,
-                                fontStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontStyle,
-                              ),
-                              letterSpacing: 0.0,
-                              fontWeight: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .fontWeight,
-                              fontStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.openSans(
+                            fontWeight: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.fontWeight,
+                            fontStyle: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.fontStyle,
+                          ),
+                          letterSpacing: 0.0,
+                          fontWeight: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium!.fontWeight,
+                          fontStyle: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium!.fontStyle,
+                        ),
                         maxLines: 3,
-                        cursorColor: Theme.of(context)
-                            .extension<CustomColors>()!
-                            .primaryText,
-                        validator:
-                            _model.textControllerValidator.asValidator(context),
+                        cursorColor: Theme.of(
+                          context,
+                        ).extension<CustomColors>()!.primaryText,
+                        validator: _model.textControllerValidator.asValidator(
+                          context,
+                        ),
                       ),
                     ),
                   ].addToEnd(SizedBox(height: 250.0)),

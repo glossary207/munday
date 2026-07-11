@@ -32,18 +32,13 @@ double? posterscaleCopy(double? scalewile) {
   return scalewile != null ? (scalewile * 0.446 * 1.4141592) + 20 : null;
 }
 
-bool? showsearch(
-  String? textSearchFor,
-  String? textSearchIn,
-) {
+bool? showsearch(String? textSearchFor, String? textSearchIn) {
   if (textSearchFor == null || textSearchFor.trim().isEmpty) {
     return true;
   }
-  
+
   // Convert both search strings to lowercase before checking
-  return textSearchIn
-          ?.toLowerCase()
-          .contains(textSearchFor.toLowerCase()) ??
+  return textSearchIn?.toLowerCase().contains(textSearchFor.toLowerCase()) ??
       false;
 }
 
@@ -60,7 +55,8 @@ bool returnDistanceBetweenTwoPoints2(
 
   // ใช้สูตร Haversine เพื่อคำนวณระยะทางระหว่างสองพิกัด
   var p = 0.017453292519943295;
-  var a = 0.5 -
+  var a =
+      0.5 -
       math.cos((positionTwo.latitude - positionOne.latitude) * p) / 2 +
       math.cos(positionOne.latitude * p) *
           math.cos(positionTwo.latitude * p) *
@@ -93,21 +89,16 @@ double? screen(double? hig) {
   return hig == null ? null : hig - 180;
 }
 
-int? positionItemInSet(
-  List<String>? sett,
-  String? item,
-) {
+int? positionItemInSet(List<String>? sett, String? item) {
   if (sett == null || item == null) {
     return null; // Return null if the set or item is null
   }
-  return sett
-      .indexOf(item); // Find and return the position of the item in the set
+  return sett.indexOf(
+    item,
+  ); // Find and return the position of the item in the set
 }
 
-bool? checklist(
-  List<String>? listt,
-  String? variable,
-) {
+bool? checklist(List<String>? listt, String? variable) {
   if (listt == null || variable == null) {
     return null; // Return null if either the list or the variable is null
   }
@@ -150,11 +141,7 @@ List<SupabaseDocRef>? add2de1(
   return newList.isNotEmpty ? newList : null;
 }
 
-double? postershow(
-  double? screenx,
-  double? screeny,
-  double? screenxshow,
-) {
+double? postershow(double? screenx, double? screeny, double? screenxshow) {
   if (screenx != null && screeny != null && screenxshow != null) {
     return (((screenxshow - 20) * screeny) / screenx) + 40;
   }
@@ -216,10 +203,7 @@ int? add1(int? num) {
   return num + 1;
 }
 
-List<int>? add1onlistselect(
-  List<int>? list1,
-  int? order,
-) {
+List<int>? add1onlistselect(List<int>? list1, int? order) {
   // ตรวจสอบว่า list1 ไม่เป็น null และ order ไม่เป็น null และอยู่ในช่วงของ index ที่ถูกต้อง
   if (list1 != null && order != null && order >= 0 && order < list1.length) {
     list1[order] += 1; // เพิ่มค่าที่ตำแหน่ง order ใน list1 ด้วย 1
@@ -227,10 +211,7 @@ List<int>? add1onlistselect(
   return list1; // คืนค่า list ที่อัปเดตแล้ว
 }
 
-List<int>? addToSetInt(
-  List<int>? setdata,
-  int? value,
-) {
+List<int>? addToSetInt(List<int>? setdata, int? value) {
   // หาก setdata เป็น null, สร้าง list ใหม่
   setdata ??= [];
 
@@ -263,10 +244,7 @@ List<SupabaseDocRef>? userintersec(
   return resultSet.toList();
 }
 
-int? aminusB(
-  int? a,
-  int? b,
-) {
+int? aminusB(int? a, int? b) {
   if (a != null && b != null) {
     return a - b;
   } else {
@@ -274,10 +252,7 @@ int? aminusB(
   }
 }
 
-String? addsocial(
-  String? social,
-  String? id,
-) {
+String? addsocial(String? social, String? id) {
   return '$social$id';
 }
 
@@ -292,11 +267,7 @@ String getFileNameFromFirebaseStorageLink(String url) {
   }
 }
 
-List<String> replaceImage(
-  List<String> images,
-  String newImage,
-  int index,
-) {
+List<String> replaceImage(List<String> images, String newImage, int index) {
   List<String> newImages = List.from(images);
   newImages[index] = newImage;
   return newImages;
@@ -308,8 +279,9 @@ int? minus1(int? data) {
 
 List<String>? flipararyPhoto(List<String>? dataphoto) {
   if (dataphoto == null || dataphoto.isEmpty) return null;
-  List<String> nonEmptyList =
-      dataphoto.where((element) => element.isNotEmpty).toList();
+  List<String> nonEmptyList = dataphoto
+      .where((element) => element.isNotEmpty)
+      .toList();
   return nonEmptyList.reversed.toList();
 }
 
@@ -323,10 +295,7 @@ List<UsersRecord>? datasumuser(
       .toList();
 }
 
-List<String>? add6ListPhoto(
-  UserphotoshowStruct? listphoto,
-  String? photoshow,
-) {
+List<String>? add6ListPhoto(UserphotoshowStruct? listphoto, String? photoshow) {
   // 1. สร้างลิสต์ใหม่สำหรับเก็บผลลัพธ์
   final result = <String>[];
 
@@ -338,19 +307,20 @@ List<String>? add6ListPhoto(
   }
 
   // 3. ดึงค่าจากฟิลด์ photo1, photo2, photo3, photo4, photo5, photo6
-  final photoUrls = [
-    listphoto?.photo1,
-    listphoto?.photo2,
-    listphoto?.photo3,
-    listphoto?.photo4,
-    listphoto?.photo5, // แก้จาก photos เป็น photo5
-    listphoto?.photo6,
-  ]
-      .where((url) =>
-          url != null &&
-          url.isNotEmpty) // ตรวจสอบว่า url ไม่เป็น null และไม่ว่าง
-      .cast<String>() // แปลงเป็น List<String>
-      .toList();
+  final photoUrls =
+      [
+            listphoto?.photo1,
+            listphoto?.photo2,
+            listphoto?.photo3,
+            listphoto?.photo4,
+            listphoto?.photo5, // แก้จาก photos เป็น photo5
+            listphoto?.photo6,
+          ]
+          .where(
+            (url) => url != null && url.isNotEmpty,
+          ) // ตรวจสอบว่า url ไม่เป็น null และไม่ว่าง
+          .cast<String>() // แปลงเป็น List<String>
+          .toList();
 
   // 4. กรอง URL ที่ไม่ซ้ำกับ photoshow
   final filteredUrls = photoUrls.where((url) => url != photoshow).toList();
@@ -367,10 +337,7 @@ List<String>? add6ListPhoto(
   return result;
 }
 
-int? multiply(
-  int? a,
-  int? b,
-) {
+int? multiply(int? a, int? b) {
   return a! * b!;
 }
 
@@ -389,11 +356,7 @@ SupabaseDocRef? userChatRight(
   }
 }
 
-String? nameright(
-  String? name1,
-  String? name2,
-  String? namedelete,
-) {
+String? nameright(String? name1, String? name2, String? namedelete) {
   if (name1 != namedelete && name2 != namedelete) {
     // Both name1 and name2 do not match with namedelete
     return null; // or throw an exception, depending on your requirements
@@ -512,8 +475,8 @@ List<dynamic>? jsonDataRoomAndStore(
       'startchat': room.lastMessage.isNotEmpty,
       'LastpersonUpdate': room.lastMessageSenderId.isNotEmpty
           ? SupabaseFirestore.instance
-              .collection('users')
-              .doc(room.lastMessageSenderId)
+                .collection('users')
+                .doc(room.lastMessageSenderId)
           : null,
     };
   }).toList();
@@ -535,10 +498,7 @@ List<dynamic>? block(
   return result;
 }
 
-String? deleteroom(
-  String? collectionName,
-  String? documentId,
-) {
+String? deleteroom(String? collectionName, String? documentId) {
   final firestore = SupabaseFirestore.instance;
 
   // ลบเอกสารในคอลเล็กชัน
@@ -586,10 +546,7 @@ List<SupabaseDocRef>? onlinestatus(StoreRecord? store) {
   return onlineUsers;
 }
 
-dynamic returndatafromstore(
-  StoreRecord? storedata,
-  SupabaseDocRef? id,
-) {
+dynamic returndatafromstore(StoreRecord? storedata, SupabaseDocRef? id) {
   if (storedata != null && id != null) {
     for (dynamic user in storedata.user) {
       if (user.userinstore == id) {
@@ -607,10 +564,7 @@ dynamic returndatafromstore(
   return null;
 }
 
-double? axb(
-  double? a,
-  double? b,
-) {
+double? axb(double? a, double? b) {
   if (a == null || b == null) {
     return null;
   }
@@ -657,7 +611,7 @@ List<dynamic>? dataEvent(
     print("DEBUG dataEvent: Returning null because events is null");
     return null;
   }
-  
+
   // ใช้ค่า default ถ้าเป็น null
   final safeMaxDistance = maxDistance ?? 500.0;
   final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
@@ -672,7 +626,8 @@ List<dynamic>? dataEvent(
   double calculateDistance(LatLng start, LatLng end) {
     const double degreeToKm = 111.32; // 1 องศาละติจูด ~ 111.32 กม.
     final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon = (end.longitude - start.longitude) *
+    final dLon =
+        (end.longitude - start.longitude) *
         degreeToKm *
         math.cos(start.latitude * math.pi / 180);
     final distance = math.sqrt(dLat * dLat + dLon * dLon);
@@ -683,82 +638,106 @@ List<dynamic>? dataEvent(
 
   // ฟังก์ชันกรองอีเวนต์ตามเงื่อนไขที่ต้องการ
   List<Map<String, dynamic>> filterEvents(List<EventsRecord> sourceEvents) {
-    return sourceEvents.where((event) {
-      // ถ้า event ไม่มี location ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
-      final bool eventHasLocation = event.location != null;
+    return sourceEvents
+        .where((event) {
+          // ถ้า event ไม่มี location ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
+          final bool eventHasLocation = event.location != null;
 
-      // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
-      double distance = 0.0;
-      if (eventHasLocation && hasValidLocation) {
-        LatLng eventLocation =
-            LatLng(event.location!.latitude, event.location!.longitude);
-        distance = calculateDistance(safeUserLocation, eventLocation);
-      }
+          // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
+          double distance = 0.0;
+          if (eventHasLocation && hasValidLocation) {
+            LatLng eventLocation = LatLng(
+              event.location!.latitude,
+              event.location!.longitude,
+            );
+            distance = calculateDistance(safeUserLocation, eventLocation);
+          }
 
-      // ตรวจสอบ music style
-      final normalizedEventMusicStyle = normalizeTag(event.musicstyle);
-      final normalizedMusicFilters =
-          musicstyle?.map(normalizeTag).where((e) => e.isNotEmpty).toList() ??
+          // ตรวจสอบ music style
+          final normalizedEventMusicStyle = normalizeTag(event.musicstyle);
+          final normalizedMusicFilters =
+              musicstyle
+                  ?.map(normalizeTag)
+                  .where((e) => e.isNotEmpty)
+                  .toList() ??
               const <String>[];
-      final matchesMusicStyle = normalizedMusicFilters.isEmpty ||
-          normalizedEventMusicStyle.isEmpty ||
-          normalizedMusicFilters.contains(normalizedEventMusicStyle);
+          final matchesMusicStyle =
+              normalizedMusicFilters.isEmpty ||
+              normalizedEventMusicStyle.isEmpty ||
+              normalizedMusicFilters.contains(normalizedEventMusicStyle);
 
-      // ตรวจสอบ styleVenues
-      final normalizedEventVenueStyles = event.styleVenues
-          .map(normalizeTag)
-          .where((e) => e.isNotEmpty)
-          .toSet();
-      final normalizedVenueFilters =
-          styleVenues?.map(normalizeTag).where((e) => e.isNotEmpty).toList() ??
+          // ตรวจสอบ styleVenues
+          final normalizedEventVenueStyles = event.styleVenues
+              .map(normalizeTag)
+              .where((e) => e.isNotEmpty)
+              .toSet();
+          final normalizedVenueFilters =
+              styleVenues
+                  ?.map(normalizeTag)
+                  .where((e) => e.isNotEmpty)
+                  .toList() ??
               const <String>[];
-      final matchesStyleVenues = normalizedVenueFilters.isEmpty ||
-          normalizedEventVenueStyles.isEmpty ||
-          normalizedVenueFilters
-              .every((style) => normalizedEventVenueStyles.contains(style));
+          final matchesStyleVenues =
+              normalizedVenueFilters.isEmpty ||
+              normalizedEventVenueStyles.isEmpty ||
+              normalizedVenueFilters.every(
+                (style) => normalizedEventVenueStyles.contains(style),
+              );
 
-      // ตรวจสอบวันที่ หากมีการค้นหาตามวันที่
-      bool matchesDate = true;
-      if (searchDate == true && dateselect != null && event.date != null) {
-        DateTime eventDate =
-            DateTime(event.date!.year, event.date!.month, event.date!.day);
-        DateTime selectedDate =
-            DateTime(dateselect.year, dateselect.month, dateselect.day);
-        matchesDate = eventDate == selectedDate;
-      }
+          // ตรวจสอบวันที่ หากมีการค้นหาตามวันที่
+          bool matchesDate = true;
+          if (searchDate == true && dateselect != null && event.date != null) {
+            DateTime eventDate = DateTime(
+              event.date!.year,
+              event.date!.month,
+              event.date!.day,
+            );
+            DateTime selectedDate = DateTime(
+              dateselect.year,
+              dateselect.month,
+              dateselect.day,
+            );
+            matchesDate = eventDate == selectedDate;
+          }
 
-      // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ event) ข้าม distance filter
-      final bool withinDistance =
-          !hasValidLocation || !eventHasLocation || distance <= safeMaxDistance;
-      return withinDistance &&
-          matchesMusicStyle &&
-          matchesStyleVenues &&
-          matchesDate;
-    }).map((event) {
-      // สร้างข้อมูลอีเวนต์เป็น Map เพื่อนำไปใช้ง่าย ๆ
-      double distance = 0.0;
-      if (event.location != null && hasValidLocation) {
-        LatLng eventLocation =
-            LatLng(event.location!.latitude, event.location!.longitude);
-        distance = calculateDistance(safeUserLocation, eventLocation);
-      }
+          // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ event) ข้าม distance filter
+          final bool withinDistance =
+              !hasValidLocation ||
+              !eventHasLocation ||
+              distance <= safeMaxDistance;
+          return withinDistance &&
+              matchesMusicStyle &&
+              matchesStyleVenues &&
+              matchesDate;
+        })
+        .map((event) {
+          // สร้างข้อมูลอีเวนต์เป็น Map เพื่อนำไปใช้ง่าย ๆ
+          double distance = 0.0;
+          if (event.location != null && hasValidLocation) {
+            LatLng eventLocation = LatLng(
+              event.location!.latitude,
+              event.location!.longitude,
+            );
+            distance = calculateDistance(safeUserLocation, eventLocation);
+          }
 
-      return {
-        'Name_artise': event.nameArtise,
-        'Name_store': event.nameStore,
-        'Poster': event.poster,
-        'capacity': event.capacity,
-        'distance': distance,
-        'max_capacity': event.maxCapacity,
-        'musicstyle': event.musicstyle,
-        'Date': event.date,
-        'doc_ref': event.reference,
-        'position': event.location ?? const LatLng(0.0, 0.0),
-        'iDVenuse': event.iDVenues,
-        'FREE': event.free,
-        'PriceDetail': event.priceDetail,
-      };
-    }).toList();
+          return {
+            'Name_artise': event.nameArtise,
+            'Name_store': event.nameStore,
+            'Poster': event.poster,
+            'capacity': event.capacity,
+            'distance': distance,
+            'max_capacity': event.maxCapacity,
+            'musicstyle': event.musicstyle,
+            'Date': event.date,
+            'doc_ref': event.reference,
+            'position': event.location ?? const LatLng(0.0, 0.0),
+            'iDVenuse': event.iDVenues,
+            'FREE': event.free,
+            'PriceDetail': event.priceDetail,
+          };
+        })
+        .toList();
   }
 
   // เริ่มต้นด้วยการกรองอีเวนต์ตามเงื่อนไขทั่วไป
@@ -815,8 +794,10 @@ List<dynamic>? dataEvent(
   }
 
   // ดึงอีเวนต์ตามหน้าที่ต้องการ
-  List<Map<String, dynamic>> paginatedEvents =
-      filteredEvents.sublist(startIndex, endIndex);
+  List<Map<String, dynamic>> paginatedEvents = filteredEvents.sublist(
+    startIndex,
+    endIndex,
+  );
 
   // หากมีอีเวนต์ในหน้านี้เพียง 1 รายการ ให้เพิ่ม dummy event (Name_store = '007')
   if (paginatedEvents.length == 1) {
@@ -854,7 +835,7 @@ String? dateMonthTH(DateTime? time) {
     9: 'ก.ย.',
     10: 'ต.ค.',
     11: 'พ.ย.',
-    12: 'ธ.ค.'
+    12: 'ธ.ค.',
   };
 
   return thaiMonths[time.month];
@@ -875,9 +856,9 @@ List<dynamic>? dataVenuse(
     print("DEBUG dataVenuse: Returning null because data is null");
     return null;
   }
-  
+
   print("DEBUG dataVenuse: Received ${data.length} venues from Supabase");
-  
+
   final safeMaxDistance = maxDistance ?? 500.0;
   final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
 
@@ -893,7 +874,8 @@ List<dynamic>? dataVenuse(
     const double degreeToKm = 111.32; // 1 องศาของ latitude ~ 111.32 กม.
 
     final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon = (end.longitude - start.longitude) *
+    final dLon =
+        (end.longitude - start.longitude) *
         degreeToKm *
         math.cos(start.latitude * math.pi / 180);
 
@@ -902,80 +884,99 @@ List<dynamic>? dataVenuse(
   }
 
   // กรองและ Map venues ให้เป็นโครงสร้างข้อมูลที่เราต้องการ
-  List<Map<String, dynamic>> filteredVenues = data.where((venue) {
-    // ถ้า venue ไม่มี position ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
-    final bool venueHasLocation = venue.position != null;
+  List<Map<String, dynamic>> filteredVenues = data
+      .where((venue) {
+        // ถ้า venue ไม่มี position ให้ถือว่าข้าม distance filter (แสดงได้เสมอ)
+        final bool venueHasLocation = venue.position != null;
 
-    // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
-    double distance = 0.0;
-    if (venueHasLocation && hasValidLocation) {
-      final venueLocation =
-          LatLng(venue.position!.latitude, venue.position!.longitude);
-      distance = calculateDistance(safeUserLocation, venueLocation);
-    }
+        // คำนวณระยะทางเฉพาะเมื่อมี location ครบทั้งสองฝั่ง
+        double distance = 0.0;
+        if (venueHasLocation && hasValidLocation) {
+          final venueLocation = LatLng(
+            venue.position!.latitude,
+            venue.position!.longitude,
+          );
+          distance = calculateDistance(safeUserLocation, venueLocation);
+        }
 
-    // เช็คเงื่อนไข styleMusicfilter (ถ้าไม่มีการกรอง ก็ผ่าน)
-    final normalizedVenueMusicStyles =
-        venue.styleMusic.map(normalizeTag).where((e) => e.isNotEmpty).toSet();
-    final normalizedMusicFilters = styleMusicfilter
-            ?.map(normalizeTag)
+        // เช็คเงื่อนไข styleMusicfilter (ถ้าไม่มีการกรอง ก็ผ่าน)
+        final normalizedVenueMusicStyles = venue.styleMusic
+            .map(normalizeTag)
             .where((e) => e.isNotEmpty)
-            .toList() ??
-        const <String>[];
-    final matchesMusicStyle = normalizedMusicFilters.isEmpty ||
-        normalizedVenueMusicStyles.isEmpty ||
-        normalizedMusicFilters
-            .any((style) => normalizedVenueMusicStyles.contains(style));
+            .toSet();
+        final normalizedMusicFilters =
+            styleMusicfilter
+                ?.map(normalizeTag)
+                .where((e) => e.isNotEmpty)
+                .toList() ??
+            const <String>[];
+        final matchesMusicStyle =
+            normalizedMusicFilters.isEmpty ||
+            normalizedVenueMusicStyles.isEmpty ||
+            normalizedMusicFilters.any(
+              (style) => normalizedVenueMusicStyles.contains(style),
+            );
 
-    // เช็คเงื่อนไข styleVenusefilter (ถ้าไม่มีการกรอง ก็ผ่าน)
-    final normalizedVenueStyles =
-        venue.styleVenuse.map(normalizeTag).where((e) => e.isNotEmpty).toSet();
-    final normalizedVenueFilters = styleVenusefilter
-            ?.map(normalizeTag)
+        // เช็คเงื่อนไข styleVenusefilter (ถ้าไม่มีการกรอง ก็ผ่าน)
+        final normalizedVenueStyles = venue.styleVenuse
+            .map(normalizeTag)
             .where((e) => e.isNotEmpty)
-            .toList() ??
-        const <String>[];
-    final matchesVenueStyle = normalizedVenueFilters.isEmpty ||
-        normalizedVenueStyles.isEmpty ||
-        normalizedVenueFilters
-            .any((style) => normalizedVenueStyles.contains(style));
+            .toSet();
+        final normalizedVenueFilters =
+            styleVenusefilter
+                ?.map(normalizeTag)
+                .where((e) => e.isNotEmpty)
+                .toList() ??
+            const <String>[];
+        final matchesVenueStyle =
+            normalizedVenueFilters.isEmpty ||
+            normalizedVenueStyles.isEmpty ||
+            normalizedVenueFilters.any(
+              (style) => normalizedVenueStyles.contains(style),
+            );
 
-    // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ venue) ข้าม distance filter
-    final bool withinDistance =
-        !hasValidLocation || !venueHasLocation || distance <= safeMaxDistance;
+        // ถ้าไม่มี location ที่ถูกต้อง (ทั้ง user หรือ venue) ข้าม distance filter
+        final bool withinDistance =
+            !hasValidLocation ||
+            !venueHasLocation ||
+            distance <= safeMaxDistance;
 
-    // เงื่อนไขหลักคือ ระยะทางไม่เกิน maxDistance และต้องตรงกับ style ที่กำหนด (Music หรือ Venuse)
-    return withinDistance && (matchesMusicStyle || matchesVenueStyle);
-  }).map((venue) {
-    // แปลงเป็น Map เพื่อสะดวกในการส่งออก
-    double distance = 0.0;
-    final venuePosition = venue.position ?? const LatLng(0.0, 0.0);
-    if (venue.position != null && hasValidLocation) {
-      final venueLocation =
-          LatLng(venue.position!.latitude, venue.position!.longitude);
-      distance = calculateDistance(safeUserLocation, venueLocation);
-    }
+        // เงื่อนไขหลักคือ ระยะทางไม่เกิน maxDistance และต้องตรงกับ style ที่กำหนด (Music หรือ Venuse)
+        return withinDistance && (matchesMusicStyle || matchesVenueStyle);
+      })
+      .map((venue) {
+        // แปลงเป็น Map เพื่อสะดวกในการส่งออก
+        double distance = 0.0;
+        final venuePosition = venue.position ?? const LatLng(0.0, 0.0);
+        if (venue.position != null && hasValidLocation) {
+          final venueLocation = LatLng(
+            venue.position!.latitude,
+            venue.position!.longitude,
+          );
+          distance = calculateDistance(safeUserLocation, venueLocation);
+        }
 
-    return {
-      'Name_Venuse': venue.nameVenuse,
-      'BG': venue.bg,
-      'capacity': venue.capacity,
-      'max_capacity': venue.maxCapacity,
-      'Open_Close_time': venue.openCloseTime,
-      'styleVenuse': venue.styleVenuse,
-      'styleMusic': venue.styleMusic,
-      'Logo': venue.logo,
-      'Events': venue.events,
-      'distance': distance,
-      'doc_ref': venue.reference,
-      'Position': venuePosition,
-      'iDVenuse': venue.reference,
-      'EventID': venue.events,
-      'rating': venue.rating,
-      'promotion': venue.promotion,
-      'listpromotion': venue.listpromotion,
-    };
-  }).toList();
+        return {
+          'Name_Venuse': venue.nameVenuse,
+          'BG': venue.bg,
+          'capacity': venue.capacity,
+          'max_capacity': venue.maxCapacity,
+          'Open_Close_time': venue.openCloseTime,
+          'styleVenuse': venue.styleVenuse,
+          'styleMusic': venue.styleMusic,
+          'Logo': venue.logo,
+          'Events': venue.events,
+          'distance': distance,
+          'doc_ref': venue.reference,
+          'Position': venuePosition,
+          'iDVenuse': venue.reference,
+          'EventID': venue.events,
+          'rating': venue.rating,
+          'promotion': venue.promotion,
+          'listpromotion': venue.listpromotion,
+        };
+      })
+      .toList();
 
   if (loveVenuseOnly == true && loveVenuse != null) {
     filteredVenues = filteredVenues
@@ -986,7 +987,9 @@ List<dynamic>? dataVenuse(
   // เรียงตามระยะทางจากใกล้ไปไกล
   filteredVenues.sort((a, b) => a['distance'].compareTo(b['distance']));
 
-  print("DEBUG dataVenuse: Returning ${filteredVenues.length} venues to UI (searchMap=$searchMap, page=$page)");
+  print(
+    "DEBUG dataVenuse: Returning ${filteredVenues.length} venues to UI (searchMap=$searchMap, page=$page)",
+  );
 
   // หาก searchMap == true แสดงว่าต้องการค้นหาบนแผนที่ ไม่ต้องแบ่งหน้า
   if (searchMap == true) {
@@ -1041,10 +1044,7 @@ String? googlemapURL(LatLng? latlonPosition) {
   return googleMapUrl;
 }
 
-double? distanceLocation(
-  LatLng? locationA,
-  LatLng? locationB,
-) {
+double? distanceLocation(LatLng? locationA, LatLng? locationB) {
   if (locationA == null || locationB == null) {
     return null;
   }
@@ -1053,7 +1053,8 @@ double? distanceLocation(
 
   // Difference in degrees
   final dLat = (locationB.latitude - locationA.latitude) * degreeToKm;
-  final dLon = (locationB.longitude - locationA.longitude) *
+  final dLon =
+      (locationB.longitude - locationA.longitude) *
       degreeToKm *
       math.cos(locationA.latitude * math.pi / 180);
 
@@ -1063,10 +1064,7 @@ double? distanceLocation(
   return double.parse(distance.toStringAsFixed(2));
 }
 
-int? searchIndexEvent(
-  List<EventsRecord>? event,
-  SupabaseDocRef? dataselect,
-) {
+int? searchIndexEvent(List<EventsRecord>? event, SupabaseDocRef? dataselect) {
   // ตรวจสอบว่า dataEvent และ dataselect มีค่า null หรือไม่
   if (event == null || dataselect == null) {
     return null;
@@ -1115,10 +1113,10 @@ List<EventsRecord>? dataEventDocRef(
   if (events == null) {
     return null;
   }
-  
+
   final safeMaxDistance = maxDistance ?? 500.0;
   final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
-  
+
   final bool hasValidLocation =
       !(safeUserLocation.latitude == 0.0 && safeUserLocation.longitude == 0.0);
 
@@ -1128,7 +1126,8 @@ List<EventsRecord>? dataEventDocRef(
 
     // Difference in degrees
     final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon = (end.longitude - start.longitude) *
+    final dLon =
+        (end.longitude - start.longitude) *
         degreeToKm *
         math.cos(start.latitude * math.pi / 180);
 
@@ -1143,25 +1142,34 @@ List<EventsRecord>? dataEventDocRef(
   List<EventsRecord> filteredEvents = events.where((event) {
     final bool eventHasLocation = event.location != null;
     double distance = 0.0;
-    
+
     if (eventHasLocation && hasValidLocation) {
-      LatLng eventLocation =
-          LatLng(event.location!.latitude, event.location!.longitude);
+      LatLng eventLocation = LatLng(
+        event.location!.latitude,
+        event.location!.longitude,
+      );
       distance = calculateDistance(safeUserLocation, eventLocation);
     }
 
     // Check distance and musicstyle
-    bool matchesMusicStyle = musicstyle == null ||
+    bool matchesMusicStyle =
+        musicstyle == null ||
         musicstyle.isEmpty ||
         musicstyle.contains(event.musicstyle);
 
     // Date filtering
     bool matchesDate = true;
     if (searchDate == true && dateselect != null && event.date != null) {
-      DateTime eventDate =
-          DateTime(event.date!.year, event.date!.month, event.date!.day);
-      DateTime selectedDate =
-          DateTime(dateselect.year, dateselect.month, dateselect.day);
+      DateTime eventDate = DateTime(
+        event.date!.year,
+        event.date!.month,
+        event.date!.day,
+      );
+      DateTime selectedDate = DateTime(
+        dateselect.year,
+        dateselect.month,
+        dateselect.day,
+      );
       matchesDate = eventDate == selectedDate;
     }
 
@@ -1188,15 +1196,19 @@ List<EventsRecord>? dataEventDocRef(
   loveEventsList.sort((a, b) {
     LatLng aLocation = LatLng(a.location!.latitude, a.location!.longitude);
     LatLng bLocation = LatLng(b.location!.latitude, b.location!.longitude);
-    return calculateDistance(safeUserLocation, aLocation)
-        .compareTo(calculateDistance(safeUserLocation, bLocation));
+    return calculateDistance(
+      safeUserLocation,
+      aLocation,
+    ).compareTo(calculateDistance(safeUserLocation, bLocation));
   });
 
   nonLoveEventsList.sort((a, b) {
     LatLng aLocation = LatLng(a.location!.latitude, a.location!.longitude);
     LatLng bLocation = LatLng(b.location!.latitude, b.location!.longitude);
-    return calculateDistance(safeUserLocation, aLocation)
-        .compareTo(calculateDistance(safeUserLocation, bLocation));
+    return calculateDistance(
+      safeUserLocation,
+      aLocation,
+    ).compareTo(calculateDistance(safeUserLocation, bLocation));
   });
 
   // Combine the lists with loveEvents first
@@ -1222,10 +1234,7 @@ String? linkLine(String? iDline) {
   return baseUrl + iDline; // ต่อ URL กับ parameter ID
 }
 
-List<String>? selectpicture(
-  int? numselect,
-  List<String>? data,
-) {
+List<String>? selectpicture(int? numselect, List<String>? data) {
   /// ตรวจสอบว่า data และ numselect ไม่เป็น null และ numselect อยู่ในขอบเขตของลิสต์หรือไม่
   if (data == null ||
       numselect == null ||
@@ -1291,10 +1300,10 @@ List<VenuesRecord>? dataVenuseDocref(
   if (venues == null) {
     return null;
   }
-  
+
   final safeMaxDistance = maxDistance ?? 500.0;
   final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
-  
+
   final bool hasValidLocation =
       !(safeUserLocation.latitude == 0.0 && safeUserLocation.longitude == 0.0);
 
@@ -1304,7 +1313,8 @@ List<VenuesRecord>? dataVenuseDocref(
 
     // ความแตกต่างขององศา
     final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon = (end.longitude - start.longitude) *
+    final dLon =
+        (end.longitude - start.longitude) *
         degreeToKm *
         math.cos(start.latitude * math.pi / 180);
 
@@ -1319,24 +1329,30 @@ List<VenuesRecord>? dataVenuseDocref(
   List<VenuesRecord> filteredVenues = venues.where((venue) {
     final bool venueHasLocation = venue.position != null;
     double distance = 0.0;
-    
+
     if (venueHasLocation && hasValidLocation) {
-      LatLng venueLocation =
-          LatLng(venue.position!.latitude, venue.position!.longitude);
+      LatLng venueLocation = LatLng(
+        venue.position!.latitude,
+        venue.position!.longitude,
+      );
       distance = calculateDistance(safeUserLocation, venueLocation);
     }
 
     // ตรวจสอบว่าเวนิวส์ตรงกับสไตล์เพลงที่เลือก
-    bool matchesMusicStyle = styleMusicfilter == null ||
+    bool matchesMusicStyle =
+        styleMusicfilter == null ||
         styleMusicfilter.isEmpty ||
-        styleMusicfilter
-            .any((style) => venue.styleMusic?.contains(style) ?? false);
+        styleMusicfilter.any(
+          (style) => venue.styleMusic?.contains(style) ?? false,
+        );
 
     // ตรวจสอบว่าเวนิวส์ตรงกับสไตล์เวนิวส์ที่เลือก
-    bool matchesVenueStyle = styleVenusefilter == null ||
+    bool matchesVenueStyle =
+        styleVenusefilter == null ||
         styleVenusefilter.isEmpty ||
-        styleVenusefilter
-            .any((style) => venue.styleVenuse?.contains(style) ?? false);
+        styleVenusefilter.any(
+          (style) => venue.styleVenuse?.contains(style) ?? false,
+        );
 
     final bool withinDistance =
         !hasValidLocation || !venueHasLocation || distance <= safeMaxDistance;
@@ -1361,15 +1377,19 @@ List<VenuesRecord>? dataVenuseDocref(
   loveVenuesList.sort((a, b) {
     LatLng aLocation = LatLng(a.position!.latitude, a.position!.longitude);
     LatLng bLocation = LatLng(b.position!.latitude, b.position!.longitude);
-    return calculateDistance(safeUserLocation, aLocation)
-        .compareTo(calculateDistance(safeUserLocation, bLocation));
+    return calculateDistance(
+      safeUserLocation,
+      aLocation,
+    ).compareTo(calculateDistance(safeUserLocation, bLocation));
   });
 
   nonLoveVenuesList.sort((a, b) {
     LatLng aLocation = LatLng(a.position!.latitude, a.position!.longitude);
     LatLng bLocation = LatLng(b.position!.latitude, b.position!.longitude);
-    return calculateDistance(safeUserLocation, aLocation)
-        .compareTo(calculateDistance(safeUserLocation, bLocation));
+    return calculateDistance(
+      safeUserLocation,
+      aLocation,
+    ).compareTo(calculateDistance(safeUserLocation, bLocation));
   });
 
   // รวมรายการโดยมีเวนิวส์ที่ชอบอยู่ก่อน
@@ -1378,10 +1398,7 @@ List<VenuesRecord>? dataVenuseDocref(
   return sortedVenues;
 }
 
-bool? checkdate(
-  DateTime? date1,
-  DateTime? date2,
-) {
+bool? checkdate(DateTime? date1, DateTime? date2) {
   if (date1 == null || date2 == null) {
     return null; // คืนค่า null ถ้าข้อมูลใดๆ เป็น null
   }
@@ -1398,8 +1415,11 @@ bool? checkdate(
   //    ถ้าไม่ตรงกัน คืน false
 
   DateTime blockStart(DateTime dt) {
-    final dayStart =
-        DateTime(dt.year, dt.month, dt.day); // ช่วง 00:00 ของวันนั้น
+    final dayStart = DateTime(
+      dt.year,
+      dt.month,
+      dt.day,
+    ); // ช่วง 00:00 ของวันนั้น
     if (dt.hour < 7) {
       // ยังไม่ถึง 7 โมง แสดงว่าอยู่ในช่วงวันก่อนหน้า
       final previousDay = dayStart.subtract(const Duration(days: 1));
@@ -1416,10 +1436,7 @@ bool? checkdate(
   return blockStart1 == blockStart2;
 }
 
-double? scaleshowuser(
-  double? screenwide,
-  double? num,
-) {
+double? scaleshowuser(double? screenwide, double? num) {
   if (screenwide == null || num == null) {
     return null; // กรณีค่าที่ส่งมาเป็น null
   }
@@ -1437,10 +1454,7 @@ double? scaleshowuser(
   return (computedValue * roundedNum) + 100;
 }
 
-double? addpending(
-  double? a,
-  double? b,
-) {
+double? addpending(double? a, double? b) {
   // data A + data B
   if (a == null || b == null) {
     return null;
@@ -1449,10 +1463,7 @@ double? addpending(
   return a + b;
 }
 
-double? posterscale(
-  double? scalewile,
-  bool? showall,
-) {
+double? posterscale(double? scalewile, bool? showall) {
   if (scalewile != null) {
     double baseScale = scalewile * 0.446 * 1.4141592;
     if (showall == true) {
@@ -1489,7 +1500,8 @@ List<VenuesRecord>? connectVenuse(
   double calculateDistance(LatLng start, LatLng end) {
     const double degreeToM = 111320.0; // 1 degree of latitude ~ 111,320 m
     final dLat = (end.latitude - start.latitude) * degreeToM;
-    final dLon = (end.longitude - start.longitude) *
+    final dLon =
+        (end.longitude - start.longitude) *
         degreeToM *
         math.cos(start.latitude * math.pi / 180);
 
@@ -1499,8 +1511,10 @@ List<VenuesRecord>? connectVenuse(
   // คัดกรองร้านค้าที่อยู่ภายในระยะที่กำหนด (เมตร)
   final filteredVenues = dataVenuse.where((venue) {
     if (venue.position == null) return false;
-    final venueLocation =
-        LatLng(venue.position!.latitude, venue.position!.longitude);
+    final venueLocation = LatLng(
+      venue.position!.latitude,
+      venue.position!.longitude,
+    );
     final dist = calculateDistance(location, venueLocation);
     return dist <= maxDistance;
   }).toList();
@@ -1508,11 +1522,7 @@ List<VenuesRecord>? connectVenuse(
   return filteredVenues;
 }
 
-bool? check2position(
-  LatLng? lo1,
-  LatLng? lo2,
-  double? distance,
-) {
+bool? check2position(LatLng? lo1, LatLng? lo2, double? distance) {
   print(lo1);
   print(lo2);
   print(distance);
@@ -1530,7 +1540,8 @@ bool? check2position(
   double dLng = toRadians(lo2.longitude - lo1.longitude);
 
   // ใช้สูตร Haversine ในการคำนวณระยะทางระหว่างสองจุด
-  double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+  double a =
+      math.sin(dLat / 2) * math.sin(dLat / 2) +
       math.cos(toRadians(lo1.latitude)) *
           math.cos(toRadians(lo2.latitude)) *
           math.sin(dLng / 2) *
@@ -1551,10 +1562,7 @@ double? positionprice(double? wlid) {
   return wlid * 0.028; // คำนวณ 2.8% ของ wlid
 }
 
-String? newCustomFunction(
-  String? name,
-  int? num,
-) {
+String? newCustomFunction(String? name, int? num) {
   if (name == null || num == null || num <= 0) {
     return name;
   }
@@ -1617,8 +1625,9 @@ List<PromotionDataSubStruct>? sourcedatadatepromotion(
   //    - ถ้า todaycheck == true => ใช้ DateTime.now() (current time)
   //    - ถ้าไม่ใช่ => ใช้ dateclick ถ้า dateclick != null,
   //      แต่ถ้า dateclick เป็น null ก็ fallback เป็น now() ไปเลย
-  final DateTime dayToUse =
-      (todaycheck == true) ? DateTime.now() : (dateclick ?? DateTime.now());
+  final DateTime dayToUse = (todaycheck == true)
+      ? DateTime.now()
+      : (dateclick ?? DateTime.now());
 
   // 3) แปลง dayToUse เป็นตัวย่อวัน (Mon, Tue, Wed, Thu, Fri, Sat, Sun)
   final List<String> abbreviations = [
@@ -1628,7 +1637,7 @@ List<PromotionDataSubStruct>? sourcedatadatepromotion(
     "Thu",
     "Fri",
     "Sat",
-    "Sun"
+    "Sun",
   ];
   // weekday: Monday=1, Tuesday=2, ..., Sunday=7
   final String clickedDayAbbrev = abbreviations[dayToUse.weekday - 1];
@@ -1693,10 +1702,7 @@ List<PromotionDataSubStruct>? sourcedatadatepromotion(
   return sortedList;
 }
 
-bool? checkday(
-  List<PromotionDataSubStruct>? data,
-  DateTime? date,
-) {
+bool? checkday(List<PromotionDataSubStruct>? data, DateTime? date) {
   // หากไม่มีข้อมูลโปรโมชั่นหรือไม่มีวันที่ให้ตรวจสอบ ก็ให้ return false ทันที
   if (data == null || date == null) {
     print("DEBUG checkday: Returning false because data or date is null");
@@ -1726,17 +1732,18 @@ bool? checkday(
   }
 
   // ใช้ฟังก์ชัน any เพื่อตรวจสอบว่าโปรโมชั่นใด ๆ ในรายการใช้งานได้ในวันนั้นหรือไม่
-  final bool hasActive = data.any((promotion) => isPromotionActive(promotion, date.weekday));
+  final bool hasActive = data.any(
+    (promotion) => isPromotionActive(promotion, date.weekday),
+  );
   if (!hasActive) {
-    print("DEBUG checkday: Returning false. No active promotion on weekday ${date.weekday} for data length ${data.length}");
+    print(
+      "DEBUG checkday: Returning false. No active promotion on weekday ${date.weekday} for data length ${data.length}",
+    );
   }
   return hasActive;
 }
 
-double? scaleshowphoto(
-  double? wild,
-  double? border,
-) {
+double? scaleshowphoto(double? wild, double? border) {
   // ตรวจสอบค่า null ของพารามิเตอร์
   if (wild == null || border == null) {
     return null;
@@ -1784,20 +1791,14 @@ int? int5(int? numdata) {
   return (numdata - 5) % 5;
 }
 
-double? addtapsilverscale(
-  double? width,
-  double? add,
-) {
+double? addtapsilverscale(double? width, double? add) {
   if (width == null || add == null) {
     return null;
   }
   return (width - add);
 }
 
-String? linkgrab(
-  String? storeName,
-  LatLng? location,
-) {
+String? linkgrab(String? storeName, LatLng? location) {
   if (storeName == null || storeName.trim().isEmpty || location == null) {
     return null;
   }

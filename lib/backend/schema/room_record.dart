@@ -10,10 +10,8 @@ import '/backend/schema/util/supabase_util.dart';
 import '/core/utils/app_util.dart';
 
 class RoomRecord extends SupabaseRecord {
-  RoomRecord._(
-    SupabaseDocRef reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+  RoomRecord._(SupabaseDocRef reference, Map<String, dynamic> data)
+    : super(reference, data) {
     _initializeFields();
   }
 
@@ -89,8 +87,10 @@ class RoomRecord extends SupabaseRecord {
     _timeupdate = snapshotData['timeupdate'] as DateTime?;
     _namesend = snapshotData['namesend'] as String?;
     _namerecive = snapshotData['namerecive'] as String?;
-    _lastpersonUpdate =
-        getSupabaseDocRef(snapshotData['LastpersonUpdate'], 'users');
+    _lastpersonUpdate = getSupabaseDocRef(
+      snapshotData['LastpersonUpdate'],
+      'users',
+    );
     _startchat = snapshotData['startchat'] as bool?;
     _photosend = snapshotData['photosend'] as String?;
     _photorecive = snapshotData['photorecive'] as String?;
@@ -112,15 +112,14 @@ class RoomRecord extends SupabaseRecord {
       ref.get().then((s) => RoomRecord.fromSnapshot(s));
 
   static RoomRecord fromSnapshot(SupabaseDocSnapshot snapshot) => RoomRecord._(
-        snapshot.reference,
-        mapFromSupabase(snapshot.data() as Map<String, dynamic>),
-      );
+    snapshot.reference,
+    mapFromSupabase(snapshot.data() as Map<String, dynamic>),
+  );
 
   static RoomRecord getDocumentFromData(
     Map<String, dynamic> data,
     SupabaseDocRef reference,
-  ) =>
-      RoomRecord._(reference, mapFromSupabase(data));
+  ) => RoomRecord._(reference, mapFromSupabase(data));
 
   @override
   String toString() =>
@@ -192,20 +191,20 @@ class RoomRecordDocumentEquality implements Equality<RoomRecord> {
 
   @override
   int hash(RoomRecord? e) => const ListEquality().hash([
-        e?.lastmassage,
-        e?.usersend,
-        e?.userrecive,
-        e?.timeupdate,
-        e?.namesend,
-        e?.namerecive,
-        e?.lastpersonUpdate,
-        e?.startchat,
-        e?.photosend,
-        e?.photorecive,
-        e?.message,
-        e?.onlinesend,
-        e?.onlinerecive
-      ]);
+    e?.lastmassage,
+    e?.usersend,
+    e?.userrecive,
+    e?.timeupdate,
+    e?.namesend,
+    e?.namerecive,
+    e?.lastpersonUpdate,
+    e?.startchat,
+    e?.photosend,
+    e?.photorecive,
+    e?.message,
+    e?.onlinesend,
+    e?.onlinerecive,
+  ]);
 
   @override
   bool isValidKey(Object? o) => o is RoomRecord;

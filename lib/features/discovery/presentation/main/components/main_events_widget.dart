@@ -25,22 +25,18 @@ class MainEventsWidget extends StatelessWidget {
             child: Text(
               'Events สำหรับคุณ',
               style: Theme.of(context).textTheme.bodyMedium!.override(
-                    font: GoogleFonts.openSans(
-                      fontWeight:
-                          Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                      fontStyle:
-                          Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                    ),
-                    color: Theme.of(context)
-                        .extension<CustomColors>()!
-                        .primaryText,
-                    fontSize: 18.0,
-                    letterSpacing: 0.4,
-                    fontWeight:
-                        Theme.of(context).textTheme.bodyMedium!.fontWeight,
-                    fontStyle:
-                        Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                  ),
+                font: GoogleFonts.openSans(
+                  fontWeight: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium!.fontWeight,
+                  fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+                ),
+                color: Theme.of(context).extension<CustomColors>()!.primaryText,
+                fontSize: 18.0,
+                letterSpacing: 0.4,
+                fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
+                fontStyle: Theme.of(context).textTheme.bodyMedium!.fontStyle,
+              ),
             ),
           ),
         ),
@@ -69,21 +65,23 @@ class MainEventsWidget extends StatelessWidget {
               child: AuthUserStreamWidget(
                 builder: (context) => Builder(
                   builder: (context) {
-                    final dataeventmainhome = functions
+                    final dataeventmainhome =
+                        functions
                             .dataEvent(
-                                context.appState.Filterdistance,
-                                containerEventsRecordList.toList(),
-                                currentUserLocationValue,
-                                context.appState.StyleMusic.toList(),
-                                (currentUserDocument?.loveEvent.toList() ?? [])
-                                    .toList(),
-                                context.appState.StyleVenuse.toList(),
-                                1,
-                                false,
-                                false,
-                                getCurrentTimestamp,
-                                false,
-                                false)
+                              context.appState.Filterdistance,
+                              containerEventsRecordList.toList(),
+                              currentUserLocationValue,
+                              context.appState.StyleMusic.toList(),
+                              (currentUserDocument?.loveEvent.toList() ?? [])
+                                  .toList(),
+                              context.appState.StyleVenuse.toList(),
+                              1,
+                              false,
+                              false,
+                              getCurrentTimestamp,
+                              false,
+                              false,
+                            )
                             ?.toList() ??
                         [];
 
@@ -91,8 +89,9 @@ class MainEventsWidget extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        children: List.generate(dataeventmainhome.length,
-                                (dataeventmainhomeIndex) {
+                        children: List.generate(dataeventmainhome.length, (
+                          dataeventmainhomeIndex,
+                        ) {
                           final dataeventmainhomeItem =
                               dataeventmainhome[dataeventmainhomeIndex];
                           return Padding(
@@ -108,27 +107,23 @@ class MainEventsWidget extends StatelessWidget {
                                   queryParameters: {
                                     'idVenues': serializeParam(
                                       DataEventsStruct.maybeFromMap(
-                                              dataeventmainhomeItem)
-                                          ?.iDVenuse,
+                                        dataeventmainhomeItem,
+                                      )?.iDVenuse,
                                       ParamType.SupabaseDocRef,
                                     ),
                                     'distance': serializeParam(
                                       DataEventsStruct.maybeFromMap(
-                                              dataeventmainhomeItem)
-                                          ?.distance
-                                          .toString(),
+                                        dataeventmainhomeItem,
+                                      )?.distance.toString(),
                                       ParamType.String,
                                     ),
                                     'dateclick': serializeParam(
                                       DataEventsStruct.maybeFromMap(
-                                              dataeventmainhomeItem)
-                                          ?.date,
+                                        dataeventmainhomeItem,
+                                      )?.date,
                                       ParamType.DateTime,
                                     ),
-                                    'index': serializeParam(
-                                      0,
-                                      ParamType.int,
-                                    ),
+                                    'index': serializeParam(0, ParamType.int),
                                   }.withoutNulls,
                                 );
                               },
@@ -145,8 +140,8 @@ class MainEventsWidget extends StatelessWidget {
                                     image: Image.network(
                                       _safeMainImageUrl(
                                         DataEventsStruct.maybeFromMap(
-                                                dataeventmainhomeItem)
-                                            ?.poster,
+                                          dataeventmainhomeItem,
+                                        )?.poster,
                                         fallback: _kMainFallbackPosterUrl,
                                       ),
                                     ).image,
@@ -163,10 +158,17 @@ class MainEventsWidget extends StatelessWidget {
                                       children: [
                                         Align(
                                           alignment: const AlignmentDirectional(
-                                              0.0, 0.0),
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10.0, 10.0, 0.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0,
+                                                  10.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: Container(
                                               width: 42.0,
                                               height: 42.0,
@@ -182,98 +184,120 @@ class MainEventsWidget extends StatelessWidget {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0.0, 3.0, 0.0, 0.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          3.0,
+                                                          0.0,
+                                                          0.0,
+                                                        ),
                                                     child: Text(
                                                       functions
-                                                          .dateEventday(DataEventsStruct
-                                                                  .maybeFromMap(
-                                                                      dataeventmainhomeItem)
-                                                              ?.date)
+                                                          .dateEventday(
+                                                            DataEventsStruct.maybeFromMap(
+                                                              dataeventmainhomeItem,
+                                                            )?.date,
+                                                          )
                                                           .toString(),
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodyMedium!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
+                                                            font: GoogleFonts.openSans(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .extension<
-                                                                    CustomColors>()!
-                                                                .primaryText,
+                                                            color:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .extension<
+                                                                      CustomColors
+                                                                    >()!
+                                                                    .primaryText,
                                                             fontSize: 17.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                             lineHeight: 1.0,
                                                           ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0.0, 2.0, 0.0, 2.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          2.0,
+                                                          0.0,
+                                                          2.0,
+                                                        ),
                                                     child: Text(
                                                       valueOrDefault<String>(
                                                         functions.dateMonthTH(
-                                                            DataEventsStruct
-                                                                    .maybeFromMap(
-                                                                        dataeventmainhomeItem)
-                                                                ?.date),
+                                                          DataEventsStruct.maybeFromMap(
+                                                            dataeventmainhomeItem,
+                                                          )?.date,
+                                                        ),
                                                         'ไม่ระบุ',
                                                       ),
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodyMedium!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight: Theme
-                                                                      .of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .extension<
-                                                                    CustomColors>()!
-                                                                .primaryText,
+                                                            color:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .extension<
+                                                                      CustomColors
+                                                                    >()!
+                                                                    .primaryText,
                                                             fontSize: 13.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                             lineHeight: 1.0,
                                                           ),
                                                     ),
@@ -284,8 +308,13 @@ class MainEventsWidget extends StatelessWidget {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                0.0,
+                                                0.0,
+                                                5.0,
+                                                0.0,
+                                              ),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -296,38 +325,31 @@ class MainEventsWidget extends StatelessWidget {
                                                           ?.loveEvent
                                                           .toList() ??
                                                       [])
-                                                  .contains(DataEventsStruct
-                                                          .maybeFromMap(
-                                                              dataeventmainhomeItem)
-                                                      ?.docRef)) {
-                                                await currentUserReference!
-                                                    .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'loveEvent': FieldValue
-                                                          .arrayRemove([
-                                                        DataEventsStruct
-                                                                .maybeFromMap(
-                                                                    dataeventmainhomeItem)
-                                                            ?.docRef
-                                                      ]),
-                                                    },
-                                                  ),
+                                                  .contains(
+                                                    DataEventsStruct.maybeFromMap(
+                                                      dataeventmainhomeItem,
+                                                    )?.docRef,
+                                                  )) {
+                                                await currentUserReference!.update({
+                                                  ...mapToSupabase({
+                                                    'loveEvent':
+                                                        FieldValue.arrayRemove([
+                                                          DataEventsStruct.maybeFromMap(
+                                                            dataeventmainhomeItem,
+                                                          )?.docRef,
+                                                        ]),
+                                                  }),
                                                 });
                                               } else {
-                                                await currentUserReference!
-                                                    .update({
-                                                  ...mapToSupabase(
-                                                    {
-                                                      'loveEvent': FieldValue
-                                                          .arrayUnion([
-                                                        DataEventsStruct
-                                                                .maybeFromMap(
-                                                                    dataeventmainhomeItem)
-                                                            ?.docRef
-                                                      ]),
-                                                    },
-                                                  ),
+                                                await currentUserReference!.update({
+                                                  ...mapToSupabase({
+                                                    'loveEvent':
+                                                        FieldValue.arrayUnion([
+                                                          DataEventsStruct.maybeFromMap(
+                                                            dataeventmainhomeItem,
+                                                          )?.docRef,
+                                                        ]),
+                                                  }),
                                                 });
                                               }
                                             },
@@ -344,27 +366,31 @@ class MainEventsWidget extends StatelessWidget {
                                                               ?.loveEvent
                                                               .toList() ??
                                                           [])
-                                                      .contains(DataEventsStruct
-                                                              .maybeFromMap(
-                                                                  dataeventmainhomeItem)
-                                                          ?.docRef))
+                                                      .contains(
+                                                        DataEventsStruct.maybeFromMap(
+                                                          dataeventmainhomeItem,
+                                                        )?.docRef,
+                                                      ))
                                                     const Align(
                                                       alignment:
                                                           AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    1.5,
-                                                                    0.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              1.5,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: FaIcon(
                                                           FontAwesomeIcons
                                                               .heart,
-                                                          color:
-                                                              Color(0xFFFDFDFD),
+                                                          color: Color(
+                                                            0xFFFDFDFD,
+                                                          ),
                                                           size: 23.0,
                                                         ),
                                                       ),
@@ -373,27 +399,31 @@ class MainEventsWidget extends StatelessWidget {
                                                               ?.loveEvent
                                                               .toList() ??
                                                           [])
-                                                      .contains(DataEventsStruct
-                                                              .maybeFromMap(
-                                                                  dataeventmainhomeItem)
-                                                          ?.docRef))
+                                                      .contains(
+                                                        DataEventsStruct.maybeFromMap(
+                                                          dataeventmainhomeItem,
+                                                        )?.docRef,
+                                                      ))
                                                     const Align(
                                                       alignment:
                                                           AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    1.5,
-                                                                    0.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              1.5,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: FaIcon(
                                                           FontAwesomeIcons
                                                               .solidHeart,
-                                                          color:
-                                                              Color(0xFFFF0000),
+                                                          color: Color(
+                                                            0xFFFF0000,
+                                                          ),
                                                           size: 23.0,
                                                         ),
                                                       ),
@@ -416,16 +446,18 @@ class MainEventsWidget extends StatelessWidget {
                                       width: double.infinity,
                                       height:
                                           MediaQuery.sizeOf(context).height *
-                                              0.22,
+                                          0.22,
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
                                             Colors.transparent,
-                                            Color(0xED000000)
+                                            Color(0xED000000),
                                           ],
                                           stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
+                                          begin: AlignmentDirectional(
+                                            0.0,
+                                            -1.0,
+                                          ),
                                           end: AlignmentDirectional(0, 1.0),
                                         ),
                                         borderRadius: BorderRadius.only(
@@ -436,8 +468,13 @@ class MainEventsWidget extends StatelessWidget {
                                         ),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                              5.0,
+                                              0.0,
+                                              5.0,
+                                              0.0,
+                                            ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -446,18 +483,22 @@ class MainEventsWidget extends StatelessWidget {
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                    -1.0,
+                                                    0.0,
+                                                  ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      5.0,
+                                                      0.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: Text(
                                                   valueOrDefault<String>(
                                                     DataEventsStruct.maybeFromMap(
-                                                            dataeventmainhomeItem)
-                                                        ?.nameArtise
-                                                        .firstOrNull,
+                                                      dataeventmainhomeItem,
+                                                    )?.nameArtise.firstOrNull,
                                                     'ไม่ระบุ',
                                                   ),
                                                   maxLines: 18,
@@ -465,8 +506,7 @@ class MainEventsWidget extends StatelessWidget {
                                                       .textTheme
                                                       .bodyMedium!
                                                       .override(
-                                                        font: GoogleFonts
-                                                            .openSans(
+                                                        font: GoogleFonts.openSans(
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontStyle:
@@ -477,7 +517,8 @@ class MainEventsWidget extends StatelessWidget {
                                                         ),
                                                         color: Theme.of(context)
                                                             .extension<
-                                                                CustomColors>()!
+                                                              CustomColors
+                                                            >()!
                                                             .primaryText,
                                                         fontSize: 18.0,
                                                         letterSpacing: 0.0,
@@ -494,9 +535,12 @@ class MainEventsWidget extends StatelessWidget {
                                             ),
                                             Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      0.0, 0.0, 0.0, 3.0),
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    3.0,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -505,15 +549,17 @@ class MainEventsWidget extends StatelessWidget {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 0.0, 2.0),
+                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                          5.0,
+                                                          0.0,
+                                                          0.0,
+                                                          2.0,
+                                                        ),
                                                     child: Text(
                                                       valueOrDefault<String>(
-                                                        DataEventsStruct
-                                                                .maybeFromMap(
-                                                                    dataeventmainhomeItem)
-                                                            ?.nameStore,
+                                                        DataEventsStruct.maybeFromMap(
+                                                          dataeventmainhomeItem,
+                                                        )?.nameStore,
                                                         'ไม่ระบุ',
                                                       ),
                                                       maxLines: 18,
@@ -521,29 +567,33 @@ class MainEventsWidget extends StatelessWidget {
                                                           .textTheme
                                                           .bodyMedium!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
+                                                            font: GoogleFonts.openSans(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
                                                             color: const Color(
-                                                                0xFFA1A1A1),
+                                                              0xFFA1A1A1,
+                                                            ),
                                                             fontSize: 14.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
                                                     ),
                                                   ),
@@ -553,12 +603,17 @@ class MainEventsWidget extends StatelessWidget {
                                             Align(
                                               alignment:
                                                   const AlignmentDirectional(
-                                                      1.0, 0.0),
+                                                    1.0,
+                                                    0.0,
+                                                  ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 5.0, 5.0),
+                                                    const EdgeInsetsDirectional.fromSTEB(
+                                                      5.0,
+                                                      0.0,
+                                                      5.0,
+                                                      5.0,
+                                                    ),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -576,138 +631,156 @@ class MainEventsWidget extends StatelessWidget {
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(8.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              8.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           valueOrDefault<
-                                                              String>(
-                                                            DataEventsStruct
-                                                                    .maybeFromMap(
-                                                                        dataeventmainhomeItem)
-                                                                ?.capacity
-                                                                .toString(),
+                                                            String
+                                                          >(
+                                                            DataEventsStruct.maybeFromMap(
+                                                              dataeventmainhomeItem,
+                                                            )?.capacity.toString(),
                                                             'ไม่ระบุ',
                                                           ),
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(2.0,
-                                                              0.0, 0.0, 0.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            2.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_9ksqi8gl,
+                                                          context,
+                                                        )!.k_9ksqi8gl,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyMedium!
                                                             .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
+                                                              font: GoogleFonts.openSans(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .fontStyle,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
                                                               ),
-                                                              color: const Color(
-                                                                  0xFFE8E8E8),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
                                                               fontSize: 14.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(2.0,
-                                                              0.0, 0.0, 0.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            2.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Text(
                                                         valueOrDefault<String>(
-                                                          DataEventsStruct
-                                                                  .maybeFromMap(
-                                                                      dataeventmainhomeItem)
-                                                              ?.maxCapacity
-                                                              .toString(),
+                                                          DataEventsStruct.maybeFromMap(
+                                                            dataeventmainhomeItem,
+                                                          )?.maxCapacity.toString(),
                                                           'ไม่ระบุ',
                                                         ),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyMedium!
                                                             .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
+                                                              font: GoogleFonts.openSans(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .fontStyle,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
                                                               ),
-                                                              color: const Color(
-                                                                  0xFFE8E8E8),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
                                                               fontSize: 13.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
                                                       ),
                                                     ),
@@ -722,93 +795,105 @@ class MainEventsWidget extends StatelessWidget {
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(10.0,
-                                                                0.0, 0.0, 0.0),
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                              10.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           valueOrDefault<
-                                                              String>(
-                                                            DataEventsStruct
-                                                                    .maybeFromMap(
-                                                                        dataeventmainhomeItem)
-                                                                ?.distance
-                                                                .toString(),
+                                                            String
+                                                          >(
+                                                            DataEventsStruct.maybeFromMap(
+                                                              dataeventmainhomeItem,
+                                                            )?.distance.toString(),
                                                             'ไม่ระบุ',
                                                           ),
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .override(
+                                                                font: GoogleFonts.openSans(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                                ),
+                                                                color:
+                                                                    const Color(
+                                                                      0xFFE8E8E8,
                                                                     ),
-                                                                    color: const Color(
-                                                                        0xFFE8E8E8),
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
                                                                         .textTheme
                                                                         .bodyMedium!
                                                                         .fontStyle,
-                                                                  ),
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(5.0,
-                                                              0.0, 0.0, 0.0),
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                            5.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_8wo43ybd,
+                                                          context,
+                                                        )!.k_8wo43ybd,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyMedium!
                                                             .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
+                                                              font: GoogleFonts.openSans(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .fontStyle,
+                                                                fontStyle:
+                                                                    Theme.of(
+                                                                          context,
+                                                                        )
+                                                                        .textTheme
+                                                                        .bodyMedium!
+                                                                        .fontStyle,
                                                               ),
-                                                              color: const Color(
-                                                                  0xFFE8E8E8),
+                                                              color:
+                                                                  const Color(
+                                                                    0xFFE8E8E8,
+                                                                  ),
                                                               fontSize: 13.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontStyle,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
                                                             ),
                                                       ),
                                                     ),
@@ -825,18 +910,17 @@ class MainEventsWidget extends StatelessWidget {
                               ),
                             ),
                           );
-                        })
-                            .addToStart(const SizedBox(width: 10.0))
-                            .addToEnd(const SizedBox(width: 25.0)),
+                        }).addToStart(const SizedBox(width: 10.0)).addToEnd(const SizedBox(width: 25.0)),
                       ),
                     );
                   },
                 ),
               ),
             ).animateOnPageLoad(
-                animationsMap['containerOnPageLoadAnimation1']!);
+              animationsMap['containerOnPageLoadAnimation1']!,
+            );
           },
-        )
+        ),
       ],
     );
   }

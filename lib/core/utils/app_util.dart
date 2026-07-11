@@ -18,7 +18,6 @@ import '../../main.dart';
 
 import 'package:munday/core/types/lat_lng.dart';
 
-
 export 'package:munday/core/types/lat_lng.dart';
 export 'package:munday/core/types/place.dart';
 export 'package:munday/core/types/uploaded_file.dart';
@@ -100,20 +99,9 @@ Future launchMap({
   );
 }
 
-enum FormatType {
-  decimal,
-  percent,
-  scientific,
-  compact,
-  compactLong,
-  custom,
-}
+enum FormatType { decimal, percent, scientific, compact, compactLong, custom }
 
-enum DecimalType {
-  automatic,
-  periodDecimal,
-  commaDecimal,
-}
+enum DecimalType { automatic, periodDecimal, commaDecimal }
 
 String formatNumber(
   num? value, {
@@ -167,8 +155,10 @@ String formatNumber(
       break;
     case FormatType.custom:
       final hasLocale = locale != null && locale.isNotEmpty;
-      formattedValue =
-          NumberFormat(format, hasLocale ? locale : null).format(value);
+      formattedValue = NumberFormat(
+        format,
+        hasLocale ? locale : null,
+      ).format(value);
   }
 
   if (formattedValue.isEmpty) {
@@ -288,20 +278,24 @@ const kTextValidatorWebsiteRegex =
     r'(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
 
 LatLng? cachedUserLocation;
-Future<LatLng> getCurrentUserLocation(
-    {required LatLng defaultLocation, bool cached = false}) async {
+Future<LatLng> getCurrentUserLocation({
+  required LatLng defaultLocation,
+  bool cached = false,
+}) async {
   if (cached && cachedUserLocation != null) {
     return cachedUserLocation!;
   }
-  return queryCurrentUserLocation().then((loc) {
-    if (loc != null) {
-      cachedUserLocation = loc;
-    }
-    return loc ?? defaultLocation;
-  }).onError((error, _) {
-    print("Error querying user location: $error");
-    return defaultLocation;
-  });
+  return queryCurrentUserLocation()
+      .then((loc) {
+        if (loc != null) {
+          cachedUserLocation = loc;
+        }
+        return loc ?? defaultLocation;
+      })
+      .onError((error, _) {
+        print("Error querying user location: $error");
+        return defaultLocation;
+      });
 }
 
 Future<LatLng?> queryCurrentUserLocation() async {
@@ -320,7 +314,8 @@ Future<LatLng?> queryCurrentUserLocation() async {
 
   if (permission == LocationPermission.deniedForever) {
     return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
+      'Location permissions are permanently denied, we cannot request permissions.',
+    );
   }
 
   final position = await Geolocator.getCurrentPosition();
@@ -335,10 +330,13 @@ extension MundayTextEditingControllerExt on TextEditingController? {
 }
 
 extension IterableExt<T> on Iterable<T> {
-  List<T> sortedList<S>(
-      {S Function(T)? keyOf, bool desc = false}) {
+  List<T> sortedList<S>({S Function(T)? keyOf, bool desc = false}) {
     final sortedAscending = toList()
-      ..sort(keyOf == null ? null : ((a, b) => ((keyOf(a) as dynamic)?.compareTo(keyOf(b)) ?? 0)));
+      ..sort(
+        keyOf == null
+            ? null
+            : ((a, b) => ((keyOf(a) as dynamic)?.compareTo(keyOf(b)) ?? 0)),
+      );
     if (desc) {
       return sortedAscending.reversed.toList();
     }
@@ -379,9 +377,7 @@ void showSnackbar(
               child: Container(
                 height: 20,
                 width: 20,
-                child: const CircularProgressIndicator(
-                  color: Colors.white,
-                ),
+                child: const CircularProgressIndicator(color: Colors.white),
               ),
             ),
           Text(message),
@@ -395,8 +391,8 @@ void showSnackbar(
 extension MundayStringExt on String {
   String maybeHandleOverflow({int? maxChars, String replacement = ''}) =>
       maxChars != null && length > maxChars
-          ? replaceRange(maxChars, null, replacement)
-          : this;
+      ? replaceRange(maxChars, null, replacement)
+      : this;
 
   String toCapitalization(TextCapitalization textCapitalization) {
     switch (textCapitalization) {
@@ -418,10 +414,10 @@ extension ListFilterExt<T> on Iterable<T?> {
 
 extension MapFilterExtensions<T> on Map<String, T?> {
   Map<String, T> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value as T)),
-      );
+    entries
+        .where((e) => e.value != null)
+        .map((e) => MapEntry(e.key, e.value as T)),
+  );
 }
 
 extension MapListContainsExt on List<dynamic> {
@@ -436,10 +432,10 @@ extension ListDivideExt<T extends Widget> on Iterable<T> {
   List<Widget> divide(Widget t, {bool Function(int)? filterFn}) => isEmpty
       ? []
       : (enumerate
-          .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
-          .expand((i) => i)
-          .toList()
-        ..removeLast());
+            .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
+            .expand((i) => i)
+            .toList()
+          ..removeLast());
 
   List<Widget> around(Widget t) => addToStart(t).addToEnd(t);
 
@@ -449,9 +445,12 @@ extension ListDivideExt<T extends Widget> on Iterable<T> {
   List<Widget> addToEnd(Widget t) =>
       enumerate.map((e) => e.value).toList()..add(t);
 
-  List<Padding> paddingTopEach(double val) =>
-      map((w) => Padding(padding: EdgeInsets.only(top: val), child: w))
-          .toList();
+  List<Padding> paddingTopEach(double val) => map(
+    (w) => Padding(
+      padding: EdgeInsets.only(top: val),
+      child: w,
+    ),
+  ).toList();
 }
 
 extension StatefulWidgetExtensions on State<StatefulWidget> {
@@ -541,4 +540,3 @@ String getCurrentRoute(BuildContext context) =>
     context.mounted ? MyApp.of(context).getRoute() : '';
 List<String> getCurrentRouteStack(BuildContext context) =>
     context.mounted ? MyApp.of(context).getRouteStack() : [];
-

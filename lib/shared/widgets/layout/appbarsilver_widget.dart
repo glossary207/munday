@@ -15,10 +15,7 @@ import 'package:munday/core/theme/theme.dart';
 export 'appbarsilver_model.dart';
 
 class AppbarsilverWidget extends ConsumerStatefulWidget {
-  const AppbarsilverWidget({
-    super.key,
-    required this.image,
-  });
+  const AppbarsilverWidget({super.key, required this.image});
 
   final String? image;
 
@@ -55,9 +52,7 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.black,
-      ),
+      decoration: BoxDecoration(color: Colors.black),
       child: Stack(
         children: [
           Align(
@@ -70,7 +65,9 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                 height: MediaQuery.sizeOf(context).height * 1.0,
                 backgroundColorSliverAppBar: Colors.transparent,
                 expandedHeightAppBAr: functions.addtapsilverscale(
-                    MediaQuery.sizeOf(context).width, 170.0),
+                  MediaQuery.sizeOf(context).width,
+                  170.0,
+                ),
                 photoBG: widget.image,
                 heightBG: MediaQuery.sizeOf(context).width,
                 maxscroll: 150.0,
@@ -90,12 +87,9 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                   BoxShadow(
                     blurRadius: 25.0,
                     color: Color(0xA6000000),
-                    offset: Offset(
-                      0.0,
-                      -3.0,
-                    ),
+                    offset: Offset(0.0, -3.0),
                     spreadRadius: 10.0,
-                  )
+                  ),
                 ],
                 gradient: LinearGradient(
                   colors: [Color(0xFF131313), Color(0xFF050505)],
@@ -116,15 +110,23 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        5.0,
+                        0.0,
+                        5.0,
+                        0.0,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 15.0, 0.0, 5.0),
+                                0.0,
+                                15.0,
+                                0.0,
+                                5.0,
+                              ),
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -152,10 +154,9 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                                             fontSize: 25.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .fontStyle,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.titleMedium!.fontStyle,
                                           ),
                                     ),
                                   ],
@@ -167,7 +168,11 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                             alignment: AlignmentDirectional(0.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 15.0, 0.0, 0.0),
+                                0.0,
+                                15.0,
+                                0.0,
+                                0.0,
+                              ),
                               child: Container(
                                 width: 140.0,
                                 height: 50.0,
@@ -182,11 +187,14 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .k_jph82c73,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_jph82c73,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -212,8 +220,10 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                                       ],
                                     ),
                                     Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
+                                      alignment: AlignmentDirectional(
+                                        -1.0,
+                                        0.0,
+                                      ),
                                       child: Container(
                                         width: 30.0,
                                         height: 30.0,
@@ -222,12 +232,18 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                                           shape: BoxShape.circle,
                                         ),
                                         child: Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 1.0, 0.0, 0.0),
+                                                  0.0,
+                                                  1.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: FaIcon(
                                               FontAwesomeIcons.minus,
                                               color: Colors.white,
@@ -247,12 +263,18 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                                           shape: BoxShape.circle,
                                         ),
                                         child: Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                          alignment: AlignmentDirectional(
+                                            0.0,
+                                            0.0,
+                                          ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 1.0, 0.0, 0.0),
+                                                  0.0,
+                                                  1.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
                                             child: FaIcon(
                                               FontAwesomeIcons.plus,
                                               color: Colors.white,
@@ -279,43 +301,38 @@ class _AppbarsilverWidgetState extends ConsumerState<AppbarsilverWidget> {
                               print('Button pressed ...');
                             },
                             text: AppLocalizations.of(context)!.k_r5xcsk95,
-                            icon: Icon(
-                              Icons.add,
-                              size: 15.0,
-                            ),
+                            icon: Icon(Icons.add, size: 15.0),
                             options: MundayButtonOptions(
                               width: double.infinity,
                               height: 50.0,
                               padding: EdgeInsets.all(0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                              ),
                               iconColor: Colors.white,
                               color: Color(0xFFFF0000),
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
+                              textStyle: Theme.of(context).textTheme.titleSmall!
                                   .override(
                                     font: GoogleFonts.openSans(
-                                      fontWeight: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontWeight,
-                                      fontStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .fontStyle,
+                                      fontWeight: Theme.of(
+                                        context,
+                                      ).textTheme.titleSmall!.fontWeight,
+                                      fontStyle: Theme.of(
+                                        context,
+                                      ).textTheme.titleSmall!.fontStyle,
                                     ),
                                     color: Colors.white,
                                     fontSize: 18.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontWeight,
-                                    fontStyle: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontStyle,
+                                    fontWeight: Theme.of(
+                                      context,
+                                    ).textTheme.titleSmall!.fontWeight,
+                                    fontStyle: Theme.of(
+                                      context,
+                                    ).textTheme.titleSmall!.fontStyle,
                                   ),
                               elevation: 0.0,
                               borderSide: BorderSide(

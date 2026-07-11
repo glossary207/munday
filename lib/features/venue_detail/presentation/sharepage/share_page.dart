@@ -74,7 +74,9 @@ class _SharePageState extends ConsumerState<SharePage>
         context.appState.dateclick = widget.dateclick;
         safeSetState(() {});
       } else {
-        context.appState.dateclick = functions.boxstarttime(getCurrentTimestamp);
+        context.appState.dateclick = functions.boxstarttime(
+          getCurrentTimestamp,
+        );
         safeSetState(() {});
       }
       safeSetState(() {
@@ -3132,11 +3134,11 @@ class _SharePageState extends ConsumerState<SharePage>
                                                             .user
                                                             .where(
                                                               (e) =>
-                                                                  functions
-                                                                      .checkdate(
-                                                                        (e as dynamic)?.date,
-                                                                        selectedDate,
-                                                                      ) ??
+                                                                  functions.checkdate(
+                                                                    (e as dynamic)
+                                                                        ?.date,
+                                                                    selectedDate,
+                                                                  ) ??
                                                                   false,
                                                             )
                                                             .toList()
@@ -3317,7 +3319,8 @@ class _SharePageState extends ConsumerState<SharePage>
                                                       .where(
                                                         (e) =>
                                                             functions.checkdate(
-                                                              (e as dynamic)?.date,
+                                                              (e as dynamic)
+                                                                  ?.date,
                                                               selectedDate,
                                                             ) ??
                                                             false,

@@ -92,19 +92,14 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
           ClipRRect(
             borderRadius: BorderRadius.circular(0.0),
             child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 2.0,
-                sigmaY: 2.0,
-              ),
+              filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: Image.network(
-                      '',
-                    ).image,
+                    image: Image.network('').image,
                   ),
                 ),
               ),
@@ -131,22 +126,34 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 3.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        3.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 30.0, 10.0, 0.0),
+                                10.0,
+                                30.0,
+                                10.0,
+                                0.0,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                      10.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: MundayIconButton(
                                       borderColor: Colors.transparent,
                                       borderRadius: 30.0,
@@ -165,7 +172,11 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 0.0, 0.0, 0.0),
+                                      20.0,
+                                      0.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Text(
                                       AppLocalizations.of(context)!.k_61ovuoqq,
                                       style: Theme.of(context)
@@ -177,24 +188,21 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                   .textTheme
                                                   .bodyMedium!
                                                   .fontWeight,
-                                              fontStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontStyle,
+                                              fontStyle: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium!.fontStyle,
                                             ),
                                             color: Theme.of(context)
                                                 .extension<CustomColors>()!
                                                 .primaryText,
                                             fontSize: 24.0,
                                             letterSpacing: 1.0,
-                                            fontWeight: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontWeight,
-                                            fontStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontStyle,
+                                            fontWeight: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontWeight,
+                                            fontStyle: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium!.fontStyle,
                                           ),
                                     ),
                                   ),
@@ -207,23 +215,35 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 40.0, 0.0, 0.0),
+                                      0.0,
+                                      40.0,
+                                      0.0,
+                                      0.0,
+                                    ),
                                     child: Container(
                                       width: double.infinity,
                                       height: 455.0,
                                       decoration: BoxDecoration(),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 0.0, 20.0, 0.0),
+                                          20.0,
+                                          0.0,
+                                          20.0,
+                                          0.0,
+                                        ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 0.0, 10.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    10.0,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -232,30 +252,32 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                 children: [
                                                   Text(
                                                     AppLocalizations.of(
-                                                            context)!
-                                                        .k_ax962ez4,
+                                                      context,
+                                                    )!.k_ax962ez4,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .override(
-                                                          font: GoogleFonts
-                                                              .openSans(
+                                                          font: GoogleFonts.openSans(
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
                                                           ),
-                                                          color: Theme.of(
-                                                                  context)
+                                                          color: Theme.of(context)
                                                               .extension<
-                                                                  CustomColors>()!
+                                                                CustomColors
+                                                              >()!
                                                               .primaryBtnText,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
@@ -277,95 +299,95 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    5.0,
-                                                                    0.0),
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              5.0,
+                                                              0.0,
+                                                            ),
                                                         child: Text(
                                                           _model.sliderValue
                                                               .toString(),
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyMedium!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: Theme.of(
-                                                                            context)
-                                                                        .extension<
-                                                                            CustomColors>()!
-                                                                        .primaryBtnText,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyMedium!
-                                                                        .fontStyle,
-                                                                  ),
+                                                          style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color: Theme.of(context)
+                                                                .extension<
+                                                                  CustomColors
+                                                                >()!
+                                                                .primaryBtnText,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .fontStyle,
+                                                          ),
                                                         ),
                                                       ),
                                                       Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_q0tqvw1e,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
-                                                                fontWeight: Theme.of(
-                                                                        context)
+                                                          context,
+                                                        )!.k_q0tqvw1e,
+                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                                fontStyle: Theme.of(
-                                                                        context)
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontStyle,
-                                                              ),
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .extension<
-                                                                      CustomColors>()!
-                                                                  .primaryBtnText,
-                                                              fontSize: 12.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight: Theme
-                                                                      .of(context)
+                                                          ),
+                                                          color: Theme.of(context)
+                                                              .extension<
+                                                                CustomColors
+                                                              >()!
+                                                              .primaryBtnText,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
+                                                          fontStyle:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontStyle,
-                                                            ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -378,20 +400,27 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                               min: 1.0,
                                               max: 1000000.0,
                                               value: _model.sliderValue ??=
-                                                  context.appState.Filterdistance,
+                                                  context
+                                                      .appState
+                                                      .Filterdistance,
                                               label: _model.sliderValue
                                                   ?.toStringAsFixed(1),
                                               divisions: 1999998,
                                               onChanged: (newValue) {
-                                                newValue = double.parse(newValue
-                                                    .toStringAsFixed(1));
-                                                safeSetState(() => _model
-                                                    .sliderValue = newValue);
+                                                newValue = double.parse(
+                                                  newValue.toStringAsFixed(1),
+                                                );
+                                                safeSetState(
+                                                  () => _model.sliderValue =
+                                                      newValue,
+                                                );
                                                 EasyDebounce.debounce(
                                                   '_model.sliderValue',
                                                   Duration(milliseconds: 300),
                                                   () async {
-                                                    context.appState.Filterdistance =
+                                                    context
+                                                            .appState
+                                                            .Filterdistance =
                                                         _model.sliderValue!;
                                                     safeSetState(() {});
                                                   },
@@ -410,52 +439,51 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
                                                       child: Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_nlvb3wjv,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
-                                                                fontWeight: Theme.of(
-                                                                        context)
+                                                          context,
+                                                        )!.k_nlvb3wjv,
+                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                                fontStyle: Theme.of(
-                                                                        context)
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontStyle,
-                                                              ),
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .extension<
-                                                                      CustomColors>()!
-                                                                  .primaryBtnText,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight: Theme
-                                                                      .of(context)
+                                                          ),
+                                                          color: Theme.of(context)
+                                                              .extension<
+                                                                CustomColors
+                                                              >()!
+                                                              .primaryBtnText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
+                                                          fontStyle:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontStyle,
-                                                            ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -464,344 +492,365 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                             ),
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.0, -1.0),
+                                                -1.0,
+                                                -1.0,
+                                              ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 15.0, 0.0, 0.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      0.0,
+                                                      15.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  AppState()
-                                                                      .StyleVenuse
-                                                                      .toList(),
-                                                                  'Pub') ==
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Pub',
+                                                              ) ==
                                                               false) {
                                                             AppState()
                                                                 .addToStyleVenuse(
-                                                                    'Pub');
+                                                                  'Pub',
+                                                                );
                                                             safeSetState(() {});
                                                           } else {
                                                             AppState()
                                                                 .removeFromStyleVenuse(
-                                                                    'Pub');
+                                                                  'Pub',
+                                                                );
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_gy667nbh,
-                                                        options:
-                                                            MundayButtonOptions(
+                                                              context,
+                                                            )!.k_gy667nbh,
+                                                        options: MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                10.0,
+                                                                0.0,
+                                                              ),
                                                           iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          color: functions.checklist(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
+                                                          color:
+                                                              functions.checklist(
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Pub',
+                                                              )!
+                                                              ? Color(
+                                                                  0xFFDE0000,
+                                                                )
+                                                              : Colors.white,
+                                                          textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color:
+                                                                functions.checklist(
                                                                   AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
-                                                                  'Pub')!
-                                                              ? Color(
-                                                                  0xFFDE0000)
-                                                              : Colors.white,
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: functions.checklist(
-                                                                            AppState()
-                                                                                .StyleVenuse
-                                                                                .toList(),
-                                                                            'Pub')!
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
+                                                                  'Pub',
+                                                                )!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          borderSide: BorderSide(
                                                             color: Colors
                                                                 .transparent,
                                                             width: 1.0,
                                                           ),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                              BorderRadius.circular(
+                                                                8.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  AppState()
-                                                                      .StyleVenuse
-                                                                      .toList(),
-                                                                  'Bar') ==
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Bar',
+                                                              ) ==
                                                               false) {
                                                             AppState()
                                                                 .addToStyleVenuse(
-                                                                    'Bar');
+                                                                  'Bar',
+                                                                );
                                                             safeSetState(() {});
                                                           } else {
                                                             AppState()
                                                                 .removeFromStyleVenuse(
-                                                                    'Bar');
+                                                                  'Bar',
+                                                                );
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_u6srszey,
-                                                        options:
-                                                            MundayButtonOptions(
+                                                              context,
+                                                            )!.k_u6srszey,
+                                                        options: MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                10.0,
+                                                                0.0,
+                                                              ),
                                                           iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          color: functions.checklist(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
+                                                          color:
+                                                              functions.checklist(
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Bar',
+                                                              )!
+                                                              ? Color(
+                                                                  0xFFDE0000,
+                                                                )
+                                                              : Colors.white,
+                                                          textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color:
+                                                                functions.checklist(
                                                                   AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
-                                                                  'Bar')!
-                                                              ? Color(
-                                                                  0xFFDE0000)
-                                                              : Colors.white,
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: functions.checklist(
-                                                                            AppState()
-                                                                                .StyleVenuse
-                                                                                .toList(),
-                                                                            'Bar')!
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
+                                                                  'Bar',
+                                                                )!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          borderSide: BorderSide(
                                                             color: Colors
                                                                 .transparent,
                                                           ),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                              BorderRadius.circular(
+                                                                8.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  AppState()
-                                                                      .StyleVenuse
-                                                                      .toList(),
-                                                                  'Chill') ==
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Chill',
+                                                              ) ==
                                                               false) {
                                                             AppState()
                                                                 .addToStyleVenuse(
-                                                                    'Chill');
+                                                                  'Chill',
+                                                                );
                                                             safeSetState(() {});
                                                           } else {
                                                             AppState()
                                                                 .removeFromStyleVenuse(
-                                                                    'Chill');
+                                                                  'Chill',
+                                                                );
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_eeyxdmdw,
-                                                        options:
-                                                            MundayButtonOptions(
+                                                              context,
+                                                            )!.k_eeyxdmdw,
+                                                        options: MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                10.0,
+                                                                0.0,
+                                                              ),
                                                           iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          color: functions.checklist(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
+                                                          color:
+                                                              functions.checklist(
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Chill',
+                                                              )!
+                                                              ? Color(
+                                                                  0xFFDE0000,
+                                                                )
+                                                              : Colors.white,
+                                                          textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color:
+                                                                functions.checklist(
                                                                   AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
-                                                                  'Chill')!
-                                                              ? Color(
-                                                                  0xFFDE0000)
-                                                              : Colors.white,
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: functions.checklist(
-                                                                            AppState()
-                                                                                .StyleVenuse
-                                                                                .toList(),
-                                                                            'Chill')!
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
+                                                                  'Chill',
+                                                                )!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          borderSide: BorderSide(
                                                             color: Colors
                                                                 .transparent,
                                                             width: 1.0,
                                                           ),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                              BorderRadius.circular(
+                                                                8.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
@@ -811,234 +860,250 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                             ),
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.0, -1.0),
+                                                -1.0,
+                                                -1.0,
+                                              ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 10.0, 0.0, 0.0),
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
+                                                      0.0,
+                                                      10.0,
+                                                      0.0,
+                                                      0.0,
+                                                    ),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  AppState()
-                                                                      .StyleVenuse
-                                                                      .toList(),
-                                                                  'CraftBeer') ==
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'CraftBeer',
+                                                              ) ==
                                                               false) {
                                                             AppState()
                                                                 .addToStyleVenuse(
-                                                                    'CraftBeer');
+                                                                  'CraftBeer',
+                                                                );
                                                             safeSetState(() {});
                                                           } else {
                                                             AppState()
                                                                 .removeFromStyleVenuse(
-                                                                    'CraftBeer');
+                                                                  'CraftBeer',
+                                                                );
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_rl0ga10m,
-                                                        options:
-                                                            MundayButtonOptions(
+                                                              context,
+                                                            )!.k_rl0ga10m,
+                                                        options: MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                10.0,
+                                                                0.0,
+                                                              ),
                                                           iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          color: functions.checklist(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
+                                                          color:
+                                                              functions.checklist(
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'CraftBeer',
+                                                              )!
+                                                              ? Color(
+                                                                  0xFFDE0000,
+                                                                )
+                                                              : Colors.white,
+                                                          textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color:
+                                                                functions.checklist(
                                                                   AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
-                                                                  'CraftBeer')!
-                                                              ? Color(
-                                                                  0xFFDE0000)
-                                                              : Colors.white,
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: functions.checklist(
-                                                                            AppState()
-                                                                                .StyleVenuse
-                                                                                .toList(),
-                                                                            'CraftBeer')!
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
+                                                                  'CraftBeer',
+                                                                )!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          borderSide: BorderSide(
                                                             color: Colors
                                                                 .transparent,
                                                             width: 1.0,
                                                           ),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                              BorderRadius.circular(
+                                                                8.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       child: MundayButton(
                                                         onPressed: () async {
                                                           if (functions.checklist(
-                                                                  AppState()
-                                                                      .StyleVenuse
-                                                                      .toList(),
-                                                                  'Out Door') ==
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Out Door',
+                                                              ) ==
                                                               false) {
                                                             AppState()
                                                                 .addToStyleVenuse(
-                                                                    'Out Door');
+                                                                  'Out Door',
+                                                                );
                                                             safeSetState(() {});
                                                           } else {
                                                             AppState()
                                                                 .removeFromStyleVenuse(
-                                                                    'Out Door');
+                                                                  'Out Door',
+                                                                );
                                                             safeSetState(() {});
                                                           }
                                                         },
                                                         text:
                                                             AppLocalizations.of(
-                                                                    context)!
-                                                                .k_s9yaj8wb,
-                                                        options:
-                                                            MundayButtonOptions(
+                                                              context,
+                                                            )!.k_s9yaj8wb,
+                                                        options: MundayButtonOptions(
                                                           height: 25.0,
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                10.0,
+                                                                0.0,
+                                                                10.0,
+                                                                0.0,
+                                                              ),
                                                           iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          color: functions.checklist(
+                                                              EdgeInsetsDirectional.fromSTEB(
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                              ),
+                                                          color:
+                                                              functions.checklist(
+                                                                AppState()
+                                                                    .StyleVenuse
+                                                                    .toList(),
+                                                                'Out Door',
+                                                              )!
+                                                              ? Color(
+                                                                  0xFFDE0000,
+                                                                )
+                                                              : Colors.white,
+                                                          textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
+                                                            ),
+                                                            color:
+                                                                functions.checklist(
                                                                   AppState()
                                                                       .StyleVenuse
                                                                       .toList(),
-                                                                  'Out Door')!
-                                                              ? Color(
-                                                                  0xFFDE0000)
-                                                              : Colors.white,
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .openSans(
-                                                                      fontWeight: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontWeight,
-                                                                      fontStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: functions.checklist(
-                                                                            AppState()
-                                                                                .StyleVenuse
-                                                                                .toList(),
-                                                                            'Out Door')!
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
+                                                                  'Out Door',
+                                                                )!
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          borderSide: BorderSide(
                                                             color: Colors
                                                                 .transparent,
                                                             width: 1.0,
                                                           ),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                              BorderRadius.circular(
+                                                                8.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
@@ -1047,9 +1112,13 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 20.0, 0.0, 15.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    20.0,
+                                                    0.0,
+                                                    15.0,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
@@ -1062,44 +1131,43 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                     children: [
                                                       Text(
                                                         AppLocalizations.of(
-                                                                context)!
-                                                            .k_s7cwbfue,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .openSans(
-                                                                fontWeight: Theme.of(
-                                                                        context)
+                                                          context,
+                                                        )!.k_s7cwbfue,
+                                                        style: Theme.of(context).textTheme.bodyMedium!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontWeight,
-                                                                fontStyle: Theme.of(
-                                                                        context)
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .bodyMedium!
                                                                     .fontStyle,
-                                                              ),
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .extension<
-                                                                      CustomColors>()!
-                                                                  .primaryBtnText,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight: Theme
-                                                                      .of(context)
+                                                          ),
+                                                          color: Theme.of(context)
+                                                              .extension<
+                                                                CustomColors
+                                                              >()!
+                                                              .primaryBtnText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
+                                                          fontStyle:
+                                                              Theme.of(context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .fontStyle,
-                                                            ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -1110,92 +1178,108 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        0.0,
+                                                        10.0,
+                                                        0.0,
+                                                      ),
                                                   child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'LiveMusic') ==
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'LiveMusic',
+                                                          ) ==
                                                           false) {
                                                         AppState()
                                                             .addToStyleMusic(
-                                                                'LiveMusic');
+                                                              'LiveMusic',
+                                                            );
                                                         safeSetState(() {});
                                                       } else {
                                                         AppState()
                                                             .removeFromStyleMusic(
-                                                                'LiveMusic');
+                                                              'LiveMusic',
+                                                            );
                                                         safeSetState(() {});
                                                       }
                                                     },
                                                     text: AppLocalizations.of(
-                                                            context)!
-                                                        .k_rmzseyr4,
+                                                      context,
+                                                    )!.k_rmzseyr4,
                                                     options: MundayButtonOptions(
                                                       height: 25.0,
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            10.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0,
+                                                          ),
                                                       iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      color: functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'LiveMusic')!
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
+                                                      color:
+                                                          functions.checklist(
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'LiveMusic',
+                                                          )!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle: Theme.of(
-                                                              context)
+                                                      textStyle: Theme.of(context)
                                                           .textTheme
                                                           .titleSmall!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight: Theme
-                                                                      .of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontStyle,
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
                                                             ),
-                                                            color: functions.checklist(
-                                                                    AppState()
-                                                                        .StyleMusic
-                                                                        .toList(),
-                                                                    'LiveMusic')!
+                                                            color:
+                                                                functions.checklist(
+                                                                  AppState()
+                                                                      .StyleMusic
+                                                                      .toList(),
+                                                                  'LiveMusic',
+                                                                )!
                                                                 ? Colors.white
                                                                 : Colors.black,
                                                             fontSize: 14.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .titleSmall!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
                                                           ),
                                                       borderSide: BorderSide(
                                                         color:
@@ -1204,93 +1288,111 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                            8.0,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        0.0,
+                                                        10.0,
+                                                        0.0,
+                                                      ),
                                                   child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'Hiphop') ==
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'Hiphop',
+                                                          ) ==
                                                           false) {
                                                         AppState()
                                                             .addToStyleMusic(
-                                                                'Hiphop');
+                                                              'Hiphop',
+                                                            );
                                                         safeSetState(() {});
                                                       } else {
                                                         AppState()
                                                             .removeFromStyleMusic(
-                                                                'Hiphop');
+                                                              'Hiphop',
+                                                            );
                                                         safeSetState(() {});
                                                       }
                                                     },
                                                     text: AppLocalizations.of(
-                                                            context)!
-                                                        .k_zchvxgoo,
+                                                      context,
+                                                    )!.k_zchvxgoo,
                                                     options: MundayButtonOptions(
                                                       width: 80.0,
                                                       height: 25.0,
-                                                      padding:
-                                                          EdgeInsets.all(0.0),
+                                                      padding: EdgeInsets.all(
+                                                        0.0,
+                                                      ),
                                                       iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      color: functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'Hiphop')!
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
+                                                      color:
+                                                          functions.checklist(
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'Hiphop',
+                                                          )!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle: Theme.of(
-                                                              context)
+                                                      textStyle: Theme.of(context)
                                                           .textTheme
                                                           .titleSmall!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight: Theme
-                                                                      .of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontStyle,
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
                                                             ),
-                                                            color: functions.checklist(
-                                                                    AppState()
-                                                                        .StyleMusic
-                                                                        .toList(),
-                                                                    'Hiphop')!
+                                                            color:
+                                                                functions.checklist(
+                                                                  AppState()
+                                                                      .StyleMusic
+                                                                      .toList(),
+                                                                  'Hiphop',
+                                                                )!
                                                                 ? Colors.white
                                                                 : Colors.black,
                                                             fontSize: 14.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .titleSmall!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
                                                           ),
                                                       borderSide: BorderSide(
                                                         color:
@@ -1299,92 +1401,110 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                            8.0,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                        0.0,
+                                                        0.0,
+                                                        10.0,
+                                                        0.0,
+                                                      ),
                                                   child: MundayButton(
                                                     onPressed: () async {
                                                       if (functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'ลูกทุ่ง') ==
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'ลูกทุ่ง',
+                                                          ) ==
                                                           false) {
                                                         AppState()
                                                             .addToStyleMusic(
-                                                                'ลูกทุ่ง');
+                                                              'ลูกทุ่ง',
+                                                            );
                                                         safeSetState(() {});
                                                       } else {
                                                         AppState()
                                                             .removeFromStyleMusic(
-                                                                'ลูกทุ่ง');
+                                                              'ลูกทุ่ง',
+                                                            );
                                                         safeSetState(() {});
                                                       }
                                                     },
                                                     text: AppLocalizations.of(
-                                                            context)!
-                                                        .k_qtwraypg,
+                                                      context,
+                                                    )!.k_qtwraypg,
                                                     options: MundayButtonOptions(
                                                       height: 25.0,
-                                                      padding:
-                                                          EdgeInsets.all(0.0),
+                                                      padding: EdgeInsets.all(
+                                                        0.0,
+                                                      ),
                                                       iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      color: functions.checklist(
-                                                              AppState()
-                                                                  .StyleMusic
-                                                                  .toList(),
-                                                              'ลูกทุ่ง')!
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                          ),
+                                                      color:
+                                                          functions.checklist(
+                                                            AppState()
+                                                                .StyleMusic
+                                                                .toList(),
+                                                            'ลูกทุ่ง',
+                                                          )!
                                                           ? Color(0xFFDE0000)
                                                           : Colors.white,
-                                                      textStyle: Theme.of(
-                                                              context)
+                                                      textStyle: Theme.of(context)
                                                           .textTheme
                                                           .titleSmall!
                                                           .override(
-                                                            font: GoogleFonts
-                                                                .openSans(
-                                                              fontWeight: Theme
-                                                                      .of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontWeight,
-                                                              fontStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .fontStyle,
+                                                            font: GoogleFonts.openSans(
+                                                              fontWeight:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  Theme.of(
+                                                                        context,
+                                                                      )
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .fontStyle,
                                                             ),
-                                                            color: functions.checklist(
-                                                                    AppState()
-                                                                        .StyleMusic
-                                                                        .toList(),
-                                                                    'ลูกทุ่ง')!
+                                                            color:
+                                                                functions.checklist(
+                                                                  AppState()
+                                                                      .StyleMusic
+                                                                      .toList(),
+                                                                  'ลูกทุ่ง',
+                                                                )!
                                                                 ? Colors.white
                                                                 : Colors.black,
                                                             fontSize: 14.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 Theme.of(
-                                                                        context)
+                                                                      context,
+                                                                    )
                                                                     .textTheme
                                                                     .titleSmall!
                                                                     .fontWeight,
-                                                            fontStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .fontStyle,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
                                                           ),
                                                       borderSide: BorderSide(
                                                         color:
@@ -1393,409 +1513,442 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                            8.0,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 0.0),
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                    0.0,
+                                                    10.0,
+                                                    0.0,
+                                                    0.0,
+                                                  ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                AppState()
-                                                                    .StyleMusic
-                                                                    .toList(),
-                                                                'เพื่อชีวิต') ==
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'เพื่อชีวิต',
+                                                            ) ==
                                                             false) {
                                                           AppState()
                                                               .addToStyleMusic(
-                                                                  'เพื่อชีวิต');
+                                                                'เพื่อชีวิต',
+                                                              );
                                                           safeSetState(() {});
                                                         } else {
                                                           AppState()
                                                               .removeFromStyleMusic(
-                                                                  'เพื่อชีวิต');
+                                                                'เพื่อชีวิต',
+                                                              );
                                                           safeSetState(() {});
                                                         }
                                                       },
                                                       text: AppLocalizations.of(
-                                                              context)!
-                                                          .k_hddmmpbl,
+                                                        context,
+                                                      )!.k_hddmmpbl,
                                                       options: MundayButtonOptions(
                                                         width: 80.0,
                                                         height: 25.0,
-                                                        padding:
-                                                            EdgeInsets.all(0.0),
+                                                        padding: EdgeInsets.all(
+                                                          0.0,
+                                                        ),
                                                         iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color: functions.checklist(
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
+                                                        color:
+                                                            functions.checklist(
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'เพื่อชีวิต',
+                                                            )!
+                                                            ? Color(0xFFDE0000)
+                                                            : Colors.white,
+                                                        textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          color:
+                                                              functions.checklist(
                                                                 AppState()
                                                                     .StyleMusic
                                                                     .toList(),
-                                                                'เพื่อชีวิต')!
-                                                            ? Color(0xFFDE0000)
-                                                            : Colors.white,
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: functions.checklist(
-                                                                          AppState()
-                                                                              .StyleMusic
-                                                                              .toList(),
-                                                                          'เพื่อชีวิต')!
-                                                                      ? Colors
-                                                                          .white
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontWeight,
-                                                                  fontStyle: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontStyle,
-                                                                ),
+                                                                'เพื่อชีวิต',
+                                                              )!
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                        ),
                                                         borderSide: BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                            BorderRadius.circular(
+                                                              8.0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                AppState()
-                                                                    .StyleMusic
-                                                                    .toList(),
-                                                                'EDM') ==
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'EDM',
+                                                            ) ==
                                                             false) {
                                                           AppState()
                                                               .addToStyleMusic(
-                                                                  'EDM');
+                                                                'EDM',
+                                                              );
                                                           safeSetState(() {});
                                                         } else {
                                                           AppState()
                                                               .removeFromStyleMusic(
-                                                                  'EDM');
+                                                                'EDM',
+                                                              );
                                                           safeSetState(() {});
                                                         }
                                                       },
                                                       text: AppLocalizations.of(
-                                                              context)!
-                                                          .k_kcsysckt,
+                                                        context,
+                                                      )!.k_kcsysckt,
                                                       options: MundayButtonOptions(
                                                         height: 25.0,
-                                                        padding:
-                                                            EdgeInsets.all(0.0),
+                                                        padding: EdgeInsets.all(
+                                                          0.0,
+                                                        ),
                                                         iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color: functions.checklist(
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
+                                                        color:
+                                                            functions.checklist(
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'EDM',
+                                                            )!
+                                                            ? Color(0xFFDE0000)
+                                                            : Colors.white,
+                                                        textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          color:
+                                                              functions.checklist(
                                                                 AppState()
                                                                     .StyleMusic
                                                                     .toList(),
-                                                                'EDM')!
-                                                            ? Color(0xFFDE0000)
-                                                            : Colors.white,
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: functions.checklist(
-                                                                          AppState()
-                                                                              .StyleMusic
-                                                                              .toList(),
-                                                                          'EDM')!
-                                                                      ? Colors
-                                                                          .white
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontWeight,
-                                                                  fontStyle: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontStyle,
-                                                                ),
+                                                                'EDM',
+                                                              )!
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                        ),
                                                         borderSide: BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                            BorderRadius.circular(
+                                                              8.0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                AppState()
-                                                                    .StyleMusic
-                                                                    .toList(),
-                                                                'Jazz') ==
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'Jazz',
+                                                            ) ==
                                                             false) {
                                                           AppState()
                                                               .addToStyleMusic(
-                                                                  'Jazz');
+                                                                'Jazz',
+                                                              );
                                                           safeSetState(() {});
                                                         } else {
                                                           AppState()
                                                               .removeFromStyleMusic(
-                                                                  'Jazz');
+                                                                'Jazz',
+                                                              );
                                                           safeSetState(() {});
                                                         }
                                                       },
                                                       text: AppLocalizations.of(
-                                                              context)!
-                                                          .k_3kdu52bs,
+                                                        context,
+                                                      )!.k_3kdu52bs,
                                                       options: MundayButtonOptions(
                                                         height: 25.0,
-                                                        padding:
-                                                            EdgeInsets.all(0.0),
+                                                        padding: EdgeInsets.all(
+                                                          0.0,
+                                                        ),
                                                         iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color: functions.checklist(
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
+                                                        color:
+                                                            functions.checklist(
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'Jazz',
+                                                            )!
+                                                            ? Color(0xFFDE0000)
+                                                            : Colors.white,
+                                                        textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          color:
+                                                              functions.checklist(
                                                                 AppState()
                                                                     .StyleMusic
                                                                     .toList(),
-                                                                'Jazz')!
-                                                            ? Color(0xFFDE0000)
-                                                            : Colors.white,
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: functions.checklist(
-                                                                          AppState()
-                                                                              .StyleMusic
-                                                                              .toList(),
-                                                                          'Jazz')!
-                                                                      ? Colors
-                                                                          .white
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontWeight,
-                                                                  fontStyle: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontStyle,
-                                                                ),
+                                                                'Jazz',
+                                                              )!
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                        ),
                                                         borderSide: BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                            BorderRadius.circular(
+                                                              8.0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                10.0, 0.0),
+                                                        EdgeInsetsDirectional.fromSTEB(
+                                                          0.0,
+                                                          0.0,
+                                                          10.0,
+                                                          0.0,
+                                                        ),
                                                     child: MundayButton(
                                                       onPressed: () async {
                                                         if (functions.checklist(
-                                                                AppState()
-                                                                    .StyleMusic
-                                                                    .toList(),
-                                                                'Rock') ==
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'Rock',
+                                                            ) ==
                                                             false) {
                                                           AppState()
                                                               .addToStyleMusic(
-                                                                  'Rock');
+                                                                'Rock',
+                                                              );
                                                           safeSetState(() {});
                                                         } else {
                                                           AppState()
                                                               .removeFromStyleMusic(
-                                                                  'Rock');
+                                                                'Rock',
+                                                              );
                                                           safeSetState(() {});
                                                         }
                                                       },
                                                       text: AppLocalizations.of(
-                                                              context)!
-                                                          .k_22jap4o5,
+                                                        context,
+                                                      )!.k_22jap4o5,
                                                       options: MundayButtonOptions(
                                                         height: 25.0,
-                                                        padding:
-                                                            EdgeInsets.all(0.0),
+                                                        padding: EdgeInsets.all(
+                                                          0.0,
+                                                        ),
                                                         iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color: functions.checklist(
+                                                            EdgeInsetsDirectional.fromSTEB(
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0,
+                                                            ),
+                                                        color:
+                                                            functions.checklist(
+                                                              AppState()
+                                                                  .StyleMusic
+                                                                  .toList(),
+                                                              'Rock',
+                                                            )!
+                                                            ? Color(0xFFDE0000)
+                                                            : Colors.white,
+                                                        textStyle: Theme.of(context).textTheme.titleSmall!.override(
+                                                          font: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .fontStyle,
+                                                          ),
+                                                          color:
+                                                              functions.checklist(
                                                                 AppState()
                                                                     .StyleMusic
                                                                     .toList(),
-                                                                'Rock')!
-                                                            ? Color(0xFFDE0000)
-                                                            : Colors.white,
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .openSans(
-                                                                    fontWeight: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontWeight,
-                                                                    fontStyle: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: functions.checklist(
-                                                                          AppState()
-                                                                              .StyleMusic
-                                                                              .toList(),
-                                                                          'Rock')!
-                                                                      ? Colors
-                                                                          .white
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontWeight,
-                                                                  fontStyle: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .fontStyle,
-                                                                ),
+                                                                'Rock',
+                                                              )!
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .fontStyle,
+                                                        ),
                                                         borderSide: BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                            BorderRadius.circular(
+                                                              8.0,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
@@ -1839,20 +1992,20 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                   child: Text(
                     AppLocalizations.of(context)!.k_ms1qtkw9,
                     style: Theme.of(context).textTheme.bodyMedium!.override(
-                          font: GoogleFonts.openSans(
-                            fontWeight: FontWeight.w500,
-                            fontStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontStyle,
-                          ),
-                          color: Color(0x98FFFFFF),
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w500,
-                          fontStyle:
-                              Theme.of(context).textTheme.bodyMedium!.fontStyle,
-                        ),
+                      font: GoogleFonts.openSans(
+                        fontWeight: FontWeight.w500,
+                        fontStyle: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.fontStyle,
+                      ),
+                      color: Color(0x98FFFFFF),
+                      fontSize: 15.0,
+                      letterSpacing: 1.0,
+                      fontWeight: FontWeight.w500,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.fontStyle,
+                    ),
                   ),
                 ),
               ),
@@ -1878,16 +2031,19 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                             ),
                           ),
                         ).animateOnPageLoad(
-                            animationsMap['containerOnPageLoadAnimation']!),
+                          animationsMap['containerOnPageLoadAnimation']!,
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 12.0, 20.0, 50.0),
+                            20.0,
+                            12.0,
+                            20.0,
+                            50.0,
+                          ),
                           child: Container(
                             width: double.infinity,
                             height: 65.0,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
-                            ),
+                            decoration: BoxDecoration(color: Color(0x00FFFFFF)),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -1903,22 +2059,26 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                       Navigator.pop(context);
                                     },
                                     child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
+                                      width:
+                                          MediaQuery.sizeOf(context).width *
                                           0.7,
                                       height: double.infinity,
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
                                             Color(0xFFFF0000),
-                                            Color(0xFFC10000)
+                                            Color(0xFFC10000),
                                           ],
                                           stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
+                                          begin: AlignmentDirectional(
+                                            0.0,
+                                            -1.0,
+                                          ),
                                           end: AlignmentDirectional(0, 1.0),
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(45.0),
+                                        borderRadius: BorderRadius.circular(
+                                          45.0,
+                                        ),
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -1926,8 +2086,9 @@ class _FilterWidgetState extends ConsumerState<FilterWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            AppLocalizations.of(context)!
-                                                .k_zqtx4gzg,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.k_zqtx4gzg,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!

@@ -19,11 +19,9 @@ Future<String?> uploadData(
     }
 
     final fileOptions = FileOptions(contentType: mime(path), upsert: true);
-    await Supabase.instance.client.storage.from(resolvedBucket).uploadBinary(
-          path,
-          data,
-          fileOptions: fileOptions,
-        );
+    await Supabase.instance.client.storage
+        .from(resolvedBucket)
+        .uploadBinary(path, data, fileOptions: fileOptions);
     return Supabase.instance.client.storage
         .from(resolvedBucket)
         .getPublicUrl(path);

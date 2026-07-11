@@ -18,7 +18,8 @@ class PayreservenormdayPage extends ConsumerStatefulWidget {
       _PayreservenormdayWidgetState();
 }
 
-class _PayreservenormdayWidgetState extends ConsumerState<PayreservenormdayPage> {
+class _PayreservenormdayWidgetState
+    extends ConsumerState<PayreservenormdayPage> {
   late PayreservenormdayModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -47,42 +48,40 @@ class _PayreservenormdayWidgetState extends ConsumerState<PayreservenormdayPage>
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor:
-            Theme.of(context).extension<CustomColors>()!.primaryBackground,
-        appBar: responsiveVisibility(
-          context: context,
-          tablet: false,
-          tabletLandscape: false,
-          desktop: false,
-        )
+        backgroundColor: Theme.of(
+          context,
+        ).extension<CustomColors>()!.primaryBackground,
+        appBar:
+            responsiveVisibility(
+              context: context,
+              tablet: false,
+              tabletLandscape: false,
+              desktop: false,
+            )
             ? AppBar(
                 backgroundColor: Color(0xFFFF0003),
                 automaticallyImplyLeading: false,
                 title: Text(
                   AppLocalizations.of(context)!.k_glw1miga,
                   style: Theme.of(context).textTheme.headlineMedium!.override(
-                        font: GoogleFonts.roboto(
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontWeight,
-                          fontStyle: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontStyle,
-                        ),
-                        color: Colors.white,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        fontWeight: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontWeight,
-                        fontStyle: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontStyle,
-                      ),
+                    font: GoogleFonts.roboto(
+                      fontWeight: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontWeight,
+                      fontStyle: Theme.of(
+                        context,
+                      ).textTheme.headlineMedium!.fontStyle,
+                    ),
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    letterSpacing: 0.0,
+                    fontWeight: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontWeight,
+                    fontStyle: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.fontStyle,
+                  ),
                 ),
                 actions: [],
                 centerTitle: false,
@@ -91,10 +90,7 @@ class _PayreservenormdayWidgetState extends ConsumerState<PayreservenormdayPage>
             : null,
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [],
-          ),
+          child: Column(mainAxisSize: MainAxisSize.max, children: []),
         ),
       ),
     );

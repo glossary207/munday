@@ -11,7 +11,6 @@ import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
-
 import 'package:ff_commons/flutter_flow/lat_lng.dart';
 
 export 'package:ff_commons/flutter_flow/lat_lng.dart';
@@ -265,7 +264,7 @@ extension IterableExt<T> on Iterable<T> {
 }
 
 void setDarkModeSetting(BuildContext context, ThemeMode themeMode) {
-    // MyApp.of(context).setThemeMode(themeMode);
+  // MyApp.of(context).setThemeMode(themeMode);
 }
 
 void showSnackbar(
@@ -443,7 +442,6 @@ extension ListUniqueExt<T> on Iterable<T> {
   }
 }
 
-String getCurrentRoute(BuildContext context) =>
-    context.mounted ? '' : '';
+String getCurrentRoute(BuildContext context) => context.mounted ? '' : '';
 List<String> getCurrentRouteStack(BuildContext context) =>
     context.mounted ? [] : [];
