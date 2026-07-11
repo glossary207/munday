@@ -1155,7 +1155,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                                               children: [
                                                                                 Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisSize: MainAxisSize.min,
                                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                                   children: [
                                                                                     Container(
@@ -1203,7 +1203,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                   ],
                                                                                 ),
                                                                                 Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisSize: MainAxisSize.min,
                                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                                   children: [
                                                                                     Text(
@@ -1375,7 +1375,7 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                 CrossAxisAlignment.end,
                                                                             children: [
                                                                               Column(
-                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisSize: MainAxisSize.min,
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Container(
@@ -1416,11 +1416,11 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                                                 ],
                                                                               ),
                                                                               Row(
-                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisSize: MainAxisSize.min,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Column(
-                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    mainAxisSize: MainAxisSize.min,
                                                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                                                     children: [
                                                                                       Text(
