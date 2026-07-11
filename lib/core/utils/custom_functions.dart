@@ -1106,6 +1106,7 @@ List<EventsRecord>? dataEventDocRef(
   LatLng? userLocation,
   List<SupabaseDocRef>? loveEvents,
   List<String>? musicstyle,
+  List<String>? styleVenues,
   List<EventsRecord>? events,
   bool? searchDate,
   DateTime? dateselect,
@@ -1114,107 +1115,35 @@ List<EventsRecord>? dataEventDocRef(
     return null;
   }
 
-  final safeMaxDistance = maxDistance ?? 500.0;
-  final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
+  // Call dataEvent with map/search mode to bypass pagination and ignore love filter for standard sort
+  final dynList = dataEvent(
+    maxDistance,
+    events,
+    userLocation,
+    musicstyle,
+    loveEvents,
+    styleVenues,
+    1,
+    true, // searchMap = true bypasses pagination
+    searchDate,
+    dateselect,
+    false, // alldata = false
+    false, // loveEventonly = false
+  );
 
-  final bool hasValidLocation =
-      !(safeUserLocation.latitude == 0.0 && safeUserLocation.longitude == 0.0);
+  if (dynList == null) return null;
 
-  // Function to calculate approximate distance between two LatLng points using Euclidean formula
-  double calculateDistance(LatLng start, LatLng end) {
-    const double degreeToKm = 111.32; // 1 degree of latitude ~ 111.32 km
-
-    // Difference in degrees
-    final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon =
-        (end.longitude - start.longitude) *
-        degreeToKm *
-        math.cos(start.latitude * math.pi / 180);
-
-    // Euclidean distance
-    final distance = math.sqrt(dLat * dLat + dLon * dLon);
-
-    // Return distance rounded to 2 decimal places
-    return double.parse(distance.toStringAsFixed(2));
-  }
-
-  // Filter events based on distance, musicstyle, and date
-  List<EventsRecord> filteredEvents = events.where((event) {
-    final bool eventHasLocation = event.location != null;
-    double distance = 0.0;
-
-    if (eventHasLocation && hasValidLocation) {
-      LatLng eventLocation = LatLng(
-        event.location!.latitude,
-        event.location!.longitude,
-      );
-      distance = calculateDistance(safeUserLocation, eventLocation);
-    }
-
-    // Check distance and musicstyle
-    bool matchesMusicStyle =
-        musicstyle == null ||
-        musicstyle.isEmpty ||
-        musicstyle.contains(event.musicstyle);
-
-    // Date filtering
-    bool matchesDate = true;
-    if (searchDate == true && dateselect != null && event.date != null) {
-      DateTime eventDate = DateTime(
-        event.date!.year,
-        event.date!.month,
-        event.date!.day,
-      );
-      DateTime selectedDate = DateTime(
-        dateselect.year,
-        dateselect.month,
-        dateselect.day,
-      );
-      matchesDate = eventDate == selectedDate;
-    }
-
-    final bool withinDistance =
-        !hasValidLocation || !eventHasLocation || distance <= safeMaxDistance;
-
-    return withinDistance && matchesMusicStyle && matchesDate;
-  }).toList();
-
-  // Separate loveEvents and non-loveEvents
-  List<EventsRecord> loveEventsList = [];
-  List<EventsRecord> nonLoveEventsList = [];
-
-  for (var event in filteredEvents) {
-    // Check if loveEvents contains the reference of the event
-    if (loveEvents != null && loveEvents.contains(event.reference)) {
-      loveEventsList.add(event);
-    } else {
-      nonLoveEventsList.add(event);
+  List<EventsRecord> result = [];
+  for (var item in dynList) {
+    if (item['doc_ref'] != null) {
+      try {
+        final rec = events.firstWhere((e) => e.reference == item['doc_ref']);
+        result.add(rec);
+      } catch (_) {}
     }
   }
 
-  // Sort both lists by distance
-  loveEventsList.sort((a, b) {
-    LatLng aLocation = LatLng(a.location!.latitude, a.location!.longitude);
-    LatLng bLocation = LatLng(b.location!.latitude, b.location!.longitude);
-    return calculateDistance(
-      safeUserLocation,
-      aLocation,
-    ).compareTo(calculateDistance(safeUserLocation, bLocation));
-  });
-
-  nonLoveEventsList.sort((a, b) {
-    LatLng aLocation = LatLng(a.location!.latitude, a.location!.longitude);
-    LatLng bLocation = LatLng(b.location!.latitude, b.location!.longitude);
-    return calculateDistance(
-      safeUserLocation,
-      aLocation,
-    ).compareTo(calculateDistance(safeUserLocation, bLocation));
-  });
-
-  // Combine the lists with loveEvents first
-  List<EventsRecord> sortedEvents = [...loveEventsList, ...nonLoveEventsList];
-
-  return sortedEvents;
+  return result;
 }
 
 String? addName(List<String>? names) {
@@ -1301,101 +1230,31 @@ List<VenuesRecord>? dataVenuseDocref(
     return null;
   }
 
-  final safeMaxDistance = maxDistance ?? 500.0;
-  final safeUserLocation = userLocation ?? LatLng(0.0, 0.0);
+  final dynList = dataVenuse(
+    venues,
+    maxDistance,
+    loveVenues,
+    userLocation,
+    styleMusicfilter,
+    styleVenusefilter,
+    1,
+    true, // searchMap = true bypasses pagination
+    false, // loveVenuseOnly = false
+  );
 
-  final bool hasValidLocation =
-      !(safeUserLocation.latitude == 0.0 && safeUserLocation.longitude == 0.0);
+  if (dynList == null) return null;
 
-  // ฟังก์ชันสำหรับคำนวณระยะห่างระหว่างสองจุด LatLng โดยใช้สูตร Euclidean
-  double calculateDistance(LatLng start, LatLng end) {
-    const double degreeToKm = 111.32; // 1 degree ของละติจูด ~ 111.32 กม.
-
-    // ความแตกต่างขององศา
-    final dLat = (end.latitude - start.latitude) * degreeToKm;
-    final dLon =
-        (end.longitude - start.longitude) *
-        degreeToKm *
-        math.cos(start.latitude * math.pi / 180);
-
-    // ระยะทางแบบ Euclidean
-    final distance = math.sqrt(dLat * dLat + dLon * dLon);
-
-    // คืนค่าระยะทางที่ปัดเศษทศนิยมสองตำแหน่ง
-    return double.parse(distance.toStringAsFixed(2));
-  }
-
-  // กรองเวนิวส์ตามระยะทางและสไตล์
-  List<VenuesRecord> filteredVenues = venues.where((venue) {
-    final bool venueHasLocation = venue.position != null;
-    double distance = 0.0;
-
-    if (venueHasLocation && hasValidLocation) {
-      LatLng venueLocation = LatLng(
-        venue.position!.latitude,
-        venue.position!.longitude,
-      );
-      distance = calculateDistance(safeUserLocation, venueLocation);
-    }
-
-    // ตรวจสอบว่าเวนิวส์ตรงกับสไตล์เพลงที่เลือก
-    bool matchesMusicStyle =
-        styleMusicfilter == null ||
-        styleMusicfilter.isEmpty ||
-        styleMusicfilter.any(
-          (style) => venue.styleMusic?.contains(style) ?? false,
-        );
-
-    // ตรวจสอบว่าเวนิวส์ตรงกับสไตล์เวนิวส์ที่เลือก
-    bool matchesVenueStyle =
-        styleVenusefilter == null ||
-        styleVenusefilter.isEmpty ||
-        styleVenusefilter.any(
-          (style) => venue.styleVenuse?.contains(style) ?? false,
-        );
-
-    final bool withinDistance =
-        !hasValidLocation || !venueHasLocation || distance <= safeMaxDistance;
-
-    return withinDistance && matchesMusicStyle && matchesVenueStyle;
-  }).toList();
-
-  // แยกเวนิวส์ที่อยู่ในรายการโปรดและไม่อยู่ในรายการโปรด
-  List<VenuesRecord> loveVenuesList = [];
-  List<VenuesRecord> nonLoveVenuesList = [];
-
-  for (var venue in filteredVenues) {
-    // ตรวจสอบว่า loveVenues มี reference ของเวนิวส์นี้หรือไม่
-    if (loveVenues != null && loveVenues.contains(venue.reference)) {
-      loveVenuesList.add(venue);
-    } else {
-      nonLoveVenuesList.add(venue);
+  List<VenuesRecord> result = [];
+  for (var item in dynList) {
+    if (item['doc_ref'] != null) {
+      try {
+        final rec = venues.firstWhere((e) => e.reference == item['doc_ref']);
+        result.add(rec);
+      } catch (_) {}
     }
   }
 
-  // จัดเรียงทั้งสองรายการตามระยะทาง
-  loveVenuesList.sort((a, b) {
-    LatLng aLocation = LatLng(a.position!.latitude, a.position!.longitude);
-    LatLng bLocation = LatLng(b.position!.latitude, b.position!.longitude);
-    return calculateDistance(
-      safeUserLocation,
-      aLocation,
-    ).compareTo(calculateDistance(safeUserLocation, bLocation));
-  });
-
-  nonLoveVenuesList.sort((a, b) {
-    LatLng aLocation = LatLng(a.position!.latitude, a.position!.longitude);
-    LatLng bLocation = LatLng(b.position!.latitude, b.position!.longitude);
-    return calculateDistance(
-      safeUserLocation,
-      aLocation,
-    ).compareTo(calculateDistance(safeUserLocation, bLocation));
-  });
-
-  // รวมรายการโดยมีเวนิวส์ที่ชอบอยู่ก่อน
-  List<VenuesRecord> sortedVenues = [...loveVenuesList, ...nonLoveVenuesList];
-
-  return sortedVenues;
+  return result;
 }
 
 bool? checkdate(DateTime? date1, DateTime? date2) {

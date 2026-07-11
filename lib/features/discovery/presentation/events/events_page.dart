@@ -66,10 +66,14 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  Stream<List<EventsRecord>>? _eventsStream;
+
   @override
   void initState() {
     super.initState();
     _model = EventsModel()..internalInit(context);
+
+    _eventsStream = queryEventsRecord();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -317,7 +321,7 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
             child: Stack(
               children: [
                 StreamBuilder<List<EventsRecord>>(
-                  stream: queryEventsRecord(),
+                  stream: _eventsStream,
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (snapshot.hasError) {
@@ -386,6 +390,7 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                         (currentUserDocument?.loveEvent ?? [])
                                             .toList(),
                                         _model.stylemusic.toList(),
+                                        context.appState.StyleVenuse.toList(),
                                         homeBodyEventsRecordList
                                             .where(
                                               (e) => functions.showsearch(
@@ -431,6 +436,7 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                           .toList(),
                                                       _model.stylemusic
                                                           .toList(),
+                                                      context.appState.StyleVenuse.toList(),
                                                       homeBodyEventsRecordList
                                                           .where(
                                                             (
@@ -3722,9 +3728,11 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                                           if (_model.mapOn) {
                                                             _model.mapOn =
                                                                 false;
+                                                            context.appState.update(() { context.appState.mapModeOn = false; });
                                                             safeSetState(() {});
                                                           } else {
                                                             _model.mapOn = true;
+                                                            context.appState.update(() { context.appState.mapModeOn = true; });
                                                             safeSetState(() {});
                                                           }
                                                         },
@@ -6130,9 +6138,11 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
                                             onTap: () async {
                                               if (_model.mapOn) {
                                                 _model.mapOn = false;
+                                                context.appState.update(() { context.appState.mapModeOn = false; });
                                                 safeSetState(() {});
                                               } else {
                                                 _model.mapOn = true;
+                                                context.appState.update(() { context.appState.mapModeOn = true; });
                                                 safeSetState(() {});
                                               }
 

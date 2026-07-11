@@ -70,7 +70,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
         try {
           final userRes = await Supabase.instance.client
               .from('users')
-              .select('id, display_name, photo_url, online')
+              .select('id, display_name, photo_url')
               .eq('id', uid)
               .maybeSingle();
           if (userRes != null) {
@@ -80,7 +80,7 @@ class _MainChatWidgetState extends ConsumerState<MainChatPage>
               'photo':
                   userRes['photo_url'] ??
                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/teams/lkdKxh7NZs2rc2gAfQ51/assets/r0tk3qfmv01q/profile_Small.png',
-              'online': userRes['online'] ?? false,
+              'online': false,
             });
           }
         } catch (e) {

@@ -430,11 +430,12 @@ class _MapVenuseState extends ConsumerState<MapVenuse>
 
           final markerIcon = isSelected
               ? (_customMarkerSelectedIcon ??
+                    _customMarkerIcon ??
                     gmf.BitmapDescriptor.defaultMarker)
               : (_customMarkerIcon ?? gmf.BitmapDescriptor.defaultMarker);
 
           final marker = gmf.Marker(
-            markerId: gmf.MarkerId(venuse.reference.id),
+            markerId: gmf.MarkerId('${venuse.reference.id}_${isSelected ? 'sel' : 'unsel'}'),
             position: position,
             icon: markerIcon,
             zIndex: isSelected

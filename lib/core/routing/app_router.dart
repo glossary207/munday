@@ -126,14 +126,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
       ShellRoute(
         navigatorKey: GlobalKey<NavigatorState>(),
         builder: (context, state, child) {
+          final isMapModeOn = context.watchAppState.mapModeOn;
           final uri = state.uri.toString();
           final showNav =
+              (!isMapModeOn) && (
               uri == '/' ||
               (uri.startsWith('/main') && !uri.startsWith('/mainChat')) ||
               uri.startsWith('/events') ||
               uri.startsWith('/venues') ||
               uri.startsWith('/promotion') ||
-              uri.startsWith('/search');
+              uri.startsWith('/search'));
 
           if (!showNav) return child;
 

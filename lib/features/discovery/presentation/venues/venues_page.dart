@@ -2581,9 +2581,11 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                                       onTap: () async {
                                                         if (_model.map!) {
                                                           _model.map = false;
+                                                          context.appState.update(() { context.appState.mapModeOn = false; });
                                                           safeSetState(() {});
                                                         } else {
                                                           _model.map = true;
+                                                          context.appState.update(() { context.appState.mapModeOn = true; });
                                                           safeSetState(() {});
                                                         }
                                                       },
@@ -4860,9 +4862,11 @@ class _VenuesWidgetState extends ConsumerState<VenuesPage>
                                             onTap: () async {
                                               if (_model.map!) {
                                                 _model.map = false;
+                                                context.appState.update(() { context.appState.mapModeOn = false; });
                                                 safeSetState(() {});
                                               } else {
                                                 _model.map = true;
+                                                context.appState.update(() { context.appState.mapModeOn = true; });
                                                 safeSetState(() {});
                                               }
 

@@ -688,6 +688,13 @@ class AppState extends ChangeNotifier {
   void clearDatachatCache() => _datachatManager.clear();
   void clearDatachatCacheKey(String? uniqueKey) =>
       _datachatManager.clearRequest(uniqueKey);
+
+  bool _mapModeOn = false;
+  bool get mapModeOn => _mapModeOn;
+  set mapModeOn(bool value) {
+    _mapModeOn = value;
+    notifyListeners();
+  }
 }
 
 extension AppStateExtension on BuildContext {

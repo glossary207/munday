@@ -303,6 +303,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   }
 
   void _setupRealtime() {
+    if (currentUserUid == null) return;
+    
     _friendRequestChannel = Supabase.instance.client.channel(
       'public:friend_request',
     );
@@ -314,7 +316,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           filter: PostgresChangeFilter(
             type: PostgresChangeFilterType.eq,
             column: 'receiver_id',
-            value: currentUserUid,
+            value: currentUserUid!,
           ),
           callback: (payload) {
             _fetchFriendRequests();
@@ -332,6 +334,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   Future<void> _fetchFriendRequests() async {
     if (!mounted) return;
     setState(() => _loadingRequests = true);
+    
     try {
       final result = await Supabase.instance.client
           .from('friend_request')
@@ -368,16 +371,19 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           });
         }
       }
+
       if (mounted) {
         setState(() {
           _friendRequests = enriched;
           _loadingRequests = false;
         });
       }
-    } catch (e) {
+    } catch (_) {
       if (mounted) setState(() => _loadingRequests = false);
     }
   }
+
+
 
   Future<void> _respondToRequest(
     String requestId,
@@ -415,26 +421,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           debugPrint('Error inserting friend record: $e');
         }
 
-        // --- Create DM Chat Room if it doesn't exist ---
-        try {
-          final existingRoomsRes = await Supabase.instance.client
-              .from('chat_rooms')
-              .select('id')
-              .eq('group_chat', false)
-              .contains('user_ids', [currentUserUid, senderId]);
 
-          if (existingRoomsRes.isEmpty) {
-            await Supabase.instance.client.from('chat_rooms').insert({
-              'user_ids': [currentUserUid, senderId],
-              'created_time': DateTime.now().toIso8601String(),
-              'last_message_time': DateTime.now().toIso8601String(),
-              'group_chat': false,
-            });
-          }
-        } catch (e) {
-          debugPrint('Error creating chat room: $e');
-        }
-        // -----------------------------------------------
       }
 
       if (!mounted) return;
@@ -1898,8 +1885,7 @@ class NotificationBadgeButton extends ConsumerStatefulWidget {
       _NotificationBadgeButtonState();
 }
 
-class _NotificationBadgeButtonState
-    extends ConsumerState<NotificationBadgeButton> {
+class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButton> {
   int _pendingRequests = 0;
   RealtimeChannel? _subscription;
 
@@ -1911,6 +1897,8 @@ class _NotificationBadgeButtonState
   }
 
   void _setupRealtime() {
+    if (currentUserUid == null) return;
+    
     _subscription = Supabase.instance.client
         .channel('public:friend_request:receiver_id=eq.$currentUserUid')
         .onPostgresChanges(
@@ -1920,7 +1908,7 @@ class _NotificationBadgeButtonState
           filter: PostgresChangeFilter(
             type: PostgresChangeFilterType.eq,
             column: 'receiver_id',
-            value: currentUserUid,
+            value: currentUserUid!,
           ),
           callback: (payload) {
             _fetchCount();
@@ -1947,7 +1935,6 @@ class _NotificationBadgeButtonState
       }
     } catch (_) {}
   }
-
   @override
   Widget build(BuildContext context) {
     final unreadMsg = (currentUserDocument?.usermassage ?? []).length;

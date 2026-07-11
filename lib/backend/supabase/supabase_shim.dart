@@ -144,6 +144,17 @@ class SupabaseDocRef {
 
   SupabaseDocRef(this.path, this.id);
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SupabaseDocRef &&
+          runtimeType == other.runtimeType &&
+          path == other.path &&
+          id == other.id;
+
+  @override
+  int get hashCode => path.hashCode ^ id.hashCode;
+
   // Parent is the SupabaseCollectionRef that contains this document
   SupabaseCollectionRef get parent => SupabaseCollectionRef(path);
 

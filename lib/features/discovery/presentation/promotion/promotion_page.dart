@@ -1348,6 +1348,7 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                   onTap: () async {
                                                     if (_model.mapon!) {
                                                       _model.mapon = false;
+                                                      context.appState.update(() { context.appState.mapModeOn = false; });
                                                       safeSetState(() {});
                                                     } else {
                                                       AppState()
@@ -1392,6 +1393,7 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                           ?.reference;
                                                       safeSetState(() {});
                                                       _model.mapon = true;
+                                                      context.appState.update(() { context.appState.mapModeOn = true; });
                                                       safeSetState(() {});
                                                     }
                                                   },
@@ -3541,6 +3543,7 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                       onTap: () async {
                                                         if (_model.mapon!) {
                                                           _model.mapon = false;
+                                                          context.appState.update(() { context.appState.mapModeOn = false; });
                                                           safeSetState(() {});
                                                         } else {
                                                           AppState()
@@ -3585,6 +3588,7 @@ class _PromotionWidgetState extends ConsumerState<PromotionPage>
                                                               ?.reference;
                                                           safeSetState(() {});
                                                           _model.mapon = true;
+                                                          context.appState.update(() { context.appState.mapModeOn = true; });
                                                           safeSetState(() {});
                                                         }
                                                       },
