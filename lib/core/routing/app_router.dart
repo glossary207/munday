@@ -168,7 +168,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                     'roomref',
                     ParamType.SupabaseDocRef,
                     isList: false,
-                    collectionNamePath: ['room'],
+                    collectionNamePath: ['chat_rooms'],
                   ),
                   name: params.getParam('name', ParamType.String),
                   online: params.getParam('online', ParamType.bool),

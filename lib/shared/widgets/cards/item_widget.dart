@@ -431,8 +431,7 @@ class _ItemWidgetState extends ConsumerState<ItemWidget>
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Expanded(
-                                  child: Container(
+                                Container(
                                     width: double.infinity,
                                     height: 330.0,
                                     child: Stack(
@@ -1218,7 +1217,6 @@ class _ItemWidgetState extends ConsumerState<ItemWidget>
                                       ],
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           ),

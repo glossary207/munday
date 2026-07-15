@@ -132,6 +132,11 @@ dependencies:
   liquid_glass_easy: ^3.2.2
   firebase_core: ^4.11.0
   firebase_messaging: ^16.4.1
+  liquid_glass_widgets: ^0.21.4
+  flutter_swiper_plus: ^2.0.4
+  infinite_carousel: ^1.1.1
+  stacked_card_carousel: ^0.0.4
+  coverflow_carousel: ^2.0.1
 dependency_overrides:
   http: 1.4.0
   uuid: ^4.0.0

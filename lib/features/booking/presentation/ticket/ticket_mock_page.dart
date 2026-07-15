@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
@@ -22,6 +20,7 @@ class MockTicket {
   final int quantity;
   final TicketStatus status;
   final bool isEvent;
+  final String? logo;
 
   const MockTicket({
     required this.nameEvent,
@@ -36,6 +35,7 @@ class MockTicket {
     required this.quantity,
     required this.status,
     this.isEvent = true,
+    this.logo,
   });
 }
 
@@ -44,8 +44,7 @@ final List<MockTicket> kMockTickets = [
     nameEvent: 'NEON NIGHT FESTIVAL',
     nameVenues: 'ONYX Bangkok',
     bg: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=900',
-    poster:
-        'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=900',
+    poster: 'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=900',
     dateEvent: DateTime(2026, 6, 14),
     timeEvent: '22:00',
     zone: 'VIP',
@@ -55,60 +54,34 @@ final List<MockTicket> kMockTickets = [
     status: TicketStatus.upcoming,
   ),
   MockTicket(
-    nameEvent: 'DEEP HOUSE SATURDAY',
-    nameVenues: 'Levels Club & Lounge',
-    bg: 'https://images.unsplash.com/photo-1571266028243-d220c6a3bcf4?w=900',
-    poster:
-        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900',
+    nameEvent: 'THE GLASS HOUSE',
+    nameVenues: 'Pattaya',
+    bg: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900',
+    poster: '',
     dateEvent: DateTime(2026, 6, 21),
-    timeEvent: '23:00',
+    timeEvent: '18:00',
     zone: 'REGULAR',
-    seatCode: 'B-042',
-    price: '800',
-    quantity: 1,
-    status: TicketStatus.upcoming,
-  ),
-  MockTicket(
-    nameEvent: 'RED PARTY EXCLUSIVE',
-    nameVenues: 'Route 66 Club',
-    bg: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=900',
-    poster:
-        'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=900',
-    dateEvent: DateTime(2026, 5, 5),
-    timeEvent: '21:30',
-    zone: 'STANDARD',
-    seatCode: 'C-007',
-    price: '500',
-    quantity: 3,
-    status: TicketStatus.used,
-  ),
-  MockTicket(
-    nameEvent: 'MIDNIGHT GROOVE',
-    nameVenues: 'Sing Sing Theater',
-    bg: 'https://images.unsplash.com/photo-1540039155733-5bb30b4f9c17?w=900',
-    poster:
-        'https://images.unsplash.com/photo-1540039155733-5bb30b4f9c17?w=900',
-    dateEvent: DateTime(2026, 7, 12),
-    timeEvent: '22:30',
-    zone: 'VIP TABLE',
-    seatCode: 'T-03',
-    price: '2,500',
+    seatCode: 'T-042',
+    price: '0',
     quantity: 4,
     status: TicketStatus.upcoming,
+    isEvent: false,
+    logo: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200',
   ),
   MockTicket(
-    nameEvent: 'TECHNO UNDERGROUND',
-    nameVenues: 'Glow Bangkok',
-    bg: 'https://images.unsplash.com/photo-1598387993441-a364f854cfed?w=900',
-    poster:
-        'https://images.unsplash.com/photo-1598387993441-a364f854cfed?w=900',
-    dateEvent: DateTime(2026, 4, 20),
-    timeEvent: '00:00',
-    zone: 'FLOOR',
-    seatCode: 'F-099',
-    price: '350',
-    quantity: 1,
-    status: TicketStatus.cancelled,
+    nameEvent: 'SUSHI DEN (RESERVATION)',
+    nameVenues: 'Siam Paragon',
+    bg: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=900',
+    poster: '',
+    dateEvent: DateTime(2026, 7, 12),
+    timeEvent: '19:30',
+    zone: 'TABLE',
+    seatCode: 'S-03',
+    price: '0',
+    quantity: 2,
+    status: TicketStatus.upcoming,
+    isEvent: false,
+    logo: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=200',
   ),
 ];
 
@@ -124,96 +97,84 @@ class TicketMockPage extends ConsumerStatefulWidget {
   ConsumerState<TicketMockPage> createState() => _TicketMockWidgetState();
 }
 
-class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _TicketMockWidgetState extends ConsumerState<TicketMockPage> {
+  int _currentIndex = 0;
+  final CarouselSliderController _carouselController = CarouselSliderController();
 
-  static const _tabs = ['ทั้งหมด', 'กำลังมา', 'ผ่านมาแล้ว'];
-
-  List<MockTicket> get _filtered {
-    switch (_tabController.index) {
-      case 1:
-        return kMockTickets
-            .where((t) => t.status == TicketStatus.upcoming)
-            .toList();
-      case 2:
-        return kMockTickets
-            .where(
-              (t) =>
-                  t.status == TicketStatus.used ||
-                  t.status == TicketStatus.cancelled,
-            )
-            .toList();
-      default:
-        return kMockTickets;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this)
-      ..addListener(() => setState(() {}));
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  List<MockTicket> get _tickets {
+    return kMockTickets.where((t) => t.status == TicketStatus.upcoming).toList();
   }
 
   // ── helpers ──────────────────────────────────────────────────────────────
 
   static const _monthTH = [
-    'ม.ค.',
-    'ก.พ.',
-    'มี.ค.',
-    'เม.ย.',
-    'พ.ค.',
-    'มิ.ย.',
-    'ก.ค.',
-    'ส.ค.',
-    'ก.ย.',
-    'ต.ค.',
-    'พ.ย.',
-    'ธ.ค.',
+    'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
+    'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.',
   ];
-  static const _dayTH = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];
 
   String _day(DateTime d) => d.day.toString();
   String _month(DateTime d) => _monthTH[d.month - 1];
   String _year(DateTime d) => (d.year + 543).toString().substring(2);
-  String _weekday(DateTime d) => _dayTH[d.weekday - 1];
+
+  Color _statusColor(MockTicket ticket) {
+    switch (ticket.status) {
+      case TicketStatus.upcoming:
+        return const Color(0xFF00C853);
+      case TicketStatus.used:
+        return const Color(0xFF888888);
+      case TicketStatus.cancelled:
+        return const Color(0xFFFF4444);
+    }
+  }
+
+  String _statusLabel(MockTicket ticket) {
+    switch (ticket.status) {
+      case TicketStatus.upcoming:
+        return 'VALID';
+      case TicketStatus.used:
+        return 'USED';
+      case TicketStatus.cancelled:
+        return 'CANCELLED';
+    }
+  }
 
   // ── build ────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
-    final tickets = _filtered;
+    final tickets = _tickets;
+    final safeIndex = (_currentIndex < tickets.length) ? _currentIndex : 0;
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context),
-            _buildTabBar(context),
+            _buildHeader(context, tickets.length),
             Expanded(
               child: tickets.isEmpty
                   ? _buildEmpty(context)
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                      itemCount: tickets.length,
-                      itemBuilder: (ctx, i) => Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: _TicketCard(
-                          ticket: tickets[i],
-                          day: _day(tickets[i].dateEvent),
-                          month: _month(tickets[i].dateEvent),
-                          year: _year(tickets[i].dateEvent),
-                          weekday: _weekday(tickets[i].dateEvent),
+                  : Column(
+                      children: [
+                        const SizedBox(height: 16),
+                        _buildCarousel(context, tickets),
+                        const SizedBox(height: 24),
+                        _buildTicketTitles(tickets[safeIndex]),
+                        const SizedBox(height: 32),
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFD9D9D9),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(32),
+                                topRight: Radius.circular(32),
+                              ),
+                            ),
+                            child: _buildDetailsArea(tickets[safeIndex]),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
             ),
           ],
@@ -222,13 +183,9 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    final upcoming = kMockTickets
-        .where((t) => t.status == TicketStatus.upcoming)
-        .length;
-
+  Widget _buildHeader(BuildContext context, int count) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 8, 16, 0),
+      padding: const EdgeInsets.fromLTRB(12, 8, 16, 16),
       child: Row(
         children: [
           // Back button
@@ -264,7 +221,7 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
                   ),
                 ),
                 Text(
-                  '$upcoming upcoming',
+                  '$count upcoming',
                   style: GoogleFonts.openSans(
                     color: const Color(0xFFFF4444),
                     fontSize: 12,
@@ -292,7 +249,7 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  kMockTickets.length.toString(),
+                  count.toString(),
                   style: GoogleFonts.openSans(
                     color: Colors.white,
                     fontSize: 15,
@@ -303,42 +260,6 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTabBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 2),
-      child: Container(
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xFF111111),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF2A2A2A)),
-        ),
-        child: TabBar(
-          controller: _tabController,
-          indicator: BoxDecoration(
-            color: const Color(0xFFCC0000),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          indicatorSize: TabBarIndicatorSize.tab,
-          dividerColor: Colors.transparent,
-          splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-          labelStyle: GoogleFonts.openSans(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-          unselectedLabelStyle: GoogleFonts.openSans(
-            fontSize: 13,
-            fontWeight: FontWeight.w400,
-          ),
-          labelColor: Colors.white,
-          unselectedLabelColor: const Color(0xFF666666),
-          tabs: _tabs.map((t) => Tab(text: t)).toList(),
-        ),
       ),
     );
   }
@@ -355,7 +276,7 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
           ),
           const SizedBox(height: 16),
           Text(
-            'ไม่มี Ticket ในหมวดนี้',
+            'ไม่มี Ticket ในขณะนี้',
             style: GoogleFonts.openSans(
               color: const Color(0xFF555555),
               fontSize: 16,
@@ -365,433 +286,234 @@ class _TicketMockWidgetState extends ConsumerState<TicketMockPage>
       ),
     );
   }
-}
 
-// ─── Ticket Card ──────────────────────────────────────────────────────────────
-
-class _TicketCard extends ConsumerWidget {
-  const _TicketCard({
-    required this.ticket,
-    required this.day,
-    required this.month,
-    required this.year,
-    required this.weekday,
-  });
-
-  final MockTicket ticket;
-  final String day;
-  final String month;
-  final String year;
-  final String weekday;
-
-  Color get _statusColor {
-    switch (ticket.status) {
-      case TicketStatus.upcoming:
-        return const Color(0xFF00C853);
-      case TicketStatus.used:
-        return const Color(0xFF888888);
-      case TicketStatus.cancelled:
-        return const Color(0xFFFF4444);
-    }
-  }
-
-  String get _statusLabel {
-    switch (ticket.status) {
-      case TicketStatus.upcoming:
-        return 'VALID';
-      case TicketStatus.used:
-        return 'USED';
-      case TicketStatus.cancelled:
-        return 'CANCELLED';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final dimmed = ticket.status != TicketStatus.upcoming;
-    return Opacity(
-      opacity: dimmed ? 0.6 : 1.0,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Column(
-          children: [_buildPosterHalf(context), _buildDetailHalf(context)],
+  Widget _buildCarousel(BuildContext context, List<MockTicket> tickets) {
+    return SizedBox(
+      height: 290,
+      width: double.infinity,
+      child: CarouselSlider.builder(
+        carouselController: _carouselController,
+        itemCount: tickets.length,
+        itemBuilder: (context, index, realIndex) {
+          return _buildCardImage(tickets[index]);
+        },
+        options: CarouselOptions(
+          height: 290,
+          viewportFraction: 0.65, // <--- Key to overlapping! 0.65 makes side cards slide behind the center
+          enlargeCenterPage: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.zoom, // Smooth scaling
+          enlargeFactor: 0.25, // How much the side cards shrink
+          enableInfiniteScroll: false,
+          onPageChanged: (index, reason) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
         ),
       ),
     );
   }
 
-  // ── Top half: event poster ────────────────────────────────────────────────
-
-  Widget _buildPosterHalf(BuildContext context) {
-    return SizedBox(
-      height: 160,
+  Widget _buildCardImage(MockTicket ticket) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black54,
+            blurRadius: 15,
+            offset: Offset(0, 8),
+          )
+        ],
+        image: DecorationImage(
+          image: NetworkImage(ticket.isEvent ? ticket.poster : ticket.bg),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Stack(
-        fit: StackFit.expand,
         children: [
-          // Background image
-          Image.network(
-            ticket.isEvent ? ticket.poster : ticket.bg,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) =>
-                Container(color: const Color(0xFF1A1A1A)),
-          ),
-          // Dark overlay
+          // Dark gradient overlay to make text/logo pop slightly
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0x99000000), Color(0xCC000000)],
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: const LinearGradient(
+                colors: [Colors.transparent, Colors.black45],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
           ),
-          // Content
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    // Status badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _statusColor.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: _statusColor.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: _statusColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            _statusLabel,
-                            style: GoogleFonts.openSans(
-                              color: _statusColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    // Quantity badge
-                    if (ticket.quantity > 1)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0x33FFFFFF),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'x${ticket.quantity}',
-                          style: GoogleFonts.openSans(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-                const Spacer(),
-                Text(
-                  ticket.nameEvent,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.3,
+          if (!ticket.isEvent && ticket.logo != null)
+            Positioned(
+              left: 12,
+              bottom: 12,
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2),
+                  image: DecorationImage(
+                    image: NetworkImage(ticket.logo!),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.location_on_rounded,
-                      color: Color(0xFFFF4444),
-                      size: 14,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      ticket.nameVenues,
-                      style: GoogleFonts.openSans(
-                        color: const Color(0xFFCCCCCC),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
         ],
       ),
     );
   }
 
-  // ── Perforated divider ────────────────────────────────────────────────────
+  Widget _buildTicketTitles(MockTicket ticket) {
+    return Column(
+      children: [
+        Text(
+          ticket.nameEvent,
+          style: GoogleFonts.openSans(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          ticket.nameVenues,
+          style: GoogleFonts.openSans(
+            color: const Color(0xFFAAAAAA),
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
 
-  // ── Bottom half: ticket details ───────────────────────────────────────────
-
-  Widget _buildDetailHalf(BuildContext context) {
-    return Container(
-      color: const Color(0xFF111111),
+  Widget _buildDetailsArea(MockTicket ticket) {
+    return Padding(
+      padding: const EdgeInsets.all(28.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Perforated edge
-          //          _PerforatedEdge(),
-          // Details row
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Date block
-                Container(
-                  width: 54,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFCC0000),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        weekday,
-                        style: GoogleFonts.openSans(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        day,
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          height: 1.1,
-                        ),
-                      ),
-                      Text(
-                        '$month $year',
-                        style: GoogleFonts.openSans(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 14),
-                // Middle info
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          _InfoChip(
-                            icon: Icons.star_rounded,
-                            label: ticket.zone,
-                            color: const Color(0xFFFFAA00),
-                          ),
-                          const SizedBox(width: 6),
-                          _InfoChip(
-                            icon: Icons.chair_alt_rounded,
-                            label: ticket.seatCode,
-                            color: const Color(0xFF888888),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.access_time_rounded,
-                            color: Color(0xFF666666),
-                            size: 14,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            ticket.timeEvent,
-                            style: GoogleFonts.openSans(
-                              color: const Color(0xFF888888),
-                              fontSize: 13,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            '฿${ticket.price}',
-                            style: GoogleFonts.openSans(
-                              color: const Color(0xFFFF4444),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                // QR button
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1A1A1A),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF333333)),
-                    ),
-                    child: const Icon(
-                      Icons.qr_code_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildDetailItem('Date', '${_day(ticket.dateEvent)} ${_month(ticket.dateEvent)} ${_year(ticket.dateEvent)}'),
+              _buildDetailItem('Time', ticket.timeEvent),
+            ],
           ),
+          const SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildDetailItem('Zone', ticket.zone),
+              _buildDetailItem('Seat', ticket.seatCode),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildDetailItem('Price', ticket.price == '0' ? 'Free' : '฿${ticket.price}'),
+              _buildDetailItem('Quantity', 'x${ticket.quantity}'),
+            ],
+          ),
+          const Spacer(),
+          // Status indicator and QR button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Status',
+                    style: GoogleFonts.openSans(
+                      color: const Color(0xFF666666),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: _statusColor(ticket).withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: _statusColor(ticket), width: 1.5),
+                    ),
+                    child: Text(
+                      _statusLabel(ticket),
+                      style: GoogleFonts.openSans(
+                        color: _statusColor(ticket),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.qr_code_rounded,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
-}
 
-// ─── Info Chip ────────────────────────────────────────────────────────────────
-
-class _InfoChip extends ConsumerWidget {
-  const _InfoChip({
-    required this.icon,
-    required this.label,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+  Widget _buildDetailItem(String label, String value) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 12),
-          const SizedBox(width: 4),
           Text(
             label,
             style: GoogleFonts.openSans(
-              color: color,
-              fontSize: 11,
+              color: const Color(0xFF666666),
+              fontSize: 13,
               fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
             ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: GoogleFonts.openSans(
+              color: Colors.black87,
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
     );
   }
-}
-
-// ─── Perforated Edge ─────────────────────────────────────────────────────────
-
-class _TicketDivider extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      height: 20,
-      child: Row(
-        children: [
-          // Left notch
-          Container(
-            width: 12,
-            height: 20,
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-            ),
-          ),
-          // Dashed line
-          Expanded(child: CustomPaint(painter: _DashedLinePainter())),
-          // Right notch
-          Container(
-            width: 12,
-            height: 20,
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DashedLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFF2A2A2A)
-      ..strokeWidth = 1.5
-      ..style = PaintingStyle.stroke;
-
-    const dashWidth = 6.0;
-    const gap = 4.0;
-    double x = 0;
-    final y = size.height / 2;
-
-    while (x < size.width) {
-      canvas.drawLine(
-        Offset(x, y),
-        Offset(math.min(x + dashWidth, size.width), y),
-        paint,
-      );
-      x += dashWidth + gap;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DashedLinePainter old) => false;
 }

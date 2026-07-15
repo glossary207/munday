@@ -86,23 +86,23 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
       }
 
       safeSetState(() {});
-      await showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) {
-          return GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
-            child: Padding(
-              padding: MediaQuery.viewInsetsOf(context),
-              child: ItemWidget(),
-            ),
-          );
-        },
-      ).then((value) => safeSetState(() {}));
+      // await showModalBottomSheet(
+      //   isScrollControlled: true,
+      //   backgroundColor: Colors.transparent,
+      //   context: context,
+      //   builder: (context) {
+      //     return GestureDetector(
+      //       onTap: () {
+      //         FocusScope.of(context).unfocus();
+      //         FocusManager.instance.primaryFocus?.unfocus();
+      //       },
+      //       child: Padding(
+      //         padding: MediaQuery.viewInsetsOf(context),
+      //         child: ItemWidget(),
+      //       ),
+      //     );
+      //   },
+      // ).then((value) => safeSetState(() {}));
     });
 
     _model.textController ??= TextEditingController();
@@ -2279,94 +2279,107 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                             safeSetState(() {});
                                             if (_model.textController.text !=
                                                 '') {
-                                              // 1. Update chat_rooms metadata
-                                              await widget.roomref!.update({
-                                                ...createChatRoomsRecordData(
-                                                  lastMessage: _model
-                                                      .textController
-                                                      .text,
-                                                  lastMessageTime:
-                                                      getCurrentTimestamp,
-                                                  lastMessageSenderId:
-                                                      currentUserReference?.id,
-                                                ),
-                                              });
-
-                                              // 2. Insert new message row
-                                              await MessagesRecord.collection
-                                                  .add(
-                                                    createMessagesRecordData(
-                                                      chatRoomId:
-                                                          widget.roomref!.id,
-                                                      text: _model
-                                                          .textController
-                                                          .text,
-                                                      senderId:
-                                                          currentUserReference
-                                                              ?.id,
-                                                      senderName:
-                                                          currentUserDisplayName,
-                                                      senderPhoto:
-                                                          currentUserPhoto,
-                                                      timestamp:
-                                                          getCurrentTimestamp,
-                                                    ),
-                                                  );
-
-                                              // 3. Notify other user(s)
-                                              if (!widget.openchat!) {
-                                                final otherUserIds =
-                                                    stackChatRoomsRecord.userIds
-                                                        .where(
-                                                          (id) =>
-                                                              id !=
-                                                              currentUserReference
-                                                                  ?.id,
-                                                        )
-                                                        .toList();
-                                                for (final otherUserId
-                                                    in otherUserIds) {
-                                                  final otherUserRef =
-                                                      SupabaseFirestore.instance
-                                                          .collection('users')
-                                                          .doc(otherUserId);
-                                                  await otherUserRef.update({
-                                                    ...mapToSupabase({
-                                                      'usermassage':
-                                                          FieldValue.arrayUnion([
-                                                            currentUserReference,
-                                                          ]),
-                                                    }),
-                                                  });
-                                                  triggerPushNotification(
-                                                    notificationTitle:
-                                                        currentUserDisplayName,
-                                                    notificationText: _model
+                                              try {
+                                                // 1. Update chat_rooms metadata
+                                                await widget.roomref!.update({
+                                                  ...createChatRoomsRecordData(
+                                                    lastMessage: _model
                                                         .textController
                                                         .text,
-                                                    scheduledTime:
+                                                    lastMessageTime:
                                                         getCurrentTimestamp,
-                                                    notificationSound:
-                                                        'default',
-                                                    userRefs: [otherUserRef],
-                                                    initialPageName: 'HomePage',
-                                                    parameterData: {},
-                                                  );
+                                                    lastMessageSenderId:
+                                                        currentUserReference?.id,
+                                                  ),
+                                                });
 
-                                                  await currentUserReference!
-                                                      .update({
-                                                        ...mapToSupabase({
-                                                          'usermassage_read':
-                                                              FieldValue.arrayUnion(
-                                                                [otherUserRef],
-                                                              ),
-                                                        }),
-                                                      });
+                                                // 2. Insert new message row
+                                                await MessagesRecord.collection
+                                                    .add(
+                                                      createMessagesRecordData(
+                                                        chatRoomId:
+                                                            widget.roomref!.id,
+                                                        text: _model
+                                                            .textController
+                                                            .text,
+                                                        senderId:
+                                                            currentUserReference
+                                                                ?.id,
+                                                        senderName:
+                                                            currentUserDisplayName,
+                                                        senderPhoto:
+                                                            currentUserPhoto,
+                                                        timestamp:
+                                                            getCurrentTimestamp,
+                                                      ),
+                                                    );
+
+                                                // 3. Notify other user(s)
+                                                if (!widget.openchat!) {
+                                                  final otherUserIds =
+                                                      stackChatRoomsRecord.userIds
+                                                          .where(
+                                                            (id) =>
+                                                                id !=
+                                                                currentUserReference
+                                                                    ?.id,
+                                                          )
+                                                          .toList();
+                                                  for (final otherUserId
+                                                      in otherUserIds) {
+                                                    final otherUserRef =
+                                                        SupabaseFirestore.instance
+                                                            .collection('users')
+                                                            .doc(otherUserId);
+                                                    await otherUserRef.update({
+                                                      ...mapToSupabase({
+                                                        'usermassage':
+                                                            FieldValue.arrayUnion([
+                                                              currentUserReference,
+                                                            ]),
+                                                      }),
+                                                    });
+                                                    triggerPushNotification(
+                                                      notificationTitle:
+                                                          currentUserDisplayName,
+                                                      notificationText: _model
+                                                          .textController
+                                                          .text,
+                                                      scheduledTime:
+                                                          getCurrentTimestamp,
+                                                      notificationSound:
+                                                          'default',
+                                                      userRefs: [otherUserRef],
+                                                      initialPageName: 'HomePage',
+                                                      parameterData: {},
+                                                    );
+
+                                                    await currentUserReference!
+                                                        .update({
+                                                          ...mapToSupabase({
+                                                            'usermassage_read':
+                                                                FieldValue.arrayUnion(
+                                                                  [otherUserRef],
+                                                                ),
+                                                          }),
+                                                        });
+                                                  }
                                                 }
+                                                safeSetState(() {
+                                                  _model.textController?.clear();
+                                                });
+                                              } catch (e) {
+                                                debugPrint('Error sending message: $e');
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(
+                                                    content: Text('Failed to send message: $e', style: TextStyle(color: Colors.white)),
+                                                    backgroundColor: Colors.red,
+                                                  ),
+                                                );
+                                              } finally {
+                                                _model.lockchatt = false;
+                                                safeSetState(() {});
                                               }
-                                              safeSetState(() {
-                                                _model.textController?.clear();
-                                              });
                                             } else {
                                               ScaffoldMessenger.of(
                                                 context,
@@ -2390,10 +2403,9 @@ class _ChatsWidgetState extends ConsumerState<ChatsPage> {
                                                   ),
                                                 ),
                                               );
+                                              _model.lockchatt = false;
+                                              safeSetState(() {});
                                             }
-
-                                            _model.lockchatt = false;
-                                            safeSetState(() {});
                                           }
                                         },
                                         child: Container(
