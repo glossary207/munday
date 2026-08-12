@@ -129,13 +129,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final isMapModeOn = context.watchAppState.mapModeOn;
           final uri = state.uri.toString();
           final showNav =
-              (!isMapModeOn) && (
-              uri == '/' ||
-              (uri.startsWith('/main') && !uri.startsWith('/mainChat')) ||
-              uri.startsWith('/events') ||
-              uri.startsWith('/venues') ||
-              uri.startsWith('/promotion') ||
-              uri.startsWith('/search'));
+              (!isMapModeOn) &&
+              (uri == '/' ||
+                  uri.startsWith('/main') ||
+                  uri.startsWith('/events') ||
+                  uri.startsWith('/venues') ||
+                  uri.startsWith('/ticket') ||
+                  uri.startsWith('/search'));
 
           if (!showNav) return child;
 
@@ -342,7 +342,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 name: PayreservenormdayPage.routeName,
                 path: PayreservenormdayPage.routePath,
                 requireAuth: true,
-                builder: (context, params) => PayreservenormdayPage(),
+                builder: (context, params) => PayreservenormdayPage(
+                  venueId: params.getParam('venueId', ParamType.String),
+                  date: params.getParam('date', ParamType.DateTime),
+                  tableIds:
+                      params.getParam<String>(
+                        'tableIds',
+                        ParamType.String,
+                        isList: true,
+                      ) ??
+                      const [],
+                  amount: params.getParam('amount', ParamType.double),
+                  partySize: params.getParam('partySize', ParamType.int),
+                ),
               ),
               MundayRoute(
                 name: NotificationPage.routeName,

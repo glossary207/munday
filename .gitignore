@@ -68,6 +68,7 @@ local.properties
 .munday_builder/
 .venv/
 .migration_env/
+java_pid*.hprof
 
 # iOS Pods (generated, not committed)
 ios/Pods/

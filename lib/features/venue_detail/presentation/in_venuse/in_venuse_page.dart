@@ -1302,7 +1302,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                             ParamType.LatLng,
                                                           ),
                                                       'date': serializeParam(
-                                                        widget.dateclick,
+                                                        selectedDate,
                                                         ParamType.DateTime,
                                                       ),
                                                       'currentuid':
@@ -3605,7 +3605,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                     ParamType.LatLng,
                                                                                   ),
                                                                                   'date': serializeParam(
-                                                                                    widget.dateclick,
+                                                                                    selectedDate,
                                                                                     ParamType.DateTime,
                                                                                   ),
                                                                                   'currentuid': serializeParam(

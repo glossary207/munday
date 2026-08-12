@@ -105,6 +105,17 @@ class UsersRecord extends SupabaseRecord {
   List<String> get listStore => _listStore ?? const [];
   bool hasListStore() => _listStore != null;
 
+  // "pending_reservations" field.
+  Map<String, dynamic>? _pendingReservations;
+  Map<String, dynamic> get pendingReservations =>
+      _pendingReservations ?? const {};
+  bool hasPendingReservations() => _pendingReservations != null;
+
+  // "pending_bills" field.
+  Map<String, dynamic>? _pendingBills;
+  Map<String, dynamic> get pendingBills => _pendingBills ?? const {};
+  bool hasPendingBills() => _pendingBills != null;
+
   // "unlimitcheers" field.
   bool? _unlimitcheers;
   bool get unlimitcheers => _unlimitcheers ?? false;
@@ -283,6 +294,14 @@ class UsersRecord extends SupabaseRecord {
       'users',
     );
     _listStore = getDataList(snapshotData['list_store']);
+    final pendingReservations = snapshotData['pending_reservations'];
+    _pendingReservations = pendingReservations is Map
+        ? Map<String, dynamic>.from(pendingReservations)
+        : null;
+    final pendingBills = snapshotData['pending_bills'];
+    _pendingBills = pendingBills is Map
+        ? Map<String, dynamic>.from(pendingBills)
+        : null;
     _unlimitcheers = snapshotData['unlimitcheers'] as bool?;
     _idTransactionList = getDataList(snapshotData['id_transaction_list']);
     _payList = getDataList(snapshotData['pay_list']);
@@ -383,6 +402,8 @@ Map<String, dynamic> createUsersRecordData({
   bool? setCheers,
   String? logoRoom,
   SupabaseDocRef? groupInviteID,
+  Map<String, dynamic>? pendingReservations,
+  Map<String, dynamic>? pendingBills,
 }) {
   final supabaseData = mapToSupabase(
     <String, dynamic>{
@@ -395,6 +416,8 @@ Map<String, dynamic> createUsersRecordData({
       'chekin': checkin,
       'unread': unread,
       'seeusercheers': seeusercheers,
+      'pending_reservations': pendingReservations,
+      'pending_bills': pendingBills,
     }.withoutNulls,
   );
 
@@ -440,6 +463,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         listEquality.equals(e1?.usercheerme, e2?.usercheerme) &&
         listEquality.equals(e1?.showprofilecheers, e2?.showprofilecheers) &&
         listEquality.equals(e1?.listStore, e2?.listStore) &&
+        const DeepCollectionEquality().equals(
+          e1?.pendingReservations,
+          e2?.pendingReservations,
+        ) &&
+        const DeepCollectionEquality().equals(
+          e1?.pendingBills,
+          e2?.pendingBills,
+        ) &&
         e1?.unlimitcheers == e2?.unlimitcheers &&
         listEquality.equals(e1?.idTransactionList, e2?.idTransactionList) &&
         listEquality.equals(e1?.payList, e2?.payList) &&
@@ -491,6 +522,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
     e?.usercheerme,
     e?.showprofilecheers,
     e?.listStore,
+    e?.pendingReservations,
+    e?.pendingBills,
     e?.unlimitcheers,
     e?.idTransactionList,
     e?.payList,

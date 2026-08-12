@@ -20,6 +20,7 @@ import 'backend/supabase/supabase_config.dart';
 import 'core/utils/locale_util.dart';
 import 'package:munday/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 import 'core/state/app_state.dart';
 import 'core/theme/app_theme.dart';
 
@@ -30,6 +31,7 @@ late SharedPreferences sharedPrefs;
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LiquidGlassWidgets.initialize();
   await Firebase.initializeApp();
   sharedPrefs = await SharedPreferences.getInstance();
   await SupabaseService().initialize();

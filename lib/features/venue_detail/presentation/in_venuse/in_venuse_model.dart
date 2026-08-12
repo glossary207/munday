@@ -11,11 +11,8 @@ import '/core/utils/app_util.dart';
 import 'package:flutter/material.dart';
 
 const _kInVenuseDemoVenueCoverVideoPaths = [
-  'assets/videos/video 1.mp4',
-  'assets/videos/video 2.mp4',
-  'assets/videos/video 3.mp4',
-  'assets/videos/video4.mp4',
-  'assets/videos/video5.mp4',
+  'assets/videos/venue_cover.mp4',
+  'assets/videos/video3.mp4',
 ];
 
 final _inVenuseDemoVideoRandom = math.Random();
