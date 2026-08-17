@@ -695,6 +695,13 @@ class AppState extends ChangeNotifier {
     _mapModeOn = value;
     notifyListeners();
   }
+
+  bool _eventDetailOpen = false;
+  bool get eventDetailOpen => _eventDetailOpen;
+  set eventDetailOpen(bool value) {
+    _eventDetailOpen = value;
+    notifyListeners();
+  }
 }
 
 extension AppStateExtension on BuildContext {

@@ -27,6 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'sharepage_model.dart';
 import 'package:munday/core/theme/theme.dart';
+import 'package:munday/features/booking/domain/booking_date.dart';
 
 class SharePage extends ConsumerStatefulWidget {
   const SharePage({
@@ -57,28 +58,23 @@ class _SharePageState extends ConsumerState<SharePage>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   LatLng? currentUserLocationValue;
+  late DateTime _selectedDate;
 
   @override
   void initState() {
     super.initState();
     _model = SharepageModel()..internalInit(context);
-    context.appState.dateclick ??=
-        widget.dateclick ??
-        functions.boxstarttime(getCurrentTimestamp) ??
-        getCurrentTimestamp;
+    _selectedDate = resolveBookingDate(
+      routeDate: widget.dateclick,
+      selectedDate: context.appState.dateclick,
+      fallback:
+          functions.boxstarttime(getCurrentTimestamp) ?? getCurrentTimestamp,
+    );
+    context.appState.dateclick = _selectedDate;
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue = await getCurrentUserLocation(
         defaultLocation: const LatLng(0.0, 0.0),
       );
-      if (widget.dateclick != null) {
-        context.appState.dateclick = widget.dateclick;
-        safeSetState(() {});
-      } else {
-        context.appState.dateclick = functions.boxstarttime(
-          getCurrentTimestamp,
-        );
-        safeSetState(() {});
-      }
       safeSetState(() {
         _model.tabBarController?.animateTo(
           widget.index ?? 0,
@@ -111,11 +107,7 @@ class _SharePageState extends ConsumerState<SharePage>
   @override
   Widget build(BuildContext context) {
     context.watch<AppState>();
-    final selectedDate =
-        context.appState.dateclick ??
-        widget.dateclick ??
-        functions.boxstarttime(getCurrentTimestamp) ??
-        getCurrentTimestamp;
+    final selectedDate = _selectedDate;
     if (currentUserLocationValue == null) {
       return Container(
         color: Theme.of(context).extension<CustomColors>()!.primaryBackground,
@@ -3198,31 +3190,37 @@ class _SharePageState extends ConsumerState<SharePage>
                                               child: Container(
                                                 width: 45.0,
                                                 height: 75.0,
-                                                child:
-                                                    custom_widgets.Calendarslide(
-                                                      width: 45.0,
-                                                      height: 75.0,
-                                                      colorPicker: Color(
-                                                        0xFFFF0000,
-                                                      ),
-                                                      icon: Icon(
-                                                        Icons.star_rate,
-                                                        color: Color(
-                                                          0xFFFF0000,
-                                                        ),
-                                                        size: 15.0,
-                                                      ),
-                                                      dateNow:
-                                                          getCurrentTimestamp,
-                                                      dateclickwidget:
-                                                          selectedDate,
-                                                      dateEvent:
-                                                          sharepageVenuesRecord
-                                                              .dateEvents,
-                                                      onselect: () async {
-                                                        safeSetState(() {});
-                                                      },
-                                                    ),
+                                                child: custom_widgets.Calendarslide(
+                                                  width: 45.0,
+                                                  height: 75.0,
+                                                  colorPicker: Color(
+                                                    0xFFFF0000,
+                                                  ),
+                                                  icon: Icon(
+                                                    Icons.star_rate,
+                                                    color: Color(0xFFFF0000),
+                                                    size: 15.0,
+                                                  ),
+                                                  dateNow: getCurrentTimestamp,
+                                                  dateclickwidget: selectedDate,
+                                                  dateEvent:
+                                                      sharepageVenuesRecord
+                                                          .dateEvents,
+                                                  onselect: () async {
+                                                    final selected = context
+                                                        .appState
+                                                        .dateclick;
+                                                    if (selected == null) {
+                                                      return;
+                                                    }
+                                                    safeSetState(() {
+                                                      _selectedDate =
+                                                          normalizeBookingDate(
+                                                            selected,
+                                                          );
+                                                    });
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -3447,6 +3445,21 @@ class _SharePageState extends ConsumerState<SharePage>
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                final bookingDate = resolveBookingDate(
+                                  routeDate: _selectedDate,
+                                  fallback:
+                                      functions.boxstarttime(
+                                        getCurrentTimestamp,
+                                      ) ??
+                                      getCurrentTimestamp,
+                                );
+                                _selectedDate = bookingDate;
+                                context.appState.dateclick = bookingDate;
+                                debugPrint(
+                                  '[BookingDate] opening booking from share '
+                                  'date=${bookingDate.toIso8601String()} '
+                                  'routeDate=${widget.dateclick?.toIso8601String()}',
+                                );
                                 context.pushNamed(
                                   BookingPage.routeName,
                                   queryParameters: {
@@ -3459,7 +3472,7 @@ class _SharePageState extends ConsumerState<SharePage>
                                       ParamType.LatLng,
                                     ),
                                     'date': serializeParam(
-                                      widget.dateclick,
+                                      bookingDate,
                                       ParamType.DateTime,
                                     ),
                                     'currentuid': serializeParam(

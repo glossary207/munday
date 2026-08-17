@@ -127,22 +127,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         navigatorKey: GlobalKey<NavigatorState>(),
         builder: (context, state, child) {
           final isMapModeOn = context.watchAppState.mapModeOn;
+          final isEventDetailOpen = context.watchAppState.eventDetailOpen;
           final uri = state.uri.toString();
-          final showNav =
-              (!isMapModeOn) &&
-              (uri == '/' ||
-                  uri.startsWith('/main') ||
-                  uri.startsWith('/events') ||
-                  uri.startsWith('/venues') ||
-                  uri.startsWith('/ticket') ||
-                  uri.startsWith('/search'));
+          final isNavRoute =
+              uri == '/' ||
+              uri.startsWith('/main') ||
+              uri.startsWith('/events') ||
+              uri.startsWith('/venues') ||
+              uri.startsWith('/ticket') ||
+              uri.startsWith('/search');
 
-          if (!showNav) return child;
+          if (!isNavRoute || isMapModeOn) return child;
 
           return AdaptiveScaffold(
             minimizeBehavior: TabBarMinimizeBehavior.never,
             resizeToAvoidBottomInset: false,
-            bottomNavigationBar: buildAdaptiveNavBar(context),
+            bottomNavigationBar: isEventDetailOpen
+                ? null
+                : buildAdaptiveNavBar(context),
             body: child,
           );
         },

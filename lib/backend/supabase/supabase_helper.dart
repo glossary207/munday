@@ -100,6 +100,7 @@ class SupabaseHelper {
         ...floorOtherData,
         ...floorMeta,
         '_row_id': floorRowId,
+        '_normalized_table_count': tableLayout.length,
         if (floor['label'] != null) 'label': floor['label'],
         if (floor['bounds'] != null) 'bounds': floor['bounds'],
         'table_layout': tableLayout,

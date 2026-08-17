@@ -70,5 +70,8 @@ local.properties
 .migration_env/
 java_pid*.hprof
 
+# Supabase CLI local project metadata
+supabase/.temp/
+
 # iOS Pods (generated, not committed)
 ios/Pods/

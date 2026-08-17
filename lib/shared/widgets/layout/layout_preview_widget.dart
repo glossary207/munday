@@ -119,10 +119,18 @@ class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
         venueId,
         dateString,
       );
+      final session = SupabaseHelper.client.auth.currentSession;
       debugPrint(
-        '[LayoutPreview] loaded date=$dateString '
+        '[LayoutPreview] loaded venue=$venueId requestedDate=$dateString '
+        'authRole=${session == null ? 'anon' : 'authenticated'} '
+        'authUser=${session?.user.id} '
+        'layoutId=${first?['id']} layoutDate=${first?['date']} '
+        'floors=${_layoutFloorDiagnostics(first)} '
         'inventory=${first?['_layout_inventory'] ?? 'legacy-or-empty'}',
       );
+      if (first == null) {
+        await _logAvailableLayoutSources(venueId, dateString);
+      }
       if (!mounted || generation != _loadGeneration) return;
       setState(() {
         _layoutData = first;
@@ -205,6 +213,66 @@ class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
         .whereType<String>()
         .where((id) => id.isNotEmpty)
         .toList(growable: false);
+  }
+
+  Map<String, Map<String, Object?>> _layoutFloorDiagnostics(
+    Map<String, dynamic>? layout,
+  ) {
+    final floors = layout?['floors'];
+    if (floors is! Map) return const {};
+
+    final diagnostics = <String, Map<String, Object?>>{};
+    for (final entry in floors.entries) {
+      final floor = entry.value;
+      if (floor is! Map) continue;
+      final tables = floor['table_layout'];
+      diagnostics[entry.key.toString()] = <String, Object?>{
+        'row_id': floor['_row_id'],
+        'normalized_rows': floor['_normalized_table_count'],
+        'visible_rows': tables is Map ? tables.length : 0,
+      };
+    }
+    return diagnostics;
+  }
+
+  Future<void> _logAvailableLayoutSources(
+    String venueId,
+    String requestedDate,
+  ) async {
+    try {
+      final dynamic rows = await SupabaseHelper.client
+          .from('venue_daily_layouts')
+          .select('id,date,updated_at')
+          .eq('venue_id', venueId)
+          .order('date', ascending: false)
+          .limit(20);
+      debugPrint(
+        '[LayoutPreview] daily layout candidates venue=$venueId '
+        'requestedDate=$requestedDate rows=$rows',
+      );
+    } catch (error) {
+      debugPrint(
+        '[LayoutPreview] daily layout candidates unavailable '
+        'venue=$venueId error=$error',
+      );
+    }
+
+    try {
+      final dynamic rows = await SupabaseHelper.client
+          .from('preset_layouts')
+          .select('id,name,created_time')
+          .eq('venue_id', venueId)
+          .order('created_time', ascending: false)
+          .limit(20);
+      debugPrint(
+        '[LayoutPreview] preset layout candidates venue=$venueId rows=$rows',
+      );
+    } catch (error) {
+      debugPrint(
+        '[LayoutPreview] preset layout candidates unavailable '
+        'venue=$venueId error=$error',
+      );
+    }
   }
 
   void _scheduleRealtimeReinitialize(

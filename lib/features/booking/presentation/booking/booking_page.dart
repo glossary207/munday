@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'booking_model.dart';
 import 'package:munday/core/theme/theme.dart';
+import 'package:munday/features/booking/domain/booking_date.dart';
 export 'booking_model.dart';
 
 class BookingPage extends ConsumerStatefulWidget {
@@ -55,7 +56,16 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
   void initState() {
     super.initState();
     _model = BookingModel()..internalInit(context);
-    _selectedDate = widget.date ?? AppState().dateclick ?? DateTime.now();
+    _selectedDate = resolveBookingDate(
+      routeDate: widget.date,
+      selectedDate: AppState().dateclick,
+      fallback: DateTime.now(),
+    );
+    debugPrint(
+      '[BookingDate] booking page '
+      'routeDate=${widget.date?.toIso8601String()} '
+      'resolved=${_selectedDate.toIso8601String()}',
+    );
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -77,10 +87,11 @@ class _BookingWidgetState extends ConsumerState<BookingPage> {
       return;
     }
     setState(() {
-      _selectedDate = selected;
+      _selectedDate = normalizeBookingDate(selected);
       _selectedTableIds = const [];
       _minimumPartySize = 1;
     });
+    context.appState.dateclick = _selectedDate;
     context.appState.update(() {
       context.appState.SeatSelect = [];
       context.appState.Totlepricebooking = 0;
