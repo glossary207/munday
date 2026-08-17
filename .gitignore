@@ -68,6 +68,10 @@ local.properties
 .munday_builder/
 .venv/
 .migration_env/
+java_pid*.hprof
+
+# Supabase CLI local project metadata
+supabase/.temp/
 
 # iOS Pods (generated, not committed)
 ios/Pods/

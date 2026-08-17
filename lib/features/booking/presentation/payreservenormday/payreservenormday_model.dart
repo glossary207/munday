@@ -1,6 +1,6 @@
 import 'package:munday/core/state/base_model.dart';
 import '/core/utils/app_util.dart';
-import 'payreservenormday_page.dart' show PayreservenormdayWidget;
+import 'payreservenormday_page.dart' show PayreservenormdayPage;
 import 'package:flutter/material.dart';
 
 class PayreservenormdayModel extends BaseModel {

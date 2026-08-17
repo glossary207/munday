@@ -304,7 +304,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
 
   void _setupRealtime() {
     if (currentUserUid == null) return;
-    
+
     _friendRequestChannel = Supabase.instance.client.channel(
       'public:friend_request',
     );
@@ -334,7 +334,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   Future<void> _fetchFriendRequests() async {
     if (!mounted) return;
     setState(() => _loadingRequests = true);
-    
+
     try {
       final result = await Supabase.instance.client
           .from('friend_request')
@@ -383,8 +383,6 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     }
   }
 
-
-
   Future<void> _respondToRequest(
     String requestId,
     String senderId,
@@ -420,8 +418,6 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           // Ignore unique constraint or other insertion errors if they somehow already exist
           debugPrint('Error inserting friend record: $e');
         }
-
-
       }
 
       if (!mounted) return;
@@ -1878,14 +1874,33 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
 
 class NotificationBadgeButton extends ConsumerStatefulWidget {
   final VoidCallback onTap;
-  const NotificationBadgeButton({super.key, required this.onTap});
+  final Color backgroundColor;
+  final double iconSize;
+  final double badgeSize;
+  final bool showBadgeBorder;
+  final double badgeTop;
+  final double badgeRight;
+  final bool abbreviateBadgeCount;
+
+  const NotificationBadgeButton({
+    super.key,
+    required this.onTap,
+    this.backgroundColor = Colors.black,
+    this.iconSize = 22.0,
+    this.badgeSize = 14.0,
+    this.showBadgeBorder = true,
+    this.badgeTop = 6.0,
+    this.badgeRight = 6.0,
+    this.abbreviateBadgeCount = true,
+  });
 
   @override
   ConsumerState<NotificationBadgeButton> createState() =>
       _NotificationBadgeButtonState();
 }
 
-class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButton> {
+class _NotificationBadgeButtonState
+    extends ConsumerState<NotificationBadgeButton> {
   int _pendingRequests = 0;
   RealtimeChannel? _subscription;
 
@@ -1898,7 +1913,7 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
 
   void _setupRealtime() {
     if (currentUserUid == null) return;
-    
+
     _subscription = Supabase.instance.client
         .channel('public:friend_request:receiver_id=eq.$currentUserUid')
         .onPostgresChanges(
@@ -1935,6 +1950,7 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
       }
     } catch (_) {}
   }
+
   @override
   Widget build(BuildContext context) {
     final unreadMsg = (currentUserDocument?.usermassage ?? []).length;
@@ -1949,8 +1965,8 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
       child: Container(
         width: 40,
         height: 40,
-        decoration: const BoxDecoration(
-          color: Colors.black,
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
           shape: BoxShape.circle,
         ),
         child: Stack(
@@ -1958,29 +1974,41 @@ class _NotificationBadgeButtonState extends ConsumerState<NotificationBadgeButto
             Center(
               child: Image.asset(
                 'assets/images/icon_notification.png',
-                width: 22,
-                height: 22,
+                width: widget.iconSize,
+                height: widget.iconSize,
               ),
             ),
             if (total > 0)
               Positioned(
-                top: 6,
-                right: 6,
+                top: widget.badgeTop,
+                right: widget.badgeRight,
                 child: Container(
-                  width: 14,
-                  height: 14,
+                  width: widget.badgeSize,
+                  height: widget.badgeSize,
                   decoration: BoxDecoration(
                     color: _kRed,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black, width: 1.5),
+                    border: widget.showBadgeBorder
+                        ? Border.all(color: Colors.black, width: 1.5)
+                        : null,
                   ),
                   child: Center(
-                    child: Text(
-                      total > 9 ? '9+' : '$total',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.abbreviateBadgeCount && total > 9
+                              ? '9+'
+                              : '$total',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: widget.badgeSize >= 18.0 ? 10.0 : 8.0,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
                       ),
                     ),
                   ),

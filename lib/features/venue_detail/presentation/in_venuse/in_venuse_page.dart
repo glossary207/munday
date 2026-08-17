@@ -1,4 +1,5 @@
 import 'package:munday/core/theme/theme.dart';
+import 'package:munday/features/booking/domain/booking_date.dart';
 import 'package:provider/provider.dart';
 
 import 'package:nowa_runtime/nowa_runtime.dart';
@@ -86,6 +87,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
   LatLng? currentUserLocationValue;
   double _scrollOffset = 0.0;
   bool _videoCompleted = false;
+  late DateTime _selectedDate;
 
   final animationsMap = <String, AnimationInfo>{};
 
@@ -720,7 +722,11 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                     dateclickwidget: selectedDate,
                     dateEvent: venue.dateEvents,
                     onselect: () async {
-                      safeSetState(() {});
+                      final selected = context.appState.dateclick;
+                      if (selected == null) return;
+                      safeSetState(() {
+                        _selectedDate = normalizeBookingDate(selected);
+                      });
                     },
                   ),
                 ),
@@ -876,26 +882,19 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
   void initState() {
     super.initState();
     _model = InVenuseModel()..internalInit(context);
-    context.appState.dateclick ??=
-        widget.dateclick ??
-        functions.boxstarttime(getCurrentTimestamp) ??
-        getCurrentTimestamp;
+    _selectedDate = resolveBookingDate(
+      routeDate: widget.dateclick,
+      selectedDate: context.appState.dateclick,
+      fallback:
+          functions.boxstarttime(getCurrentTimestamp) ?? getCurrentTimestamp,
+    );
+    context.appState.dateclick = _selectedDate;
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue = await getCurrentUserLocation(
         defaultLocation: const LatLng(0.0, 0.0),
       );
-      if (widget.dateclick != null) {
-        context.appState.dateclick = widget.dateclick;
-        safeSetState(() {});
-      } else {
-        context.appState.dateclick = functions.boxstarttime(
-          getCurrentTimestamp,
-        );
-        safeSetState(() {});
-      }
-
       safeSetState(() {
         _model.tabBarController!.animateTo(
           widget.index ?? 0,
@@ -1016,11 +1015,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
   Widget build(BuildContext context) {
     context.watch<AppState>();
 
-    final selectedDate =
-        context.appState.dateclick ??
-        widget.dateclick ??
-        functions.boxstarttime(getCurrentTimestamp) ??
-        getCurrentTimestamp;
+    final selectedDate = _selectedDate;
 
     if (widget.idVenues == null) {
       return _buildVenueLoadError(
@@ -1118,7 +1113,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                             venueAudienceSection: _buildVenueAudienceSection(
                               context,
                               inVenuseVenuesRecord,
-                              DateTime.now() ?? DateTime.now(),
+                              selectedDate,
                             ),
                           ),
                         ],
@@ -1287,6 +1282,15 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                     );
                                                     return;
                                                   }
+                                                  final bookingDate =
+                                                      _selectedDate;
+                                                  context.appState.dateclick =
+                                                      bookingDate;
+                                                  debugPrint(
+                                                    '[BookingDate] opening booking '
+                                                    'date=${bookingDate.toIso8601String()} '
+                                                    'routeDate=${widget.dateclick?.toIso8601String()}',
+                                                  );
                                                   context.pushNamed(
                                                     BookingPage.routeName,
                                                     queryParameters: {
@@ -1302,7 +1306,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                             ParamType.LatLng,
                                                           ),
                                                       'date': serializeParam(
-                                                        widget.dateclick,
+                                                        bookingDate,
                                                         ParamType.DateTime,
                                                       ),
                                                       'currentuid':
@@ -3593,6 +3597,13 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                 );
                                                                                 return;
                                                                               }
+                                                                              final bookingDate = _selectedDate;
+                                                                              context.appState.dateclick = bookingDate;
+                                                                              debugPrint(
+                                                                                '[BookingDate] opening booking '
+                                                                                'date=${bookingDate.toIso8601String()} '
+                                                                                'routeDate=${widget.dateclick?.toIso8601String()}',
+                                                                              );
                                                                               context.pushNamed(
                                                                                 BookingPage.routeName,
                                                                                 queryParameters: {
@@ -3605,7 +3616,7 @@ class _InVenuseWidgetState extends ConsumerState<InVenusePage>
                                                                                     ParamType.LatLng,
                                                                                   ),
                                                                                   'date': serializeParam(
-                                                                                    widget.dateclick,
+                                                                                    bookingDate,
                                                                                     ParamType.DateTime,
                                                                                   ),
                                                                                   'currentuid': serializeParam(

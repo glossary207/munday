@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:munday/core/state/app_state.dart';
 
+import '/features/booking/presentation/ticket/ticket_page.dart';
 import '/features/discovery/presentation/events/events_page.dart';
-import '/features/discovery/presentation/main/main_page.dart';
-import '/features/discovery/presentation/promotion/promotion_page.dart';
 import '/features/discovery/presentation/venues/venues_page.dart';
+import '/features/social/presentation/main_chat/main_chat_page.dart';
 
 class CustomNavBar extends StatelessWidget {
   final BuildContext context;
@@ -14,30 +14,28 @@ class CustomNavBar extends StatelessWidget {
 
   String? _navIconAsset(String menuItem) {
     switch (menuItem) {
-      case 'Home':
-        return 'assets/images/nav_home.png';
       case 'Events':
         return 'assets/images/nav_events.png';
       case 'Venues':
         return 'assets/images/nav_venues.png';
-      case 'Promotion':
-        return 'assets/images/nav_promotion.png';
+      case 'Chat':
+        return 'assets/images/icon_message.png';
+      case 'Booking':
+        return 'assets/images/icon_ticket.png';
       default:
         return null;
     }
   }
 
   void _handleMenuTap(String menuItem) {
-    if (menuItem == context.appState.menuActiveitem) return;
-
     if (menuItem == 'Events') {
       context.goNamed(EventsPage.routeName);
     } else if (menuItem == 'Venues') {
       context.goNamed(VenuesPage.routeName);
-    } else if (menuItem == 'Promotion') {
-      context.goNamed(PromotionPage.routeName);
-    } else if (menuItem == 'Home') {
-      context.goNamed(MainPage.routeName);
+    } else if (menuItem == 'Chat') {
+      context.goNamed(MainChatPage.routeName);
+    } else if (menuItem == 'Booking') {
+      context.goNamed(TicketPage.routeName);
     }
     context.appState.menuActiveitem = menuItem;
   }
@@ -89,7 +87,7 @@ class CustomNavBar extends StatelessWidget {
                             item,
                             style: TextStyle(
                               color: activeItem == item
-                                  ? Colors.red
+                                  ? const Color(0xFFFF1E1E)
                                   : Colors.white,
                               fontSize: 10,
                               fontWeight: activeItem == item
@@ -106,7 +104,7 @@ class CustomNavBar extends StatelessWidget {
                 // Search button
                 GestureDetector(
                   onTap: () {
-                    // Handle search tap
+                    context.goNamed('Search');
                   },
                   behavior: HitTestBehavior.opaque,
                   child: SizedBox(
@@ -115,9 +113,9 @@ class CustomNavBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/ Gemini_Generated_Image_9r9y1j9r9y1j9r9y ขนาดใหญ่.png',
-                          width: 32,
-                          height: 32,
+                          'assets/images/icon_search.png',
+                          width: 24,
+                          height: 24,
                         ),
                       ],
                     ),

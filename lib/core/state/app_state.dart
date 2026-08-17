@@ -338,7 +338,7 @@ class AppState extends ChangeNotifier {
     _menuActiveitem = value;
   }
 
-  List<String> _menuItems = ['Home', 'Events', 'Venues', 'Promotion'];
+  List<String> _menuItems = ['Events', 'Venues', 'Chat', 'Booking'];
   List<String> get menuItems => _menuItems;
   set menuItems(List<String> value) {
     _menuItems = value;
@@ -693,6 +693,13 @@ class AppState extends ChangeNotifier {
   bool get mapModeOn => _mapModeOn;
   set mapModeOn(bool value) {
     _mapModeOn = value;
+    notifyListeners();
+  }
+
+  bool _eventDetailOpen = false;
+  bool get eventDetailOpen => _eventDetailOpen;
+  set eventDetailOpen(bool value) {
+    _eventDetailOpen = value;
     notifyListeners();
   }
 }

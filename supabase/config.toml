@@ -1,0 +1,2 @@
+[functions.verify-payment-for-reservation]
+verify_jwt = false

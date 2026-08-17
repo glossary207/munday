@@ -7,6 +7,9 @@ analyzer:
     - lib/backend/schema/**
     - lib/index.dart
     - lib/main.dart
+    # Backend handoff source retained for reference; the integrated copy lives
+    # under lib/shared/widgets/layout.
+    - layout_preview_widget.dart
     - '**/*.g.dart'
   
   errors:
