@@ -139,6 +139,7 @@ dependencies:
   infinite_carousel: ^1.1.1
   stacked_card_carousel: ^0.0.4
   coverflow_carousel: ^2.0.1
+  inspire_blur: 0.4.0
 dependency_overrides:
   http: 1.4.0
   uuid: ^4.0.0

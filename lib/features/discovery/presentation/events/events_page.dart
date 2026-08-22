@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:inspire_blur/inspire_blur.dart';
 import 'package:provider/provider.dart';
 import 'package:munday/core/state/app_state.dart';
 import 'package:munday/l10n/app_localizations.dart';
@@ -659,16 +660,20 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
         return;
       }
 
-      await showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: false,
-        useRootNavigator: true,
-        isDismissible: true,
-        enableDrag: true,
-        backgroundColor: Colors.transparent,
-        barrierColor: const Color(0xB3000000),
-        builder: (bottomSheetContext) {
+      await Navigator.of(context, rootNavigator: true).push<void>(
+        PageRouteBuilder<void>(
+          opaque: false,
+          barrierColor: const Color(0xB3000000),
+          barrierDismissible: true,
+          transitionDuration: const Duration(milliseconds: 300),
+          reverseTransitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: Material(
+                type: MaterialType.transparency,
+                child: Builder(
+                builder: (bottomSheetContext) {
           return _EventDetailSheet(
             detailFuture: detailFuture,
             fallbackEventData: eventData,
@@ -702,7 +707,12 @@ class _EventsWidgetState extends ConsumerState<EventsPage>
             },
           );
         },
-      );
+      ),
+    ),
+  );
+  },
+),
+);
     } finally {
       appState.eventDetailOpen = false;
       if (mounted) {
@@ -9344,6 +9354,38 @@ class _EventsGroupedByDay extends StatelessWidget {
   }
 }
 
+/// Mockup genre tags for the grouped-by-day event rows.
+///
+/// Starts from the real `musicstyle` value (when present) and pads the list
+/// with deterministic picks from [_kNightclubCategoryMockups] so every row
+/// shows 2-5 tags like the target design. Replace with real event tags once
+/// the backend provides them.
+List<String> _mockEventGenreTags(DataEventsStruct event) {
+  final tags = <String>[];
+  final style = event.musicstyle.trim();
+  if (style.isNotEmpty) tags.add(style);
+
+  var seed = '${event.nameStore}|${event.nameArtise.join(',')}'.hashCode.abs();
+  final targetCount = 2 + seed % 4; // 2..5 tags per event.
+  var guard = 0;
+  while (tags.length < targetCount &&
+      guard < _kNightclubCategoryMockups.length * 2) {
+    final candidate =
+        _kNightclubCategoryMockups[seed % _kNightclubCategoryMockups.length];
+    if (!tags.contains(candidate)) tags.add(candidate);
+    seed = seed ~/ 7 + 13;
+    guard++;
+  }
+  return tags;
+}
+
+/// Stable accent color per tag label, reusing the category browser palette so
+/// the same category gets the same color everywhere.
+Color _eventTagColor(String label) {
+  const palette = _EventsCategoryBrowser._colors;
+  return palette[label.hashCode.abs() % palette.length];
+}
+
 class _GroupedEventRow extends StatelessWidget {
   const _GroupedEventRow({required this.event, required this.onTap});
 
@@ -9374,13 +9416,15 @@ class _GroupedEventRow extends StatelessWidget {
     final timeLabel = event.date == null
         ? 'ยังไม่ระบุเวลา'
         : '${dateTimeFormat('Hm', event.date!)} น.';
+    final genreTags = _mockEventGenreTags(event);
+    const maxVisibleTags = 3;
 
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsetsDirectional.symmetric(vertical: 16.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
@@ -9413,23 +9457,27 @@ class _GroupedEventRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Icon(
-                      Icons.favorite_border_rounded,
-                      color: Color(0xFFB9B9C2),
-                      size: 27.0,
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  _EventsScriptText(
-                    _title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    color: Colors.white,
-                    fontSize: 19.0,
-                    height: 1.25,
-                    fontWeight: FontWeight.w900,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _EventsScriptText(
+                          _title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          color: Colors.white,
+                          fontSize: 19.0,
+                          height: 1.25,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Color(0xFFB9B9C2),
+                        size: 27.0,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10.0),
                   Row(
@@ -9492,25 +9540,22 @@ class _GroupedEventRow extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (event.musicstyle.trim().isNotEmpty) ...[
+                  if (genreTags.isNotEmpty) ...[
                     const SizedBox(height: 10.0),
-                    Container(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        11.0,
-                        5.0,
-                        11.0,
-                        5.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1A1A1A),
-                        borderRadius: BorderRadius.circular(9.0),
-                        border: Border.all(color: const Color(0x1AFFFFFF)),
-                      ),
-                      child: _EventsScriptText(
-                        event.musicstyle,
-                        color: const Color(0xFFDDDDDD),
-                        fontSize: 11.0,
-                      ),
+                    Wrap(
+                      spacing: 6.0,
+                      runSpacing: 6.0,
+                      children: [
+                        for (final tag in genreTags.take(maxVisibleTags))
+                          _EventGenreTagChip(
+                            label: tag,
+                            color: _eventTagColor(tag),
+                          ),
+                        if (genreTags.length > maxVisibleTags)
+                          _EventGenreTagChip(
+                            label: '+${genreTags.length - maxVisibleTags}',
+                          ),
+                      ],
                     ),
                   ],
                 ],
@@ -9518,6 +9563,82 @@ class _GroupedEventRow extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _EventGenreTagChip extends StatelessWidget {
+  const _EventGenreTagChip({required this.label, this.color});
+
+  final String label;
+
+  /// Accent color for genre tags; `null` renders a neutral overflow ("+N")
+  /// chip without an icon.
+  final Color? color;
+
+  IconData get _icon {
+    const icons = _EventsCategoryBrowser._icons;
+    return icons[label.hashCode.abs() % icons.length];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = color;
+    if (accent == null) {
+      return Container(
+        height: 26.0,
+        padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(9.0),
+          border: Border.all(color: const Color(0x1AFFFFFF)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _EventsScriptText(
+              label,
+              maxLines: 1,
+              color: const Color(0xFFDDDDDD),
+              fontSize: 11.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Same look as `_EventCategoryChip`, scaled down.
+    return Container(
+      height: 26.0,
+      padding: const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 9.0, 0.0),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(9.0),
+        border: Border.all(color: const Color(0x1AFFFFFF)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 18.0,
+            height: 18.0,
+            decoration: BoxDecoration(
+              color: accent.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: Icon(_icon, color: accent, size: 12.0),
+          ),
+          const SizedBox(width: 5.0),
+          _EventsScriptText(
+            label,
+            maxLines: 1,
+            color: Colors.white,
+            fontSize: 11.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ],
       ),
     );
   }
@@ -10042,33 +10163,36 @@ class _FeaturedEventsHeroState extends State<_FeaturedEventsHero> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.network(
-                              posterUrl,
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                              loadingBuilder: (context, child, progress) {
-                                if (progress == null) return child;
-                                return const ColoredBox(
-                                  color: Color(0xFF17181E),
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.0,
-                                    ),
-                                  ),
-                                );
-                              },
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const ColoredBox(
+                            Hero(
+                              tag: posterUrl,
+                              child: Image.network(
+                                posterUrl,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) return child;
+                                  return const ColoredBox(
                                     color: Color(0xFF17181E),
                                     child: Center(
-                                      child: Icon(
-                                        Icons.event_rounded,
-                                        color: Colors.white70,
-                                        size: 52.0,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2.0,
                                       ),
                                     ),
-                                  ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const ColoredBox(
+                                      color: Color(0xFF17181E),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.event_rounded,
+                                          color: Colors.white70,
+                                          size: 52.0,
+                                        ),
+                                      ),
+                                    ),
+                              ),
                             ),
                             const Positioned(
                               left: 14.0,
@@ -10860,61 +10984,39 @@ class _EventDetailSheet extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 18.0),
-          _EventDateTimeCard(detailData: detailData),
-          const SizedBox(height: 12.0),
+          _EventDateTimeRow(detailData: detailData),
+          const SizedBox(height: 14.0),
           _buildVenueContextCard(detailData),
-          const SizedBox(height: 12.0),
-          Row(
-            children: [
-              Expanded(
-                child: _EventInfoCard(
-                  label: 'ENTRY',
-                  value: detailData.isFree ? 'ฟรี' : detailData.priceLabel,
-                ),
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: _EventInfoCard(
-                  label: 'แนวเพลง',
-                  value: detailData.musicStyle,
-                ),
-              ),
-            ],
+          const SizedBox(height: 24.0),
+          _EventAttendeesSection(
+            userInVenuesRef: detailData.venueRecord?.refUserInVenues,
+            eventDate: detailData.eventDate,
           ),
           const SizedBox(height: 24.0),
-          _buildScheduleCard(detailData),
+          _EventInfoRow(
+            icon: Icons.music_note_rounded,
+            label: 'แนวเพลง',
+            value: detailData.musicStyle,
+          ),
+          const SizedBox(height: 16.0),
+          _EventInfoRow(
+            icon: Icons.groups_rounded,
+            label: 'ผู้เข้าร่วม',
+            value: detailData.capacityLabel,
+          ),
+          const SizedBox(height: 16.0),
+          _EventInfoRow(
+            icon: Icons.table_bar_rounded,
+            label: 'โต๊ะของ event',
+            value: detailData.tableCountLabel,
+          ),
+          const SizedBox(height: 28.0),
+          _buildScheduleSection(detailData),
           if (!detailData.isFree) ...[
-            const SizedBox(height: 18.0),
+            const SizedBox(height: 24.0),
             _buildPaymentBanner(),
           ],
           const SizedBox(height: 24.0),
-          Row(
-            children: [
-              Expanded(
-                child: _EventMetricTile(
-                  icon: Icons.groups_rounded,
-                  label: 'ผู้เข้าร่วม',
-                  value: detailData.capacityLabel,
-                ),
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: _EventMetricTile(
-                  icon: Icons.table_bar_rounded,
-                  label: 'โต๊ะของ event',
-                  value: detailData.tableCountLabel,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24.0),
-          if (detailData.venueRecord?.hasRefUserInVenues() ?? false) ...[
-            _EventAttendeesSection(
-              userInVenuesRef: detailData.venueRecord!.refUserInVenues!,
-              eventDate: detailData.eventDate,
-            ),
-            const SizedBox(height: 24.0),
-          ],
           _EventSection(
             title: 'รายละเอียด',
             child: _buildParagraphs(detailData.detailParagraphs),
@@ -10924,6 +11026,11 @@ class _EventDetailSheet extends StatelessWidget {
             title: 'Highlights',
             child: _buildBulletList(detailData.highlights),
           ),
+          const SizedBox(height: 24.0),
+          _EventSection(
+            title: 'เกี่ยวกับร้าน',
+            child: _buildAboutVenueCard(detailData),
+          ),
           if (venuePhotos.isNotEmpty) ...[
             const SizedBox(height: 24.0),
             _EventSection(
@@ -10931,11 +11038,6 @@ class _EventDetailSheet extends StatelessWidget {
               child: _EventVenuePhotoStrip(photos: venuePhotos),
             ),
           ],
-          const SizedBox(height: 24.0),
-          _EventSection(
-            title: 'เกี่ยวกับร้าน',
-            child: _buildAboutVenueCard(detailData),
-          ),
           const SizedBox(height: 24.0),
           _EventSection(
             title: 'สถานที่และเวลาเปิด',
@@ -10968,56 +11070,30 @@ class _EventDetailSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildScheduleCard(_EventDetailData detailData) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFF161616),
-        borderRadius: BorderRadius.circular(18.0),
-        border: Border.all(color: const Color(0x22FFFFFF)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.schedule_rounded,
-                color: Color(0xFFE7E8EE),
-                size: 21.0,
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Text(
-                  'Timing and schedule',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.0,
-                  ),
-                ),
-              ),
-              const Icon(
-                Icons.keyboard_arrow_up_rounded,
-                color: Colors.white,
-                size: 22.0,
-              ),
-            ],
+  Widget _buildScheduleSection(_EventDetailData detailData) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Timing and schedule',
+          style: GoogleFonts.openSans(
+            color: Colors.white,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.0,
           ),
-          const SizedBox(height: 18.0),
-          _EventScheduleRow(
-            title: 'Doors open',
-            subtitle: detailData.doorsOpenLabel,
-          ),
-          const SizedBox(height: 16.0),
-          _EventScheduleRow(
-            title: 'Show starts',
-            subtitle: detailData.showStartsLabel,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 14.0),
+        _EventScheduleRow(
+          title: 'Doors open',
+          subtitle: detailData.doorsOpenLabel,
+        ),
+        const SizedBox(height: 16.0),
+        _EventScheduleRow(
+          title: 'Show starts',
+          subtitle: detailData.showStartsLabel,
+        ),
+      ],
     );
   }
 
@@ -11273,7 +11349,7 @@ class _EventDetailSheet extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14.0),
         decoration: BoxDecoration(
-          color: const Color(0xFF121212),
+          color: Colors.black,
           borderRadius: BorderRadius.circular(18.0),
           border: Border.all(color: const Color(0x22FFFFFF)),
         ),
@@ -11350,19 +11426,11 @@ class _EventDetailSheet extends StatelessWidget {
         ? _safeEventsImageUrl(bg, fallback: _kEventsFallbackProfileUrl)
         : detailData.venueImageUrl;
 
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: const Color(0xFF121212),
-        borderRadius: BorderRadius.circular(18.0),
-        border: Border.all(color: const Color(0x22FFFFFF)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18.0),
+      child: Stack(
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: 140.0,
+          Positioned.fill(
             child: Image.network(
               coverUrl,
               fit: BoxFit.cover,
@@ -11378,88 +11446,114 @@ class _EventDetailSheet extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image.network(
-                    detailData.venueImageUrl,
-                    width: 48.0,
-                    height: 48.0,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 48.0,
-                      height: 48.0,
-                      color: const Color(0xFF2A2C35),
-                      child: const Icon(
-                        Icons.storefront_rounded,
-                        color: Colors.white70,
-                        size: 22.0,
-                      ),
-                    ),
-                  ),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.black,
+                  ],
+                  stops: const [0.45, 0.75, 1.0],
                 ),
-                const SizedBox(width: 12.0),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        detailData.venueName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              14.0,
+              0.0,
+              14.0,
+              14.0,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 140.0),
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Image.network(
+                        detailData.venueImageUrl,
+                        width: 48.0,
+                        height: 48.0,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          width: 48.0,
+                          height: 48.0,
+                          color: const Color(0xFF2A2C35),
+                          child: const Icon(
+                            Icons.storefront_rounded,
+                            color: Colors.white70,
+                            size: 22.0,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4.0),
-                      Text(
-                        '${detailData.ratingLabel} • ${detailData.openCloseTime}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.openSans(
-                          color: const Color(0xFFB8BBC7),
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.0,
+                    ),
+                    const SizedBox(width: 12.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            detailData.venueName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.openSans(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            '${detailData.ratingLabel} • ${detailData.openCloseTime}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.openSans(
+                              color: const Color(0xFFE4E5EA),
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (canOpenVenue) ...[
+                      const SizedBox(width: 10.0),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10.0),
+                        onTap: () => onViewVenue(detailData),
+                        child: Container(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            12.0,
+                            8.0,
+                            12.0,
+                            8.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0x33FFFFFF),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Text(
+                            'ดูหน้าร้าน',
+                            style: GoogleFonts.openSans(
+                              color: Colors.white,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
+                  ],
                 ),
-                if (canOpenVenue) ...[
-                  const SizedBox(width: 10.0),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(10.0),
-                    onTap: () => onViewVenue(detailData),
-                    child: Container(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        12.0,
-                        8.0,
-                        12.0,
-                        8.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0x22FFFFFF),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Text(
-                        'ดูหน้าร้าน',
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ],
             ),
           ),
@@ -11589,36 +11683,39 @@ class _EventDetailHeroState extends State<_EventDetailHero> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24.0),
-                child: Image.network(
-                  widget.posterUrl,
-                  fit: BoxFit.contain,
-                  filterQuality: FilterQuality.high,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
+                child: Hero(
+                  tag: widget.posterUrl,
+                  child: Image.network(
+                    widget.posterUrl,
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
 
-                    return SizedBox(
+                      return SizedBox(
+                        width: constraints.maxWidth,
+                        height: constraints.maxHeight,
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) => SizedBox(
                       width: constraints.maxWidth,
                       height: constraints.maxHeight,
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) => SizedBox(
-                    width: constraints.maxWidth,
-                    height: constraints.maxHeight,
-                    child: Container(
-                      color: const Color(0xFF141414),
-                      child: const Center(
-                        child: Icon(
-                          Icons.event_rounded,
-                          color: Colors.white70,
-                          size: 54.0,
+                      child: Container(
+                        color: const Color(0xFF141414),
+                        child: const Center(
+                          child: Icon(
+                            Icons.event_rounded,
+                            color: Colors.white70,
+                            size: 54.0,
+                          ),
                         ),
                       ),
                     ),
@@ -11907,63 +12004,6 @@ class _EventMapPreviewPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-class _EventMetricTile extends StatelessWidget {
-  const _EventMetricTile({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 82.0),
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFF121212),
-        borderRadius: BorderRadius.circular(18.0),
-        border: Border.all(color: const Color(0x22FFFFFF)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(icon, color: const Color(0xFFFF4B4B), size: 22.0),
-          const SizedBox(height: 9.0),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.openSans(
-              color: const Color(0xFFAEB1BD),
-              fontSize: 12.0,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.0,
-            ),
-          ),
-          const SizedBox(height: 2.0),
-          Text(
-            value,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontSize: 15.0,
-              fontWeight: FontWeight.w800,
-              height: 1.12,
-              letterSpacing: 0.0,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _EventSection extends StatelessWidget {
   const _EventSection({required this.title, required this.child});
 
@@ -12043,8 +12083,8 @@ class _EventHeroCircleButton extends StatelessWidget {
   }
 }
 
-class _EventDateTimeCard extends StatelessWidget {
-  const _EventDateTimeCard({required this.detailData});
+class _EventDateTimeRow extends StatelessWidget {
+  const _EventDateTimeRow({required this.detailData});
 
   final _EventDetailData detailData;
 
@@ -12052,148 +12092,124 @@ class _EventDateTimeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final calendarUrl = detailData.calendarUrl;
 
-    return Container(
-      padding: const EdgeInsets.all(14.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFF121212),
-        borderRadius: BorderRadius.circular(18.0),
-        border: Border.all(color: const Color(0x22FFFFFF)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44.0,
-            height: 44.0,
-            decoration: BoxDecoration(
-              color: const Color(0x1AFF4B4B),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: const Icon(
-              Icons.calendar_today_rounded,
-              color: Color(0xFFFF6B6B),
-              size: 21.0,
+    return Row(
+      children: [
+        const Icon(
+          Icons.calendar_today_rounded,
+          color: Color(0xFFFF6B6B),
+          size: 22.0,
+        ),
+        const SizedBox(width: 14.0),
+        Expanded(
+          child: Text(
+            detailData.eventDateLabel,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.openSans(
+              color: Colors.white,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.0,
             ),
           ),
-          const SizedBox(width: 12.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  detailData.eventDateLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.openSans(
+        ),
+        if (calendarUrl != null) ...[
+          const SizedBox(width: 10.0),
+          InkWell(
+            borderRadius: BorderRadius.circular(10.0),
+            onTap: () => launchURL(calendarUrl),
+            child: Container(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                12.0,
+                8.0,
+                12.0,
+                8.0,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0x22FFFFFF),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.edit_calendar_rounded,
                     color: Colors.white,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.0,
+                    size: 15.0,
                   ),
-                ),
-                const SizedBox(height: 3.0),
-                Text(
-                  detailData.priceSummaryLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.openSans(
-                    color: const Color(0xFFB8BBC7),
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (calendarUrl != null) ...[
-            const SizedBox(width: 10.0),
-            InkWell(
-              borderRadius: BorderRadius.circular(10.0),
-              onTap: () => launchURL(calendarUrl),
-              child: Container(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                  12.0,
-                  8.0,
-                  12.0,
-                  8.0,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0x22FFFFFF),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.edit_calendar_rounded,
+                  const SizedBox(width: 6.0),
+                  Text(
+                    'ปฏิทิน',
+                    style: GoogleFonts.openSans(
                       color: Colors.white,
-                      size: 15.0,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.0,
                     ),
-                    const SizedBox(width: 6.0),
-                    Text(
-                      'ปฏิทิน',
-                      style: GoogleFonts.openSans(
-                        color: Colors.white,
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.0,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ],
-      ),
+      ],
     );
   }
 }
 
-class _EventInfoCard extends StatelessWidget {
-  const _EventInfoCard({required this.label, required this.value});
+class _EventInfoRow extends StatelessWidget {
+  const _EventInfoRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
 
+  final IconData icon;
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFF121212),
-        borderRadius: BorderRadius.circular(18.0),
-        border: Border.all(color: const Color(0x22FFFFFF)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.openSans(
-              color: const Color(0xFF8E91A0),
-              fontSize: 11.0,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.8,
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 2.0),
+          child: Icon(icon, color: const Color(0xFFAEB1BD), size: 22.0),
+        ),
+        const SizedBox(width: 14.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: const Color(0xFF8E91A0),
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
+                ),
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                value,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 6.0),
-          Text(
-            value,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontSize: 15.0,
-              fontWeight: FontWeight.w800,
-              height: 1.15,
-              letterSpacing: 0.0,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -12241,15 +12257,10 @@ class _EventContactLinkRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(12.0),
       onTap: () => launchURL(link.url),
-      child: Container(
-        padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 14.0, 12.0),
-        decoration: BoxDecoration(
-          color: const Color(0xFF121212),
-          borderRadius: BorderRadius.circular(16.0),
-          border: Border.all(color: const Color(0x22FFFFFF)),
-        ),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(2.0, 10.0, 2.0, 10.0),
         child: Row(
           children: [
             Container(
@@ -12277,7 +12288,7 @@ class _EventContactLinkRow extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12.0),
+            const SizedBox(width: 14.0),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -12327,140 +12338,161 @@ class _EventAttendeesSection extends StatelessWidget {
     required this.eventDate,
   });
 
-  final SupabaseDocRef userInVenuesRef;
+  final SupabaseDocRef? userInVenuesRef;
   final DateTime? eventDate;
+
+  /// Shown when the venue has no real attendee data yet.
+  static const _mockAttendees = <({String name, String photo})>[
+    (name: 'Mindy', photo: 'https://i.pravatar.cc/100?img=47'),
+    (name: 'Tle', photo: 'https://i.pravatar.cc/100?img=12'),
+    (name: 'Praew', photo: 'https://i.pravatar.cc/100?img=32'),
+    (name: 'Nott', photo: 'https://i.pravatar.cc/100?img=53'),
+    (name: 'Bam', photo: 'https://i.pravatar.cc/100?img=5'),
+    (name: 'Ken', photo: 'https://i.pravatar.cc/100?img=15'),
+    (name: 'Fah', photo: 'https://i.pravatar.cc/100?img=44'),
+    (name: 'Pond', photo: 'https://i.pravatar.cc/100?img=59'),
+    (name: 'Nuna', photo: 'https://i.pravatar.cc/100?img=25'),
+    (name: 'Mark', photo: 'https://i.pravatar.cc/100?img=68'),
+    (name: 'Jib', photo: 'https://i.pravatar.cc/100?img=38'),
+    (name: 'Tarn', photo: 'https://i.pravatar.cc/100?img=21'),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final ref = userInVenuesRef;
+    if (ref == null) {
+      return _buildAttendees(_mockAttendees);
+    }
+
     return StreamBuilder<UserInVenuesRecord>(
-      stream: UserInVenuesRecord.getDocument(userInVenuesRef),
+      stream: UserInVenuesRecord.getDocument(ref),
       builder: (context, snapshot) {
         final record = snapshot.data;
-        if (record == null) {
-          return const SizedBox.shrink();
+        var people = _mockAttendees;
+        if (record != null) {
+          final referenceDate = eventDate ?? getCurrentTimestamp;
+          final attendees = record.user
+              .where(
+                (entry) =>
+                    functions.checkdate(entry.date, referenceDate) ?? false,
+              )
+              .map((entry) => entry.user)
+              .toList();
+          if (attendees.isNotEmpty) {
+            people = [
+              for (final user in attendees)
+                (name: user.name.trim(), photo: user.photoprofile),
+            ];
+          }
         }
+        return _buildAttendees(people);
+      },
+    );
+  }
 
-        final referenceDate = eventDate ?? getCurrentTimestamp;
-        final attendees = record.user
-            .where(
-              (entry) =>
-                  functions.checkdate(entry.date, referenceDate) ?? false,
-            )
-            .map((entry) => entry.user)
-            .toList();
-        if (attendees.isEmpty) {
-          return const SizedBox.shrink();
-        }
-
-        final avatarCount = attendees.length.clamp(0, 5);
-        final names = attendees
-            .take(3)
-            .map((user) => user.name.trim())
-            .where((name) => name.isNotEmpty)
-            .toList();
-        final others = attendees.length - names.length;
+  Widget _buildAttendees(List<({String name, String photo})> people) {
+    final avatarCount = people.length.clamp(0, 4);
+    final extraCount = people.length - avatarCount;
+    final names = people
+        .take(4)
+        .map((user) => user.name)
+        .where((name) => name.isNotEmpty)
+        .toList();
+    final others = people.length - names.length;
         final namesLabel = names.isEmpty
             ? ''
             : others > 0
             ? '${names.join(', ')} และอีก $others คน'
             : names.join(', ');
+        const circleSize = 40.0;
+        const overlap = 26.0;
+        final stackWidth =
+            circleSize + (avatarCount + (extraCount > 0 ? 1 : 0) - 1) * overlap;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'คนที่จะไปด้วย',
+              'เข้าร่วม ${people.length} คน',
               style: GoogleFonts.openSans(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w800,
+                color: const Color(0xFF8E91A0),
+                fontSize: 13.0,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.0,
               ),
             ),
-            const SizedBox(height: 10.0),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(14.0),
-              decoration: BoxDecoration(
-                color: const Color(0xFF121212),
-                borderRadius: BorderRadius.circular(18.0),
-                border: Border.all(color: const Color(0x22FFFFFF)),
-              ),
-              child: Row(
+            const SizedBox(height: 12.0),
+            Container(height: 1.0, color: const Color(0x14FFFFFF)),
+            const SizedBox(height: 16.0),
+            SizedBox(
+              width: stackWidth,
+              height: circleSize,
+              child: Stack(
                 children: [
-                  SizedBox(
-                    width: 36.0 + (avatarCount - 1) * 20.0,
-                    height: 36.0,
-                    child: Stack(
-                      children: [
-                        for (var index = 0; index < avatarCount; index++)
-                          Positioned(
-                            left: index * 20.0,
-                            child: Container(
-                              width: 36.0,
-                              height: 36.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2.0,
-                                ),
-                              ),
-                              child: CircleAvatar(
-                                backgroundColor: const Color(0xFF2A2A2A),
-                                backgroundImage: NetworkImage(
-                                  _safeEventsImageUrl(
-                                    attendees[index].photoprofile,
-                                    fallback: _kEventsFallbackProfileUrl,
-                                  ),
-                                ),
-                                onBackgroundImageError: (error, stackTrace) {},
-                              ),
+                  for (var index = 0; index < avatarCount; index++)
+                    Positioned(
+                      left: index * overlap,
+                      child: Container(
+                        width: circleSize,
+                        height: circleSize,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black, width: 2.0),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: const Color(0xFF2A2A2A),
+                          backgroundImage: NetworkImage(
+                            _safeEventsImageUrl(
+                              people[index].photo,
+                              fallback: _kEventsFallbackProfileUrl,
                             ),
                           ),
-                      ],
+                          onBackgroundImageError: (error, stackTrace) {},
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${attendees.length} คนกำลังจะไป',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                  if (extraCount > 0)
+                    Positioned(
+                      left: avatarCount * overlap,
+                      child: Container(
+                        width: circleSize,
+                        height: circleSize,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3A3A3E),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black, width: 2.0),
+                        ),
+                        child: Text(
+                          '+$extraCount',
                           style: GoogleFonts.openSans(
                             color: Colors.white,
-                            fontSize: 14.5,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w700,
                             letterSpacing: 0.0,
                           ),
                         ),
-                        if (namesLabel.isNotEmpty) ...[
-                          const SizedBox(height: 3.0),
-                          Text(
-                            namesLabel,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.openSans(
-                              color: const Color(0xFFB8BBC7),
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500,
-                              height: 1.3,
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ],
-                      ],
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
+            if (namesLabel.isNotEmpty) ...[
+              const SizedBox(height: 14.0),
+              Text(
+                namesLabel,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                  height: 1.35,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ],
           ],
         );
-      },
-    );
   }
 }

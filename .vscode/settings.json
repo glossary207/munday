@@ -1,5 +1,6 @@
 {
   "dart.flutterSdkPath": "/Users/bewsunattha/flutter",
   "dart.flutterWidgetPreview": "disabled",
-  "dart.previewFlutterUiGuides": false
+  "dart.previewFlutterUiGuides": false,
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
